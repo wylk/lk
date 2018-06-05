@@ -12,4 +12,3 @@ return array(
 	'DB_PREFIX'=>'lk_',
 	'STATIC_RESOURCE'=>'1'
 );
-?>

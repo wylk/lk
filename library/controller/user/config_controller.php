@@ -1,27 +1,36 @@
 <?php
-require_once dirname(__FILE__).'/global.php';
-$condition_config['gid'] = 1;
-$condition_config['status'] = '1';
-$config = D('Config')->where($condition_config)->order('`id` asc')->select();
-foreach($config as $key=>$value){
-	$config_list[$value['tab_id']]['name'] = $value['tab_name'];
-	$config_list[$value['tab_id']]['list'][] = $value;
-}
-$build_html = build_html($config_list);
+class config_controller extends base_controller{
+	public function __construct()
+	{
 
-   function build_html($config_list){
+	}
+
+	public function index(){
+		$condition_config['gid'] = 1;
+		$condition_config['status'] = '1';
+		$config = D('Config')->where($condition_config)->order('`id` asc')->select();
+		foreach($config as $key=>$value){
+			$config_list[$value['tab_id']]['name'] = $value['tab_name'];
+			$config_list[$value['tab_id']]['list'][] = $value;
+		}
+		$config = $this->buildHtml($config_list);
+
+		$this->assign('config',$config);
+		$this->display();
+	}
+
+	public function saveConfig()
+	{
+		$data = $this->clear_html($_POST);
+		dump($data);
+	}
+
+	public function buildHtml($config_list)
+	{
 		if(is_array($config_list)){
+
 			$config_html = '';
-			if(count($config_list) > 1) $has_tab = true;
-			if($has_tab) $config_tab_html = '<ul class="tab_ul">';
-			$pigcms_auto_key = 1;
-
-			$has_image_btn = false;
-			$has_page_btn = false;
 			foreach($config_list as $pigcms_key=>$pigcms_value){
-				if($has_tab) $config_tab_html .= '<li '.($pigcms_auto_key==1 ? 'class="active"' : '').'><a data-toggle="tab" href="#tab_'.$pigcms_key.'">'.$pigcms_value['name'].'</a></li>';
-
-				$config_html .= '<table cellpadding="0" cellspacing="0" class="table_form" width="100%" style="display:block;" id="tab_'.$pigcms_key.'">';
 				foreach($pigcms_value['list'] as $key=>$value){
 					$tmp_type_arr = explode('&',$value['type']);
 					$type_arr = array();
@@ -31,7 +40,7 @@ $build_html = build_html($config_list);
 					}
 
 					$config_html .= '<tr>';
-					$config_html .= '<th width="160">'.$value['info'].'：</th>';
+					$config_html .= '<th style="width: 20%;text-align: center;">'.$value['info'].'：</th>';
 					$config_html .= '<td>';
 					if(in_array($type_arr['type'],array('text','otext'))) {	
 						$size = !empty($type_arr['size']) ? $type_arr['size'] : '60';
@@ -64,7 +73,7 @@ $build_html = build_html($config_list);
 						$config_html .= '<span class="config_upload_file_btn" file_validate="'.$type_arr['file'].'"><input type="button" value="上传文件" class="button" style="margin-left:0px;margin-right:10px;"/></span><input type="text" class="input-text input-file" name="'.$value['name'].'" id="config_'.$value['name'].'" value="'.$value['value'].'" size="48" readonly="readonly" validate="'.$type_arr['validate'].'" tips="'.$value['desc'].'"/> ';
 					}else if($type_arr['type'] == 'select'){
 						$radio_option = explode('|',$type_arr['value']);
-						$config_html .= '<select name="'.$value['name'].'">';
+						$config_html .= '<select name="'.$value['name'].'" style="width:60%;height:25px">';
 						foreach($radio_option as $radio_k=>$radio_v){
 							$radio_one = explode(':',$radio_v);
 							$config_html .= '<option value="'.$radio_one[0].'" '.($value['value']==$radio_one[0] ? 'selected="selected"' : '').'>'.$radio_one[1].'</option>';
@@ -85,19 +94,10 @@ $build_html = build_html($config_list);
 					$config_html .= '</td>';
 					$config_html .= '</tr>';
 				}
-				$config_html .= '</table>';
-				$pigcms_auto_key++;
 			}
-			if($has_tab) $config_tab_html .= '</ul>';
-
-			$return_config['config_html'] = $config_html;
-			if($has_tab) $return_config['config_tab_html'] = $config_tab_html;
-			$return_config['has_image_btn'] = $has_image_btn;
-			$return_config['has_page_btn'] = $has_page_btn;
-            $return_config['has_sale_btn'] = $has_salt_btn;
-			return $return_config;
+			
+			return $config_html;
 		}
 	}
 
-include display('index');
-echo ob_get_clean();
+}

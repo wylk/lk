@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>后台登录-X-admin2.0</title>
+	<title>乐卡后台管理</title>
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -19,7 +19,7 @@
 <body>
     <!-- 顶部开始 -->
     <div class="container">
-        <div class="logo"><a href="./index.html">X-admin v2.0</a></div>
+        <div class="logo"><a href="./index.html">乐卡 v2.0</a></div>
         <div class="left_open">
             <i title="展开左侧栏" class="iconfont">&#xe699;</i>
         </div>
@@ -114,7 +114,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="order-list.html">
+                        <a _href="?c=index&a=orderList">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>订单列表</cite>
                         </a>
@@ -254,6 +254,12 @@
                             <cite>图标对应字体</cite>
                         </a>
                     </li>
+                    <li>
+                        <a _href="?c=config&a=index">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>系统管理</cite>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -278,9 +284,9 @@
     <!-- 右侧主体结束 -->
     <!-- 中部结束 -->
     <!-- 底部开始 -->
-   <!--  <div class="footer">
-       <div class="copyright">Copyright ©2017 x-admin v2.3 All Rights Reserved</div>  
-   </div> -->
+   <div class="footer">
+       <div class="copyright">Copyright ©2017 lk 2.3 All Rights Reserved</div>  
+   </div> 
     <!-- 底部结束 -->
     <script>
     //百度统计可去掉
