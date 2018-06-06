@@ -22,4 +22,4 @@ import('source.class.test'); / import('test');
 2, $this->json 传输 dexit(['error'=>0,'msg'=>'ttt']);
 注意：在wap里不用$this-> 
 
-----------
+---------- 
