@@ -21,8 +21,31 @@ class config_controller extends base_controller{
 
 	public function saveConfig()
 	{
-		$data = $this->clear_html($_POST);
-		dump($data);
+		if(IS_POST){
+			if(IS_POST){
+			$database_config = D('Config');
+			$data = $this->clear_html($_POST);
+			foreach($data as $key=>$value){
+				$data['name'] = str_replace('，', ',', $key);
+				$data['value'] = str_replace('，', ',', trim(stripslashes(htmlspecialchars_decode($value))));
+				$database_config->data($data)->where(array("name"=>$key))->save();
+				if ($key == 'wechat_sourceid') {
+					$data['name'] = 'wechat_token';
+					$data['value'] = md5('pigcms_wechat_token' . $data['value']);
+					$database_config->data($data)->where(array("name"=>'wechat_token'))->save();
+				}
+			}
+			//import('ORG.Util.Dir');
+			//Dir::delDirnotself('./cache');
+			$this->dexit(['error'=>0,'msg'=>'修改成功']);
+		}else{
+			$this->dexit(['error'=>1,'msg'=>'修改失败']);
+		}
+		}
+		//$data = $this->clear_html($_POST);
+		//dump($data);
+		
+		
 	}
 
 	public function buildHtml($config_list)

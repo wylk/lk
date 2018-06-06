@@ -146,24 +146,20 @@ $(function(){
 					label.addClass("success");
 				},
 				submitHandler:function(form){
-					if($('.ke-container').size() > 0){
-						kind_editor.sync();
-					}
 					if($(form).attr('frame') == 'true' || $(form).attr('refresh') == 'true'){
 						$.post($(form).attr('action'),$(form).serialize(),function(result){
-							if(result.status == 1){
-								window.top.msg(1,result.info,true);
+							if(result.error == 0){
+								swal("友情提示！", result.msg,"success");
 								if($(form).attr('refresh') == 'true'){
 									window.top.main_refresh();
 								}
 								window.top.closeiframe();
 							}else{
-								window.top.msg(0,result.info,true);
+								swal("友情提示！", result.msg,"error");
 							}
-						});
+						},'json');
 						return false;
 					}else{
-						window.top.msg(2,'表单提交中，请稍等...',true,360);
 						form.submit();
 					}
 				} 

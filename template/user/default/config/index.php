@@ -10,15 +10,18 @@
         <link rel="stylesheet" href="<?php echo TPL_URL;?>x-admin/css/font.css">
         <link rel="stylesheet" href="<?php echo TPL_URL;?>x-admin/css/xadmin.css">
         <link rel="stylesheet" type="text/css" href="https://epai.51ao.com/source/tp/Project/tpl/Static/css/style.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo STATIC_URL;?>/sweetalert/css/sweet-alert.css">
         <script type="text/javascript">
             var frame_show = false;
             var static_path = false;
         </script>
         <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+        <script src="<?php echo STATIC_URL;?>/sweetalert/js/sweet-alert.min.js"></script>
         <script type="text/javascript" src="<?php echo TPL_URL;?>/js/common.js?r=<?php echo time();?>"></script>
         <script type="text/javascript" src="https://mall.epaikj.com//static/js/jquery.form.js"></script>
         <script type="text/javascript" src="https://mall.epaikj.com//static/js/jquery.validate.js"></script>
         <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+
     </head>
     <body>
     <div class="x-body layui-anim layui-anim-up">
