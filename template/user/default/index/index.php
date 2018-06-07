@@ -42,7 +42,7 @@
               <dd><a href="./login.html">退出</a></dd>
             </dl>
           </li>
-          <li class="layui-nav-item to-index"><a href="/">前台首页</a></li>
+          <li class="layui-nav-item to-index"><a href="/">清除缓存</a></li>
         </ul>
         
     </div>
@@ -124,14 +124,20 @@
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe723;</i>
-                    <cite>分类管理</cite>
+                    <cite>商家管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     <li>
                         <a _href="cate.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>多级分类</cite>
+                            <cite>店铺管理</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="cate.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>发券人管理</cite>
                         </a>
                     </li >
                 </ul>
@@ -139,14 +145,20 @@
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe723;</i>
-                    <cite>城市联动</cite>
+                    <cite>卡券管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     <li>
                         <a _href="city.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>三级地区联动</cite>
+                            <cite>卡管理</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="city.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>券管理</cite>
                         </a>
                     </li >
                 </ul>
@@ -177,9 +189,9 @@
                         </a>
                     </li >
                     <li>
-                        <a _href="admin-rule.html">
+                        <a _href="?c=admin&a=auth">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>权限管理</cite>
+                            <cite>菜单管理</cite>
                         </a>
                     </li >
                 </ul>
@@ -197,67 +209,52 @@
                             <cite>拆线图</cite>
                         </a>
                     </li >
-                    <li>
-                        <a _href="echarts2.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>柱状图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts3.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>地图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts4.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>饼图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts5.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>雷达图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts6.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>k线图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts7.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>热力图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts8.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>仪表图</cite>
-                        </a>
-                    </li>
                 </ul>
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe6b4;</i>
-                    <cite>图标字体</cite>
+                    <i class="iconfont">&#xe6ee;</i>
+                    <cite>财务管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="unicode.html">
+                        <a _href="echarts1.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>图标对应字体</cite>
+                            <cite>提现管理</cite>
                         </a>
-                    </li>
+                    </li >
+                    <li>
+                        <a _href="echarts1.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>财务对账</cite>
+                        </a>
+                    </li >
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe6ae;</i>
+                    <cite>系统管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
                     <li>
                         <a _href="?c=config&a=index">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>系统管理</cite>
+                            <cite>系统设置</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="unicode.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>模块管理</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="unicode.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>功能管理</cite>
                         </a>
                     </li>
                 </ul>
