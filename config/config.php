@@ -4,7 +4,7 @@
  */
 
 return array(
-	'DB_HOST'=>'127.0.0.1',
+	'DB_HOST'=>'192.168.1.220',
 	'DB_NAME'=>'lk',
 	'DB_USER'=>'root',
 	'DB_PWD'=>'root',

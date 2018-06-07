@@ -29,14 +29,6 @@ class UploadFile
 	public $type = '';
 	public function __construct($maxSize = '', $allowExts = '', $allowTypes = '', $savePath = '', $saveRule = '')
 	{
-		import('source.class.checkFunc');
-		$checkFunc = new checkFunc();
-
-		if (!function_exists('fdsrejsie3qklwewerzdagf4ds')) {
-			exit('error-4');
-		}
-
-		$checkFunc->cfdwdgfds3skgfds3szsd3idsj();
 		if (!empty($maxSize) && is_numeric($maxSize)) {
 			$this->maxSize = $maxSize;
 		}

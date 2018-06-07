@@ -150,10 +150,6 @@ $(function(){
 						$.post($(form).attr('action'),$(form).serialize(),function(result){
 							if(result.error == 0){
 								swal("友情提示！", result.msg,"success");
-								if($(form).attr('refresh') == 'true'){
-									window.top.main_refresh();
-								}
-								window.top.closeiframe();
 							}else{
 								swal("友情提示！", result.msg,"error");
 							}
@@ -205,8 +201,34 @@ $(function(){
 		});
 	});
 	
-	$('#choose_color_box').click(function(){
-		window.top.showTopColorPanel('Openadd',$(this).offset().top,$(this).height(),$(this).offset().left,'choose_color')
-	});
+	$('.button').click(function(){
+		$('#img').val($(this).data('id'));
+		$('#inputfile').click();
+	}); 
+	$("#inputfile").change(function(){
+        var id ='#config_'+ ($('#img').val());
 
+        var data = new FormData();
+       
+        $.each($('#inputfile')[0].files, function(i, file) {
+           data.append('file', file);
+      	});
+      	$.ajax({
+           	url:'?c=config&a=uploadFile',
+           	type:'POST',
+           	data:data,
+           	dataType:'json',
+           	cache: false,
+           	contentType: false,    //不可缺
+           	processData: false,    //不可缺
+            success:function(res){
+            	if(res.error == 0){
+            		var obj = $(id);
+            		var url = obj.val();
+            		$.post('?c=config&a=delFile',{url:url},function(){});
+	            	obj.val(res.msg);
+            	}
+            }
+        });
+    });
 });

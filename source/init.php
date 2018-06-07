@@ -1,5 +1,5 @@
 <?php
-if (!(defined('PIGCMS_PATH'))) {
+if (!(defined('LEKA_PATH'))) {
 	exit('deny access!');
 }
 
@@ -32,8 +32,8 @@ defined('GROUP_NAME') || define('GROUP_NAME', 'index');
 defined('MODULE_NAME') || define('MODULE_NAME', (isset($_GET['c']) ? strtolower($_GET['c']) : 'index'));
 defined('ACTION_NAME') || define('ACTION_NAME', (isset($_GET['a']) ? strtolower($_GET['a']) : 'index'));
 defined('APP_PATH') || define('APP_PATH', '');
-defined('DATA_PATH') || define('DATA_PATH', PIGCMS_PATH . 'cache/data/');
-defined('CACHE_PATH') || define('CACHE_PATH', PIGCMS_PATH . 'cache/cache/');
+defined('DATA_PATH') || define('DATA_PATH', LEKA_PATH . 'cache/data/');
+defined('CACHE_PATH') || define('CACHE_PATH', LEKA_PATH . 'cache/cache/');
 defined('USE_FRAMEWORK') || define('USE_FRAMEWORK', false);
 defined('IS_SUB_DIR') || define('IS_SUB_DIR', false);
 define('NOW_TIME', $_SERVER['REQUEST_TIME']);
@@ -54,15 +54,15 @@ define('WY_TPL_URL', CND_PATH.'/template/wap/default/');//定义手机端样式�
 define('WY_CND_PATH', CND_PATH.'/static/');         //全局静态文件存放js/img/css.....
 
 define('FRICT_STORE_B', 100);
-require_file(PIGCMS_PATH . 'source/class/360_safe3.php');
-require_file(PIGCMS_PATH . 'source/functions/common.php');
+require_file(LEKA_PATH . 'source/class/360_safe3.php');
+require_file(LEKA_PATH . 'source/functions/common.php');
 
 foreach ($_GET as &$get_value ) {
 	$get_value = htmlspecialchars(str_replace(array('<', '>', '\'', '"', '(', ')'), '', $get_value));
 }
 
 doStripslashes();
-$_G['system'] = require_file(PIGCMS_PATH . 'config/config.php');
+$_G['system'] = require_file(LEKA_PATH . 'config/config.php');
 $config = F('config');
 if (empty($config)) {
 	$configs = D('Config')->field('`name`,`value`')->select();
@@ -87,10 +87,10 @@ if (APP_PATH) {
 }
 
 
-defined('TPL_PATH') || define('TPL_PATH', PIGCMS_PATH . 'template/');
+defined('TPL_PATH') || define('TPL_PATH', LEKA_PATH . 'template/');
 defined('TPL_URL') || define('TPL_URL', (!(IS_SUB_DIR) ? $static_domain . '/template/' . GROUP_NAME . '/' . $_G['config']['theme_' . GROUP_NAME . '_group'] . '/' : $static_domain . '/template/' . GROUP_NAME . '/' . $config['theme_' . GROUP_NAME . '_group'] . '/'));
 
-defined('STATIC_PATH') || define('STATIC_PATH', PIGCMS_PATH . 'static/');
+defined('STATIC_PATH') || define('STATIC_PATH', LEKA_PATH . 'static/');
 defined('STATIC_URL') || define('STATIC_URL', $static_domain . '/static/');
 
 if (USE_FRAMEWORK == true) {
@@ -137,7 +137,7 @@ function pigcms_tips($msg, $url = '', $isAutoGo = false, $showCopy = true)
 		}
 
 
-		include PIGCMS_PATH . 'source/sys_tpl/tip.php';
+		include LEKA_PATH . 'source/sys_tpl/tip.php';
 	}
 
 	exit();
@@ -237,8 +237,8 @@ function require_file($load_file)
 	}
 
 
-	$file = str_replace(PIGCMS_PATH, '', $load_file);
-	pigcms_tips(PIGCMS_PATH . $file . ' 文件不存在。', 'none');
+	$file = str_replace(LEKA_PATH, '', $load_file);
+	pigcms_tips(LEKA_PATH . $file . ' 文件不存在。', 'none');
 }
 
 

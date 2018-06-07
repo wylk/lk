@@ -244,35 +244,35 @@ function strip_whitespace($content){
  * 自动加载
  */
 function __autoload($class){
-	if(file_exists(PIGCMS_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.GROUP_NAME.'/'.$class.'.php')){
-		require_once(PIGCMS_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.GROUP_NAME.'/'.$class.'.php');
+	if(file_exists(LEKA_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.GROUP_NAME.'/'.$class.'.php')){
+		require_once(LEKA_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.GROUP_NAME.'/'.$class.'.php');
 		return;
-	}else if(file_exists(PIGCMS_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.$class.'.php')) {
-		require_once(PIGCMS_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.$class.'.php');
+	}else if(file_exists(LEKA_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.$class.'.php')) {
+		require_once(LEKA_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.$class.'.php');
 		return;
-	}else if(file_exists(PIGCMS_PATH.'library/model/'.$class.'.php')){
-		require_once(PIGCMS_PATH.'library/model/'.$class.'.php');
+	}else if(file_exists(LEKA_PATH.'library/model/'.$class.'.php')){
+		require_once(LEKA_PATH.'library/model/'.$class.'.php');
 		return;
-	}else if(file_exists(PIGCMS_PATH.'library/class/'.$class.'.class.php')){
-		require_once(PIGCMS_PATH.'library/class/'.$class.'.class.php');
+	}else if(file_exists(LEKA_PATH.'library/class/'.$class.'.class.php')){
+		require_once(LEKA_PATH.'library/class/'.$class.'.class.php');
 		return;
-	}else if(file_exists(PIGCMS_PATH.'source/class/'.$class.'.class.php')){
-		require_once(PIGCMS_PATH.'source/class/'.$class.'.class.php');
+	}else if(file_exists(LEKA_PATH.'source/class/'.$class.'.class.php')){
+		require_once(LEKA_PATH.'source/class/'.$class.'.class.php');
 		return;
 	}
 
 	$class = strtolower($class);
-	if(file_exists(PIGCMS_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.GROUP_NAME.'/'.$class.'.php')){
-		require_once(PIGCMS_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.GROUP_NAME.'/'.$class.'.php');
-	}else if(file_exists(PIGCMS_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.$class.'.php')) {
-		require_once(PIGCMS_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.$class.'.php');
-	}else if(file_exists(PIGCMS_PATH.'library/model/'.$class.'.php')){
-		require_once(PIGCMS_PATH.'library/model/'.$class.'.php');
-	}else if(file_exists(PIGCMS_PATH.'library/class/'.$class.'.class.php')){
-		require_once(PIGCMS_PATH.'library/class/'.$class.'.class.php');
-	}else if(file_exists(PIGCMS_PATH.'source/class/'.$class.'.class.php')){
+	if(file_exists(LEKA_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.GROUP_NAME.'/'.$class.'.php')){
+		require_once(LEKA_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.GROUP_NAME.'/'.$class.'.php');
+	}else if(file_exists(LEKA_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.$class.'.php')) {
+		require_once(LEKA_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.$class.'.php');
+	}else if(file_exists(LEKA_PATH.'library/model/'.$class.'.php')){
+		require_once(LEKA_PATH.'library/model/'.$class.'.php');
+	}else if(file_exists(LEKA_PATH.'library/class/'.$class.'.class.php')){
+		require_once(LEKA_PATH.'library/class/'.$class.'.class.php');
+	}else if(file_exists(LEKA_PATH.'source/class/'.$class.'.class.php')){
 
-		require_once(PIGCMS_PATH.'source/class/'.$class.'.class.php');
+		require_once(LEKA_PATH.'source/class/'.$class.'.class.php');
 	}else{
 		pigcms_tips($class . ' 类不存在。','none');
 	}
@@ -289,20 +289,20 @@ function import($file,$path=''){
 	switch($file_arr_count){
 		case 1:
 			if(substr($file_arr[0],0,1) == '@'){
-				$load_file = PIGCMS_PATH.'library/class/'.substr($file_arr[0],1).'.class.php';
+				$load_file = LEKA_PATH.'library/class/'.substr($file_arr[0],1).'.class.php';
 			}else{
-				$load_file = PIGCMS_PATH.'source/class/'.$file_arr[0].'.class.php';
+				$load_file = LEKA_PATH.'source/class/'.$file_arr[0].'.class.php';
 			}
 			break;
 		case 2:
 			if(substr($file_arr[0],0,1) == '@'){
-				$load_file = PIGCMS_PATH.'library/'.substr($file_arr[0],1).'/'.$file_arr[1].'.class.php';
+				$load_file = LEKA_PATH.'library/'.substr($file_arr[0],1).'/'.$file_arr[1].'.class.php';
 			}else{
-				$load_file = PIGCMS_PATH.'source/'.$file_arr[0].'/'.$file_arr[1].'.class.php';
+				$load_file = LEKA_PATH.'source/'.$file_arr[0].'/'.$file_arr[1].'.class.php';
 			}
 			break;
 		case 3:
-			$load_file = PIGCMS_PATH.$file_arr[0].'/'.$file_arr[1].'/'.$file_arr[2].'.class.php';
+			$load_file = LEKA_PATH.$file_arr[0].'/'.$file_arr[1].'/'.$file_arr[2].'.class.php';
 			break;
 		default:
 			$file_data = '';
@@ -313,7 +313,7 @@ function import($file,$path=''){
 					$file_data .= '/'.$val;
 				}
 			}
-			$load_file = PIGCMS_PATH.$file_data.'.class.php';
+			$load_file = LEKA_PATH.$file_data.'.class.php';
 	}
 	require_file($load_file);
 }
@@ -348,7 +348,7 @@ function D($table='',$other=array()){
  */
 function R($group,$mode,$action){
 	$mode = strtolower($mode);
-	$mode_file = PIGCMS_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.$group.'/'.$mode.'_controller.php';
+	$mode_file = LEKA_PATH.(APP_PATH?APP_PATH:'library/').'controller/'.$group.'/'.$mode.'_controller.php';
 	if(file_exists($mode_file)){
 		$mode_name = $mode.'_controller';
 		require($mode_file);
@@ -412,7 +412,7 @@ function M($model){
 		return $obj_arr[$lower_model];
 	}
 
-	$model_file = PIGCMS_PATH.'library/model/'.$lower_model.'_model.php';
+	$model_file = LEKA_PATH.'library/model/'.$lower_model.'_model.php';
 	if(file_exists($model_file)){
 		$model_name = $lower_model.'_model';
 		if(!class_exists($model_name,false)){
@@ -709,7 +709,7 @@ function json_return($err_code,$err_msg='',$err_dom=''){
  * @param string $attr 参数
  */
 function check_plugin($plugin){
-	if (is_string($plugin) && file_exists(PIGCMS_PATH.'source/plugins/'.$plugin.'/'.$plugin.'.php')){
+	if (is_string($plugin) && file_exists(LEKA_PATH.'source/plugins/'.$plugin.'/'.$plugin.'.php')){
 		return true;
 	}else{
 		return false;
@@ -828,7 +828,7 @@ function getAttachmentUrl($fileUrl, $is_remote = true){
  * 得到附件相对应网站目录的文件地址
  */
 function getAttachmentFilePath($fileUrl){
-	return PIGCMS_PATH.'upload/'.$fileUrl;
+	return LEKA_PATH.'upload/'.$fileUrl;
 }
 
 /**
@@ -1524,7 +1524,7 @@ function logs($title,$content){
 }
 
 function logss($data,$title = 'log',$filename = 'log'){
-	$fp = fopen(PIGCMS_PATH.'/upload/log/'.$filename.'.txt','a');
+	$fp = fopen(LEKA_PATH.'/upload/log/'.$filename.'.txt','a');
 	if(is_array($data)){
 		$data = json_encode($data);
 	}

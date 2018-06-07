@@ -7,6 +7,13 @@
 例(D('Store')->where(array('store_id' =>1))->find());
 例(D('Store')->where(array('store_id' =>1))->select());
 链表 例D('')->table(array('Product'=>'p','Order_product'=>'op'))->field('*,p.supplier_id AS wholesale_supplier_id')->where("`op`.`order_id`='$order_id' AND `op`.`product_id`=`p`.`product_id`")->order('`op`.`pigcms_id` ASC')->select();
+
+
+$comment_list = $this->db->table("Comment as c")->join('Comment_attachment as ca ON ca.cid=c.id','LEFT')
+							-> where($where)->group($group)
+							-> limit($offset . ',' . $limit)
+							-> field("c.*,ca.file,ca.width,ca.height,c.relation_id")
+							-> select();
 model 文件操作
 M('User')->getCoupon($where);
 例$data = $this->db->where(array('key' => 1))->find();
@@ -22,4 +29,13 @@ import('source.class.test'); / import('test');
 2, $this->json 传输 dexit(['error'=>0,'msg'=>'ttt']);
 注意：在wap里不用$this-> 
 
----------- 
+---------- 全局变量------------------
+$config = option('config');
+
+----------弹框------------------------
+<?php echo STATIC_URL;?>/sweetalert/js/sweet-alert.min.js
+<?php echo STATIC_URL;?>/sweetalert/css/sweet-alert.css
+
+----------------------------------------------------
+
+

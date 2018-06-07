@@ -1,4 +1,4 @@
-<?php if(!defined('PIGCMS_PATH')) exit('deny access!');?>
+<?php if(!defined('LEKA_PATH')) exit('deny access!');?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

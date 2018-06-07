@@ -1,10 +1,10 @@
 <?php
 
 /* 手机端公共文件 */
-define('PIGCMS_PATH', dirname(__FILE__).'/../');
+define('LEKA_PATH', dirname(__FILE__).'/../');
 define('GROUP_NAME','wap');
 define('IS_SUB_DIR',true);
-require_once PIGCMS_PATH.'source/init.php';
+require_once LEKA_PATH.'source/init.php';
 
 if (!empty($tmp_store_id) && !empty($_GET['sessid']) && !empty($_GET['token'])) { //对接粉丝登录
     $user = M('User');

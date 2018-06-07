@@ -2,7 +2,7 @@
 header("Content-type: text/html; charset=utf-8");
 /* 店铺管理 */
 
-define('PIGCMS_PATH', dirname(__FILE__).'/');
+define('LEKA_PATH', dirname(__FILE__).'/');
 define('GROUP_NAME', 'user');
 define('USE_FRAMEWORK', true);
 
@@ -12,6 +12,6 @@ if(strpos($url,'amp;amp;')) {
 	header('Location: '.$url1);
 	exit;
 }
-require_once PIGCMS_PATH.'source/init.php';
+require_once LEKA_PATH.'source/init.php';
 
 ?>

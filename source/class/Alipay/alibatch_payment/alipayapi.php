@@ -20,8 +20,8 @@
  * 3、支付宝论坛（http://club.alipay.com/read-htm-tid-8681712.html）
  * 如果不想使用扩展功能请把扩展功能参数赋空值。
  */
-require_once(PIGCMS_PATH.'/source/class/pay/alibatch_payment/alipay.config.php');
-require_once(PIGCMS_PATH.'/source/class/pay/alibatch_payment/lib/alipay_submit.class.php');
+require_once(LEKA_PATH.'/source/class/pay/alibatch_payment/alipay.config.php');
+require_once(LEKA_PATH.'/source/class/pay/alibatch_payment/lib/alipay_submit.class.php');
 // require_once("alipay.config.php");
 // require_once("lib/alipay_submit.class.php");
 

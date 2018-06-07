@@ -33,7 +33,7 @@ class Express
 		ob_start();
 		$ch = curl_init();
 		$headers[] = 'Accept-Charset:utf-8';
-		$cookieFile = PIGCMS_PATH . 'cache/cookie.txt';
+		$cookieFile = LEKA_PATH . 'cache/cookie.txt';
 		curl_setopt($ch, CURLOPT_URL, 'http://www.baidu.com/');
 		curl_setopt($ch, CURLOPT_COOKIESESSION, true);
 		curl_setopt($ch, CURLOPT_COOKIEJAR, $cookieFile);

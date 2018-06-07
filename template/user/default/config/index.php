@@ -17,7 +17,7 @@
         </script>
         <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
         <script src="<?php echo STATIC_URL;?>/sweetalert/js/sweet-alert.min.js"></script>
-        <script type="text/javascript" src="<?php echo TPL_URL;?>/js/common.js?r=<?php echo time();?>"></script>
+        <script type="text/javascript" src="<?php echo TPL_URL;?>/js/config_index.js?r=<?php echo time();?>"></script>
         <script type="text/javascript" src="https://mall.epaikj.com//static/js/jquery.form.js"></script>
         <script type="text/javascript" src="https://mall.epaikj.com//static/js/jquery.validate.js"></script>
         <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
@@ -44,5 +44,7 @@
             <blockquote class="layui-elem-quote layui-quote-nm"> <button  class="layui-btn layui-btn-lg" name="dosubmit">保存</button></blockquote>
         </form>
     </div>
+    <input type="hidden" value="" id="img">
+    <input type="file" name="image" style="opacity:0;filter:alpha(opacity=0);" id="inputfile"/>
     </body>
 </html>
