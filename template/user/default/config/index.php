@@ -7,8 +7,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" href="<?php echo TPL_URL;?>x-admin/css/font.css">
-        <link rel="stylesheet" href="<?php echo TPL_URL;?>x-admin/css/xadmin.css">
+        <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
+        <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css">
         <link rel="stylesheet" type="text/css" href="https://epai.51ao.com/source/tp/Project/tpl/Static/css/style.css">
         <link rel="stylesheet" type="text/css" href="<?php echo STATIC_URL;?>/sweetalert/css/sweet-alert.css">
         <script type="text/javascript">

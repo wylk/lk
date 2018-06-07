@@ -36,6 +36,5 @@ $config = option('config');
 <?php echo STATIC_URL;?>/sweetalert/js/sweet-alert.min.js
 <?php echo STATIC_URL;?>/sweetalert/css/sweet-alert.css
 
-----------------------------------------------------
-
-
+-------------x-admin的引入---------------------------------------
+<?php echo STATIC_URL;?>x-admin
