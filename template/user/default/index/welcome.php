@@ -7,8 +7,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" href="<?php echo TPL_URL;?>x-admin/css/font.css">
-        <link rel="stylesheet" href="<?php echo TPL_URL;?>x-admin/css/xadmin.css">
+        <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
+        <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css">
     </head>
     <body>
     <div class="x-body layui-anim layui-anim-up">
@@ -158,7 +158,7 @@
         (function() {
           var hm = document.createElement("script");
           hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-          var s = document.getElementsByTagName("script")[0]; 
+          var s = document.getElementsByTagName("script")[0];
           s.parentNode.insertBefore(hm, s);
         })();
         </script>
