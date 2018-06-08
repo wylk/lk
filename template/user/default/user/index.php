@@ -78,7 +78,6 @@
                         echo '女';
                     }
               ?>
-
             </td>
             <td><?= date('Y-m-d H:i:s',$v["timestamp"]) ?></td>
             <td class="td-status">

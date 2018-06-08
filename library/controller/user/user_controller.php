@@ -36,12 +36,6 @@ class user_controller extends base_controller
         $this->display();
     }
 
-    //修改密码
-    public function password()
-    {
-        $this->display();
-    }
-
     //启用 禁用
     public function change()
     {
@@ -61,6 +55,7 @@ class user_controller extends base_controller
     public function delete()
     {
         $data = $this->clear_html($_POST);
+        // (D('User')->data($data)->where(array('id' =>$data['id']))->save());
         if((D('User')->where(array('id' =>$data['id']))->delete())) {
             $arr=['status'=>0,'msg'=>'修改成功'];
         } else{
