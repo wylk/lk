@@ -38,3 +38,6 @@ $config = option('config');
 
 -------------x-admin的引入---------------------------------------
 <?php echo STATIC_URL;?>x-admin
+
+-----------刷新当前页面-----------
+location.replace(location.href);

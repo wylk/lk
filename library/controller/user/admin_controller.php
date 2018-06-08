@@ -19,6 +19,8 @@ class admin_controller extends base_controller
 				$this->dexit(['error'=>1,'msg'=>'添加失败']);
 			}
 		}
+		$auth = M('Auth')->findAll();
+		$this->assign('auth',$auth);
 		$this->display();
 	}
 
