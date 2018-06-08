@@ -20,8 +20,24 @@ class admin_controller extends base_controller
 			}
 		}
 		$auth = M('Auth')->findAll();
-		$this->assign('auth',$auth);
+		$pid = D('Auth')->field('id,name')->where(['pid'=>0,'status'=>1])->select();
+		dump($pid);
+		$this->assign('auth',$this->getTree($auth,0,0));
 		$this->display();
 	}
+
+	public function getTree($arr,$pid,$step)
+	{
+        global $tree;
+        foreach($arr as $key=>$val) {
+            if($val['pid'] == $pid) {
+                $flg = str_repeat('└―',$step);
+                $val['name'] = $flg.$val['name'];
+                $tree[] = $val;
+                $this->getTree($arr , $val['id'] ,$step+1);
+            }
+        }
+        return $tree;
+    }
 
 }
