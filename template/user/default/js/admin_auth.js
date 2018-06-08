@@ -24,7 +24,10 @@ function() {
         $.post('?c=admin&a=auth', data.field, function(res) {
             console.log(res);
             if(res.error == 0){
-                swal("友情提示！", res.msg,"success");
+                swal("友情提示！", res.msg,"success",false);
+                setTimeout(function(){
+                    window.location.replace(location.href);
+                },2000)
             }else{
                 swal("友情提示！", res.msg,"error");
             }

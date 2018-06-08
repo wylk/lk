@@ -78,15 +78,16 @@
             <th>操作</th>
         </thead>
         <tbody>
+          <?php foreach ($auth as $k => $v){?>
           <tr>
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td>1</td>
-            <td>管理员管理</td>
-            <td>admin</td>
-            <td>index</td>
-            <td>是</td>
+            <td><?php echo $v['id'];?></td>
+            <td><?php echo $v['name'];?></td>
+            <td><?php echo $v['auth_c'];?></td>
+            <td><?php echo $v['auth_a'];?></td>
+            <td><?php echo $v['is_show']=='1'?'显示':'不显示';?></td>
             <td class="td-manage">
               <a title="编辑"  onclick="x_admin_show('编辑','xxx.html')" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
@@ -96,6 +97,7 @@
               </a>
             </td>
           </tr>
+          <?php }?>
         </tbody>
       </table>
       <div class="page">
