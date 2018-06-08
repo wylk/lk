@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>/sweetalert/css/sweet-alert.css">
-    
+    <script type="text/javascript">
+      var delAuthUrl = "<?php dourl('delAuth');?>";
+      var authUrl = "<?php dourl('auth');?>";
+    </script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>/sweetalert/js/sweet-alert.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
@@ -23,9 +26,9 @@
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
-        <a href="">演示</a>
+        <a href="">管理员管理</a>
         <a>
-          <cite>导航元素88</cite></a>
+          <cite>菜单管理</cite></a>
       </span>
       <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
@@ -39,8 +42,9 @@
           <div class="layui-input-inline">
             <select name="pid">
               <option value="0">父类</option>
-              <option value="1">会员管理</option>
-              <option value="2">订单管理</option>
+              <?php foreach($pids as $kk => $vv){?>
+                <option value="<?php echo $vv['id']?>"><?php echo $vv['name']?></option>
+              <?php }?>
             </select>
           </div>
           <div class="layui-input-inline">
@@ -89,10 +93,10 @@
             <td><?php echo $v['auth_a'];?></td>
             <td><?php echo $v['is_show']=='1'?'显示':'不显示';?></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('编辑','xxx.html')" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('编辑','?c=admin&a=authEdit&id=<?php echo $v['id'];?>',600,500)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<?php echo $v['id'];?>')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
