@@ -38,7 +38,7 @@ class config_controller extends base_controller{
 		}else{
 			$this->dexit(['error'=>1,'msg'=>'修改失败']);
 		}
-		
+
 	}
 
 	//ajax图片上传
@@ -51,7 +51,7 @@ class config_controller extends base_controller{
 			if (!is_dir($upload_dir)) {
 				mkdir($upload_dir, 0777, true);
 			}
-			
+
 			import('UploadFile');
 			$upload = new UploadFile();
 			$upload->maxSize = 1*1024*1024;
@@ -66,7 +66,6 @@ class config_controller extends base_controller{
 				$this->dexit(['error'=>1,'msg'=>$upload->getErrorMsg()]);
 			}
 		}
-
 	}
 
 	//

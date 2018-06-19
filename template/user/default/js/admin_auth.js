@@ -13,14 +13,15 @@ function() {
         auth_c:[/[a-zA-Z]/,'控制器必须是字母'],
         auth_a:[/[a-zA-Z]/,'方法必须是字母'],
         icon:function(value){
-            if (value.length < 8) {
-                return '图标名不能少得8个字符啊';
+            if (value.length < 5) {
+                return '图标名不能少得5个字符啊';
             }
         }
     });
 
     //监听提交
     form.on('submit(add)', function(data) {
+        console.log(data.field);
         $.post(authUrl, data.field, function(res) {
             console.log(res);
             if(res.error == 0){
@@ -49,7 +50,7 @@ function member_del(obj,id){
                 layer.msg(res.msg,{icon:4,time:1000});
             }
         },'json');
-      
+
     });
 }
 

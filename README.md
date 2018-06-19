@@ -1,8 +1,10 @@
+
+
 ---------数据库操作-----------------
 1.添加: 例(D('Aaep_wxmenu')->data($data)->add());
 2.修改: 例(D('Store')->data($data)->where(array('store_id' =>1))->save());
 3.删除: 例(D('Store')->where(array('store_id' =>1))->delete());
-3.查: 
+3.查:
 
 例(D('Store')->where(array('store_id' =>1))->find());
 例(D('Store')->where(array('store_id' =>1))->select());
@@ -25,9 +27,9 @@ import('source.class.test'); / import('test');
 
 
 -----------文件传输处理------------------------------
-1, $this->clear_html($_POST);   
+1, $this->clear_html($_POST);
 2, $this->json 传输 dexit(['error'=>0,'msg'=>'ttt']);
-注意：在wap里不用$this-> 
+注意：在wap里不用$this->
 
 ---------- 全局变量------------------
 $config = option('config');

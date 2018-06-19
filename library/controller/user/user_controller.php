@@ -40,8 +40,7 @@ class user_controller extends base_controller
     public function change()
     {
         // $_GET['status'] = ($request->input(key:'status')==1) ? 0 : 1;
-
-        $data = $this->clear_html($_GET);
+       $data = $this->clear_html($_GET);
         $data['status'] = $data['status'] ? 0 : 1;
         if(D('User')->data(['status'=>$data['status']])->where(array('id' =>$data['id']))->save()){
             $arr=['status'=>0,'msg'=>'修改成功'];

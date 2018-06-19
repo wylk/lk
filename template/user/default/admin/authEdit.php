@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  
+
   <head>
     <meta charset="UTF-8">
     <title>欢迎页面-X-admin2.0</title>
@@ -14,10 +14,11 @@
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/js/xadmin.js"></script>
   </head>
-  
+
   <body>
     <div class="x-body">
         <form class="layui-form">
+          <input type="hidden" name="id" value="<?php echo $auth['id']; ?>">
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
                   <span class="x-red">*</span>权限名称
@@ -74,7 +75,7 @@
                   <span class="x-red">*</span>图标
               </label>
               <div class="layui-input-inline">
-                  <input type="text" value="<?php echo $auth['icon'];?>"  name="iocn" required="" lay-verify="icon"
+                  <input type="text" value="<?php echo $auth['icon'];?>"  name="icon" required="" lay-verify="icon"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -101,7 +102,7 @@
         $ = layui.jquery;
         var form = layui.form
         ,layer = layui.layer;
-      
+
         //自定义验证规则
         form.verify({
           nikename: function(value){
@@ -119,18 +120,29 @@
 
         //监听提交
         form.on('submit(add)', function(data){
-          console.log(data);
-          //发异步，把数据提交给php
-          layer.alert("增加成功", {icon: 6},function () {
-              // 获得frame索引
-              var index = parent.layer.getFrameIndex(window.name);
-              //关闭当前frame
-              parent.layer.close(index);
-          });
+          $.post('?c=admin&a=authEdit',data.field,function(res){
+                console.log(res);
+                if(res.error==0){
+                    layer.alert(res.msg, {icon: 1,},function () {
+                      // 获得frame索引
+                      var index = parent.layer.getFrameIndex(window.name);
+                      //关闭当前frame
+                      parent.layer.close(index);
+                    });
+                }else{
+                    layer.alert(res.msg, {icon: 2,time:1000},function () {
+                      // 获得frame索引
+                      var index = parent.layer.getFrameIndex(window.name);
+                      //关闭当前frame
+                      parent.layer.close(index);
+                    });
+                }
+            },'json');
+
           return false;
         });
-        
-        
+
+
       });
   </script>
   </body>

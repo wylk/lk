@@ -52,213 +52,31 @@
     <div class="left-nav">
       <div id="side-nav">
         <ul id="nav">
+            <?php foreach($auth as $k=>$v){ ?>
+            <?php if($v['is_show']==1){ ?>
+            <?php if($v['pid'] == 0){ ?>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe6b8;</i>
-                    <cite>会员管理</cite>
+                    <i class="iconfont"><?= htmlspecialchars_decode($v['icon']) ?></i>
+                    <cite><?= $v['name'] ?></cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
+                    <?php foreach($auth as $kk=>$vv){ ?>
+                <?php if($vv['pid'] == $v['id'] && $vv['is_show']==1){ ?>
                     <li>
-                        <a _href="?c=user&a=index">
+                        <a _href="?c=<?= $vv['auth_c'] ?>&a=<?= $vv['auth_a'] ?>">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>会员列表</cite>
-
+                            <cite><?= $vv['name'] ?></cite>
                         </a>
                     </li >
-                    <li>
-                        <a _href="member-del.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>会员删除</cite>
-
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:;">
-                            <i class="iconfont">&#xe70b;</i>
-                            <cite>会员管理</cite>
-                            <i class="iconfont nav_right">&#xe697;</i>
-                        </a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a _href="xxx.html">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>会员列表</cite>
-
-                                </a>
-                            </li >
-                            <li>
-                                <a _href="xx.html">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>会员删除</cite>
-
-                                </a>
-                            </li>
-                            <li>
-                                <a _href="xx.html">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>等级管理</cite>
-
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
+                    <?php } ?>
+                <?php } ?>
                 </ul>
+                <?php } ?>
             </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
-                    <cite>订单管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="?c=index&a=orderList">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>订单列表</cite>
-                        </a>
-                    </li >
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
-                    <cite>商家管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="cate.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>店铺管理</cite>
-                        </a>
-                    </li >
-                    <li>
-                        <a _href="cate.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>发券人管理</cite>
-                        </a>
-                    </li >
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
-                    <cite>卡券管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="city.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>卡管理</cite>
-                        </a>
-                    </li >
-                    <li>
-                        <a _href="city.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>券管理</cite>
-                        </a>
-                    </li >
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe726;</i>
-                    <cite>管理员管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="admin-list.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>管理员列表</cite>
-                        </a>
-                    </li >
-                    <li>
-                        <a _href="admin-role.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>角色管理</cite>
-                        </a>
-                    </li >
-                    <li>
-                        <a _href="admin-cate.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>权限分类</cite>
-                        </a>
-                    </li >
-                    <li>
-                        <a _href="?c=admin&a=auth">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>菜单管理</cite>
-                        </a>
-                    </li >
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe6ce;</i>
-                    <cite>系统统计</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="echarts1.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>拆线图</cite>
-                        </a>
-                    </li >
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe6ee;</i>
-                    <cite>财务管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="echarts1.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>提现管理</cite>
-                        </a>
-                    </li >
-                    <li>
-                        <a _href="echarts1.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>财务对账</cite>
-                        </a>
-                    </li >
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe6ae;</i>
-                    <cite>系统管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="?c=config&a=index">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>系统设置</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="unicode.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>模块管理</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="unicode.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>功能管理</cite>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            <?php } ?>
+            <?php } ?>
         </ul>
       </div>
     </div>

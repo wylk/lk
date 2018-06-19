@@ -22,11 +22,13 @@ $(function  () {
        //监听提交
        form.on('submit(login)', function(data){
           $.post('?c=public&a=login',data.field,function(res){
-            if(data.status==0){
-              alert(res.msg);
-              window.location.href="?c=index&a=index";
+            if(res.status == 0){
+              layer.msg(res.msg,{icon:1,time:2000});
+              setTimeout(function(){
+                window.location.href="user.php?c=index&a=index";
+              },2000)
             }else{
-              alert(res.msg);
+              layer.msg(res.msg,{icon:2,time:1000});
             }
           },'json');
 

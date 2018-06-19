@@ -12,7 +12,7 @@ class base_controller extends controller{
 	public function __construct()
     {
 		parent::__construct();
-       
+
 
 
         // var_dump($_SESSION);
