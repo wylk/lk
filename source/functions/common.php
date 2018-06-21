@@ -318,6 +318,29 @@ function import($file,$path=''){
 	require_file($load_file);
 }
 
+function import_plugin($file)
+{
+	$file_arr = explode('.',$file);
+	$file_arr_count = count($file_arr);
+	include LEKA_PATH.'library/plugin/Card.class.php';
+	
+	switch ($file_arr_count) {
+		case 1:
+			$load_file = LEKA_PATH.'library/plugin/'.substr($file_arr[0],0).'Card.class.php';
+			break;
+		case 2:
+			# code...
+			break;
+		case 3:
+			# code...
+			break;
+		default:
+			# code...
+			break;
+	}
+	require_file($load_file);
+}
+
 /**
  * 调用数据库类
  */

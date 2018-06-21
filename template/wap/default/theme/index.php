@@ -2,18 +2,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<link rel="stylesheet" type="text/css" href="https://epai.51ao.com/static/js/date/skin/whyGreen/datepicker.css">
-	<link rel="stylesheet" type="text/css" href="https://mall.epaikj.com//source/tp/Project/tpl/Static/css/jquery.ui.css">
-	<link rel="stylesheet" type="text/css" href="https://epai.51ao.com/source/tp/Project/tpl/Static/css/style.css">
-	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.7/jquery.min.js"></script>
-	<script type="text/javascript" src="https://mall.epaikj.com//source/tp/Project/tpl/Static/js/common.js"></script>
-	<script type="text/javascript" src="https://mall.epaikj.com//static/js/jquery.form.js"></script>
-	<script type="text/javascript" src="https://mall.epaikj.com//static/js/jquery.validate.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
-	<?php echo $build_html['config_tab_html']?>
-	<?php echo $build_html['config_html']?>
+	<form class="layui-form" action="">
+		<input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+		<a href="javascript:;" class="layui-btn">一个可跳转的按钮</a>
+  	</form>
+  	<?php include display('public_menu');?>
 </body>
 </html>
+<script type="text/javascript">
+	layui.use(['form', 'layer'],function(){
+		form = layui.form;
+        var element = layui.element;
+        layer = layui.layer;
+	})
+</script>
