@@ -160,4 +160,13 @@ class config_controller extends base_controller{
 			}
 		}
 	}
+
+	public function test()
+	{
+		if(IS_POST){
+			$postData = $this->clear_html($_POST);
+			dump($postData);
+		}
+
+	}
 }
