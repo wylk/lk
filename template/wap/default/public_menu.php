@@ -30,7 +30,6 @@ box-flex: 1;
 position: relative;
 width: 200px;
 height: 45px;
-line-height: 0px;
 padding-top: 4px;
 color: #999;
 font-size: 12px;
@@ -41,7 +40,7 @@ text-align: center;
 	color: #f6bc00;
 }
 .wx_nav a:before {
-background-image: url(../images/icon_nav.png);
+background-image: url(../template/wap/default/images/icon_nav.png);
 background-repeat: no-repeat;
 background-size: 207px 46px;
 -webkit-background-size: 207px 46px;
