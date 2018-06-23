@@ -65,7 +65,7 @@
                   <span class="x-red">*</span>角色
               </label>
               <div class="layui-input-inline">
-                  <select name="role_name" lay-verify="required" lay-search="">
+                  <select name="role_name" lay-verify="required" lay-search="" >
                     <?php foreach($res as $k=>$v){ ?>
                     <option value="<?= $v['id'] ?>" <?php if($rid==$v['id']){  echo 'selected';}else{'';}  ?> ><?= $v['role_name'] ?></option>
                     <?php } ?>

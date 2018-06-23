@@ -56,42 +56,43 @@
             <th>手机</th>
             <th>邮箱</th>
             <th>角色</th>
-            <th>加入时间</th>
             <th>状态</th>
             <th>操作</th>
         </thead>
         <tbody>
 
-          <?php foreach($admin as $k=>$v){ ?>
+          <?php foreach($role as $k=>$v){
+                    foreach($v as $kk=>$vv){
+          ?>
 
           <tr>
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td><?= $v['id'] ?></td>
-            <td><?= $v['name'] ?></td>
-            <td><?= $v['phone'] ?></td>
-            <td><?= $v['email'] ?>
-            <td><?= $v['authority'] ?></td>
-            <td><?= date('Y-m-d H:i:s',$v['timestamp']) ?></td>
+            <td><?= $vv['id'] ?></td>
+            <td><?= $vv['name'] ?></td>
+            <td><?= $vv['phone'] ?></td>
+            <td><?= $vv['email'] ?>
+            <td><?= $vv['role_name'] ?></td>
             <td class="td-status">
-              <?php if( $v["status"] ==0){ ?>
-                  <button class="btn-success member_stop layui-btn layui-btn-normal"   data-id="<?= $v['id'] ?>" data-status="<?= $v['status'] ?>">已启用</button>
+              <?php if( $vv["status"] ==0){ ?>
+                  <button class="btn-success member_stop layui-btn layui-btn-normal"   data-id="<?= $vv['id'] ?>" data-status="<?= $vv['status'] ?>">已启用</button>
                 <?php }else{ ?>
-                  <button class="btn-danger member_stop layui-btn layui-btn-normal"  data-id="<?= $v['id'] ?>" data-status=status="<?= $v['status'] ?>">已禁用</button>
+                  <button class="btn-danger member_stop layui-btn layui-btn-normal"  data-id="<?= $vv['id'] ?>" data-status=status="<?= $vv['status'] ?>">已禁用</button>
                 <?php } ?>
             </td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('编辑','?c=admin&a=edit&id=<?= $v['id'] ?>',700)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('编辑','?c=admin&a=edit&id=<?= $vv['id'] ?>',700)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'<?= $v['id'] ?>')" href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<?= $vv['id'] ?>')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
           </tr>
 
-          <?php } ?>
+          <?php }} ?>
+
         </tbody>
       </table>
       <div class="page">

@@ -78,17 +78,13 @@ class admin_controller extends base_controller
     public function index()
     {
         $admin = (D('Admin')->select());
-        $this->assign('admin',$admin);
-
-        // $name = [];
-        // foreach($admin as $k=>$v){
-        //     $id = $v['id'];
-        //     $name[] = D('Admin')->table(array('RoleAdmin'=>'p','Role'=>'t'))->field('t.role_name')->where("`p`.`admin_id`='$id' AND `p`.`role_id`=`t`.`id`")->select();
-        // }
-        // dump($name);
-
-        $RoleName = array_unique($RoleName);
-        // dump($RoleName);
+        foreach($admin as $k=>$v){
+            $id = $v['id'];
+            $name = D('Admin')->table(array('RoleAdmin'=>'p','Role'=>'t','Admin'=>'y'))->field('y.id,y.name,y.phone,y.email,y.status,t.role_name')->where("`y`.`id`='$id' AND `y`.`id`=`p`.`admin_id` AND `p`.`role_id`=`t`.`id`")->order('`y`.`id` ASC')->select();
+            $name = array_unique($name);
+            $role[] = $name;
+        }
+        $this->assign('role',$role);
         $this->display();
     }
 
@@ -111,15 +107,15 @@ class admin_controller extends base_controller
         if(IS_POST){
             $data = $this->clear_html($_POST);
             $id = $data['id'];
-            $roleName = $data['role_name'];
+            $roleId = $data['role_name'];
             unset($data['id']);
             unset($data['role_name']);
             $admins = D('Admin')->data($data)->where(array('id' =>$id))->save();
-            $roleAdmin = D('RoleAdmin')->data(['role_id'=>$roleName])->where(array('admin_id' =>$id))->save();
-            if($admins && $roleAdmin){
+            $roleAdmin = D('RoleAdmin')->data(['role_id'=>$roleId])->where(array('admin_id' =>$id))->save();
+            if($roleAdmin){
                 $this->dexit(['error'=>0,'msg'=>'修改成功']);
             }else{
-                D('RoleAdmin')->data(['role_id'=>$roleName,'admin_id' =>$id])->add();
+                D('RoleAdmin')->data(['role_id'=>$roleId,'admin_id' =>$id])->add();
                 $this->dexit(['error'=>1,'msg'=>'添加权限成功']);
             }
         }
@@ -139,7 +135,9 @@ class admin_controller extends base_controller
     public function delete()
     {
         $data = $this->clear_html($_POST);
-        if(D('Admin')->where(array('id' =>$data['id']))->delete()){
+        $RoleAdmin = D('RoleAdmin')->where(array('admin_id' =>$data['id']))->delete();
+        $Admin = D('Admin')->where(array('id' =>$data['id']))->delete();
+        if($RoleAdmin && $Admin){
             $this->dexit(['error'=>0,'msg'=>'删除成功']);
         } else {
             $this->dexit(['error'=>1,'msg'=>'删除失败']);
@@ -158,7 +156,9 @@ class admin_controller extends base_controller
     public function delall()
     {
         $data = $this->clear_html($_POST);
-        if(D('Role')->where(array('id'=>$data['id']))->delete()){
+        $access = D('Access')->where(array('role_id'=>$data['id']))->delete();
+        $role = D('Role')->where(array('id'=>$data['id']))->delete();
+        if($access && $role){
             $this->dexit(['error'=>0,'msg'=>'删除成功']);
         }else{
             $this->dexit(['error'=>1,'msg'=>'删除失败']);
@@ -183,9 +183,13 @@ class admin_controller extends base_controller
     {
         if(IS_POST){
             $res = $this->clear_html($_POST);
-            $auth_ids = empty($res['role_id']) ? [] : $res['role_id'];
-            unset($res['role_id']);
+            // $auth_ids = empty($res['role_id']) ? [] : $res['role_id'];
+            // unset($res['role_id']);
+
+                dump($_POST);
+
             $res['created_at'] = time();
+             // dump($res['role_id']);die;
             $role = D('Role')->data($res)->add();
             $roleName = D('Role')->where(array('role_name' => $res['role_name']))->find();
 
@@ -197,12 +201,12 @@ class admin_controller extends base_controller
                 $insertDatas = D('Access')->data(['role_id'=>$roleName['id'],'auth_id'=>$v])->add();
             }
 
-            if($role && $insertDatas){
-                $this->dexit(['error'=>0,'msg'=>'添加成功']);
-            }else{
-                $this->dexit(['error'=>1,'msg'=>'添加失败']);
-            }
-            die;
+            // if($role && $insertDatas){
+            //     $this->dexit(['error'=>0,'msg'=>'添加成功']);
+            // }else{
+            //     $this->dexit(['error'=>1,'msg'=>'添加失败']);
+            // }
+
         }
         $lk_auth = D('lk_auth')->select();
         $this->assign('lk_auth',$lk_auth);
@@ -214,8 +218,10 @@ class admin_controller extends base_controller
     {
         $data = $this->clear_html($_GET);
         $role = D('Role')->where(array('id' =>$data['id']))->find();
+        $roleId = $role['id'];
         $this->assign('role',$role);
-
+        $arr = D('')->table(array('Access'=>'p','Auth'=>'op'))->field('op.name')->where("`p`.`role_id`='$roleId' AND `p`.`auth_id`=`op`.`id`")->order('`op`.`id` ASC')->select();
+        $this->assign('arr',$arr);
         if(IS_POST){
             $res = $this->clear_html($_POST);
             $auth_ids = empty($res['role_id']) ? [] : $res['role_id'];
@@ -229,7 +235,7 @@ class admin_controller extends base_controller
             foreach($auth_ids as $v){
                 $insertDatas = D('Access')->data(['role_id'=>$role_ids,'auth_id'=>$v])->add();
             }
-            if($delect && $insertDatas){
+            if($insertDatas){
                 $this->dexit(['error'=>0,'msg'=>'修改成功']);
             }else{
                 $this->dexit(['error'=>1,'msg'=>'修改失败']);

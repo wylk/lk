@@ -43,17 +43,17 @@
                             <tr>
                                 <?php if($v['pid'] == 0){ ?>
                                 <td>
-                                    <input type="checkbox" name="auth_id[]" lay-skin="primary" title="<?= $v['name'] ?>" value="<?= $v['id'] ?>">
+                                    <input type="checkbox" name="auth_id[]" lay-skin="primary" title="<?= $v['name'] ?>"   >
                                 </td>
                                 <td>
                                     <?php foreach($lk_auth as $kk=>$vv){
                                     ?>
                                     <?php if($vv['pid'] == $v['id']  ){ ?>
                                     <div class="layui-input-block" style="float: left;">
-                                        <input name="auth_id[]" lay-skin="primary" type="checkbox" title="<?= $vv['name'] ?>" value="<?= $vv['id'] ?>">
+                                        <input name="auth_id[]" lay-skin="primary" type="checkbox" title="<?= $vv['name'] ?>"  >
                                     </div>
-                                     <?php } ?>
-                                <?php } ?>
+
+                                     <?php }} ?>
                                 </td>
                                 <?php } ?>
                             </tr>
@@ -96,21 +96,22 @@
             }
 
             $.post('?c=admin&a=roleAdd',postData,function(res){
-                if(res.error==0){
-                    layer.alert(res.msg, {icon: 1,},function () {
-                      // 获得frame索引
-                      var index = parent.layer.getFrameIndex(window.name);
-                      //关闭当前frame
-                      parent.layer.close(index);
-                    });
-                }else{
-                    layer.alert(res.msg, {icon: 2,time:1000},function () {
-                      // 获得frame索引
-                      var index = parent.layer.getFrameIndex(window.name);
-                      //关闭当前frame
-                      parent.layer.close(index);
-                    });
-                }
+              console.log(res);
+                // if(res.error==0){
+                //     layer.alert(res.msg, {icon: 1,},function () {
+                //       // 获得frame索引
+                //       var index = parent.layer.getFrameIndex(window.name);
+                //       //关闭当前frame
+                //       parent.layer.close(index);
+                //     });
+                // }else{
+                //     layer.alert(res.msg, {icon: 2,time:1000},function () {
+                //       // 获得frame索引
+                //       var index = parent.layer.getFrameIndex(window.name);
+                //       //关闭当前frame
+                //       parent.layer.close(index);
+                //     });
+                // }
             },'json');
 
             return false;

@@ -45,14 +45,14 @@
                             <tr>
                                 <?php if($v['pid'] == 0){ ?>
                                 <td>
-                                    <input type="checkbox" name="auth_id[]" lay-skin="primary" title="<?= $v['name'] ?>" value="<?= $v['id'] ?>">
+                                    <input type="checkbox" name="auth_id[]" lay-skin="primary" title="<?= $v['name'] ?>" value="<?= $v['id'] ?>" <?php foreach($arr as $key=>$value){ if($value['name']==$v['name']){echo 'checked';} } ?> >
                                 </td>
                                 <td>
                                     <?php foreach($lk_auth as $kk=>$vv){
                                     ?>
                                     <?php if($vv['pid'] == $v['id']  ){ ?>
                                     <div class="layui-input-block" style="float: left;">
-                                        <input name="auth_id[]" lay-skin="primary" type="checkbox" title="<?= $vv['name'] ?>" value="<?= $vv['id'] ?>"   >
+                                        <input name="auth_id[]" lay-skin="primary" type="checkbox" title="<?= $vv['name'] ?>" value="<?= $vv['id'] ?>"  <?php foreach($arr as $key=>$value){ if($value['name']==$v['name']){echo 'checked';} } ?>  >
                                     </div>
 
                                      <?php }} ?>
