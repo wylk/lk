@@ -14,6 +14,13 @@ var lk = {
             processData: false,    //不可缺
             success:backfunc
         });
-	}
+	},
+    checkbox_val:function(name){
+        var standards = "";
+        $("input:checkbox[name="+name+"]:checked").each(function() {
+            standards += "," + $(this).val();
+        });
+        return standards;
+    }
 }
- 
+
