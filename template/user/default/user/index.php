@@ -35,7 +35,7 @@
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so" method="get">
           <input type="text" name="name"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  lay-submit="?c=user&a=index" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
@@ -89,7 +89,7 @@
             </td>
             <td class="td-manage">
 
-              <a title="编辑"  onclick="x_admin_show('编辑','?c=user&a=edit&id=<?= $v['id'] ?> ?>',600,400) href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('编辑','?c=user&a=edit&id=<?= $v['id'] ?>',700)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="member_del(this,'<?= $v['id'] ?>')" href="javascript:;">
@@ -163,10 +163,6 @@
 
           });
       }
-
-
-
-
       // function delAll (argument) {
 
       //   var data = tableCheck.getData();
@@ -178,12 +174,6 @@
       //   });
       // }
     </script>
-    <script>var _hmt = _hmt || []; (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-      })();</script>
   </body>
 
 </html>
