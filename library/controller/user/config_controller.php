@@ -165,7 +165,10 @@ class config_controller extends base_controller{
 	{
 		if(IS_POST){
 			$postData = $this->clear_html($_POST);
-			dump($postData);
+			import('Hook');
+			$hook = new Hook($postData['contract']);
+			$hook->add($postData['contract']);
+			$hook->exec('add',[$postData]);
 		}
 
 	}

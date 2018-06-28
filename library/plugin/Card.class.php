@@ -6,7 +6,7 @@ abstract class Card
     发布
     */
 
-    abstract public function add();
+    abstract public function add($data);
 
     /*
      领取

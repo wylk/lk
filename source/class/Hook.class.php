@@ -14,8 +14,8 @@ class Hook
         $this->hooklist =  new $people();        
     }  
     // 触发事件  
-    public function exec($fun)
+    public function exec($fun,$arr = array())
     {  
-        return call_user_func_array(array($this->hooklist, $fun),array());
+        return call_user_func_array(array($this->hooklist, $fun),$arr);
     }  
 }
