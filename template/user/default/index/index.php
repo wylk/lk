@@ -38,7 +38,6 @@
             <a href="javascript:;">admin</a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
               <dd><a onclick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
-              <dd><a onclick="x_admin_show('切换帐号','?c=public&a=logout')">切换帐号</a></dd>
               <dd><a href="?c=index&a=logout">退出</a></dd>
             </dl>
           </li>

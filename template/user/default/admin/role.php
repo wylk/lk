@@ -132,18 +132,20 @@
       /*用户-删除*/
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
-            $.post('?c=admin&a=delall',{id:id},function(data){
-              if(data.error == 0){
+            $.post('?c=admin&a=delall',{id:id},function(res){
+              if(res.error == 0){
+                $(obj).parents("tr").remove();
                 layer.msg(res.msg,{icon:1,time:1000});
               }else{
-                layer.msg(res.msg,{icon:1,time:1000});
+                layer.msg(res.msg,{icon:4,time:1000});
               }
             },'json');
               //发异步删除数据
-              $(obj).parents("tr").remove();
-              layer.msg('已删除!',{icon:1,time:1000});
+              // $(obj).parents("tr").remove();
+              // layer.msg('已删除!',{icon:1,time:1000});
           });
       }
+
       function delAll (argument) {
 
         var data = tableCheck.getData();

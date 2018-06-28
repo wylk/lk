@@ -3,11 +3,6 @@
   系统设置
  */
 class config_controller extends base_controller{
-	public function __construct()
-	{
-
-	}
-
 	public function index()
 	{
 		$where['gid'] = '1';

@@ -48,31 +48,19 @@
               </div>
           </div>
           <div class="layui-form-item">
-              <label for="L_email" class="layui-form-label">
-                  <span class="x-red">*</span>邮箱
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="L_email" name="email" required="" lay-verify="email"
-                  autocomplete="off" class="layui-input" value="email">
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-                  <span class="x-red">*</span>
-              </div>
-          </div>
-          <div class="layui-form-item">
               <label class="layui-form-label"><span class="x-red">*</span>角色</label>
               <div class="layui-input-block">
                 <select name="auth" id="catid" class="required">
-                  <option <?=($user->auth==3) ? 'selected' : '';?> value="3">普通会员</option>
-                  <option <?=($user->auth==2) ? 'selected' : '';?> value="2">管理员</option>
-                  <option <?=($user->auth==1) ? 'selected' : '';?> value="1">超级管理员</option>
+                  <input type="radio" name="sex" value="男" title="男" checked="">
+                  <input type="radio" name="sex" value="女" title="女">
+                  <input type="radio" name="sex" value="未知" title="未知">
                 </select>
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
-              <button  class="layui-btn" lay-filter="add" lay-submit="">
+              <button  class="layui-btn" lay-filter="edit" lay-submit="">
                   增加
               </button>
           </div>
@@ -100,17 +88,17 @@
           });
 
           //监听提交
-          // form.on('submit(add)', function(data){
-          //   console.log(data);
-          //   //发异步，把数据提交给php
-          //   layer.alert("增加成功", {icon: 6},function () {
-          //       // 获得frame索引
-          //       var index = parent.layer.getFrameIndex(window.name);
-          //       //关闭当前frame
-          //       parent.layer.close(index);
-          //   });
-          //   return false;
-          // });
+          form.on('submit(edit)', function(data){
+            console.log(data);
+            //发异步，把数据提交给php
+            layer.alert("增加成功", {icon: 6},function () {
+                // 获得frame索引
+                var index = parent.layer.getFrameIndex(window.name);
+                //关闭当前frame
+                parent.layer.close(index);
+            });
+            return false;
+          });
 
 
         });

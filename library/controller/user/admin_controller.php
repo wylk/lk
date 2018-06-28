@@ -4,10 +4,6 @@
  */
 class admin_controller extends base_controller
 {
-	public function __construct()
-	{
-
-	}
 	//添加权限菜单
 	public function auth()
 	{
@@ -40,7 +36,7 @@ class admin_controller extends base_controller
         }
         return $tree;
     }
-
+    //删除菜单
     public function delAuth()
     {
     	$id = $this->clear_html($_GET['id']);
@@ -55,6 +51,7 @@ class admin_controller extends base_controller
     	}
     }
 
+    //修改菜单
     public function authEdit()
     {
     	$pids = D('Auth')->field('id,name')->where(['pid'=>0,'status'=>1])->select();
@@ -80,10 +77,11 @@ class admin_controller extends base_controller
         $admin = (D('Admin')->select());
         foreach($admin as $k=>$v){
             $id = $v['id'];
-            $name = D('Admin')->table(array('RoleAdmin'=>'p','Role'=>'t','Admin'=>'y'))->field('y.id,y.name,y.phone,y.email,y.status,t.role_name')->where("`y`.`id`='$id' AND `y`.`id`=`p`.`admin_id` AND `p`.`role_id`=`t`.`id`")->order('`y`.`id` ASC')->select();
+            $name = D('')->table(array('RoleAdmin'=>'p','Role'=>'t','Admin'=>'y'))->field('y.id,y.name,y.phone,y.email,y.status,t.role_name')->where("`y`.`id`='$id' AND `y`.`id`=`p`.`admin_id` AND `p`.`role_id`=`t`.`id`")->order('`y`.`id` ASC')->select();
             $name = array_unique($name);
             $role[] = $name;
         }
+
         $this->assign('role',$role);
         $this->display();
     }
