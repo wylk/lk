@@ -51,10 +51,11 @@ if($loginType == "register"){
 	$code = $_SESSION['verify'][$subPhone];
 	if($subCode == $code){
 		// 将用户添加到数据库中
-		$data = ['phone'=>$subPhone,"upwd"=>"123123"];
+		$data = ['phone'=>$subPhone];
 		$insertRes = M("lk_user")->insert($data);
 		if($insertRes) {
 			$_SESSION['loginsign']['phone'] = $subPhone;
+			$_SESSION['loginsign']['id'] = $insertRes;
 			$_SESSION['loginsign']['lasttime'] = time();
 			header("location:my.php");
 			exit();
@@ -69,16 +70,31 @@ if($loginType == "register"){
 if($loginType == "login"){
 	$loginPhone = trim($_GET['phone']);
 	$loginPwd = trim($_GET['password']);
+	$loginPwd = md5($loginPwd);
 	$loginWhere = ['phone'=>$loginPhone,"upwd"=>$loginPwd];
 	$checkRes = M("lk_user")->findField("id,phone,upwd",$loginWhere);
 	if($checkRes){
 		$_SESSION['loginsign']['phone'] = $loginPhone;
+		// $_SESSION['loginsign']['id'] = $checkRes[''];
 		$_SESSION['loginsign']['lasttime'] = time();
 		header("location:./my.php");
 		exit();
 	}
 	header("location:./login.php");
     exit();
+}
+// 短信登录验证
+if($loginType == "shortLogin"){
+	$loginPhone = trim($_GET['phone']);
+	$loginCode = trim($_GET['code']);
+	if($loginCode == $_SESSION['verify'][$loginPhone]){
+		$_SESSION['loginsign']['phone'] = $loginPhone;
+		$_SESSION['loginsign']['lasttime'] = time();
+		header("location:./my.php");
+		exit();
+	}
+	header("location:./login.php");
+	exit();
 }
 
 

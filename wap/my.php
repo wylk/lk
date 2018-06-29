@@ -44,20 +44,81 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "bill"){
 }
 // 用户认证
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == 'postcard'){
+	$pagetype = "postcardBackstage";
 	import('HtmlForm');
 	$html = new HtmlForm('add','http://lk.com/wap/my.php');
-	$radio = [['val'=>1,'title'=>'男','checked'=>'checked'],['val'=>2,'title'=>'女','checked'=>'']];
-	$option = [['val'=>1,'name'=>'北京'],['val'=>2,'name'=>'上海']];
+	$radio = [['val'=>1,'title'=>'个人','checked'=>'checked'],['val'=>2,'title'=>'企业','checked'=>'']];
 	$nowcheckbox = [['val'=>0,'title'=>'未认证','checked'=>'checked']];
-	$checkbox = [['val'=>1,'title'=>'个人','checked'=>'checked'],['val'=>2,'title'=>'企业','checked'=>'']];
-	$htmlRes = $html->checkbox(['clas','认证类型'],$nowcheckbox)
-				->checkbox(['clas','认证类型'],$checkbox)
-				->input(['name','真实姓名'],['name',['reg','pass']])
-				->upload('身份证正面','img_id','img_name')
+	$htmlRes = $html->checkbox(['clas','认证状态'],$nowcheckbox)
+				->radio(['type','认证类型'],$radio)
+				->input(['name','真实姓名'],['name',['reg','cnRegex']])
+				->input(['postcard','身份证号'],['postcard',['reg','idcardRegex']])
+				->upload('身份证正面','img_just','img_just')
+				->upload('身份证反面','img_back','img_back')
+				->upload('手持身份证','img_oneself','img_oneself')
 				//->resSuccess('http://lk.com/wap/my.php')
 				->addFrom();
 	include display("postcard");
 	exit();
+}
+// 用户认证信息修改
+if(isset($_GET['pagetype']) && $_GET['pagetype'] == 'postcardEdit'){
+	// 获取用户信息
+	$uid = isset($_SESSION['loginsign']['uid']) ? $_SESSION['loginsign']['uid'] : "";
+	if(empty($uid)){
+		$userInfo = M('lk_user')->findField("id,phone","phone=".$phone);
+		$uid = transformArray($userInfo,"id");
+	}
+	$where['uid'] = $uid;
+	$postcardInfo = M("lk_user_audit")->select($where);
+	$postcardInfo = transformArray($postcardInfo);
+	$pagetype = "postcardBackstage";
+	import('HtmlForm');
+	$html = new HtmlForm('add','http://lk.com/wap/my.php');
+	$radio = [['val'=>1,'title'=>'个人','checked'=>'checked'],['val'=>2,'title'=>'企业','checked'=>'']];
+	$nowcheckbox = [['val'=>0,'title'=>'未认证','checked'=>'checked']];
+	$htmlRes = $html->checkbox(['clas','认证状态'],$nowcheckbox)
+				->radio(['type','认证类型'],$radio)
+				->input(['name','真实姓名',"text",$postcardInfo['name']],['name',['reg','cnRegex']])
+				->input(['userid','userid',"hidden",$postcardInfo['uid']],['userid',['reg','cnRegex']])
+				->input(['postcard','身份证号',"text",$postcardInfo['postcards']],['postcard',['reg','idcardRegex']])
+				->upload('身份证正面','img_just','img_just')
+				->upload('身份证反面','img_back','img_back')
+				->upload('手持身份证','img_oneself','img_oneself');
+				if($postcardInfo['remarks']){
+					$htmlRes->textarea([$postcardInfo['remarks'],"审核结果"]);
+				}
+				//->resSuccess('http://lk.com/wap/my.php')
+				$htmlRes = $htmlRes->addFrom();
+	include display("postcard");
+	exit();
+}
+//身份证认证信息处理
+if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
+	$name = isset($_GET['name']) ? $_GET['name'] : "";
+	$postcard = isset($_GET['postcard']) ? $_GET['postcard'] : "";
+	$type = isset($_GET['type']) ? $_GET['type'] : "";
+	$img_just = isset($_GET['img_just']) ? $_GET['img_just'] : "";
+	$img_back = isset($_GET['img_back']) ? $_GET['img_back'] : "";
+	$img_oneself = isset($_GET['img_oneself']) ? $_GET['img_oneself'] : "";
+	if($name && $postcard && $img_oneself){
+		$data = ['name'=>$name,"postcards"=>$postcard,"type"=>$type,"img_just"=>$img_just,"img_back"=>$img_back,"img_oneself"=>$img_oneself,"uid"=>'914',"create_time"=>time(),"update_time"=>time()];
+		$where['uid'] = isset($_GET['userid']) ? $_GET['userid'] : "";
+		$postcardRes = M("lk_user_audit")->save($data,$where);
+		if($postcardRes){
+			header("location:./my.php?pagetype=postcardEdit");
+		}else{
+			header("location:/my.php?pagetype=postcard");
+		}
+		exit();
+	}
+	$url = $_SERVER["HTTP_REFERER"];
+	header("location:".$url);
+	exit();
+}
+// 发卡
+if(isset($_GET['pagetype']) && $_GET['pagetype'] == "cardMaking"){
+	// M("")
 }
 
 // 设置
@@ -76,7 +137,7 @@ if(isset($_POST['phone']) && isset($_POST['type'])){
 		$code = rangdNumber($verifyLen);
 		require_once dirname(__FILE__).'/class/Transfer.class.php';
 		$a = new Transfer();
-		$p = '15703216916';
+		$p = '15703216915';
 		$messageRes = $a->message($p,["code"=>$code]);
 		// echo json_encode(array($messageRes,$messageRes['result']['success']));
 		if($messageRes['result']['success']){
@@ -93,6 +154,7 @@ if(isset($_POST['phone']) && isset($_POST['type'])){
 		$subPwd = trim($_POST['pwd']);
 		$code = $_SESSION['verify'][$phone];
 		if($code == $subCode){
+			$subPwd = md5($subPwd);
 			$changeRes = M("lk_user")->update("upwd",$subPwd,"phone=".$phone);
 			if($changeRes) session_destroy();
 		}

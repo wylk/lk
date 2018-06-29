@@ -31,8 +31,9 @@
     <h1 class="lk-title">导航栏</h1>
 </header>
 <div class="lk-content">
+    <span><i>注</i>普通用户无需认证 发VIP1/VIP2请完成认证</span>
 <form class="layui-form" action="">
-    <input type="hidden" name="contract" value="<?php echo $contract; ?>">
+    <input type="hidden" name="pagetype" value="<?php echo $pagetype; ?>">
     <div class="input-m"><?php echo $htmlRes;?></div>
   <div class="layui-form-item">
     <div class="layui-input-block">

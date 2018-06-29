@@ -49,8 +49,9 @@ $("#phone").blur(function(){
   }
   var data = {phone:phone,type:"check"}
   $.post("./login.php",data,function(result){
-      var result = JSON.parse(result);
-    if(result.res){
+    console.log(result);
+      // var result = JSON.parse(result);
+    if(result['res']){
       $("#phoneCheck").html("该手机号可以注册");
       $("#getVerify").attr("disabled",false);
     }else{
@@ -61,9 +62,8 @@ $("#phone").blur(function(){
 });
 $("#getVerify").bind("click",getVerify);
 function getVerify(){
-    console.log("disabled");
     var phone = $("#phone").val();
-    phone1 = phone.replace(/(^\s+)|(\s+)|(\s+$)/g,"");
+    phone = phone.replace(/(^\s+)|(\s+)|(\s+$)/g,"");
     if(!phone) {
         alert("请输入手机号");
         return;
