@@ -118,7 +118,36 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 }
 // 发卡
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == "cardMaking"){
-	// M("")
+	$cardRes = M("Contract")->find();
+	include display("cardMaking");
+	exit();
+}
+
+if(isset($_GET['pagetype']) && $_GET['pagetype'] == "cardList"){
+	$cardList = M("lk_card_package")->select();
+	foreach($cardList as $key=>$value){
+		$cardBag[$value['card_id']] = $value;
+		$cardIds[] = $value['card_id'];
+	}
+	list($cardListRes,$cIdInfo) = M("lk_card")->cardInfobyCardId($cardIds);
+	foreach($cardListRes as $key=>$value){
+		foreach($cIdInfo as $k=> $v){
+			$value[$v['id']]['field'] = $v['val'];
+			$value[$v['id']]['describe'] = $v['describe'];
+			$cardListRes[$key]['uid'] = $value[$v['id']]['uid'];
+			$cardListRes[$key]['c_id'] = $value[$v['id']]['c_id'];
+			$cardListRes[$key]['card_id'] = $value[$v['id']]['card_id'];
+			// $cardListRes[$key]['val'] = $value[$v['id']]['val'];
+			$cardListRes[$key][$v['val']] = $value[$v['id']]['val'];
+			$cardListRes[$key][$v['val']."_describe"] = $v['describe'];
+
+		}
+	}
+	// // 	var_dump($cIdInfo);
+	// print_r($cardBag);
+	// print_r($cardListRes);
+	include display("cardList");
+	exit();
 }
 
 // 设置
