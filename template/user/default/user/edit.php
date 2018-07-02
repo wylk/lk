@@ -23,13 +23,14 @@
   <body>
     <div class="x-body">
         <form class="layui-form">
+          <input type="hidden" name="id" value="<?= $user['id'] ?>" >
           <div class="layui-form-item">
               <label for="username" class="layui-form-label">
                   <span class="x-red">*</span>登录名
               </label>
               <div class="layui-input-inline">
                   <input type="text" id="username" name="name" required="" lay-verify="required"
-                  autocomplete="off" class="layui-input" value="name">
+                  autocomplete="off" class="layui-input" value="<?= $user['name'] ?>">
               </div>
               <div class="layui-form-mid layui-word-aux">
                   <span class="x-red">*</span>将会成为您唯一的登入名
@@ -41,27 +42,23 @@
               </label>
               <div class="layui-input-inline">
                   <input type="text" id="phone" name="phone" required="" lay-verify="phone"
-                  autocomplete="off" class="layui-input" value="phone">
+                  autocomplete="off" class="layui-input" value="<?= $user['phone'] ?>">
               </div>
               <div class="layui-form-mid layui-word-aux">
                   <span class="x-red">*</span>将会成为您唯一的登入名
               </div>
           </div>
           <div class="layui-form-item">
-              <label class="layui-form-label"><span class="x-red">*</span>角色</label>
-              <div class="layui-input-block">
-                <select name="auth" id="catid" class="required">
-                  <input type="radio" name="sex" value="男" title="男" checked="">
-                  <input type="radio" name="sex" value="女" title="女">
-                  <input type="radio" name="sex" value="未知" title="未知">
-                </select>
-              </div>
+              <label class="layui-form-label"><span class="x-red">*</span>性别</label>
+                  <input type="radio" name="sex" value="1" title="男" <?= ($user['sex']==1) ? 'checked' : ''; ?> >
+                  <input type="radio" name="sex" value="2" title="女" <?= ($user['sex']==2) ? 'checked' : ''; ?> >
+                  <input type="radio" name="sex" value="0" title="未知" <?= ($user['sex']==0) ? 'checked' : ''; ?> >
           </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
               <button  class="layui-btn" lay-filter="edit" lay-submit="">
-                  增加
+                  修改
               </button>
           </div>
       </form>
@@ -89,14 +86,23 @@
 
           //监听提交
           form.on('submit(edit)', function(data){
-            console.log(data);
-            //发异步，把数据提交给php
-            layer.alert("增加成功", {icon: 6},function () {
-                // 获得frame索引
-                var index = parent.layer.getFrameIndex(window.name);
-                //关闭当前frame
-                parent.layer.close(index);
-            });
+            $.post('?c=user&a=edit',data.field,function(res){
+              console.log(res);
+              if(res.error==0){
+                layer.msg(res.msg, {icon: 1,time:1000},function(){
+                    // 获得frame索引
+                    var index = parent.layer.getFrameIndex(window.name);
+                    //关闭当前frame
+                    parent.layer.close(index);
+                });
+              }else{
+                layer.msg(res.msg, {icon: 1,time:1000},function(){
+                  var index = parent.layer.getFrameIndex(window.name);
+                  parent.layer.close(index);
+                });
+              }
+            },'json');
+
             return false;
           });
 
