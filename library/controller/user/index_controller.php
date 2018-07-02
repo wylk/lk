@@ -3,15 +3,12 @@ class index_controller extends base_controller{
 
 	public function index()
 	{
-		if(empty($_SESSION["admin"]))
-		{
-			header("location:?c=public&a=login");//空的话就返回登录页面
-		exit;
-		}
-
 		$id = $_SESSION["admin"]["id"];
-
-		$auth = D('')->table(array('RoleAdmin'=>'p','Access'=>'t','Auth'=>'y'))->field('y.id,y.name,y.pid,y.auth_c,y.auth_a,y.icon,y.is_show')->where("`p`.`admin_id`='$id' AND `p`.`role_id`=`t`.`role_id` AND `t`.`auth_id`=`y`.`id`")->order('`y`.`id` ASC')->select();
+		if($_SESSION["admin"]["name"] == "admin"){
+			$auth = D('Auth')->select();
+		}else{
+			$auth = D('')->table(array('RoleAdmin'=>'p','Access'=>'t','Auth'=>'y'))->field('y.id,y.name,y.pid,y.auth_c,y.auth_a,y.icon,y.is_show')->where("`p`.`admin_id`='$id' AND `p`.`role_id`=`t`.`role_id` AND `t`.`auth_id`=`y`.`id`")->order('`y`.`id` ASC')->select();
+		}
 
 		$this->assign('auth',$auth);
 		$this->display();

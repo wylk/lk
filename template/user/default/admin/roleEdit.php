@@ -52,7 +52,9 @@
                                     ?>
                                     <?php if($vv['pid'] == $v['id']  ){ ?>
                                     <div class="layui-input-block" style="float: left;">
-                                        <input name="auth_id" lay-skin="primary" type="checkbox" title="<?= $vv['name'] ?>" value="<?= $vv['id'] ?>" lay-filter="allChoose" <?php foreach($arr as $key=>$value){ if($value['name']==$v['name']){echo 'checked';} } ?>  >
+                                        <input name="auth_id" lay-skin="primary" type="checkbox" title="<?= $vv['name'] ?>" value="<?= $vv['id'] ?>" lay-filter="allChoose" <?php foreach($arr as $key1=>$value1){
+                                         if($value1['name']==$vv['name']){echo 'checked';} }
+                                         ?>  >
                                     </div>
 
                                      <?php }} ?>
@@ -90,7 +92,6 @@
               });
               form.render('checkbox');
           });
-
 
           //监听提交
           form.on('submit(edit)', function(data){
