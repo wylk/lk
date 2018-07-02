@@ -6,6 +6,7 @@
 class lk_card_model extends base_model
 {
 	public function save($data,$where){
+		// var_dump($where);
 		if(empty($where)){
 			return $this->db->data($data)->add();
 		}else{

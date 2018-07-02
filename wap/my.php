@@ -7,6 +7,7 @@ $verifyLen = "6";  //验证码长度
 
 // 判断是否登录状态中
 if(isset($_SESSION['loginsign']) && time()-$_SESSION['loginsign']['lasttime']<3600*60){
+	var_dump(time()-$_SESSION['loginsign']['lasttime']);
 	$_SESSION['loginsign']['lasttime'] = time();
 	$phone = $_SESSION['loginsign']['phone'];
 	$phone = isset($_SESSION['loginsign']['phone']) ? $_SESSION['loginsign']['phone'] : "";
@@ -21,11 +22,6 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "purse"){
 	$userInfo = M("lk_user")->findField("point_balance,phone,id,upwd","phone=".$phone);
 	$userRes = transformArray($userInfo);
 	$pointBalance = $userRes['point_balance'];
-
-	// // 插入一些账单信息
-	// $data = ['user_id'=>"3","card_id"=>"1","type"=>"3","money"=>"100","time"=>time()];
-	// $billRes = M("lk_bill")->insert($data);
-	// var_dump($billRes);
 
 // 获取用户提现/充值的账单
 	$where = ["user_id"=>$userRes['id'],"type"=>['or',['1','2']]];
@@ -46,7 +42,7 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "bill"){
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == 'postcard'){
 	$pagetype = "postcardBackstage";
 	import('HtmlForm');
-	$html = new HtmlForm('add','http://lk.com/wap/my.php');
+	$html = new HtmlForm('add','http://lk.com/wap/my.php?pagetype=postcardBackstage');
 	$radio = [['val'=>1,'title'=>'个人','checked'=>'checked'],['val'=>2,'title'=>'企业','checked'=>'']];
 	$nowcheckbox = [['val'=>0,'title'=>'未认证','checked'=>'checked']];
 	$htmlRes = $html->checkbox(['clas','认证状态'],$nowcheckbox)
@@ -56,7 +52,7 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == 'postcard'){
 				->upload('身份证正面','img_just','img_just')
 				->upload('身份证反面','img_back','img_back')
 				->upload('手持身份证','img_oneself','img_oneself')
-				//->resSuccess('http://lk.com/wap/my.php')
+				// ->resSuccess('http://lk.com/wap/my.php?pagetype=postcardBackstage')
 				->addFrom();
 	include display("postcard");
 	exit();
@@ -74,7 +70,7 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == 'postcardEdit'){
 	$postcardInfo = transformArray($postcardInfo);
 	$pagetype = "postcardBackstage";
 	import('HtmlForm');
-	$html = new HtmlForm('add','http://lk.com/wap/my.php');
+	$html = new HtmlForm('add','http://lk.com/wap/my.php?pagetype=postcardBackstage');
 	$radio = [['val'=>1,'title'=>'个人','checked'=>'checked'],['val'=>2,'title'=>'企业','checked'=>'']];
 	$nowcheckbox = [['val'=>0,'title'=>'未认证','checked'=>'checked']];
 	$htmlRes = $html->checkbox(['clas','认证状态'],$nowcheckbox)
@@ -108,7 +104,7 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 		if($postcardRes){
 			header("location:./my.php?pagetype=postcardEdit");
 		}else{
-			header("location:/my.php?pagetype=postcard");
+			header("location:./my.php?pagetype=postcard");
 		}
 		exit();
 	}
@@ -117,12 +113,18 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 	exit();
 }
 // 发卡
-if(isset($_GET['pagetype']) && $_GET['pagetype'] == "cardMaking"){
+if(isset($_GET['pagetype']) && $_GET['pagetype'] == "cardType"){
+	// $uid = 914;
+	// $getAuth = authentication($uid);
+	// var_dump($getAuth);
 	$cardRes = M("Contract")->find();
-	include display("cardMaking");
+	$res = D("Card_package")->where(['uid'=>$uid])->select();
+	$cardtype = array_column($res, "type");
+	$cardtype = array_map(function($value,$key){return $value.="Card";}, $cardtype);
+	include display("cardType");
 	exit();
 }
-
+// 展示卡列表
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == "cardList"){
 	$cardList = M("lk_card_package")->select();
 	foreach($cardList as $key=>$value){
@@ -209,3 +211,8 @@ if(isset($_POST['phone']) && isset($_POST['type'])){
 include display('my');
 echo ob_get_clean();
 exit();
+
+function authentication($uid){
+	return D("User_audit")->where(['uid'=>$uid])->find();
+}
+

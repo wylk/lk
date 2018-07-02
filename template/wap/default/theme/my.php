@@ -28,7 +28,7 @@
             <h2 class="layui-colla-title"><a href="./my.php?pagetype=postcard">身份证</a></h2>
         </div>
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title"><a href="./my.php?pagetype=cardMaking">发卡</a></h2>
+            <h2 class="layui-colla-title"><a href="./my.php?pagetype=cardType">发卡</a></h2>
         </div>
         <div class="layui-colla-item"> 
             <h2 class="layui-colla-title"><a href="./my.php?pagetype=cardList">卡/券/库</a></h2>

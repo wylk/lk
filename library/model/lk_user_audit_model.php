@@ -6,7 +6,7 @@
 class lk_user_audit_model extends base_model
 {
 	public function save($data,$where){
-		if(empty($where)){
+		if(empty($where['uid'])){
 			return $this->db->data($data)->add();
 		}else{
 			return $this->db->data($data)->where($where)->save();

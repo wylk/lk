@@ -31,6 +31,7 @@
   </thead>
   <tbody>
     <?php foreach($cardRes as $key => $value){?>
+    <?php  if(!in_array($value['contract_title'], $cardtype)){ ?>
     <tr id="contract_<?php echo $value['id']?>" title="<?php echo $value['contract_title']?>">
       <td><?php echo $value['contract_name']?></td>
       <td><?php echo $value['contract_title']?></td>
@@ -38,9 +39,19 @@
       <td><?php echo $value['free']?></td>
       <td><img src="<?php echo $value['pc_logo']?>"/></td>
       <td><img src="<?php echo $value['wap_logo']?>" /></td>
-      <td><?php echo $value['status']?></td>
+      <td>未使用</td>
     </tr>
-    <?php } ?>
+    <?php }else{?>
+      <tr id="contract_<?php echo $value['id']?>" title="<?php echo $value['contract_title']?>">
+      <td><?php echo $value['contract_name']?></td>
+      <td><?php echo $value['contract_title']?></td>
+      <td><?php echo $value['contract_explain']?></td>
+      <td><?php echo $value['free']?></td>
+      <td><img src="<?php echo $value['pc_logo']?>"/></td>
+      <td><img src="<?php echo $value['wap_logo']?>" /></td>
+      <td>正在使用</td>
+    </tr>
+    <?php } } ?>
   </tbody>
 </table>
 </body>
@@ -52,7 +63,7 @@ $("tr[id^=contract_]").bind("click",function(res){
     var pos = title.indexOf("Card");
     var card = title.substr(0,pos);
     // console.log(card);
-    window.location.href = "./test6.php?card="+card;
+    window.location.href = "./cardmaking.php?card="+card;
     // console.log(title);
     // alert('this');
 })
