@@ -1,17 +1,17 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
 
-function encrypt($data,$key){   
+function encrypt($data,$key){
     $encryptedList = array();
-    $step          = 11700; 
-    $encryptedData = ''; 
-    $len = strlen($data); 
-    for ($i = 0; $i < $len; $i += $step) {        
-       $tmpData   = substr($data, $i, $step); 
+    $step          = 11700;
+    $encryptedData = '';
+    $len = strlen($data);
+    for ($i = 0; $i < $len; $i += $step) {
+       $tmpData   = substr($data, $i, $step);
        $encrypted = '';
-        openssl_public_encrypt($tmpData, $encrypted, $key,OPENSSL_PKCS1_PADDING); 
+        openssl_public_encrypt($tmpData, $encrypted, $key,OPENSSL_PKCS1_PADDING);
        $encryptedList[] = ($encrypted);
-    }    
+    }
      $encryptedData = base64_encode(join('', $encryptedList));
     return $encryptedData;
 }
@@ -23,16 +23,30 @@ import('AccountBook');
 
 $token = json_encode(['uid'=>'1','contract_id'=>'33d2433410e3a8d5912f051792bf1910','sendAddress'=>'dc6c49af4b9eafd383a462e4242564f5','num'=>100,'getAddress'=>'a7c1b739593c67db34d66261ec86fd42']);
 //$token = json_encode(['uid'=>'4','contract_id'=>'33d2433410e3a8d5912f051792bf1910','account_balance'=>0]);
-$encryptedData = encrypt($token,$public_key);
-$bb = new AccountBook();
+//$encryptedData = encrypt($token,$public_key);
+//$bb = new AccountBook();
 //$bb->transferAccounts($encryptedData);//转账
 //$bb->addAccount($encryptedData);//添加新地址
 /*$da = D('Account_book')->data(['now'=>1])->where(['id'=>['in',[80,81]]])->save();
 dump($da);*/
-import('Hook');
+
+// $card = D('Card')->where()->select();
+// $Contract_field = D('Contract_field')->where()->select();
+// $Contract_fields = [];
+// foreach ($Contract_field as $kk => $vv) {
+//     $Contract_fields[$vv['id']] = $vv['val'];
+// }
+// //dump($Contract_fields);
+// $cards = array();
+// foreach ($card as $k => $v) {
+//     $cards[$v['card_id']][$Contract_fields[$v['c_id']]] = $v['val'];
+//     $cards[$v['card_id']]['uid'] = $v['uid'];
+// }
+// dump($cards);
+/*import('Hook');
 $contract = $_GET['card'];
 $hook = new Hook($contract);
 $hook->add($contract);
-$html = $hook->exec('add_tpl');
+$html = $hook->exec('add_tpl');*/
 include display('test6');
 echo ob_get_clean();
