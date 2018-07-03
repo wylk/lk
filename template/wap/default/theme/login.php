@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?<?=time()?>">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
@@ -24,7 +24,7 @@
 
 <body style="background-color: rgba(240,240,240,.3);">
   <header class="lk-bar lk-bar-nav" style="background-color: #FFF">
-      <i class="iconfont" style="font-size: 18px;">&#xe697;</i>
+      <i class="iconfont">&#xe697;</i>
       <h1 class="lk-title">登 陆</h1>
   </header>
   <div class="layui-container" style="padding-top:155px">
