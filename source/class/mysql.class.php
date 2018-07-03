@@ -150,6 +150,7 @@ class mysql{
 		}else{
 			$now_where = $where;
 		}
+		
 		$this->where = $now_where;
 		return $this;
 	}

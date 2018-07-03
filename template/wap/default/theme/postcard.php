@@ -34,7 +34,9 @@
     <span><i>注</i>普通用户无需认证 发VIP1/VIP2请完成认证</span>
 <form class="layui-form" action="">
     <input type="hidden" name="pagetype" value="<?php echo $pagetype; ?>">
-    <div class="input-m"><?php echo $htmlRes;?></div>
+    <div class="input-m">
+        <div class="layui-form-item '.$data[0].'radio"><label class="layui-form-label" id="label-form">'.$data[1].'</label><div class="layui-input-block" id="input-bloc"><input type="'.$type.'" name="'.$data[0].'" value="'.$data[3].'"  lay-verify="'.$required[0].'" placeholder="请输入'.$data[1].'" autocomplete="off" class="layui-input" id="laui-input"></div></div>
+    </div>
   <div class="layui-form-item">
     <div class="layui-input-block">
       <button class="layui-btn" lay-submit lay-filter="add">立即提交</button>

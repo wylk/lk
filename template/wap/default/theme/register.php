@@ -47,18 +47,31 @@ $("#phone").blur(function(){
     $("#phoneCheck").val("请输入正确的手机号");
     return;
   }
-  var data = {phone:phone,type:"check"}
-  $.post("./login.php",data,function(result){
-    console.log(result);
-    var jsonres = JSON.parse(result);
-    console.log(jsonres);
-    console.log(jsonres.res);
-    if(result.res){
-      $("#phoneCheck").html("该手机号可以注册");
-      $("#getVerify").attr("disabled",false);
-    }else{
-      $("#phoneCheck").html("该手机号已经被注册");
-      $("#getVerify").attr("disabled",true);
+  var data = {phone:phone,type:"check"};
+  // $.post("./login.php",data,function(result){
+  //   alert(typeof(result));
+  //   console.log(result);
+  //   console.log(typeof(result));
+  //   // console.log(result.res);
+  //   // if(result.res){
+  //   //   $("#phoneCheck").html("该手机号可以注册");
+  //   //   $("#getVerify").attr("disabled",false);
+  //   // }else{
+  //   //   $("#phoneCheck").html("该手机号已经被注册");
+  //   //   $("#getVerify").attr("disabled",true);
+  //   // }
+  // });
+  $.ajax({
+    type : "post",
+    url : "./login.php",
+    data : data,
+    dataType : "json",
+    success : function(result){
+      console.log(result);
+      console.log(typeof(result));
+    },
+    complete:function(res){
+      console.log(res);
     }
   })
 });
@@ -74,7 +87,7 @@ function getVerify(){
     if(!reg.test(phone)) return ;
     var data = {phone:phone,type : "code"}
     $.post("./login.php",data,function(result){
-        // console.log("res:",result);
+        // console.log(typeof(result));
         countDown = 60;
         setTime();
     })

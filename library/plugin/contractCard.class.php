@@ -20,7 +20,7 @@ class contractCard extends Card
 
     public function add($data)
     {
-        $uid = time();
+        $uid = 15;
 
         $contract_id =  md5($data['contract'].$uid);
 

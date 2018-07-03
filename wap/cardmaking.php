@@ -7,7 +7,7 @@ if(IS_POST){
   $hook->add($postData['contract']);
   // var_dump($postData);
   $res = $hook->exec('add',[$postData]);
-  var_dump($res);
+  // var_dump($res);
   exit();
 }
 

@@ -20,7 +20,7 @@ class offsetCard extends Card
 
     public function add($data)
     {
-        $uid = time();
+        $uid = 12;
 
         $contract_id =  md5($data['contract'].$uid);
 
