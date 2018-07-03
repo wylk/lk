@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?<?=time()?>">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
       .layui-input-block{margin-right: 50px;}
@@ -19,6 +18,10 @@
       .us-btn{background-color: #FFF; color:#FF5722; font-weight: 500}
       .layui-form-item .layui-form-label{margin-top:10px;}
       .layui-row{border-radius: 3px;}
+
+      .layui-checkbox{background-color: #FFF; color:#FFF; width: 12px; height: 12px; border:1px solid #f2f2f2; margin:10px; font-size:9px;padding:2px;}
+
+      .us-checkbox{background-color: #FFF; color:#000; width: 12px; height: 12px; border:1px solid #ddd; margin:10px; font-size:9px;padding:2px; }
     </style>
 </head>
 
@@ -29,7 +32,7 @@
   </header>
   <div class="layui-container" style="padding-top:155px">
     <form class="layui-form" action="./login.php">
-  <div class="layui-row" style="border:1px solid #d2d2d2; background-color: #FFF; margin-bottom:15px;">
+  <div class="layui-row" style="border:1px solid #d2d2d2; background-color: #FFF; margin-bottom:50px;">
     <div class="layui-col-xs12">
         <div class="layui-form-item">
             <label class="layui-form-label">手机号码</label>
@@ -46,11 +49,25 @@
   </div>
 </div>
 <div class="layui-row">
-<button class="layui-btn" lay-submit lay-filter="formDemo" style="width:100%; background-color: #FF5722;">登 陆</button>
+<button id="layui-btn" class="layui-btn" lay-submit lay-filter="formDemo"  style="width:100%; background-color: #FF5722;">登 陆</button>
 <input type="hidden" name="logintype" value='login' />
+<div id="checkbox" class="layui-icon layui-inline layui-checkbox">&#xe605;</div>同意<a href="#" style="color:#01AAED" >《服务条款》</a>
 </div>
 </form>
 </div>
+<script type="text/javascript">
+  $("#checkbox").click(
+    function(){
+      var a = !$(this).hasClass("us-checkbox");
+      if(a){
+        $(this).addClass("us-checkbox");
+        $("#layui-btn").attr("disabled", true);
+      }else{
+        $(this).removeClass("us-checkbox");
+        $("#layui-btn").removeAttr("disabled");
+      }
+  });
+</script>
     <!-- <div id="pwdLogin">
         <form class="layui-form" action="./login.php">
             <div class="layui-form-item">
