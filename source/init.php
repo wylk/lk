@@ -17,9 +17,9 @@ if (DEBUG == true) {
 }
 
 header('Content-Type: text/html; charset=UTF-8');
-header('X-Powered-By:pigcms.com');
+header('X-Powered-By:leka.com');
 date_default_timezone_set('Asia/Shanghai');
-session_name('pigcms_sessionid');
+session_name('leka_sessionid');
 if (!(my_session_start())) {
 	session_id(md5(uniqid()));
 	session_start();
@@ -101,11 +101,11 @@ if (USE_FRAMEWORK == true) {
 
 function my_session_start()
 {
-	if (ini_get('session.use_cookies') && isset($_COOKIE['pigcms_sessionid'])) {
-		$sessid = $_COOKIE['pigcms_sessionid'];
+	if (ini_get('session.use_cookies') && isset($_COOKIE['leka_sessionid'])) {
+		$sessid = $_COOKIE['leka_sessionid'];
 	}
-	 else if (!(ini_get('session.use_only_cookies')) && isset($_GET['pigcms_sessionid'])) {
-		$sessid = $_GET['pigcms_sessionid'];
+	 else if (!(ini_get('session.use_only_cookies')) && isset($_GET['leka_sessionid'])) {
+		$sessid = $_GET['leka_sessionid'];
 	}
 	 else {
 		session_start();
@@ -121,7 +121,7 @@ function my_session_start()
 	return true;
 }
 
-function pigcms_tips($msg, $url = '', $isAutoGo = false, $showCopy = true)
+function leka_tips($msg, $url = '', $isAutoGo = false, $showCopy = true)
 {
 	if (IS_AJAX) {
 		echo json_encode(array('msg' => $msg, 'url' => $url));
@@ -177,10 +177,10 @@ function appError($errno, $errstr, $errfile, $errline)
 		ob_end_clean();
 
 		if (DEBUG) {
-			pigcms_tips($errno . '' . $errstr . ' ' . $errfile . ' 第 ' . $errline . ' 行.', 'none');
+			leka_tips($errno . '' . $errstr . ' ' . $errfile . ' 第 ' . $errline . ' 行.', 'none');
 		}
 		 else {
-			pigcms_tips($errno . '' . $errstr . ' ' . basename($errfile) . ' 第 ' . $errline . ' 行.', 'none');
+			leka_tips($errno . '' . $errstr . ' ' . basename($errfile) . ' 第 ' . $errline . ' 行.', 'none');
 		}
 
 		break;
@@ -195,10 +195,10 @@ function appError($errno, $errstr, $errfile, $errline)
 	case 512:
 
 		if ($errno . '' . $errstr . ' ' . basename($errfile) . ' 第 ' . $errline . ' 行.') {
-			pigcms_tips($errstr . ' ' . $errfile . ' 第 ' . $errline . ' 行.', 'none');
+			leka_tips($errstr . ' ' . $errfile . ' 第 ' . $errline . ' 行.', 'none');
 		}
 		 else {
-			pigcms_tips($errstr . ' ' . basename($errfile) . ' 第 ' . $errline . ' 行.', 'none');
+			leka_tips($errstr . ' ' . basename($errfile) . ' 第 ' . $errline . ' 行.', 'none');
 		}
 	}
 }
@@ -219,10 +219,10 @@ function fatalError()
 			ob_end_clean();
 
 			if (DEBUG) {
-				pigcms_tips('ERROR:' . $e['message'] . ' ' . $e['file'] . ' 第' . $e['line'] . ' 行.', 'none');
+				leka_tips('ERROR:' . $e['message'] . ' ' . $e['file'] . ' 第' . $e['line'] . ' 行.', 'none');
 			}
 			 else {
-				pigcms_tips('ERROR:' . $e['message'] . ' ' . basename($e['file']) . ' 第' . $e['line'] . ' 行.', 'none');
+				leka_tips('ERROR:' . $e['message'] . ' ' . basename($e['file']) . ' 第' . $e['line'] . ' 行.', 'none');
 			}
 
 			break;
@@ -239,7 +239,7 @@ function require_file($load_file)
 
 
 	$file = str_replace(LEKA_PATH, '', $load_file);
-	pigcms_tips(LEKA_PATH . $file . ' 文件不存在。', 'none');
+	leka_tips(LEKA_PATH . $file . ' 文件不存在。', 'none');
 }
 
 
