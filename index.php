@@ -7,7 +7,6 @@ define('USE_FRAMEWORK', true);
 
 
 // qwwq人与人3454
-// qwwq人与人3454
 
 
 require_once LEKA_PATH.'source/init.php';
