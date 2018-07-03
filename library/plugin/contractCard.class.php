@@ -1,5 +1,5 @@
 <?php
-class offsetCard extends Card
+class contractCard extends Card
 {
 	public function add_tpl()
 	{
@@ -10,9 +10,9 @@ class offsetCard extends Card
         $checkbox = [['val'=>1,'title'=>'北京','checked'=>'checked'],['val'=>2,'title'=>'天津','checked'=>'']];
         return $html->input(['name','卡名'],['name',['reg','cn']])
                     //->radio(['is_free','是否收费'],$radio,'price')
-                    ->input(['price','单价'],['price',['reg','floa']])
+                    ->input(['is_limit','限制条件'],['is_limit',['reg','cn']])
                     ->input(['sum','总量'],['sum',['reg','floa']])
-                    ->input(['group','发布几份'],['group',['reg','int']])
+                    ->input(['contract_id','合约'],['contract_id',['reg','int']])
                     ->upload('会员卡log','img_id','card_log')
                     ->textarea(['describe','卡券描述'])
                     ->addFrom();
