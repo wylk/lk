@@ -22,6 +22,7 @@ class HtmlForm
     public $required = array();
     public $resSucce = '';
     public $btnId = '';
+    public $radio = '';
 
     public function __construct($btnId = '',$path = false)
     {
@@ -39,9 +40,10 @@ class HtmlForm
     {
         if($required[0] != 'required'){
             $this->required[$required[0]] = $required[1];
+            $this->required[$required[0]]['is_reg'] = 1;
         }
         $type = isset($data[2])?$data[2]:'text';
-        $str = '<div class="layui-form-item"><label class="layui-form-label" id="label-form">'.$data[1].'</label><div class="layui-input-block" id="input-bloc"><input type="'.$type.'" name="'.$data[0].'" value="'.$data[3].'"  lay-verify="'.$required[0].'" placeholder="请输入'.$data[1].'" autocomplete="off" class="layui-input" id="laui-input"></div></div>';
+        $str = '<div class="layui-form-item '.$data[0].'radio"><label class="layui-form-label" id="label-form">'.$data[1].'</label><div class="layui-input-block" id="input-bloc"><input type="'.$type.'" name="'.$data[0].'" value="'.$data[3].'"  lay-verify="'.$required[0].'" placeholder="请输入'.$data[1].'" autocomplete="off" class="layui-input" id="laui-input"></div></div>';
         $this->htmlall.=$str;
         return $this;
     }
@@ -135,13 +137,29 @@ $this->htmlall.=$str;
     }
 
     //单选
-    public function radio($data,$radio)
+    public function radio($data,$radio,$display = false)
     {
         $str = '<div class="layui-form-item"><label class="layui-form-label" style="width:40px" id="label-form">'.$data[1].'</label><div class="layui-input-block" id="input-bloc">';
         foreach ($radio as $k => $v) {
-            $str .= '<input type="radio" name="'.$data[0].'" value="'.$v['val'].'" title="'.$v['title'].'" '.$v['checked'].'>';
+            $str .= '<input type="radio" lay-filter="'.$data[0].'" name="'.$data[0].'" value="'.$v['val'].'" title="'.$v['title'].'" '.$v['checked'].'>';
         }
         $str.='</div></div>';
+        if($display){
+            $this->radio =<<<EOS
+            form.on('radio({$data[0]})', function (data) {
+                if(data.value == '1'){
+                    $('.{$display}radio').hide();
+                    //$("input[name='{$display}']").attr("disabled",true);
+                }else{
+                    $('.{$display}radio').show();
+                    //$("input[name='{$display}']").attr("disabled",false);
+                }
+                console.log(data);
+            });
+EOS;
+        $this->required[$data[0]]['is_reg']  = 0;
+             
+        }
         $this->htmlall.=$str;
         return $this;
     }
@@ -165,7 +183,9 @@ $this->htmlall.=$str;
 	public function reg($key)
 	{
 		$reg = array(
-			"passRegex"=>['/(.+){6,12}$/','密码必须6到12位'],																						//密码必须6到12位
+            "passRegex"=>['/(.+){6,12}$/','密码必须6到12位'],                                                                                     //密码必须6到12位
+            "floaRegex"=>['/(^[1-9]\d*(\.\d{1,2})?$)|(^0(\.\d{1,2})?$)/','请输入两位小数的数'],                                                                                       //密码必须6到12位
+			"intRegex"=>['/^[0-9]*[1-9][0-9]*$/','请输入正整数的数'],																						//密码必须6到12位
 			"phoneRegex"=>['^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0-9])|(17([3|5]|[6-8])))\\d{8}$','手机格式不对'],						//手机验证正则
 			"emailRegex"=>['^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$','邮箱格式不对'],								//邮箱验证
 			"idcardRegex"=>['/^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/','身份证号格式不对'],//身份证验证
@@ -249,6 +269,10 @@ $this->htmlall.=$str;
 			                },'json');
 			                return false;
 			            });
+                        $this->radio
+                         /*form.on('radio(is_free)', function (data) {
+                             console.log(data);
+                        });*/
 			        });
 			        function checkbox_val(name){
 			            var standards = "";

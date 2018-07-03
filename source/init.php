@@ -48,7 +48,8 @@ define('JS_PATH','../template/wap/default/js/');
 define('ALERT_PATH','../static/sweetalert/');
 define('JS1_PATH','../static/js/area/');
 define('IS_AJAX', (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') ? true : false));
-define('CND_PATH', 'http://lk.com/');
+//define('CND_PATH', 'http://lk.com/');
+define('CND_PATH', '/');
 /* 添加本地目录 在原有基础上前面添加WY_*/
 define('WY_TPL_URL', CND_PATH.'/template/wap/default/');//定义手机端样式目录
 define('WY_CND_PATH', CND_PATH.'/static/');         //全局静态文件存放js/img/css.....

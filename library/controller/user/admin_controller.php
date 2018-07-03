@@ -182,30 +182,25 @@ class admin_controller extends base_controller
     public function roleAdd()
     {
         if(IS_POST){
-            $res = $this->clear_html($_POST);
-            // $auth_ids = empty($res['role_id']) ? [] : $res['role_id'];
-            // unset($res['role_id']);
-
-                dump($_POST);
-
-            $res['created_at'] = time();
-             // dump($res['role_id']);die;
-            $role = D('Role')->data($res)->add();
-            $roleName = D('Role')->where(array('role_name' => $res['role_name']))->find();
-
-            $auth_ids = substr($auth_ids, 0, -1);
-            $auth_ids = explode(",", $auth_ids);
+            $posts = $this->clear_html($_POST);
+            $arr = $posts['auth_id'];
+            unset($posts['auth_id']);
+            $arr = explode(',',$arr);
+            array_shift($arr);
+            $posts['created_at'] = time();
+            $role = D('Role')->data($posts)->add();
+            $roleName = D('Role')->where(array('role_name' => $posts['role_name']))->find();
 
             $insertDatas = '';
-            foreach($auth_ids as $v){
+            foreach($arr as $v){
                 $insertDatas = D('Access')->data(['role_id'=>$roleName['id'],'auth_id'=>$v])->add();
             }
 
-            // if($role && $insertDatas){
-            //     $this->dexit(['error'=>0,'msg'=>'添加成功']);
-            // }else{
-            //     $this->dexit(['error'=>1,'msg'=>'添加失败']);
-            // }
+            if($role && $insertDatas){
+                $this->dexit(['error'=>0,'msg'=>'添加成功']);
+            }else{
+                $this->dexit(['error'=>1,'msg'=>'添加失败']);
+            }
 
         }
         $lk_auth = D('lk_auth')->select();
@@ -220,20 +215,22 @@ class admin_controller extends base_controller
         $role = D('Role')->where(array('id' =>$data['id']))->find();
         $roleId = $role['id'];
         $this->assign('role',$role);
+        // D('Role')->data(['role_name'=>])->where(array('id' =>$data['id']))->save();
         $arr = D('')->table(array('Access'=>'p','Auth'=>'op'))->field('op.name')->where("`p`.`role_id`='$roleId' AND `p`.`auth_id`=`op`.`id`")->order('`op`.`id` ASC')->select();
         $this->assign('arr',$arr);
         if(IS_POST){
             $res = $this->clear_html($_POST);
-            $auth_ids = empty($res['role_id']) ? [] : $res['role_id'];
+            $arr = $res['auth_id'];
+            unset($res['auth_id']);
+            $arr = explode(',',$arr);
+            array_shift($arr);
+            D('Role')->data(['role_name'=>$res['role_name']])->where(array('id' =>$res['ids']))->save();
 
-            $auth_ids = substr($auth_ids, 0, -1);
-            $auth_ids = explode(",", $auth_ids);
-            $role_ids = reset($auth_ids);
-            $delect = (D('Access')->where(array('role_id' =>$role_ids))->delete());
+            $delect = (D('Access')->where(array('role_id' =>$res['ids']))->delete());
             array_shift($auth_ids);
             $insertDatas = '';
-            foreach($auth_ids as $v){
-                $insertDatas = D('Access')->data(['role_id'=>$role_ids,'auth_id'=>$v])->add();
+            foreach($arr as $v){
+                $insertDatas = D('Access')->data(['role_id'=>$res['ids'],'auth_id'=>$v])->add();
             }
             if($insertDatas){
                 $this->dexit(['error'=>0,'msg'=>'修改成功']);
