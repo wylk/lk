@@ -7,8 +7,6 @@ class coiling_controller extends base_controller
     //浏览页面
 	public function card()
     {
-        $contract = D('Contract')->where()->select();
-        $this->assign('contract',$contract);
         $card = D('Card')->where()->select();
         $Contract_field = D('Contract_field')->where()->select();
         $Contract_fields = [];
@@ -22,6 +20,7 @@ class coiling_controller extends base_controller
         }
         // dump($cards);
         $this->assign('cards',$cards);
+
         $this->display();
     }
 }
