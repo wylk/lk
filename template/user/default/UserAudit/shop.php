@@ -89,6 +89,9 @@
               ?>
             </td>
             <td class="td-manage">
+              <a onclick="x_admin_show('查看详情','?c=UserAudit&a=plists&id=<?= $v['id'] ?>',700,500)" title="查看详情" href="javascript:;">
+                    <i class="layui-icon">&#xe705;</i>
+              </a>
               <a onclick="member_stop(this,'<?= $v['id'] ?>')" href="javascript:;"  title="审核通过">
                 <i class="layui-icon">&#x1005;</i>
               </a>

@@ -81,6 +81,15 @@ class UserAudit_controller extends base_controller
             }
     }
 
+    //查看详情
+    public function lists()
+    {
+        $id = $_GET['id'];
+        $res = (D('User_audit')->where(array('id' =>$id))->find());
+        $this->assign('res',$res);
+        $this->display();
+    }
+
     //个人审核没通过，反馈信息
     public function pfeedback()
     {
@@ -102,6 +111,15 @@ class UserAudit_controller extends base_controller
                 $this->dexit(['error'=>1,'msg'=>'用户以通过认证，无需反馈']);
             }
         }
+        $this->display();
+    }
+
+    //查看详情
+    public function plists()
+    {
+        $id = $_GET['id'];
+        $res = (D('User_audit')->where(array('id' =>$id))->find());
+        $this->assign('res',$res);
         $this->display();
     }
 }
