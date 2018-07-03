@@ -11,4 +11,4 @@ define('USE_FRAMEWORK', true);
 
 
 require_once LEKA_PATH.'source/init.php';
-?>
+
