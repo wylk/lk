@@ -22,8 +22,12 @@
     </style>
 </head>
 
-<body style="background-color: rgba(240,240,240,.3);margin-top:155px">
-  <div class="layui-container">
+<body style="background-color: rgba(240,240,240,.3);">
+  <header class="lk-bar lk-bar-nav" style="background-color: #FFF">
+      <i class="iconfont" style="font-size: 18px;">&#xe697;</i>
+      <h1 class="lk-title">登 陆</h1>
+  </header>
+  <div class="layui-container" style="padding-top:155px">
     <form class="layui-form" action="./login.php">
   <div class="layui-row" style="border:1px solid #d2d2d2; background-color: #FFF; margin-bottom:15px;">
     <div class="layui-col-xs12">
