@@ -50,8 +50,10 @@ $("#phone").blur(function(){
   var data = {phone:phone,type:"check"}
   $.post("./login.php",data,function(result){
     console.log(result);
-      // var result = JSON.parse(result);
-    if(result['res']){
+    var jsonres = JSON.parse(result);
+    console.log(jsonres);
+    console.log(jsonres.res);
+    if(result.res){
       $("#phoneCheck").html("该手机号可以注册");
       $("#getVerify").attr("disabled",false);
     }else{

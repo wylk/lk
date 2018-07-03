@@ -16,7 +16,7 @@
 <table class="layui-table">
     <tbody>
         <?php foreach($cardListRes as $key=>$value){ ?>
-           <?php if($value['is_publisher'] == 0){ ?>
+           <?php if($value['is_publisher'] != 0){ ?>
         <tr >
           <td colspan="2"></td>
           <td align="right">发布中</td>

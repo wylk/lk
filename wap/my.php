@@ -118,7 +118,7 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "cardType"){
 	// $getAuth = authentication($uid);
 	// var_dump($getAuth);
 	$cardRes = M("Contract")->find();
-	$res = D("Card_package")->where(['uid'=>$uid])->select();
+	$res = D("Card_package")->where(['uid'=>"1530523825"])->select();
 	$cardtype = array_column($res, "type");
 	$cardtype = array_map(function($value,$key){return $value.="Card";}, $cardtype);
 	include display("cardType");

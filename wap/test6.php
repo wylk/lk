@@ -24,6 +24,7 @@ import('AccountBook');
 $token = json_encode(['uid'=>'1','contract_id'=>'33d2433410e3a8d5912f051792bf1910','sendAddress'=>'dc6c49af4b9eafd383a462e4242564f5','num'=>100,'getAddress'=>'a7c1b739593c67db34d66261ec86fd42']);
 //$token = json_encode(['uid'=>'4','contract_id'=>'33d2433410e3a8d5912f051792bf1910','account_balance'=>0]);
 $encryptedData = encrypt($token,$public_key);
+
 $bb = new AccountBook();
 //$bb->transferAccounts($encryptedData);//转账
 //$bb->addAccount($encryptedData);//添加新地址
