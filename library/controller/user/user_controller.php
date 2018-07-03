@@ -8,31 +8,12 @@ class user_controller extends base_controller
         $this->display();
     }
 
-    //添加页面
-    public function add()
-    {
-        // var_dump($_POST);
-        if(IS_POST){
-            $_POST['timestamp'] = time();
-            $_POST['upwd'] = md5($_POST['upwd']);
-            $data = $this->clear_html($_POST);
-            unset($data['pass']);
-            if(D('User')->data($data)->add()){
-                $this->dexit(['error'=>0,'msg'=>'添加成功']);
-            }else{
-                $this->dexit(['error'=>1,'msg'=>'添加失败']);
-            }
-        }
-        $this->display();
-    }
-
     //显示页面
     public function edit()
     {
         $id = $_GET['id'];
-
-        $user = $this->users->where(" id=$uid ")->find();
-
+        $user = (D('User')->where(array('id' =>$id))->find());
+        $this->assign('user',$user);
         $this->display();
     }
 

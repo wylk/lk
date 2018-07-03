@@ -13,7 +13,6 @@ class base_controller extends controller{
     {
 		parent::__construct();
         if (!$_SESSION["admin"]) {
-            // $this->dexit(['status'=>1,'msg'=>'请先登录']);
             redirect('?c=public&a=login');
         }
         $res = $_SERVER["QUERY_STRING"];
