@@ -88,7 +88,7 @@
                 <?php } ?>
             </td>
             <td class="td-manage">
-
+              <a title="编辑"  onclick="x_admin_show('编辑','?c=user&a=edit',600,400) href="javascript:;">
               <a title="编辑"  onclick="x_admin_show('编辑','?c=user&a=edit&id=<?= $v['id'] ?>',700)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>

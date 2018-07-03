@@ -30,20 +30,9 @@ class user_controller extends base_controller
     public function edit()
     {
         $id = $_GET['id'];
-        $user = D('User')->where(array('id' =>$id))->find();
-        $this->assign('user',$user);
 
-        if(IS_POST){
-            $data = $this->clear_html($_POST);
-            $ids = $data['id'];
-            unset($data['id']);
-            $admins = D('User')->data($data)->where(array('id' =>$ids))->save();
-            if($admins){
-                $this->dexit(['error'=>0,'msg'=>'修改成功']);
-            }else{
-                $this->dexit(['error'=>1,'msg'=>'修改失败']);
-            }
-        }
+        $user = $this->users->where(" id=$uid ")->find();
+
         $this->display();
     }
 

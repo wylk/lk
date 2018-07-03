@@ -13,14 +13,15 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/js/xadmin.js"></script>
-    <script type="text/javascript" src="<?php echo TPL_URL;?>/js/admin_auth.js?r=<?php echo time();?>"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
   </head>
-  <body>
+
+  <body class="layui-anim layui-anim-up">
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -42,7 +43,7 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','?c=admin&a=roleAdd')"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="x_admin_show('添加用户','./member-add.html',600,400)"><i class="layui-icon"></i>添加</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
       </xblock>
       <table class="layui-table">
@@ -51,41 +52,65 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>ID</th>
-            <th>角色名</th>
-            <th>更新时间</th>
+            <th style="width:17px;">ID</th>
+            <th>姓名</th>
+            <th>身份证号</th>
+            <th>图片</th>
+            <th>认证时间</th>
+            <th>审核时间</th>
             <th>状态</th>
-            <th>操作</th>
+            <th>操作</th></tr>
         </thead>
 
-        <?php foreach($role as $k=>$v){ ?>
-
+        <?php foreach($arr as $k=>$v){ ?>
         <tbody>
           <tr>
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td><?= $v['id'] ?></td>
-            <td><?= $v['role_name'] ?></td>
-            <td><?= date('Y-m-d H:i:s',$v['created_at']) ?></td>
-            <td class="td-status">
-              <?php if( $v["status"] ==0){ ?>
-                  <button class="btn-success member_stop layui-btn layui-btn-normal"   data-id="<?= $v['id'] ?>" data-status="<?= $v['status'] ?>">已启用</button>
-                <?php }else{ ?>
-                  <button class="btn-danger member_stop layui-btn layui-btn-normal"  data-id="<?= $v['id'] ?>" data-status=status="<?= $v['status'] ?>">已禁用</button>
-                <?php } ?>
+            <td><?= $v['name'] ?></td>
+            <td><?= $v['postcards'] ?></td>
+            <td>
+              <img src="<?= $v['img_just'] ?>" style="width:47px" onclick="previewImg(this,'<?= $v['img_just'] ?>')" >
+              <img src="<?= $v['img_back'] ?>" style="width:47px" onclick="previewImg(this,'<?= $v['img_just'] ?>')" >
+              <img src="<?= $v['img_oneself'] ?>" style="width:47px" onclick="previewImg(this,'<?= $v['img_just'] ?>')" >
+            </td>
+            <td><?= date('Y-m-d H:i:s',$v['careat_time']); ?></td>
+            <td><?= date('Y-m-d H:i:s',$v['update_time']); ?></td>
+            <td>
+              <?php if($v['status']==0){
+                      echo '待审核';
+                    }elseif($v['status']==1){
+                      echo '审核通过';
+                    }else{
+                      echo '审核不通过';
+                    }
+              ?>
             </td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('编辑','?c=admin&a=roleEdit&id=<?= $v['id'] ?>')" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
+              <a onclick="member_stop(this,'<?= $v['id'] ?>')" href="javascript:;"  title="审核通过">
+                <i class="layui-icon">&#x1005;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'<?= $v['id'] ?>')" href="javascript:;">
+
+              <?php if($v['status']==1){ ?>
+                  <a onclick="x_admin_shows('禁用状态','?c=userAudit&a=feedback&id=<?= $v['id'] ?>&status=<?= $v['status'] ?>',600,400)" title="禁用状态" href="javascript:;">
+                    <i class="layui-icon">&#x1007;</i>
+                  </a>
+              <?php }else{ ?>
+                  <a onclick="x_admin_show('驳回申请','?c=userAudit&a=feedback&id=<?= $v['id'] ?>&status=<?= $v['status'] ?>',600,400)" title="驳回申请" href="javascript:;">
+                    <i class="layui-icon">&#x1007;</i>
+                  </a>
+              <?php } ?>
+              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
           </tr>
         </tbody>
+
         <?php } ?>
+
       </table>
       <div class="page">
         <div>
@@ -99,7 +124,7 @@
       </div>
 
     </div>
-    <script type="text/javascript">
+    <script>
       layui.use('laydate', function(){
         var laydate = layui.laydate;
 
@@ -113,36 +138,47 @@
           elem: '#end' //指定元素
         });
       });
+      //图片展示
+      function previewImg(obj) {
+             var img = new Image();
+             img.src = obj.src;
+             var imgHtml = "<img src='" + obj.src + "' />";
+            //捕获页
+             layer.open({
+                 type: 1,
+                 shade: false,
+                title: false, //不显示标题
+                //area:['600px','500px'],
+               area: [600+'px', 480+'px'],
+                 content: imgHtml, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+                 cancel: function () {
+                    //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', { time: 5000, icon: 6 });
+                 }
+           });
+         }
+
 
        /*用户-停用*/
-      $('.member_stop').click(function(){
-            var data = {}
-            data.id = $(this).data('id');
-            data.status = $(this).data('status');
-            $.get('?c=admin&a=startover',data,function(res){
-                console.log(res);
-                if(res.status == 0){
-                    alert(res.msg);
-                    window.location.replace(location.href);
-                }else{
-                    alert(res.msg);
-                }
-            },'json')
-        })
+      function member_stop(obj,id){
+          layer.confirm('确认要审核吗？',function(index){
+           $.post('?c=UserAudit&a=pchange',{id:id},function(res){
+            console.log(res);
+            if(res.error == 0){
+                layer.msg(res.msg,{icon:1,time:2000});
+                window.location.replace(location.href);
+              }else{
+                layer.msg(res.msg,{icon:4,time:2000});
+              }
+           },'json')
+          });
+      }
+
       /*用户-删除*/
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
-            $.post('?c=admin&a=delall',{id:id},function(res){
-              if(res.error == 0){
-                $(obj).parents("tr").remove();
-                layer.msg(res.msg,{icon:1,time:1000});
-              }else{
-                layer.msg(res.msg,{icon:4,time:1000});
-              }
-            },'json');
               //发异步删除数据
-              // $(obj).parents("tr").remove();
-              // layer.msg('已删除!',{icon:1,time:1000});
+              $(obj).parents("tr").remove();
+              layer.msg('已删除!',{icon:1,time:1000});
           });
       }
 
@@ -158,5 +194,12 @@
       }
 
     </script>
+    <script>var _hmt = _hmt || []; (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();</script>
   </body>
+
 </html>

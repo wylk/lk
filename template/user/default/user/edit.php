@@ -57,8 +57,8 @@
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
-              <button  class="layui-btn" lay-filter="add" lay-submit="">
-                  增加
+              <button  class="layui-btn" lay-filter="edit" lay-submit="">
+                  修改
               </button>
           </div>
       </form>
@@ -85,7 +85,7 @@
           });
 
           //监听提交
-          form.on('submit(add)', function(data){
+          form.on('submit(edit)', function(data){
             $.post('?c=user&a=edit',data.field,function(res){
               console.log(res);
               if(res.error==0){
@@ -101,7 +101,8 @@
                   parent.layer.close(index);
                 });
               }
-            },'json')
+            },'json');
+
             return false;
           });
 
