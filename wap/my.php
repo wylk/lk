@@ -6,8 +6,8 @@ $userId = 11;
 
 
 // 判断是否登录状态中
-if(isset($_SESSION['loginsign']) && time()-$_SESSION['loginsign']['lasttime']<3600*60){
-	var_dump(time()-$_SESSION['loginsign']['lasttime']);
+if(isset($_SESSION['loginsign']) && time()-$_SESSION['loginsign']['logintime']<3600*60){
+	// var_dump(time()-$_SESSION['loginsign']['lasttime']);
 	$_SESSION['loginsign']['lasttime'] = time();
 	$phone = $_SESSION['loginsign']['phone'];
 	$phone = isset($_SESSION['loginsign']['phone']) ? $_SESSION['loginsign']['phone'] : "";
@@ -16,7 +16,6 @@ if(isset($_SESSION['loginsign']) && time()-$_SESSION['loginsign']['lasttime']<36
 	header("location:login.php");
 	exit();
 }
-
 // 钱包
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == "purse"){
 	$userInfo = M("lk_user")->findField("point_balance,phone,id,upwd","phone=".$phone);
