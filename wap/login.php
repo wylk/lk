@@ -1,6 +1,5 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
-require_once dirname(__FILE__).'/func.php';
 $verifyLen = "6";  //验证码长度
 
 // 判断是否是微信、支付宝、手机号登录
@@ -21,7 +20,7 @@ if(isset($_POST['phone'])){
 	}
 	// 验证码获取
 	if(isset($_POST['type']) && $_POST['type'] == "code"){
-		require_once dirname(__FILE__).'/class/Transfer.class.php';
+		import("transfer");
 		$a = new Transfer();
 		$getPhone = $_POST['phone'];
 		$code = rangdNumber($verifyLen);
