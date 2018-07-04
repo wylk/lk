@@ -7,7 +7,7 @@ $verifyLen = "6";  //验证码长度
 // 2、支付宝
 // 3、手机号登录
 
-//var_dump($_SESSION);
+//dump($config['reg_readme_content']);
 // 手机号注册 aja请求处理
 if(isset($_POST['phone'])){
 	// ajax判断该用户账号是否存在
@@ -102,5 +102,16 @@ if($pageType && in_array($pageType, $pageArr)){
 	include display($pageType);
 }else{
 	include display("login");
+<<<<<<< HEAD
 	exit();
 }
+=======
+<<<<<<< HEAD
+	exit();
+}
+
+=======
+// 	exit();
+// }
+>>>>>>> 282dd4934e2cd756158addf52c51d0b76ad1d60b
+>>>>>>> b994f2ee30d438203a54fc1083d9943a06891b3a

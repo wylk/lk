@@ -22,6 +22,10 @@
       .layui-checkbox{background-color: #FFF; color:#FFF; width: 12px; height: 12px; border:1px solid #f2f2f2; margin:10px; font-size:9px;padding:2px;}
 
       .us-checkbox{background-color: #FFF; color:#000; width: 12px; height: 12px; border:1px solid #ddd; margin:10px; font-size:9px;padding:2px; }
+<<<<<<< HEAD
+=======
+      .layui-layer-btn{background:none;}
+>>>>>>> b994f2ee30d438203a54fc1083d9943a06891b3a
     </style>
 </head>
 
@@ -44,16 +48,34 @@
           <div class="layui-input-inline us-input-inline" style=" border-right:1px solid #F0F0F0">
                 <input type="text" name="password" required lay-verify="required" placeholder="请输入手机验证码" autocomplete="off" class="layui-input">
           </div>
+<<<<<<< HEAD
             <button type="button" name="getVerify" id="getVerify" class="layui-btn us-btn">获取验证码</button>
+=======
+            <a href="javascript:;" class="layui-btn us-btn">获取验证码</a>
+>>>>>>> b994f2ee30d438203a54fc1083d9943a06891b3a
         </div>
   </div>
 </div>
 <div class="layui-row">
+<<<<<<< HEAD
 <button id="layui-btn" class="layui-btn" lay-submit lay-filter="formDemo"  style="width:100%; background-color: #FF5722;">登 陆</button>
 <input type="hidden" name="logintype" value='login' />
 <div id="checkbox" class="layui-icon layui-inline layui-checkbox">&#xe605;</div>同意<a href="#" style="color:#01AAED" >《服务条款》</a>
+=======
+<button id="layui-btn" class="layui-btn layui-btn-disabled" lay-submit lay-filter="formDemo"  style="width:100%;">登 陆</button>
+<input type="hidden" name="logintype" value='login' />
+<div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
+  <div id="checkbox" class="layui-icon layui-inline layui-checkbox">&#xe605;</div>同意
+  <a data-method="setTop" href="javascript:;" class="layui-btn" style="color:#01AAED; background: none; margin:0; padding: 0;">《服务条款》</a>
+</div>
+>>>>>>> b994f2ee30d438203a54fc1083d9943a06891b3a
 </div>
 </form>
+</div>
+<div id="terms_content" class="layui-container" style="display: none">
+  <div class="layui-row">
+    我是你爸爸
+  </div>
 </div>
 <script type="text/javascript">
   $("#checkbox").click(
@@ -61,12 +83,62 @@
       var a = !$(this).hasClass("us-checkbox");
       if(a){
         $(this).addClass("us-checkbox");
-        $("#layui-btn").attr("disabled", true);
+        $("#layui-btn").removeClass("layui-btn-disabled");
+        $("#layui-btn").addClass("layui-btn-danger");
       }else{
         $(this).removeClass("us-checkbox");
-        $("#layui-btn").removeAttr("disabled");
+        $("#layui-btn").addClass("layui-btn-disabled");
       }
   });
+<<<<<<< HEAD
+=======
+
+
+layui.use('layer', function(){ //独立版的layer无需执行这一句
+  var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+
+  //触发事件
+  var active = {
+    setTop: function(){
+      var that = this;
+      //多窗口模式，层叠置顶
+      layer.open({
+        type: 2 //此处以iframe举例
+        ,title: '服务条款'
+        ,area: ['98%', '100%']
+        ,shade: 0
+        ,maxmin: false
+        ,offset: [0,0 //为了演示，随机坐标
+          //Math.random()*($(window).height()-300)
+          //,Math.random()*($(window).width()-390)
+        ]
+        ,content: '/wap/service_terms.php'
+        //,btn: ['继续弹出', '全部关闭'] //只是为了演示
+        ,yes: function(){
+          $(that).click();
+        }
+        ,btn2: function(){
+          layer.closeAll();
+        }
+
+        ,zIndex: layer.zIndex //重点1
+        ,success: function(layero){
+          layer.setTop(layero); //重点2
+        }
+      });
+    }
+
+
+  };
+
+  $('#layerDemo .layui-btn').on('click', function(){
+    var othis = $(this), method = othis.data('method');
+    active[method] ? active[method].call(this, othis) : '';
+  });
+
+});
+
+>>>>>>> b994f2ee30d438203a54fc1083d9943a06891b3a
 </script>
     <!-- <div id="pwdLogin">
         <form class="layui-form" action="./login.php">

@@ -15,24 +15,22 @@
     <div class="layui-main" style="height:20px;width:100%;"><a href="./my.php">返回</a></div>
 <table class="layui-table">
     <tbody>
-        <?php foreach($list as $key=>$value){ ?>
-           <?php if($value['is_publisher'] == 0){ ?>
+        <?php foreach($cardListRes as $key=>$value){ ?>
+           <?php if($value['is_publisher'] != 0){ ?>
         <tr >
           <td colspan="2"></td>
           <td align="right">发布中</td>
         </tr>
         <tr id="contract_<?php   ?>" title="<?php  ?>">
           <td rowspan="3"><img src="<?php echo $value['card_log'] ?>" /></td>
-          <td rowspan="3">
-            <?php foreach($value['field'] as $k=>$v){?>
-              <p><span><?php echo $v['describe'] ?>: </span><span><?php echo $v['val'] ?></span></p>
-            <?php } ?>
-          </td>
+          <td>数量：<?php echo $value['sum'] ?></td>
           <td rowspan="2"><?php echo $value['describe']?></td>
         </tr>
         <tr id="contract_<?php  ?>" title="<?php ?>">
+          <td>价格：<?php echo $value['price'] ?></td>
         </tr>
         <tr id="contract_<?php  ?>" title="<?php  ?>">
+          <td>剩余<?php  ?> 共<?php echo $value['num'] ?></td>
           <td></td>
         </tr>
         <?php } } ?>
