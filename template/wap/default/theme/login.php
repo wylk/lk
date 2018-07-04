@@ -16,13 +16,12 @@
       .layui-form-item .layui-input-inline.us-input-inline{display: inline-block; float: none; left: 0;  width: auto; margin: 0; padding: 10px 0 10px 31px;}
       .layui-form-item{margin: 0; line-height: 45px;}
       .us-btn{background-color: #FFF; color:#FF5722; font-weight: 500}
-      .us-btn:hover{color:#FF5722;}
       .layui-form-item .layui-form-label{margin-top:10px;}
       .layui-row{border-radius: 3px;}
 
-      .layui-checkbox{background-color: #FFF; color:#FFF; width: 12px; height: 12px; border:1px solid #666; margin:10px; font-size:9px;padding:2px;}
+      .layui-checkbox{background-color: #FFF; color:#FFF; width: 12px; height: 12px; border:1px solid #f2f2f2; margin:10px; font-size:9px;padding:2px;}
 
-      .us-checkbox{background-color: #FFF; color:#000; width: 12px; height: 12px; border:1px solid #666; margin:10px; font-size:9px;padding:2px; }
+      .us-checkbox{background-color: #FFF; color:#000; width: 12px; height: 12px; border:1px solid #ddd; margin:10px; font-size:9px;padding:2px; }
     </style>
 </head>
 
@@ -38,21 +37,20 @@
         <div class="layui-form-item">
             <label class="layui-form-label">手机号码</label>
             <div class="layui-input-inline us-input-inline" style="padding-left:0px;">
-                <input type="text" name="phone" id="phone" required lay-verify="required|phone|number" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                <input type="text" name="phone" id="phone" required lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item"  style="border-top:1px solid #F0F0F0">
           <div class="layui-input-inline us-input-inline" style=" border-right:1px solid #F0F0F0">
                 <input type="text" name="password" required lay-verify="required" placeholder="请输入手机验证码" autocomplete="off" class="layui-input">
-                <input type="hidden" name="code" id="code" value="">
           </div>
-            <a href="javascript:;"  id="getVerify" class="layui-btn us-btn">获取验证码</a>
+            <button type="button" name="getVerify" id="getVerify" class="layui-btn us-btn">获取验证码</button>
         </div>
   </div>
 </div>
 <div class="layui-row">
 <button id="layui-btn" class="layui-btn" lay-submit lay-filter="formDemo"  style="width:100%; background-color: #FF5722;">登 陆</button>
-<input type="hidden" name="logintype" value='checkAccount' />
+<input type="hidden" name="logintype" value='login' />
 <div id="checkbox" class="layui-icon layui-inline layui-checkbox">&#xe605;</div>同意<a href="#" style="color:#01AAED" >《服务条款》</a>
 </div>
 </form>
@@ -70,47 +68,86 @@
       }
   });
 </script>
-
-<script>
-    layui.use(['form',"layer","element"],function(){
-        $ = layui.jquery;
-        var form = layui.form;
-        var layer = layui.layer;
-        var element = layui.element;
-        form.on("submit(formDemo)",function(data){
-            var data = data.field;
-            $.post("./login.php",data,function(result){
-                console.log(result);
-                if(result['res']){
-                    window.location.href = './my.php';
-                    layer.msg(result['msg'],{skin:'demo-class',icon: 1});
-                }else{
-                    layer.msg(result['msg'],{skin:'demo-class',icon: 5});
-                }
-            },"json");
-            return false;
-        })
-        // 获取验证码
-        $("#getVerify").bind("click", function() {
-            var phone = $("#phone").val();
-            phoneReg = /^1([0-9]{10})$/;
-            if (!phoneReg.test(phone)) {
-                layer.msg("请正确填写手机号",{skin:'demo-class',icon: 5});
-                return ;
-            }
-            var data = { phone: phone, type: "code" }
-            $.post("./login.php", data, function(data) {
-                console.log(data);
-                if(data['result']['result']['success']){
-                    countDown = 60;
-                    setTime();
-                    $("#code").val(data['code']);
-                    layer.msg("验证码已发送",{skin:'demo-class',icon: 1});
-                }else{
-                    layer.msg("验证码发送失败",{skin:'demo-class',icon: 5});
-                }
-                
-            },'json');
+    <!-- <div id="pwdLogin">
+        <form class="layui-form" action="./login.php">
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="phone" id="phone" required lay-verify="required" placeholder="手机号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="password" required lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">也可以用微信、支付宝登录</div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">登录</button>
+                    <input type="hidden" name="login" value='1' />
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-filter="formDemo">忘记密码</button>
+                    <span type="button" class="layui-btn" id="showShortLogin">短信登录</span>
+                    <input type="hidden" name="logintype" value='login' />
+                    <a type="reset" class="layui-btn layui-btn-primary" href="./login.php?pagetype=register">注册</a>
+                </div>
+            </div>
+        </form>
+    </div> -->
+    <div id="shortLogin" style="display: none;">
+        <form class="layui-form" action="./login.php">
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="phone" id="shortPhone" required lay-verify="required" placeholder="手机号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">验证码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="code" lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">登录</button>
+                    <input type="hidden" name="login" value='1' />
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    <button type="button" name="getVerify" id="getVerify" class="layui-btn">获取验证码</button>
+                </div>
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-filter="formDemo" id="showPwdLogin">密码登录</button>
+                    <input type="hidden" name="logintype" value='shortLogin' />
+                    <a type="reset" class="layui-btn layui-btn-primary" href="./login.php?pagetype=register">注册</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+    $("#showPwdLogin").bind("click", function() {
+        $("#shortLogin").hide();
+        $("#pwdLogin").show()();
+    })
+    $("#showShortLogin").bind("click", function() {
+        $("#shortLogin").show();
+        $("#pwdLogin").hide();
+    })
+    $("#getVerify").bind("click", function() {
+        var phone = $("#shortPhone").val();
+        phone = phone.replace(/(^\s+)|(\s+)|(\s+$)/g, "");
+        if (!phone) {
+            alert("请填写手机号");
+            return;
+        }
+        var data = { phone: phone, type: "code" }
+        $.post("./login.php", data, function(result) {
+            console.log(result);
+            countDown = 60;
+            setTime();
         })
     })
     var countDown;
