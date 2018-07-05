@@ -23,8 +23,7 @@
 </header>
 <div class="lk-content">
     <span><i>注</i>普通用户无需认证 发VIP1/VIP2请完成认证</span>
-<<<<<<< HEAD
-<div class="layui-tab layui-tab-card" lay-filter>
+<div class="layui-tab layui-tab-card">
     <ul class="layui-tab-title">
         <li class="layui-this">个人认证</li>
         <li>企业认证</li>
@@ -130,18 +129,7 @@
         </div>
     </div>
 </div>
-=======
-<form class="layui-form" action="">
-    <input type="hidden" name="pagetype" value="<?php echo $pagetype; ?>">
-    <div class="input-m"><?php echo $htmlRes;?></div>
-  <div class="layui-form-item">
-    <div class="layui-input-block">
-      <button class="layui-btn" lay-submit lay-filter="add">立即提交</button>
-      <button type="reset" class="layui-btn layui-btn-primary" >重置</button>
-    </div>
-  </div>
-</form>
->>>>>>> b241a5d90bfacebcbbd571fcdce6b513f619d0e2
+
 </div>
    
     <?php include display('public_menu');?>

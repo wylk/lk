@@ -32,7 +32,7 @@
       <h1 class="lk-title">登 陆</h1>
   </header>
   <div class="layui-container" style="padding-top:155px">
-    <form class="layui-form" action="./login.php">
+    <form class="layui-form">
   <div class="layui-row" style="border:1px solid #d2d2d2; background-color: #FFF; margin-bottom:50px;">
     <div class="layui-col-xs12">
         <div class="layui-form-item">
@@ -50,9 +50,8 @@
   </div>
 </div>
 <div class="layui-row">
-
 <button id="layui-btn" class="layui-btn layui-btn-disabled" lay-submit lay-filter="formDemo"  style="width:100%;">登 陆</button>
-<input type="hidden" name="logintype" value='login' />
+<input type="hidden" name="logintype" value='checkAccount' />
 <div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
   <div id="checkbox" class="layui-icon layui-inline layui-checkbox">&#xe605;</div>同意
   <a data-method="setTop" href="javascript:;" class="layui-btn" style="color:#01AAED; background: none; margin:0; padding: 0;">《服务条款》</a>
@@ -128,9 +127,10 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
         var element = layui.element;
         form.on("submit(formDemo)",function(data){
             var data = data.field;
+            console.log(data);
             $.post("./login.php",data,function(result){
                 console.log(result);
-                if(result['res']){
+                if(!result['res']){
                     window.location.href = './my.php';
                     layer.msg(result['msg'],{skin:'demo-class',icon: 1});
                 }else{

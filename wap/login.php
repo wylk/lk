@@ -26,9 +26,7 @@ if(isset($_POST['phone'])){
 		$code = rangdNumber($verifyLen);
 		$result = $a->message($getPhone,array("code"=>$code));
 		$_SESSION['verify'][$getPhone] = $code;
-		$data = array($getPhone,$code,$result,$_SESSION['verify'][$getPhone]);
-		echo json_encode($data);
-		exit();
+		dexit(['result'=>$result,'code'=>$code]);
 	}
 	// 退出登录
 	if(isset($_POST['type']) && $_POST['type'] == "signOut"){
@@ -42,18 +40,22 @@ if(isset($_POST['phone'])){
 		$phone = trim($_POST['phone']);
 		$code = trim($_POST['password']);
 		if($code != $_SESSION['verify'][$phone]){
-			dexit(["res"=>false,'msg'=>"验证码错误"]);
+			dexit(["res"=>1,'msg'=>"验证码错误"]);
 		}
 		$phoneRes = D("User")->field("id")->where(['phone'=>$phone])->select();
 		if(!$phoneRes){
 			$addAccountRes = D("User")->data(['phone'=>$phone])->add();
 			if(!$addAccountRes){
-				dexit(["res"=>false,'msg'=>"注册失败"]);
+				dexit(["res"=>1,'msg'=>"注册失败"]);
 			}
 			$userid = $addAccountRes;
 		}else{
 			$userid = $phoneRes[0]['id'];
 		}
+		$_SESSION['loginsign']["phone"] = $phone;
+		$_SESSION['loginsign']['userid'] = $userid;
+		$_SESSION['loginsign']['logintime'] = time();
+		dexit(["res"=>0,'msg'=>"登录成功"]);
 	}
 }
 
@@ -114,13 +116,13 @@ if(isset($_POST['phone'])){
 
 
 // 浏览页面判断
-$pageArr = ['login',"register"];
-$pageType  = isset($_GET['pagetype']) ? $_GET['pagetype'] : '';
-if($pageType && in_array($pageType, $pageArr)){
-	include display($pageType);
-}else{
+// $pageArr = ['login',"register"];
+// $pageType  = isset($_GET['pagetype']) ? $_GET['pagetype'] : '';
+// if($pageType && in_array($pageType, $pageArr)){
+// 	include display($pageType);
+// }else{
 	include display("login");
 
-	exit();
-}
+// 	exit();
+// }
 
