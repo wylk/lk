@@ -37,12 +37,11 @@ if(isset($_POST['phone'])){
 	}
 	// 验证码登录
 	if(isset($_POST['logintype']) && $_POST['logintype'] == "checkAccount"){
-		dexit(["res"=>0,'msg'=>"测试登录"]);
 		$phone = trim($_POST['phone']);
 		$code = trim($_POST['password']);
-		if($code != $_SESSION['verify'][$phone]){
-			dexit(["res"=>1,'msg'=>"验证码错误"]);
-		}
+		// if($code != $_SESSION['verify'][$phone]){
+		// 	dexit(["res"=>1,'msg'=>"验证码错误"]);
+		// }
 		$phoneRes = D("User")->field("id")->where(['phone'=>$phone])->select();
 		if(!$phoneRes){
 			$addAccountRes = D("User")->data(['phone'=>$phone])->add();
