@@ -1,4 +1,4 @@
-layui.use(['form','layer'], function(){
+ layui.use(['form','layer'], function(){
             $ = layui.jquery;
           var form = layui.form
           ,layer = layui.layer;
@@ -12,21 +12,18 @@ layui.use(['form','layer'], function(){
             }
           });
 
+          form.on('checkbox(allChoose)', function(data){
+              var child = $(data.elem).parent().next().find('input[type="checkbox"]');
+              child.each(function(index, item){
+                item.checked = data.elem.checked;
+              });
+              form.render('checkbox');
+          });
+
           //监听提交
           form.on('submit(edit)', function(data){
-
-            var postData = {}
-            postData.role_id = '';
-            for(var k in data.field){
-              if(k == 'role_name'){
-                postData.role_name = data.field[k]
-              }else{
-                postData.role_id += data.field[k].toString()+',';
-              }
-            }
-
-            $.post('?c=admin&a=roleEdit',postData,function(res){
-                console.log(res);
+            data.field.auth_id = lk.checkbox_val('auth_id');
+            $.post('?c=admin&a=roleEdit',data.field,function(res){
                 if(res.error==0){
                     layer.alert(res.msg, {icon: 1,},function () {
                       // 获得frame索引

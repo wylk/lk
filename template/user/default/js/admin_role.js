@@ -11,12 +11,13 @@ layui.use('laydate', function(){
           elem: '#end' //指定元素
         });
       });
-      //禁用 启用
-        $('.member_stop').click(function(){
+
+       /*用户-停用*/
+      $('.member_stop').click(function(){
             var data = {}
             data.id = $(this).data('id');
             data.status = $(this).data('status');
-            $.get('?c=admin&a=change',data,function(res){
+            $.get('?c=admin&a=startover',data,function(res){
                 console.log(res);
                 if(res.status == 0){
                     alert(res.msg);
@@ -26,18 +27,17 @@ layui.use('laydate', function(){
                 }
             },'json')
         })
-
       /*用户-删除*/
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
-              $.post('?c=admin&a=delete',{id:id},function(res){
-                if(res.error == 0){
-                  $(obj).parents("tr").remove();
-                  layer.msg(res.msg,{icon:1,time:1000});
-                }else{
-                  layer.msg(res.msg,{icon:4,time:1000});
-                }
-              },'json');
+            $.post('?c=admin&a=delall',{id:id},function(res){
+              if(res.error == 0){
+                $(obj).parents("tr").remove();
+                layer.msg(res.msg,{icon:1,time:1000});
+              }else{
+                layer.msg(res.msg,{icon:4,time:1000});
+              }
+            },'json');
               //发异步删除数据
               // $(obj).parents("tr").remove();
               // layer.msg('已删除!',{icon:1,time:1000});
@@ -45,7 +45,9 @@ layui.use('laydate', function(){
       }
 
       function delAll (argument) {
+
         var data = tableCheck.getData();
+
         layer.confirm('确认要删除吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
             layer.msg('删除成功', {icon: 1});
