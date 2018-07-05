@@ -102,16 +102,7 @@ if($pageType && in_array($pageType, $pageArr)){
 	include display($pageType);
 }else{
 	include display("login");
-<<<<<<< HEAD
-	exit();
-}
-=======
-<<<<<<< HEAD
+
 	exit();
 }
 
-=======
-// 	exit();
-// }
->>>>>>> 282dd4934e2cd756158addf52c51d0b76ad1d60b
->>>>>>> b994f2ee30d438203a54fc1083d9943a06891b3a
