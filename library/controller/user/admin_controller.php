@@ -74,6 +74,7 @@ class admin_controller extends base_controller
     //管理员列表
     public function index()
     {
+        dump($_GET);
         $admin = (D('Admin')->select());
         foreach($admin as $k=>$v){
             $id = $v['id'];
@@ -81,7 +82,6 @@ class admin_controller extends base_controller
             $name = array_unique($name);
             $role[] = $name;
         }
-
         $this->assign('role',$role);
         $this->display();
     }
