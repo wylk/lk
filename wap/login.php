@@ -1,6 +1,5 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
-require_once dirname(__FILE__).'/func.php';
 $verifyLen = "6";  //验证码长度
 
 // 判断是否是微信、支付宝、手机号登录
@@ -13,17 +12,15 @@ $verifyLen = "6";  //验证码长度
 if(isset($_POST['phone'])){
 	// ajax判断该用户账号是否存在
 	if(isset($_POST['type']) && $_POST['type'] == "check"){
-		$phone = $_POST['phone'];
 		$res = M("lk_user")->findField("id,phone","phone=".$phone);
-		if($res) $res = array("res"=>false);
-		else $res = array("res"=>true);
-		echo json_encode($res);
+		if($res) $res1 = ["res"=>false,'msg'=>"该手机号已经被注册"];
+		else $res1 = ["res"=>true,"msg"=>"该手机号可以注册"];
+		echo dexit($res1);
 		exit();
-		// if()
 	}
 	// 验证码获取
 	if(isset($_POST['type']) && $_POST['type'] == "code"){
-		require_once dirname(__FILE__).'/class/Transfer.class.php';
+		import("transfer");
 		$a = new Transfer();
 		$getPhone = $_POST['phone'];
 		$code = rangdNumber($verifyLen);
@@ -105,6 +102,16 @@ if($pageType && in_array($pageType, $pageArr)){
 	include display($pageType);
 }else{
 	include display("login");
+<<<<<<< HEAD
+	exit();
+}
+=======
+<<<<<<< HEAD
 	exit();
 }
 
+=======
+// 	exit();
+// }
+>>>>>>> 282dd4934e2cd756158addf52c51d0b76ad1d60b
+>>>>>>> b994f2ee30d438203a54fc1083d9943a06891b3a

@@ -16,14 +16,16 @@
       .layui-form-item .layui-input-inline.us-input-inline{display: inline-block; float: none; left: 0;  width: auto; margin: 0; padding: 10px 0 10px 31px;}
       .layui-form-item{margin: 0; line-height: 45px;}
       .us-btn{background-color: #FFF; color:#FF5722; font-weight: 500}
-      .us-btn:hover{color:#FF5722;}
       .layui-form-item .layui-form-label{margin-top:10px;}
       .layui-row{border-radius: 3px;}
 
       .layui-checkbox{background-color: #FFF; color:#FFF; width: 12px; height: 12px; border:1px solid #f2f2f2; margin:10px; font-size:9px;padding:2px;}
 
       .us-checkbox{background-color: #FFF; color:#000; width: 12px; height: 12px; border:1px solid #ddd; margin:10px; font-size:9px;padding:2px; }
+<<<<<<< HEAD
+=======
       .layui-layer-btn{background:none;}
+>>>>>>> b994f2ee30d438203a54fc1083d9943a06891b3a
     </style>
 </head>
 
@@ -46,17 +48,31 @@
           <div class="layui-input-inline us-input-inline" style=" border-right:1px solid #F0F0F0">
                 <input type="text" name="password" required lay-verify="required" placeholder="请输入手机验证码" autocomplete="off" class="layui-input">
           </div>
+<<<<<<< HEAD
             <a href="javascript:;"  id="getVerify" class="layui-btn us-btn">获取验证码</a>
+=======
+<<<<<<< HEAD
+            <button type="button" name="getVerify" id="getVerify" class="layui-btn us-btn">获取验证码</button>
+=======
+            <a href="javascript:;" class="layui-btn us-btn">获取验证码</a>
+>>>>>>> b994f2ee30d438203a54fc1083d9943a06891b3a
+>>>>>>> 113629ddd165a431a197261a404da4b9f3cd6cad
         </div>
   </div>
 </div>
 <div class="layui-row">
+<<<<<<< HEAD
+<button id="layui-btn" class="layui-btn" lay-submit lay-filter="formDemo"  style="width:100%; background-color: #FF5722;">登 陆</button>
+<input type="hidden" name="logintype" value='login' />
+<div id="checkbox" class="layui-icon layui-inline layui-checkbox">&#xe605;</div>同意<a href="#" style="color:#01AAED" >《服务条款》</a>
+=======
 <button id="layui-btn" class="layui-btn layui-btn-disabled" lay-submit lay-filter="formDemo"  style="width:100%;">登 陆</button>
 <input type="hidden" name="logintype" value='login' />
 <div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
   <div id="checkbox" class="layui-icon layui-inline layui-checkbox">&#xe605;</div>同意
   <a data-method="setTop" href="javascript:;" class="layui-btn" style="color:#01AAED; background: none; margin:0; padding: 0;">《服务条款》</a>
 </div>
+>>>>>>> b994f2ee30d438203a54fc1083d9943a06891b3a
 </div>
 </form>
 </div>
@@ -74,6 +90,13 @@
         $("#layui-btn").addClass("layui-btn-disabled");
       }
   });
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 113629ddd165a431a197261a404da4b9f3cd6cad
 layui.use('layer', function(){ //独立版的layer无需执行这一句
   var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
 
@@ -118,6 +141,7 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
 
 });
 
+>>>>>>> b994f2ee30d438203a54fc1083d9943a06891b3a
 </script>
 <script>
     layui.use(['form',"layer","element"],function(){
