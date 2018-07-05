@@ -44,12 +44,13 @@ if(isset($_POST['phone'])){
 		}
 		$phoneRes = D("User")->field("id")->where(['phone'=>$phone])->select();
 		if(!$phoneRes){
-			$userid = $phoneRes['id'];
 			$addAccountRes = D("User")->data(['phone'=>$phone])->add();
 			if(!$addAccountRes){
 				dexit(["res"=>false,'msg'=>"注册失败"]);
 			}
 			$userid = $addAccountRes;
+		}else{
+			$userid = $phoneRes[0]['id'];
 		}
 		$_SESSION['loginsign']['phone'] = $phone;
 		$_SESSION['loginsign']['userid'] = $userid;
