@@ -2,7 +2,7 @@
 require_once dirname(__FILE__).'/global.php';
 require_once dirname(__FILE__).'/func.php';
 $verifyLen = "6";  //验证码长度
-
+$userId = 11;
 
 
 // 判断是否登录状态中
@@ -126,28 +126,37 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "cardType"){
 }
 // 展示卡列表
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == "cardList"){
-	$cardList = M("lk_card_package")->select();
-	foreach($cardList as $key=>$value){
-		$cardBag[$value['card_id']] = $value;
-		$cardIds[] = $value['card_id'];
-	}
-	list($cardListRes,$cIdInfo) = M("lk_card")->cardInfobyCardId($cardIds);
-	foreach($cardListRes as $key=>$value){
-		foreach($cIdInfo as $k=> $v){
-			$value[$v['id']]['field'] = $v['val'];
-			$value[$v['id']]['describe'] = $v['describe'];
-			$cardListRes[$key]['uid'] = $value[$v['id']]['uid'];
-			$cardListRes[$key]['c_id'] = $value[$v['id']]['c_id'];
-			$cardListRes[$key]['card_id'] = $value[$v['id']]['card_id'];
-			// $cardListRes[$key]['val'] = $value[$v['id']]['val'];
-			$cardListRes[$key][$v['val']] = $value[$v['id']]['val'];
-			$cardListRes[$key][$v['val']."_describe"] = $v['describe'];
+	$where['uid'] = $userId;
+	// 获取店铺发卡的类型
+	$cardPageList = D("Card_package")->where($where)->select();
+	$cardPageList = array_column($cardPageList,null,"card_id");
 
-		}
+	// 获取card的属性
+	$cardIds = array_keys($cardPageList);
+	$cardIdstr = implode($cardIds, "','");
+	$where = "card_id in('".$cardIdstr."')";
+	// $cardWhere['card_id'] = count($cardIds)>1 ? ['in',$cardIds] : $cardIds[0];
+	// 获取卡片的信息
+	$cards = D("Card")->where($where)->select();
+
+	// $cids = array_column($cards,"c_id");
+	// 获取所有属性列表
+	$cidField = D("Contract_field")->where()->select();
+	$cidField = array_column($cidField,null,"id");
+
+	// 整理卡的信息
+	foreach($cards as $key => $value ){
+		$list[$value['card_id']]['uid'] = $value['uid'];
+		$list[$value['card_id']]['card_id'] = $value['card_id'];
+		$list[$value['card_id']]['type'] = $cardPageList[$value['card_id']]["type"];
+		$list[$value['card_id']]['num'] = $cardPageList[$value['card_id']]["num"];
+		$list[$value['card_id']]['address'] = $cardPageList[$value['card_id']]["address"];
+		$list[$value['card_id']]['is_publisher'] = $cardPageList[$value['card_id']]["is_publisher"];
+		// 不同卡不同的属性
+		$list[$value['card_id']]['field'][$cidField[$value['c_id']]["val"]]['val'] = $value['val'];
+		$list[$value['card_id']]['field'][$cidField[$value['c_id']]["val"]]['describe'] = $cidField[$value['c_id']]["describe"];
 	}
-	// // 	var_dump($cIdInfo);
-	// print_r($cardBag);
-	// print_r($cardListRes);
+
 	include display("cardList");
 	exit();
 }
