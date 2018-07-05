@@ -6,8 +6,13 @@ $verifyLen = "6";  //验证码长度
 
 
 // 判断是否登录状态中
+<<<<<<< HEAD
 if(isset($_SESSION['loginsign']) && time()-$_SESSION['loginsign']['logintime']<3600){
 	// var_dump(time()-$_SESSION['loginsign']['lasttime']);
+=======
+if(isset($_SESSION['loginsign']) && time()-$_SESSION['loginsign']['lasttime']<3600*60){
+	var_dump(time()-$_SESSION['loginsign']['lasttime']);
+>>>>>>> b241a5d90bfacebcbbd571fcdce6b513f619d0e2
 	$_SESSION['loginsign']['lasttime'] = time();
 	$phone = isset($_SESSION['loginsign']['phone']) ? $_SESSION['loginsign']['phone'] : "";
 	$userId = isset($_SESSION['loginsign']['userid']) ? $_SESSION['loginsign']['userid'] : "";
@@ -18,6 +23,7 @@ if(isset($_SESSION['loginsign']) && time()-$_SESSION['loginsign']['logintime']<3
 	header("location:login.php");
 	exit();
 }
+
 // 钱包
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == "purse"){
 	$userInfo = M("lk_user")->findField("point_balance,phone,id,upwd","phone=".$phone);

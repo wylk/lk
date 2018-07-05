@@ -7,7 +7,7 @@ $verifyLen = "6";  //验证码长度
 // 2、支付宝
 // 3、手机号登录
 
-//var_dump($_SESSION);
+//dump($config['reg_readme_content']);
 // 手机号注册 aja请求处理
 if(isset($_POST['phone'])){
 	// ajax判断该用户账号是否存在
@@ -26,7 +26,9 @@ if(isset($_POST['phone'])){
 		$code = rangdNumber($verifyLen);
 		$result = $a->message($getPhone,array("code"=>$code));
 		$_SESSION['verify'][$getPhone] = $code;
-		dexit(["result"=>$result,"code"=>$code]);
+		$data = array($getPhone,$code,$result,$_SESSION['verify'][$getPhone]);
+		echo json_encode($data);
+		exit();
 	}
 	// 退出登录
 	if(isset($_POST['type']) && $_POST['type'] == "signOut"){
@@ -35,6 +37,7 @@ if(isset($_POST['phone'])){
 		else echo true;
 		exit();
 	}
+<<<<<<< HEAD
 	// 验证码登录
 	if(isset($_POST['logintype']) && $_POST['logintype'] == "checkAccount"){
 		$phone = trim($_POST['phone']);
@@ -51,76 +54,74 @@ if(isset($_POST['phone'])){
 			$userid = $addAccountRes;
 		}else{
 			$userid = $phoneRes[0]['id'];
-		}
-		$_SESSION['loginsign']['phone'] = $phone;
-		$_SESSION['loginsign']['userid'] = $userid;
-		$_SESSION['loginsign']['logintime'] = time();
-		dexit(["res"=>true,'msg'=>"登录成功"]);
-	}
+=======
 }
 
-// //手机号注册 短信验证
-// $loginType = isset($_GET['logintype']) ? $_GET['logintype'] : false;
-// if($loginType == "register"){
-// 	$subPhone = $_GET['phone'];
-// 	$subPhone = checkTelephone($subPhone) ? $subPhone : "";
-// 	$subCode = $_GET['code'];
-// 	$code = $_SESSION['verify'][$subPhone];
-// 	if($subCode == $code){
-// 		// 将用户添加到数据库中
-// 		$data = ['phone'=>$subPhone];
-// 		$insertRes = M("lk_user")->insert($data);
-// 		if($insertRes) {
-// 			$_SESSION['loginsign']['phone'] = $subPhone;
-// 			$_SESSION['loginsign']['id'] = $insertRes;
-// 			$_SESSION['loginsign']['lasttime'] = time();
-// 			header("location:my.php");
-// 			exit();
-// 		}
-// 	}
-// 	header("location:login.php?pagetype=register");
-// 	exit();
-// }
+//手机号注册 短信验证
+$loginType = isset($_GET['logintype']) ? $_GET['logintype'] : false;
+if($loginType == "register"){
+	$subPhone = $_GET['phone'];
+	$subPhone = checkTelephone($subPhone) ? $subPhone : "";
+	$subCode = $_GET['code'];
+	$code = $_SESSION['verify'][$subPhone];
+	if($subCode == $code){
+		// 将用户添加到数据库中
+		$data = ['phone'=>$subPhone];
+		$insertRes = M("lk_user")->insert($data);
+		if($insertRes) {
+			$_SESSION['loginsign']['phone'] = $subPhone;
+			$_SESSION['loginsign']['id'] = $insertRes;
+			$_SESSION['loginsign']['lasttime'] = time();
+			header("location:my.php");
+			exit();
+>>>>>>> b241a5d90bfacebcbbd571fcdce6b513f619d0e2
+		}
+	}
+	header("location:login.php?pagetype=register");
+	exit();
+}
 
 
-// // 手机号登录检验
-// if($loginType == "login"){
-// 	$loginPhone = trim($_GET['phone']);
-// 	$loginPwd = trim($_GET['password']);
-// 	$loginPwd = md5($loginPwd);
-// 	$loginWhere = ['phone'=>$loginPhone,"upwd"=>$loginPwd];
-// 	$checkRes = M("lk_user")->findField("id,phone,upwd",$loginWhere);
-// 	if($checkRes){
-// 		$_SESSION['loginsign']['phone'] = $loginPhone;
-// 		// $_SESSION['loginsign']['id'] = $checkRes[''];
-// 		$_SESSION['loginsign']['lasttime'] = time();
-// 		header("location:./my.php");
-// 		exit();
-// 	}
-// 	header("location:./login.php");
-//     exit();
-// }
+// 手机号登录检验
+if($loginType == "login"){
+	$loginPhone = trim($_GET['phone']);
+	$loginPwd = trim($_GET['password']);
+	$loginPwd = md5($loginPwd);
+	$loginWhere = ['phone'=>$loginPhone,"upwd"=>$loginPwd];
+	$checkRes = M("lk_user")->findField("id,phone,upwd",$loginWhere);
+	if($checkRes){
+		$_SESSION['loginsign']['phone'] = $loginPhone;
+		// $_SESSION['loginsign']['id'] = $checkRes[''];
+		$_SESSION['loginsign']['lasttime'] = time();
+		header("location:./my.php");
+		exit();
+	}
+	header("location:./login.php");
+    exit();
+}
 // 短信登录验证
-// if($loginType == "shortLogin"){
-// 	$loginPhone = trim($_GET['phone']);
-// 	$loginCode = trim($_GET['code']);
-// 	if($loginCode == $_SESSION['verify'][$loginPhone]){
-// 		$_SESSION['loginsign']['phone'] = $loginPhone;
-// 		$_SESSION['loginsign']['lasttime'] = time();
-// 		header("location:./my.php");
-// 		exit();
-// 	}
-// 	header("location:./login.php");
-// 	exit();
-// }
+if($loginType == "shortLogin"){
+	$loginPhone = trim($_GET['phone']);
+	$loginCode = trim($_GET['code']);
+	if($loginCode == $_SESSION['verify'][$loginPhone]){
+		$_SESSION['loginsign']['phone'] = $loginPhone;
+		$_SESSION['loginsign']['lasttime'] = time();
+		header("location:./my.php");
+		exit();
+	}
+	header("location:./login.php");
+	exit();
+}
 
 
 // 浏览页面判断
-// $pageArr = ['login',"register"];
-// $pageType  = isset($_GET['pagetype']) ? $_GET['pagetype'] : '';
-// if($pageType && in_array($pageType, $pageArr)){
-// 	include display($pageType);
-// }else{
+$pageArr = ['login',"register"];
+$pageType  = isset($_GET['pagetype']) ? $_GET['pagetype'] : '';
+if($pageType && in_array($pageType, $pageArr)){
+	include display($pageType);
+}else{
 	include display("login");
-// 	exit();
-// }
+
+	exit();
+}
+

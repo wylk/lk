@@ -27,15 +27,15 @@
 <body>
 <header class="lk-bar lk-bar-nav">
     <i class="iconfont" style="font-size: 30px;">&#xe697;</i>
-    <h1 class="lk-title">导航栏</h1>
+    <h1 class="lk-title">首页</h1>
 </header>
 <div class="lk-content">
 <form class="layui-form" action="">
-    <div class="input-m"><?php echo $html;?></div>
+    <div class="input-m"></div>
   <div class="layui-form-item">
     <div class="layui-input-block">
-      <button class="layui-btn" lay-submit lay-filter="add">立即提交</button>
-      <button type="reset" class="layui-btn layui-btn-primary" >重置</button>
+      
+      <a href="./home.php" class="layui-btn layui-btn-primary" >购买</a>
     </div>
   </div>
 </form>
