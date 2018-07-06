@@ -32,7 +32,11 @@ class UserAudit_controller extends base_controller
     //商户审核没通过，反馈信息
     public function feedback()
     {
+
         $gets = $this->clear_html($_GET);
+        $res = D('User_audit')->where(array('id'=>$gets['id']))->find();
+        $res = $res['remarks'];
+        $this->assign('res',$res);
         $this->assign('gets',$gets);
         if(IS_POST){
             $data = $this->clear_html($_POST);
@@ -85,6 +89,9 @@ class UserAudit_controller extends base_controller
     public function pfeedback()
     {
         $gets = $this->clear_html($_GET);
+        $res = D('User_audit')->where(array('id'=>$gets['id']))->find();
+        $res = $res['remarks'];
+        $this->assign('res',$res);
         $this->assign('gets',$gets);
         if(IS_POST){
             $data = $this->clear_html($_POST);

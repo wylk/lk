@@ -29,7 +29,7 @@
                         反馈信息
                     </label>
                     <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" id="desc" name="remarks" class="layui-textarea"></textarea>
+                        <textarea placeholder="<?= $res ?>" id="desc" name="remarks" class="layui-textarea" ></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">
