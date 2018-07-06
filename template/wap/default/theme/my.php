@@ -17,20 +17,20 @@
     <div class="layui-collapse">
         <div class="layui-colla-item" >
             <center class="layui-colla-title" >王先生</center>
-            <center class="layui-colla-title"><?php echo $phone; ?></center>  
+            <center class="layui-colla-title"><?php echo $phone; ?></center>
         </div>
         <div style="height:20px"></div>
         <div class="layui-colla-item">
             <h2 class="layui-colla-title"><a href="./my.php?pagetype=purse">钱包</a></h2>
-        </div> 
+        </div>
         <div style="height:15px"></div>
         <div class="layui-colla-item">
             <h2 class="layui-colla-title"><a href="./my.php?pagetype=postcard">身份证</a></h2>
         </div>
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title"><a href="./my.php?pagetype=cardType">发卡</a></h2>
+            <h2 class="layui-colla-title"><a href="./cardType.php">发卡</a></h2>
         </div>
-        <div class="layui-colla-item"> 
+        <div class="layui-colla-item">
             <h2 class="layui-colla-title"><a href="./my.php?pagetype=cardList">卡/券/库</a></h2>
         </div>
         <div class="layui-colla-item">
