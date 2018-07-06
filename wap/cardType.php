@@ -16,7 +16,7 @@ if(isset($_SESSION['loginsign']) && time()-$_SESSION['loginsign']['logintime']<3
 }
 
 $cardRes = M("Contract")->find();
-$res = D("Card_package")->where(['uid'=>"1530523825"])->select();
+$res = D("Card_package")->where(['uid'=>$userId])->select();
 $cardtype = array_column($res, "type");
 $cardtype = array_map(function($value,$key){return $value.="Card";}, $cardtype);
 
