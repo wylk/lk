@@ -269,8 +269,7 @@
         });
 var beatCount=0;
         form.on("submit(formPerson)",function(data){
-            beatCount++;
-            if(beatCount>1){
+            if(beatCount>=1){
                 layer.msg(beatCount+"只能提交一次",{icon:5,skin:"demo-class"});
                 return false;
             }
@@ -278,6 +277,7 @@ var beatCount=0;
                 layer.msg(data.field.status+"此状态不可更改",{icon:5,skin:"demo-class"});
                 return false;
             }
+            beatCount++;
             $.post("./my.php?pagetype=postcardBackstage",data.field,function(result){
                 console.log(result);
                 if(!result.res){
@@ -293,8 +293,7 @@ var beatCount=0;
         });
         form.on("submit(formBusiness)",function(data){
             console.log(data);
-            beatCount++;
-            if(beatCount>1){
+            if(beatCount>=1){
                 layer.msg(beatCount+"只能提交一次",{icon:5,skin:"demo-class"});
                 return false;
             }
@@ -302,6 +301,7 @@ var beatCount=0;
                 layer.msg(data.field.status+"此状态不可更改",{icon:5,skin:"demo-class"});
                 return false;
             }
+            beatCount++;
             $.post("./my.php?pagetype=postcardBackstage",data.field,function(result){
                 console.log(result);
                 if(!result.res){
