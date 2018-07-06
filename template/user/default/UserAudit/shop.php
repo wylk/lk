@@ -51,10 +51,12 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
+            <th>姓名</th>
             <th>企业名称</th>
             <th>营业执照编号</th>
+            <th>身份证</th>
             <th>营业执照</th>
-            <th>认证时间</th>
+            <th>提交时间</th>
             <th>审核时间</th>
             <th>状态</th>
             <th>操作</th></tr>
@@ -69,8 +71,10 @@
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td><?= $v['id'] ?></td>
+            <td><?= $v['name'] ?></td>
             <td><?= $v['enterprise'] ?></td>
             <td><?= $v['business_license'] ?></td>
+            <td><img src="<?= $v['img_oneself'] ?>" onclick="previewImg(this,'<?= $v['img_just'] ?>')"></td>
             <td><img src="<?= $v['business_img'] ?>" onclick="previewImg(this,'<?= $v['img_just'] ?>')"></td>
             <td><?= date('Y-m-d H:i:s',$v['careat_time']); ?></td>
             <td><?= date('Y-m-d H:i:s',$v['update_time']); ?></td>
@@ -85,6 +89,9 @@
               ?>
             </td>
             <td class="td-manage">
+              <a title="详情"  onclick="x_admin_show('详情','?c=UserAudit&a=lists&id=<?= $v['id'] ?>',700)" href="javascript:;">
+                <i class="layui-icon">&#xe705;</i>
+              </a>
               <?php if($v['status']==0 || $v['status']==2){ ?>
                   <a onclick="member_stop(this,'<?= $v['id'] ?>')" href="javascript:;"  title="审核通过">
                   <i class="layui-icon">&#x1005;</i>
