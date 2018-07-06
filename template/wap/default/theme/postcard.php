@@ -17,11 +17,12 @@
         .layui-input-block{width:200px;margin-left: 130px;}
         .hidden{display: none;}
         .cardBody{width:100%;margin-top: 46px;text-align: center;}
+        .adopt{text-align: center;height: 30px; line-height: 30px; margin-bottom: 21px;}
     </style>
 </head>
 <body>
 <header class="lk-bar lk-bar-nav">
-    <i class="iconfont" style="font-size: 30px;">&#xe697;</i>
+    <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">导航栏</h1>
 </header>
 <div class="lk-content">
@@ -35,6 +36,7 @@
         <div class="layui-tab-item <?php echo $type==2 ? "" : "layui-show"?>">
             <?php echo $type==2 ? "<div class='cardBody'>您已选择企业认证，不能再进行个人认证</div>" : ""?>
             <?php echo $type==2 ? "<form class='layui-form hidden'>" : "<form class='layui-form'>"?>
+            <?php echo (isset($audit['status']) && $audit['status']==1) ? "<p class='adopt layui-bg-blue'>认证已通过</p>" : "" ?>
                 <input type="hidden" name="type" value="1">
                 <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : ""?>">
                 <div class='layui-form-item'>
@@ -99,8 +101,9 @@
             </form>
         </div>
         <div class="layui-tab-item <?php echo $type==2 ? "layui-show" : ""?>" >
-            <?php echo $type==1 ? "<div>您已选择个人认证，不能再进行企业认证</div>" : ""?>
+            <?php echo $type==1 ? "<div class='cardBody'>您已选择个人认证，不能再进行企业认证</div>" : ""?>
             <?php echo $type==1 ? "<form class='layui-form hidden'>" : "<form class='layui-form'>"?>
+            <?php echo (isset($audit['status']) && $audit['status']==1) ? "<p class='adopt layui-bg-blue'>认证已通过</p>" : "" ?>
                 <input type="hidden" name="type" value="2">
                 <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : ""?>">
                 <div class='layui-form-item'>
@@ -277,9 +280,9 @@ var beatCount=0;
                 layer.msg(data.field.status+"此状态不可更改",{icon:5,skin:"demo-class"});
                 return false;
             }
+            beatCount++;
             $.post("./postcard.php?pagetype=postcardBackstage",data.field,function(result){
                 console.log(result);
-                beatCount++;
                 if(!result.res){
                     // window.location.href = "./postcard.php";
                     layer.msg(result.msg,{icon:1,skin:"demo-class"},function(){
@@ -301,9 +304,9 @@ var beatCount=0;
                 layer.msg(data.field.status+"此状态不可更改",{icon:5,skin:"demo-class"});
                 return false;
             }
+            beatCount++;
             $.post("./postcard.php?pagetype=postcardBackstage",data.field,function(result){
                 console.log(result);
-                beatCount++;
                 if(!result.res){
                     layer.msg(result.msg,{icon:1,skin:"demo-class"},function(){
                         window.location.href = './postcard.php';

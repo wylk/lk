@@ -30,8 +30,8 @@
         <div class="layui-colla-item">
             <h2 class="layui-colla-title"><a href="./cardType.php">发卡</a></h2>
         </div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title"><a href="./my.php?pagetype=cardList">卡/券/库</a></h2>
+        <div class="layui-colla-item"> 
+            <h2 class="layui-colla-title"><a href="./cardList.php">卡/券/库</a></h2> 
         </div>
         <div class="layui-colla-item">
             <h2 class="layui-colla-title">API接口</h2>

@@ -532,9 +532,13 @@ table th, table td {
 }
 .lk-title{
     display: inline-block;
-    width: 80%;
     font-size: 16px;
     font-weight: 500;
+    position: absolute;
+    top: 0px;
+    right: 15%;
+    left: 15%;
+    width: 70%;
     margin: 0 auto;
     text-align: center;
     color: #000;
