@@ -544,7 +544,7 @@ table th, table td {
     color: #000;
 }
 .lk-content{
-    padding: 50px 15px 0 15px;
+    padding: 50px 0 0 0;
     margin-bottom: 70px;
 }
 .lk-container-flex{

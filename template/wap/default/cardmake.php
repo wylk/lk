@@ -26,8 +26,8 @@
 </head>
 <body>
 <header class="lk-bar lk-bar-nav">
-    <i class="iconfont" style="font-size: 30px;">&#xe697;</i>
-    <h1 class="lk-title">导航栏</h1>
+    <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
+    <h1 class="lk-title">发卡</h1>
 </header>
 <div class="lk-content">
 <form class="layui-form" action="">
