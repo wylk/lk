@@ -69,7 +69,11 @@ if(isset($_GET['type']) && $_GET['type'] == "uploadFile"){
 // exit();
 // 用户认证
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == 'postcard'){
-	// if()
+	// $userId = 918;
+	$where = ['uid'=>$userId];
+	$audit = D("User_audit")->where($where)->select();
+	$audit = $audit[0];
+	$type = $audit['type'];
 	include display("postcard");
 	exit();
 }
@@ -90,35 +94,50 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == 'postcardEdit'){
 }
 //身份证认证信息处理
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
-	$judgeInfo = D("User_audit")->field("uid,type")->where(['uid'=>$userId])->select();
-	dexit(['res'=>1,"msg"=>"信息检验","other"=>$judgeInfo]);
 	$type = isset($_POST['type']) ? $_POST['type'] : "";
-	$data['type'] = $type;
+	$status = isset($_POST['status']) ? $_POST['status'] : "";
+	// $data['type'] = $type;
 	$data['name'] = isset($_POST['name']) ? $_POST['name'] : "";
 	// 个人认证
-	if($type == 0){
+	if($type == '1'){
 		$data['postcards'] = isset($_POST['postcard']) ? $_POST['postcard'] : "";
 		$data['img_just'] = isset($_POST['uploadImg_1']) ? $_POST['uploadImg_1'] : "";
 		$data['img_back'] = isset($_POST['uploadImg_2']) ? $_POST['uploadImg_2'] : "";
 		$data['img_oneself'] = isset($_POST['uploadImg_3']) ? $_POST['uploadImg_3'] : "";
+		$data['type'] = 1;
+		$data['status'] = 0;
+		if(empty($data['postcards']) || empty($data['img_just']) || empty($data['img_back']) || empty($data['img_oneself'])){
+			dexit(['res'=>1,"msg"=>"请您填写完信息后再提交"]);
+		}
 	}
 	// 店铺认证
-	if($type == 1){
+	if($type == 2){
 		$data['enterprise'] = isset($_POST['enterprise']) ? $_POST['enterprise'] : "";
 		$data['business_license'] = isset($_POST['businessLicense']) ? $_POST['businessLicense'] : "";
 		$data['business_img'] = isset($_POST['uploadBusiness']) ? $_POST['uploadBusiness'] : "";
+		$data['img_oneself'] = isset($_POST['uploadImg_3']) ? $_POST['uploadImg_3'] : "";
+		$data['type'] = 2;
+		$data['status'] = 0;
+		if(empty($data['enterprise']) || empty($data['business_license']) || empty($data['business_img']) || empty($data['img_oneself'])){
+			dexit(['res'=>1,"msg"=>"请您填写完信息后再提交","other"=>$data]);
+		}
 	}
 	if(!empty($data)){
-		$data['uid'] = $userId;
-		$data['create_time'] = time();
-		$data['update_time'] = time();
-		$res = D("User_audit")->data($data)->add();
+		if($status == 2){
+			$data['update_time'] = time();
+			$res = D("User_audit")->data($data)->where(['uid'=>$userId])->save();
+		}else{
+			$data['uid'] = $userId;	
+			$data['create_time'] = time();
+			$data['update_time'] = time();
+			$res = D("User_audit")->data($data)->add();
+		}
 		if(!$res){
-			dexit(['res'=>1,"msg"=>"信息错误，请您重新填写","other"=>$data]);
+			dexit(['res'=>1,"msg"=>"信息错误，请您重新填写","other"=>$res]);
 		}		
-		dexit(['res'=>0,"msg"=>"提交成功，请您耐心等待审核"]);
+		dexit(['res'=>0,"msg"=>"提交成功，请您耐心等待审核","other"=>$res]);
 	}
-	dexit(['res'=>1,"msg"=>"请您填写完信息后再提交"]);
+	dexit(['res'=>1,"msg"=>"请您填写完信息后再提交",'other'=>$data]);
 }
 // 发卡
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == "cardType"){
