@@ -93,7 +93,7 @@
                 </div>
                 <div class='layui-form-item'>
                     <div class="layui-input-block">
-                        <button  lay-submit class='layui-btn <?php echo isset($audit['status'])&&($audit['status']==0 || $audit['status']==1) ? "layui-btn-disabled" : "";?>' lay-filter="formPerson">提交</button>
+                        <button  lay-submit class='layui-btn <?php echo isset($audit['status'])&&($audit['status']==0 || $audit['status']==1) ? "layui-hide" : "";?>' lay-filter="formPerson">提交</button>
                     </div>
                 </div>
             </form>
@@ -153,7 +153,7 @@
                 </div>
                 <div class='layui-form-item'>
                     <div class="layui-input-block">
-                        <button type="submit" lay-submit class='layui-btn <?php echo isset($audit['status'])&&($audit['status']==0 || $audit['status']==1) ? "layui-btn-disabled" : "";?>' lay-filter="formBusiness">提交</button>
+                        <button type="submit" lay-submit class='layui-btn <?php echo isset($audit['status'])&&($audit['status']==0 || $audit['status']==1) ? "layui-hide" : "";?>' lay-filter="formBusiness">提交</button>
                     </div>
                 </div>
             </form>
@@ -278,8 +278,10 @@ var beatCount=0;
                 return false;
             }
             beatCount++;
+            layer.load();
             $.post("./my.php?pagetype=postcardBackstage",data.field,function(result){
                 console.log(result);
+                layer.closeAll("loading");
                 if(!result.res){
                     // window.location.href = "./my.php?pagetype=postcard";
                     layer.msg(result.msg,{icon:1,skin:"demo-class"},function(){
@@ -302,8 +304,10 @@ var beatCount=0;
                 return false;
             }
             beatCount++;
+            layer.load();
             $.post("./my.php?pagetype=postcardBackstage",data.field,function(result){
                 console.log(result);
+                layer.closeAll("loading");
                 if(!result.res){
                     layer.msg(result.msg,{icon:1,skin:"demo-class"},function(){
                         window.location.href = './my.php?pagetype=postcard';
