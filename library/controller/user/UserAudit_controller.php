@@ -57,6 +57,14 @@ class UserAudit_controller extends base_controller
         $this->display();
     }
 
+    //店铺详情页
+    public function lists()
+    {
+        $userAudit = D('User_audit')->where(array('id'=>$_GET['id']))->find();
+        $this->assign('userAudit',$userAudit);
+        $this->display();
+    }
+
     //个人认证
     public function personal()
     {
@@ -121,6 +129,14 @@ class UserAudit_controller extends base_controller
         } else {
             $this->dexit(['error'=>1,'msg'=>'删除失败']);
         }
+    }
+
+    //个人详情页
+    public function plists()
+    {
+        $userAudit = D('User_audit')->where(array('id'=>$_GET['id']))->find();
+        $this->assign('userAudit',$userAudit);
+        $this->display();
     }
 }
 

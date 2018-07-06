@@ -16,7 +16,7 @@
         .lk-content hr{margin: 0}
         .lk-deal-link a{width: 25%;text-align: center; line-height: 45px; font-size:.5rem;}
         .lk-justify-content-c{padding:25px;}
-        .lk-bazaar-sell{padding:5% 0 ;}
+        .lk-bazaar-sell{padding: 2% 5%;}
         .lk-bazaar-sell p{line-height: 25px}
         .item-buy{align-self:center;  border:1px solid #FF5722; width:45px; border-radius: 50px; line-height: 45px; text-align: center;}
         .order-left{width: 55%}

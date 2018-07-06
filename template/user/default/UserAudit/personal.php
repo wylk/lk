@@ -55,7 +55,7 @@
             <th>姓名</th>
             <th>身份证号</th>
             <th>图片</th>
-            <th>认证时间</th>
+            <th>提交时间</th>
             <th>审核时间</th>
             <th>状态</th>
             <th>操作</th></tr>
@@ -90,6 +90,9 @@
               ?>
             </td>
             <td class="td-manage">
+                  <a title="详情"  onclick="x_admin_show('详情','?c=UserAudit&a=plists&id=<?= $v['id'] ?>',700)" href="javascript:;">
+                    <i class="layui-icon">&#xe705;</i>
+                  </a>
               <?php if($v['status']==0 || $v['status']==2){ ?>
                   <a onclick="member_stop(this,'<?= $v['id'] ?>')" href="javascript:;"  title="审核通过">
                   <i class="layui-icon">&#x1005;</i>

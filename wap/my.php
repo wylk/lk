@@ -92,7 +92,6 @@ if($type == 2 && $status == 1 ){
 }else{
 	$menu = [
             ['icon'=>'&#xe6f5;','url'=>'./postcard.php','title'=>'身份证'],
-            ['icon'=>'&#xe758;','url'=>'./cardType.php','title'=>'发卡'],
             ['icon'=>'&#xe6ae;','url'=>'./setup.php','title'=>'设置'],
         ];
 }
