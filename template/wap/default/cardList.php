@@ -79,18 +79,18 @@
 
     <?php foreach ($cardBagList as $key => $value) { ?>
       <div class="lk-row">
-        <div class="lk-row-title"><span>抵现卡:</span>33d2433410e3a8d5912f051792bf1910</div>
+        <div class="lk-row-title"><span>抵现卡:</span><?php echo $value['card_id']; ?></div>
         <div class="lk-row-infos">
             <div class="lk-row-info info-logo">
                 <img src="https://free.modao.cc/uploads3/images/1907/19079609/raw_1523959707.jpeg" style="height: 100%;width: 100%;">
             </div>
             <div class="lk-row-info info-grow" >
                 <div>
-                    <p>累计核销:2343</p>
-                    <p>累计出售:2343</p>
+                    <p>累计核销:<?php echo number_format($value['recovery_count'],2); ?></p>
+                    <p>累计出售:<?php echo number_format($value['sell_count'],2); ?></p>
                 </div>
                 <div class="info-edit">
-                    <p>未  售:2343</p> <a class="lk-row-btn info-btn">卖出</a>
+                    <p>未  售:<?php echo number_format($value['num'],2); ?></p> <a class="lk-row-btn info-btn">卖出</a>
                 </div>
             </div>
         </div>

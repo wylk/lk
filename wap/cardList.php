@@ -2,10 +2,21 @@
 require_once dirname(__FILE__).'/global.php';
 
 
-
-	$where['uid'] = 12;
+// 判断是否登录状态中
+if(isset($_SESSION['loginsign'])){
+	// var_dump(time()-$_SESSION['loginsign']['lasttime']);
+	$_SESSION['loginsign']['logintime'] = time();
+	$phone = isset($_SESSION['loginsign']['phone']) ? $_SESSION['loginsign']['phone'] : "";
+	$userId = isset($_SESSION['loginsign']['userid']) ? $_SESSION['loginsign']['userid'] : "";
+	if(empty($phone) || empty($userId)){
+		header("location:login.php");
+	}
+}else{
+	header("location:login.php");
+	exit();
+}
 	// 获取店铺发卡的类型
-	$cardBagList = D("Card_package")->where($where)->select();
+	$cardBagList = D("Card_package")->where(['uid'=>$userId])->select();
 	// $cardIds = array_column($cardPageList, 'card_id')
 	// $accountBook = D("User_account_book")->where(['card_id'=>$])->select();
 
