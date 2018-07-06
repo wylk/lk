@@ -111,5 +111,16 @@ class UserAudit_controller extends base_controller
         }
         $this->display();
     }
+
+    //软删除认证管理
+    public function delete()
+    {
+        $data = $this->clear_html($_POST);
+        if(D('User_audit')->data(['isdelete'=>3])->where(array('id' =>$data['id']))->save()){
+            $this->dexit(['error'=>0,'msg'=>'删除成功']);
+        } else {
+            $this->dexit(['error'=>1,'msg'=>'删除失败']);
+        }
+    }
 }
 

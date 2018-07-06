@@ -77,7 +77,7 @@
 <div class="lk-content" style="background-color: #f0f0f0;">
     <div class="lk-rows"> 
 
-    <?php for ($i=0; $i < 5; $i++) { ?>
+    <?php foreach ($cardBagList as $key => $value) { ?>
       <div class="lk-row">
         <div class="lk-row-title"><span>抵现卡:</span>33d2433410e3a8d5912f051792bf1910</div>
         <div class="lk-row-infos">

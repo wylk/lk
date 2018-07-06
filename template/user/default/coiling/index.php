@@ -30,24 +30,12 @@
     <div class="x-body">
     <div class="flex-direction">
         <ul class="layui-row layui-col-space10 layui-this" style="padding-top: 35px;padding-left:58px;">
-          <li class="layui-col-xs2">
-            <img src="http://lk.com/upload/images/000/000/001/201806/5b32f7ecc1ab4.jpg">
-              <span>抵现会员卡</span>
-                <h2 style="color:red">21366</h2>
-              <ul>
-                <li>已发抵现卡：300</li>
-                <li>抵现卡总数：300</li>
-              </ul>
-              <ul style="margin-left: 145px;margin-top: -69px;">
-                <li>已发抵现卡：300</li>
-                <li>抵现卡总数：300</li>
-              </ul>
-              <a class="layui-btn layui-btn-primary layui-btn-lg" href="?c=coiling&a=cards">详情</a>
-          </li>
+
+          <?php foreach ($Contract as $k => $v) { ?>
 
           <li class="layui-col-xs2">
             <img src="http://lk.com/upload/images/000/000/001/201806/5b32f7ecc1ab4.jpg">
-              <span>抵现会员卡</span>
+              <span><?= $v['contract_name'] ?></span>
                 <h2 style="color:red">21366</h2>
               <ul>
                 <li>已发抵现卡：300</li>
@@ -59,21 +47,7 @@
               </ul>
               <a class="layui-btn layui-btn-primary layui-btn-lg" href="?c=coiling&a=cards">详情</a>
           </li>
-
-          <li class="layui-col-xs2">
-            <img src="http://lk.com/upload/images/000/000/001/201806/5b32f7ecc1ab4.jpg">
-              <span>抵现会员卡</span>
-                <h2 style="color:red">21366</h2>
-              <ul>
-                <li>已发抵现卡：300</li>
-                <li>抵现卡总数：300</li>
-              </ul>
-              <ul style="margin-left: 145px;margin-top: -69px;">
-                <li>已发抵现卡：300</li>
-                <li>抵现卡总数：300</li>
-              </ul>
-              <a class="layui-btn layui-btn-primary layui-btn-lg" href="?c=coiling&a=cards">详情</a>
-          </li>
+          <?php } ?>
           </ul>
     </div>
 
