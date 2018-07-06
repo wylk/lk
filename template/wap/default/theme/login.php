@@ -16,6 +16,7 @@
       .layui-form-item .layui-input-inline.us-input-inline{display: inline-block; float: none; left: 0;  width: auto; margin: 0; padding: 10px 0 10px 31px;}
       .layui-form-item{margin: 0; line-height: 45px;}
       .us-btn{background-color: #FFF; color:#FF5722; font-weight: 500}
+      .us-btn:hover{color:#FF5722;}
       .layui-form-item .layui-form-label{margin-top:10px;}
       .layui-row{border-radius: 3px;}
 
