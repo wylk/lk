@@ -6,7 +6,7 @@ class UserAudit_controller extends base_controller
     public function shop(){
         $User_audit = D('User_audit')->select();
         foreach ($User_audit as $key => $value) {
-           if($value['type']==1){
+           if($value['type']==2){
                 $arr[] = $value;
            }
         }
@@ -58,7 +58,7 @@ class UserAudit_controller extends base_controller
     {
         $User_audit = D('User_audit')->select();
         foreach ($User_audit as $key => $value) {
-           if($value['type']==0){
+           if($value['type']==1){
                 $arr[] = $value;
            }
         }
