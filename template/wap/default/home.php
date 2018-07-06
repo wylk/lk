@@ -92,7 +92,7 @@
 </head>
 <body>
 <header class="lk-bar lk-bar-nav">
-    <i onclick="javascript:history.back(-1);" class="iconfont"  style="font-size: 30px;">&#xe697;</i>
+    <i onclick="javascript:history.back(-1);" class="iconfont"  style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">店铺</h1>
 </header>
 <div class="lk-content" style="background: #f0f0f0">

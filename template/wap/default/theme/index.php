@@ -26,7 +26,7 @@
 </head>
 <body>
 <header class="lk-bar lk-bar-nav">
-    <i class="iconfont" style="font-size: 30px;">&#xe697;</i>
+    <i class="iconfont" style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">首页</h1>
 </header>
 <div class="lk-content">

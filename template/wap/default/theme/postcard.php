@@ -10,7 +10,7 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
-        .layui-tab-content{height: 450px}
+        .layui-tab-content{min-height: 450px}
         .uploadImg {float:right;margin-right:24px}
         .uploadImg img{width:62px}
         .layui-form-label{width:95px;}
