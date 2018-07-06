@@ -177,7 +177,7 @@
 
         var uploadInst1 = upload.render({
             elem : "#upload_1",
-            url : "postcard.php?type=uploadFile",
+            url : "my.php?type=uploadFile",
             before :  function(){
                 layer.load();
             },
@@ -196,7 +196,7 @@
         });
         var uploadInst2 = upload.render({
             elem : "#upload_2",
-            url : "postcard.php?type=uploadFile",
+            url : "my.php?type=uploadFile",
             before :  function(){
                 layer.load();
             },
@@ -215,7 +215,7 @@
         });
         var uploadInst3 = upload.render({
             elem : "#upload_3",
-            url : "postcard.php?type=uploadFile",
+            url : "my.php?type=uploadFile",
             before :  function(){
                 layer.load();
             },
@@ -233,7 +233,7 @@
         });
         var uploadInst3 = upload.render({
             elem : "#upload_business",
-            url : "postcard.php?type=uploadFile",
+            url : "my.php?type=uploadFile",
             before :  function(){
                 layer.load();
             },
@@ -251,7 +251,7 @@
         });
         var uploadInst3 = upload.render({
             elem : "#upload_oneself",
-            url : "postcard.php?type=uploadFile",
+            url : "my.php?type=uploadFile",
             before :  function(){
                 layer.load();
             },
@@ -269,21 +269,21 @@
         });
 var beatCount=0;
         form.on("submit(formPerson)",function(data){
+            beatCount++;
             if(beatCount>1){
                 layer.msg(beatCount+"只能提交一次",{icon:5,skin:"demo-class"});
                 return false;
             }
-            if(String(data.field.status) === "0" || data.field.status == 1){
+            if(data.field.status == 0 || data.field.status == 1){
                 layer.msg(data.field.status+"此状态不可更改",{icon:5,skin:"demo-class"});
                 return false;
             }
-            $.post("./postcard.php?pagetype=postcardBackstage",data.field,function(result){
+            $.post("./my.php?pagetype=postcardBackstage",data.field,function(result){
                 console.log(result);
-                beatCount++;
                 if(!result.res){
-                    // window.location.href = "./postcard.php";
+                    // window.location.href = "./my.php?pagetype=postcard";
                     layer.msg(result.msg,{icon:1,skin:"demo-class"},function(){
-                        window.location.href = "./postcard.php";
+                        window.location.href = "./my.php?pagetype=postcard";
                     })
                 }else{
                     layer.msg(result.msg,{icon:5,skin:"demo-class"});
@@ -293,20 +293,20 @@ var beatCount=0;
         });
         form.on("submit(formBusiness)",function(data){
             console.log(data);
+            beatCount++;
             if(beatCount>1){
                 layer.msg(beatCount+"只能提交一次",{icon:5,skin:"demo-class"});
                 return false;
             }
-            if(String(data.field.status) === "0" || data.field.status == 1){
+            if(data.field.status == 0 || data.field.status == 1){
                 layer.msg(data.field.status+"此状态不可更改",{icon:5,skin:"demo-class"});
                 return false;
             }
-            $.post("./postcard.php?pagetype=postcardBackstage",data.field,function(result){
+            $.post("./my.php?pagetype=postcardBackstage",data.field,function(result){
                 console.log(result);
-                beatCount++;
                 if(!result.res){
                     layer.msg(result.msg,{icon:1,skin:"demo-class"},function(){
-                        window.location.href = './postcard.php';
+                        window.location.href = './my.php?pagetype=postcard';
                     })
                 }else{
                     layer.msg(result.msg,{icon:5,skin:"demo-class"});
