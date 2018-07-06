@@ -60,7 +60,9 @@
             <th>操作</th></tr>
         </thead>
 
-        <?php foreach($arr as $k=>$v){ ?>
+        <?php foreach($arr as $k=>$v){
+          if(!$v['isdelete']==3){
+        ?>
         <tbody>
           <tr>
             <td>
@@ -83,24 +85,22 @@
               ?>
             </td>
             <td class="td-manage">
-              <a onclick="member_stop(this,'<?= $v['id'] ?>')" href="javascript:;"  title="审核通过">
-                <i class="layui-icon">&#x1005;</i>
-              </a>
-
-              <?php if($v['status']==1){ ?>
-                  <a onclick="x_admin_shows('禁用状态','?c=userAudit&a=feedback&id=<?= $v['id'] ?>&status=<?= $v['status'] ?>',600,400)" title="禁用状态" href="javascript:;">
-                    <i class="layui-icon">&#x1007;</i>
+              <?php if($v['status']==0 || $v['status']==2){ ?>
+                  <a onclick="member_stop(this,'<?= $v['id'] ?>')" href="javascript:;"  title="审核通过">
+                  <i class="layui-icon">&#x1005;</i>
                   </a>
-              <?php }else{ ?>
                   <a onclick="x_admin_show('驳回申请','?c=userAudit&a=feedback&id=<?= $v['id'] ?>&status=<?= $v['status'] ?>',600,400)" title="驳回申请" href="javascript:;">
                     <i class="layui-icon">&#x1007;</i>
                   </a>
               <?php } ?>
+              <a title="删除" onclick="member_del(this,'<?= $v['id'] ?>')" href="javascript:;">
+                <i class="layui-icon">&#xe640;</i>
+              </a>
             </td>
           </tr>
         </tbody>
 
-        <?php } ?>
+        <?php }} ?>
 
       </table>
       <div class="page">
@@ -183,9 +183,15 @@
       /*用户-删除*/
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
-              //发异步删除数据
-              $(obj).parents("tr").remove();
-              layer.msg('已删除!',{icon:1,time:1000});
+              $.post('?c=UserAudit&a=delete',{id:id},function(res){
+                console.log(res);
+                if(res.error == 0){
+                  $(obj).parents("tr").remove();
+                  layer.msg(res.msg,{icon:1,time:1000});
+                }else{
+                  layer.msg(res.msg,{icon:4,time:1000});
+                }
+              },'json');
           });
       }
 

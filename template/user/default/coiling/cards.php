@@ -34,14 +34,8 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-          <label class="layui-form-label">搜索选择框</label>
           <div class="layui-input-inline">
-            <select name="modules" lay-verify="required" lay-search="">
-              <option value="">请选择类别</option>
-              <option value="1">layer</option>
-              <option value="2">form</option>
-              <option value="3">layim</option>
-            </select>
+            <input type="text" name="username"  placeholder="发卡用户" autocomplete="off" class="layui-input">
           </div>
           <button class="layui-btn"  lay-submit="" lay-filter="sreach" ><i class="layui-icon">&#xe615;</i></button>
         </form>

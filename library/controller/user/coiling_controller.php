@@ -7,6 +7,8 @@ class coiling_controller extends base_controller
     //浏览页面
 	public function index()
     {
+        $Contract = D('Contract')->where()->select();
+        $this->assign('Contract',$Contract);
         $this->display();
     }
 
