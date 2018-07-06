@@ -3,12 +3,9 @@ require_once dirname(__FILE__).'/global.php';
 
 
 
-	$where['uid'] = 15;
+	$where['uid'] = 12;
 	// 获取店铺发卡的类型
-	$cardPageList = D("Card_package")->where($where)->select();
-	$cardPageList = array_column($cardPageList,null,"card_id");
-	var_dump($cardPageList);
-	exit();
+	$cardBagList = D("Card_package")->where($where)->select();
 	// $cardIds = array_column($cardPageList, 'card_id')
 	// $accountBook = D("User_account_book")->where(['card_id'=>$])->select();
 
