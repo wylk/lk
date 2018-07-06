@@ -6,49 +6,74 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css">
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=33">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
+    <style type="text/css">
+        .item-headers{
+            margin: 0px auto 10px;
+            background: #fff;
+            height: 100px;
+        }
+        .item-header-img{
+            width: 40%;
+            height: 100px;
+        }
+        .item-header-name{
+            width: 60%;
+            height: 100px;
+        }
+        .item-rows{
+            min-height: 200px;
+            background: #fff;
+            padding-top: 10px;
+        }
+        .item-row{
+            width: 95%;
+            line-height: 30px;
+        }
+        .item-row-title{
+           flex-grow: 1;
+        }
+        .center{
+            text-align: center;
+        }
+        .row{
+            width: 18%;
+        }
+    </style>
 </head>
 <body>
+<header class="lk-bar lk-bar-nav">
+    <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
+    <h1 class="lk-title">全部交易</h1>
+  </header>
+<div class="lk-content" style="background-color: #f0f0f0;">
 
-<div class="layui-fluid">
-    <div class="layui-collapse">
-        <div class="layui-colla-item" >
-            <center class="layui-colla-title" >王先生</center>
-            <center class="layui-colla-title"><?php echo $phone; ?></center>
+    
+        <div class="item-headers lk-container-flex" >
+            <div class="item-header-img lk-container-flex lk-justify-content-c lk-align-items-c"> <img src="http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" style="height: 80px;width: 80px;border-radius: 50%;"></div>
+            <div class="item-header-name lk-container-flex lk-align-items-c"> 
+                <div>
+                    <p>老王</p>    
+                    <p style="margin-top: 5px;">手机号:<?php echo $phone; ?></p>    
+                </div>
+            </div>
+           
         </div>
-        <div style="height:20px"></div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title"><a href="./my.php?pagetype=purse">钱包</a></h2>
-        </div>
-        <div style="height:15px"></div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title"><a href="./postcard.php">身份证</a></h2>
-        </div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title"><a href="./cardType.php">发卡</a></h2>
-        </div>
-        <div class="layui-colla-item"> 
-            <h2 class="layui-colla-title"><a href="./cardList.php">卡/券/库</a></h2> 
-        </div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title">API接口</h2>
-        </div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title">店员管理</h2>
-        </div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title"><a href="./my.php?pagetype=bill">账单明细</a></h2>
-        </div>
-        <div style="height:5px"></div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title"><a href="./my.php?pagetype=setup">设置</a></h2>
+        <div class="item-rows">
+            <?php foreach ($menu as $k => $v) {?>
+            <a href="<?php echo $v['url'];?>">
+                <div class="item-row lk-container-flex" style="margin: 0px auto;">
+                    <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;"><?php echo $v['icon'];?></i></div>
+                    <div class="item-row-title row" ><?php echo $v['title'];?></div>
+                    <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
+                </div>
+            </a>
+            <hr class="layui-bg-gray">
+            <?php }?>
         </div>
 </div>
-</div>
-
   	<?php include display('public_menu');?>
 </body>
 </html>
