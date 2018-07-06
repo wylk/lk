@@ -2,6 +2,5 @@
 require_once dirname(__FILE__).'/global.php';
 
 
-//dump($config['reg_readme_content']);
-include display('service_terms');
+include display('buy_card');
 echo ob_get_clean();

@@ -523,28 +523,102 @@ table th, table td {
 
 .lk-bar{
     position: fixed;
-    z-index: 10;
-    right: 0;
-    left: 0;
-    height: 44px;
-    line-height: 44px;
-    padding-right: 10px;
-    padding-left: 10px;
-    border-bottom: 0;
-    background-color: #f7f7f7;
+    width: 100%;
+    line-height: 45px;
+    background-color: #FFF;
     box-shadow: 0 1px 3px #efeef0;
+    z-index: 10;
+    padding:0 15px;
 }
 .lk-title{
-    font-size: 17px;
+    display: inline-block;
+    width: 80%;
+    font-size: 16px;
     font-weight: 500;
-    position: absolute;
-    top: 0px;
-    width: 100%;
-    margin: 0 -10px;
+    margin: 0 auto;
     text-align: center;
     color: #000;
 }
 .lk-content{
-    padding-top: 44px;
+    padding-top: 50px;
     margin-bottom: 70px;
 }
+.lk-container-flex{
+    display: -webkit-flex; /* Safari */
+    display: flex;
+}
+/*  内部元素方向 flex-direction:
+    row（默认值）：主轴为水平方向，起点在左端。
+    row-reverse：主轴为水平方向，起点在右端。
+    column：主轴为垂直方向，起点在上沿。
+    column-reverse：主轴为垂直方向，起点在下沿。
+*/
+.lk-flex-direction-r {flex-direction: row;}
+.lk-flex-direction-rr{flex-direction: row-reverse;}
+.lk-flex-direction-c {flex-direction: column;}
+.lk-flex-direction-cr{flex-direction: column-reverse;}
+
+/*  内部元素换行：flex-wrap:
+    nowrap（默认）：自动缩小项目, 不换行。
+    wrap：换行，第一行在上方。
+    wrap-reverse：换行，第一行在下方。
+*/
+.lk-flex-wrap-n {flex-wrap: nowrap}
+.lk-flex-wrap-w {flex-wrap: wrap  }
+.lk-flex-wrap-wr{flex-wrap: wrap-reverse;}
+
+/*  在主轴上的对齐方式 justify-content:
+    flex-start（默认）：左对齐
+    flex-end：右对齐
+    center：居中对齐
+    space- between：两端对齐
+    space-around：沿轴线均匀分布
+*/
+.lk-justify-content-fs{justify-content:flex-start}
+.lk-justify-content-fe{justify-content:flex-end}
+.lk-justify-content-c {justify-content:center}
+.lk-justify-content-sb{justify-content:space-between;}
+.lk-justify-content-sa{justify-content:space-around;}
+
+/*  在交叉轴上的对齐方式 align-items:
+    flex-start（默认）：顶端对齐
+    flex-end：底部对齐
+    center：竖直方向上居中对齐
+    baseline：第一行文字的底部对齐
+    stretch：当item未设置高度时，item将和容器等高对齐
+*/
+.lk-align-items-fs{align-items:flex-start;}
+.lk-align-items-fe{align-items:flex-end;}
+.lk-align-items-c {align-items:center;}
+.lk-align-items-b {align-items:baseline;}
+.lk-align-items-s {align-items:stretch;}
+
+/*  多行在交叉轴轴上的对齐方式 align-content:
+    flex-start：左对齐
+    flex-end：右对齐
+    center：居中对齐
+    space-between：两端对齐
+    space-around：沿轴线均匀分布
+    stretch：各行将根据其flex-grow值伸展以充分占据剩余空间
+*/
+.lk-align-content-fs{align-content:flex-start}
+.lk-align-content-fd{align-content:flex-end}
+.lk-align-content-c {align-content:center}
+.lk-align-content-sb{align-content:space-between}
+.lk-align-content-sa{align-content:space-around}
+.lk-align-content-s {align-content:stretch;}
+
+/*
+    设置在项目内单元上的6个属性
+    .item { order: 1-~; order属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。
+            flex-grow: 1; flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。
+            flex-shrink: 1; flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。
+            flex-basis: 100px(长度);  flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。
+                            浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。
+            flex：none; flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。
+                    该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。
+            align-self: auto | flex-start | flex-end | center | baseline | stretch;
+                        align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。
+                        默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。
+          }
+*/
