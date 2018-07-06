@@ -60,7 +60,7 @@
 </head>
 <body>
 <header class="lk-bar lk-bar-nav">
-    <a href="#" onClick="javascript:history.back(-1);"><i class="iconfont" style="font-size: 30px;">&#xe697;</i></a>
+    <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">卡券领取</h1>
 </header>
 <div class="lk-content">

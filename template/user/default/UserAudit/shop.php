@@ -35,9 +35,7 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-          <input class="layui-input" placeholder="开始日" name="start" id="start">
-          <input class="layui-input" placeholder="截止日" name="end" id="end">
-          <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+          <input type="text" name="username"  placeholder="请输入企业名称" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
@@ -53,9 +51,9 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
-            <th>姓名</th>
-            <th>身份证号</th>
-            <th>图片</th>
+            <th>企业名称</th>
+            <th>营业执照编号</th>
+            <th>营业执照</th>
             <th>认证时间</th>
             <th>审核时间</th>
             <th>状态</th>
@@ -69,13 +67,9 @@
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td><?= $v['id'] ?></td>
-            <td><?= $v['name'] ?></td>
-            <td><?= $v['postcards'] ?></td>
-            <td>
-              <img src="<?= $v['img_just'] ?>" style="width:48px" onclick="previewImg(this,'<?= $v['img_just'] ?>')" >
-              <img src="<?= $v['img_back'] ?>" style="width:48px" onclick="previewImg(this,'<?= $v['img_just'] ?>')" >
-              <img src="<?= $v['img_oneself'] ?>" style="width:48px" onclick="previewImg(this,'<?= $v['img_just'] ?>')" >
-            </td>
+            <td><?= $v['enterprise'] ?></td>
+            <td><?= $v['business_license'] ?></td>
+            <td><img src="<?= $v['business_img'] ?>" onclick="previewImg(this,'<?= $v['img_just'] ?>')"></td>
             <td><?= date('Y-m-d H:i:s',$v['careat_time']); ?></td>
             <td><?= date('Y-m-d H:i:s',$v['update_time']); ?></td>
             <td>

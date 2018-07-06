@@ -6,7 +6,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=345">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
@@ -38,6 +38,11 @@
     </style>
 </head>
 <body>
+  <header class="lk-bar lk-bar-nav">
+    <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
+    <h1 class="lk-title">选择卡券</h1>
+</header>
+<div class="lk-content">
   <div class="layui-container">
     <div class="layui-row dy1">
       <font size="3">
@@ -65,22 +70,32 @@
         <i>发布量 100</i>
         <i>|</i>
         <i>好评 80%</i>
-        <i><button  class="layui-btn layui-btn-primary">发布</button></i>
+        <?php if(!in_array($v['contract_title'], $cardtype)){?>
+        <i><button  class="layui-btn layui-btn-primary" id="contract_<?php echo $v['contract_title']?>">发布</button></i>
+        <?php }else{ ?>
+          <i><button  class="layui-btn layui-btn-primary" name='msg'>发布中</button></i>
+        <?php } ?>
       </div>
     </div>
   </div>
   <br>
   <hr class="layui-bg-gray">
   <?php } ?>
-
+</div>
 </body>
 </html>
 <script type="text/javascript">
-$("tr[id^=contract_]").bind("click",function(res){
+  layui.use(['form'],function(){
+    var layer = layui.layer;
+    $("button[name=msg]").bind("click",function(res){
+      layer.alert("已经在发布中，不能重复发布");
+    })
+  })
+$("button[id^=contract_]").bind("click",function(res){
     console.log(this);
-    var title = $(this).attr('title');
+    var title = $(this).attr('id');
     var pos = title.indexOf("Card");
-    var card = title.substr(0,pos);
+    var card = title.substring(9,pos);
     // console.log(card);
     window.location.href = "./cardmaking.php?card="+card;
     // console.log(title);
