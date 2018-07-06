@@ -70,7 +70,7 @@
         <i>发布量 100</i>
         <i>|</i>
         <i>好评 80%</i>
-        <i><button  class="layui-btn layui-btn-primary">发布</button></i>
+        <i><button  class="layui-btn layui-btn-primary" id="contract_<?php echo $v['contract_title']?>">发布</button></i>
       </div>
     </div>
   </div>
@@ -81,11 +81,11 @@
 </body>
 </html>
 <script type="text/javascript">
-$("tr[id^=contract_]").bind("click",function(res){
+$("button[id^=contract_]").bind("click",function(res){
     console.log(this);
-    var title = $(this).attr('title');
+    var title = $(this).attr('id');
     var pos = title.indexOf("Card");
-    var card = title.substr(0,pos);
+    var card = title.substring(9,pos);
     // console.log(card);
     window.location.href = "./cardmaking.php?card="+card;
     // console.log(title);
