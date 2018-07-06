@@ -23,6 +23,8 @@ if(IS_POST){
   return $array;
 }
 
+dump($wap_user);
+
 import('Hook');
 $contract = $_GET['card'];
 $hook = new Hook($contract);

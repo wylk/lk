@@ -1,23 +1,12 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
-require_once dirname(__FILE__).'/func.php';
+//require_once dirname(__FILE__).'/func.php';
+if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
 $verifyLen = "6";  //验证码长度
 // $userId = 11;
-
-// 判断是否登录状态中
-if(isset($_SESSION['loginsign']) && time()-$_SESSION['loginsign']['logintime']<3600){
-	// var_dump(time()-$_SESSION['loginsign']['lasttime']);
-	$_SESSION['loginsign']['logintime'] = time();
-	$phone = isset($_SESSION['loginsign']['phone']) ? $_SESSION['loginsign']['phone'] : "";
-	$userId = isset($_SESSION['loginsign']['userid']) ? $_SESSION['loginsign']['userid'] : "";
-	if(empty($phone) || empty($userId)){
-		header("location:login.php");
-	}
-}else{
-	header("location:login.php");
-	exit();
-}
-
+dump($wap_user);
+$phone = isset($wap_user['phone']) ? $wap_user['phone'] : "";
+$userId = isset($wap_user['userid']) ? $wap_users['userid'] : "";
 // 钱包
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == "purse"){
 	$userInfo = M("lk_user")->findField("point_balance,phone,id,upwd","phone=".$phone);

@@ -142,7 +142,7 @@
                 </div>
              </div>
              <div class="home-plugin-info-row-card row-card2">
-                <div style="height: 40px;">
+                <div style="height: 40px;line-height: 21px">
                <p><span style="font-weight: bold">老文</span><span class="layui-badge layui-bg-orange">V1 店铺认证</span></p>
                <p>单价:0.9CNY 限制500-1000</p>
                </div>
@@ -152,7 +152,7 @@
              </div>
          </div>
          <hr>
-         
+
          <?php for ($i=0; $i <3 ; $i++) { ?>
          <div class="home-plugin-info-row">
              <div class="home-plugin-info-row-card line-heights">
@@ -161,9 +161,9 @@
                 </div>
              </div>
              <div class="home-plugin-info-row-card row-card2">
-              <div style="height: 40px;">
+              <div style="height: 40px;line-height: 21px">
                  <p><span style="font-weight: bold">老文</span><span class="layui-badge layui-bg-orange">V2 个人认证</span></p>
-                 <p>单价:0.9CNY 交易量:300</p>
+                 <p>单价:0.92CNY 限制1-100</p>
                </div>
              </div>
              <div class="home-plugin-info-row-card card-3 line-heights">
