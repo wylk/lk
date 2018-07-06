@@ -521,36 +521,14 @@ table th, table td {
     }
 }
 
-.lk-bar{
-    position: fixed;
-    width: 100%;
-    line-height: 45px;
-    background-color: #FFF;
-    box-shadow: 0 1px 3px #efeef0;
-    z-index: 10;
-    padding:0 15px;
-}
-.lk-title{
-    display: inline-block;
-    font-size: 16px;
-    font-weight: 500;
-    position: absolute;
-    top: 0px;
-    right: 15%;
-    left: 15%;
-    width: 70%;
-    margin: 0 auto;
-    text-align: center;
-    color: #000;
-}
-.lk-content{
-    padding: 50px 0 0 0;
-    margin-bottom: 70px;
-}
-.lk-container-flex{
-    display: -webkit-flex; /* Safari */
-    display: flex;
-}
+.lk-bar{position: fixed; width: 100%; line-height: 45px;background-color: #FFF;
+        box-shadow: 0 1px 3px #efeef0;z-index: 10;padding:0 15px;}
+.lk-title{display: inline-block;font-size: 16px;font-weight: 500;position: absolute;
+          top: 0px;right: 15%;left: 15%;width: 70%;margin: 0 auto;
+          text-align: center;color: #000;}
+.lk-content{padding: 50px 0 0 0; margin-bottom: 70px;}
+.lk-container-flex{display: -webkit-flex; /* Safari */display: flex;}
+
 /*  内部元素方向 flex-direction:
     row（默认值）：主轴为水平方向，起点在左端。
     row-reverse：主轴为水平方向，起点在右端。

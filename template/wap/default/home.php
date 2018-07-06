@@ -38,9 +38,7 @@
         }
        
         .home-plugin-menu-img{
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
+            height: 60%;
             margin: 0px auto 5px;
         }
         .home-plugin-menu-title{
@@ -54,19 +52,19 @@
             min-height: 100px;
         }
         .home-plugin-info-row{
-            border-bottom: 0.5px solid #bbbbbb;
             height: 65px;
             display: flex;
             justify-content: space-between;
         }
+        .line-heights{
+            width: 22%;
+            line-height: 65px;
+        }
         .row-card2{
            flex-grow: 1;
            display: flex;
-           flex-direction:column;
-        }
-        .home-plugin-info-row-card{
-            width: 22%;
-            line-height: 30px;
+           align-items:center;
+
         }
 
         .home-plugin-info-row-card-img{
@@ -87,6 +85,10 @@
         }
         .layui-badge{
             margin-left: 5px; 
+        }
+        .home-plugin-info-row, hr{
+          width: 95%;
+          margin: 0px auto;
         }
     </style>
 </head>
@@ -132,37 +134,43 @@
        
    </div> -->
     <div class="home-plugin-info">
+      <hr>
          <div class="home-plugin-info-row">
-             <div class="home-plugin-info-row-card">
+             <div class="home-plugin-info-row-card line-heights">
                 <div class="home-plugin-info-row-card-img">
                     <img src="http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" style="height:100%;width:100%;border-radius: 50%;">
                 </div>
              </div>
              <div class="home-plugin-info-row-card row-card2">
-                 <p><span style="font-weight: bold">老文</span><span class="layui-badge layui-bg-orange">V1 店铺认证</span></p>
-                 <p>单价:0.9CNY 限制500-1000</p>
+                <div style="height: 40px;">
+               <p><span style="font-weight: bold">老文</span><span class="layui-badge layui-bg-orange">V1 店铺认证</span></p>
+               <p>单价:0.9CNY 限制500-1000</p>
+               </div>
              </div>
-             <div class="home-plugin-info-row-card card-3" >
+             <div class="home-plugin-info-row-card card-3 line-heights" >
                 <a href="./receive.php" class="layui-btn layui-btn-primary">购买</a> 
              </div>
          </div>
-         <?php for ($i=0; $i <6 ; $i++) { ?>
-             
+         <hr>
          
+         <?php for ($i=0; $i <3 ; $i++) { ?>
          <div class="home-plugin-info-row">
-             <div class="home-plugin-info-row-card">
+             <div class="home-plugin-info-row-card line-heights">
                 <div class="home-plugin-info-row-card-img">
                     <img src="http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" style="height:100%;width:100%;border-radius: 50%;">
                 </div>
              </div>
              <div class="home-plugin-info-row-card row-card2">
+              <div style="height: 40px;">
                  <p><span style="font-weight: bold">老文</span><span class="layui-badge layui-bg-orange">V2 个人认证</span></p>
                  <p>单价:0.9CNY 交易量:300</p>
+               </div>
              </div>
-             <div class="home-plugin-info-row-card card-3">
+             <div class="home-plugin-info-row-card card-3 line-heights">
                  <a href="./receive.php" class="layui-btn layui-btn-primary">购买</a>
              </div>
          </div>
+          <hr>
         <?php }?>
     </div>
 

@@ -74,13 +74,6 @@
             <?php }?>
         </div>
 </div>
-  	<?php include display('public_menu');?>
+<?php include display('public_menu');?>
 </body>
 </html>
-<script type="text/javascript">
-	layui.use(['form', 'layer'],function(){
-		form = layui.form;
-        var element = layui.element;
-        layer = layui.layer;
-	})
-</script>

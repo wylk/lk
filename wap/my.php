@@ -39,163 +39,8 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "bill"){
 	include display("bill");
 	exit();
 }
-// 文件上传
-if(isset($_GET['type']) && $_GET['type'] == "uploadFile"){
-	if(!empty($_FILES) && $_FILES['file']['error'] == 0){
-		$rand_num = 'images/'.date('Ym',$_SERVER['REQUEST_TIME']).'/';
-		$upload_dir = $_SERVER['DOCUMENT_ROOT']."/upload/" . $rand_num;
-		if (!file_exists($upload_dir)) {
-			mkdir($upload_dir, 0777, true);
-		}
-		import("UploadFile");
-		$upload = new UploadFile();
-		$upload->maxSize = 1*1024*1024;
-		$upload->allowExts = ['png','jpeg','jpg','gif'];
-		$upload->allowTypes = ['image/png',"image/jpg","image/gif",'image/jpeg'];
-		$upload->savePath = $upload_dir;
-		$upload->saveRule = 'uniqid';
-		$res = $upload->uploadOne($_FILES['file']);
-		// $file = $file['name'];
-		if(!$res){
-			$error = $upload->getErrorMsg();
-			dexit(['res'=>1,"msg"=>$error]);
-		}
-		// $uploadList = $upload->getUploadFileInfo();
-		$path = getAttachmentUrl($rand_num.$res[0]['savename']);
-		dexit(['res'=>0,"msg"=>$path]);
-	}
-	dexit(['res'=>1,"msg"=>"传送失败"]);
-}
-// exit();
-// 用户认证
-if(isset($_GET['pagetype']) && $_GET['pagetype'] == 'postcard'){
-	// $userId = 918;
-	$where = ['uid'=>$userId];
-	$audit = D("User_audit")->where($where)->select();
-	$audit = $audit[0];
-	$type = $audit['type'];
-	include display("postcard");
-	exit();
-}
-// 用户认证信息修改
-if(isset($_GET['pagetype']) && $_GET['pagetype'] == 'postcardEdit'){
-	// 获取用户信息
-	$uid = isset($_SESSION['loginsign']['uid']) ? $_SESSION['loginsign']['uid'] : "";
-	if(empty($uid)){
-		$userInfo = M('lk_user')->findField("id,phone","phone=".$phone);
-		$uid = transformArray($userInfo,"id");
-	}
-	$where['uid'] = $uid;
-	$postcardInfo = M("lk_user_audit")->select($where);
-	$postcardInfo = transformArray($postcardInfo);
-	
-	include display("postcard");
-	exit();
-}
-//身份证认证信息处理
-if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
-	$type = isset($_POST['type']) ? $_POST['type'] : "";
-	$status = isset($_POST['status']) ? $_POST['status'] : "";
-	// $data['type'] = $type;
-	$data['name'] = isset($_POST['name']) ? $_POST['name'] : "";
-	// 个人认证
-	if($type == '1'){
-		$data['postcards'] = isset($_POST['postcard']) ? $_POST['postcard'] : "";
-		$data['img_just'] = isset($_POST['uploadImg_1']) ? $_POST['uploadImg_1'] : "";
-		$data['img_back'] = isset($_POST['uploadImg_2']) ? $_POST['uploadImg_2'] : "";
-		$data['img_oneself'] = isset($_POST['uploadImg_3']) ? $_POST['uploadImg_3'] : "";
-		$data['type'] = 1;
-		$data['status'] = 0;
-		if(empty($data['postcards']) || empty($data['img_just']) || empty($data['img_back']) || empty($data['img_oneself'])){
-			dexit(['res'=>1,"msg"=>"请您填写完信息后再提交"]);
-		}
-	}
-	// 店铺认证
-	if($type == 2){
-		$data['enterprise'] = isset($_POST['enterprise']) ? $_POST['enterprise'] : "";
-		$data['business_license'] = isset($_POST['businessLicense']) ? $_POST['businessLicense'] : "";
-		$data['business_img'] = isset($_POST['uploadBusiness']) ? $_POST['uploadBusiness'] : "";
-		$data['img_oneself'] = isset($_POST['uploadImg_3']) ? $_POST['uploadImg_3'] : "";
-		$data['type'] = 2;
-		$data['status'] = 0;
-		if(empty($data['enterprise']) || empty($data['business_license']) || empty($data['business_img']) || empty($data['img_oneself'])){
-			dexit(['res'=>1,"msg"=>"请您填写完信息后再提交","other"=>$data]);
-		}
-	}
-	if(!empty($data)){
-		if($status == 2){
-			$data['update_time'] = time();
-			$res = D("User_audit")->data($data)->where(['uid'=>$userId])->save();
-		}else{
-			$data['uid'] = $userId;	
-			$data['create_time'] = time();
-			$data['update_time'] = time();
-			$res = D("User_audit")->data($data)->add();
-		}
-		if(!$res){
-			dexit(['res'=>1,"msg"=>"信息错误，请您重新填写","other"=>$res]);
-		}		
-		dexit(['res'=>0,"msg"=>"提交成功，请您耐心等待审核","other"=>$res]);
-	}
-	dexit(['res'=>1,"msg"=>"请您填写完信息后再提交",'other'=>$data]);
-}
-// 发卡
-if(isset($_GET['pagetype']) && $_GET['pagetype'] == "cardType"){
-	// $uid = 914;
-	// $getAuth = authentication($uid);
-	// var_dump($getAuth);
-	$cardRes = M("Contract")->find();
-	$res = D("Card_package")->where(['uid'=>"1530523825"])->select();
-	$cardtype = array_column($res, "type");
-	$cardtype = array_map(function($value,$key){return $value.="Card";}, $cardtype);
-	include display("cardType");
-	exit();
-}
-// 展示卡列表
-if(isset($_GET['pagetype']) && $_GET['pagetype'] == "cardList"){
-	$where['uid'] = $userId;
-	// 获取店铺发卡的类型
-	$cardPageList = D("Card_package")->where($where)->select();
-	$cardPageList = array_column($cardPageList,null,"card_id");
 
-	// 获取card的属性
-	$cardIds = array_keys($cardPageList);
-	$cardIdstr = implode($cardIds, "','");
-	$where = "card_id in('".$cardIdstr."')";
-	// $cardWhere['card_id'] = count($cardIds)>1 ? ['in',$cardIds] : $cardIds[0];
-	// 获取卡片的信息
-	$cards = D("Card")->where($where)->select();
 
-	// $cids = array_column($cards,"c_id");
-	// 获取所有属性列表
-	$cidField = D("Contract_field")->where()->select();
-	$cidField = array_column($cidField,null,"id");
-
-	// 整理卡的信息
-	foreach($cards as $key => $value ){
-		$list[$value['card_id']]['uid'] = $value['uid'];
-		$list[$value['card_id']]['card_id'] = $value['card_id'];
-		$list[$value['card_id']]['type'] = $cardPageList[$value['card_id']]["type"];
-		$list[$value['card_id']]['num'] = $cardPageList[$value['card_id']]["num"];
-		$list[$value['card_id']]['address'] = $cardPageList[$value['card_id']]["address"];
-		$list[$value['card_id']]['is_publisher'] = $cardPageList[$value['card_id']]["is_publisher"];
-		// 不同卡不同的属性
-		$list[$value['card_id']]['field'][$cidField[$value['c_id']]["val"]]['val'] = $value['val'];
-		$list[$value['card_id']]['field'][$cidField[$value['c_id']]["val"]]['describe'] = $cidField[$value['c_id']]["describe"];
-	}
-
-	include display("cardList");
-	exit();
-}
-
-// 设置
-if(isset($_GET['pagetype']) && $_GET['pagetype'] == "setup"){
-	$userInfo = M("lk_user")->findField("id,name,phone,wx_openId,ali_userid,upwd,pay_password","phone=".$phone);
-	$userInfo = transformArray($userInfo);
-	// var_dump($userInfo);
-	include display("setup");
-	exit();
-}
 // ajax请求
 // if(isset($_POST['phone']) && $_POST['phone'] == $phone && isset($_POST['type'])){
 if(isset($_POST['phone']) && isset($_POST['type'])){
@@ -240,7 +85,14 @@ if(isset($_POST['phone']) && isset($_POST['type'])){
 		exit();
 	}
 }
- $menu = [
+// 判断是否认证
+$ruleJudge = D("User_audit")->field("type,status,uid")->where(['uid'=>$userId])->select();
+foreach($ruleJudge as $key=>$val){
+	$type = $val['type'];
+	$status = $val['status'];
+}
+if($type == 2 && $status == 1 ){
+	$menu = [
             ['icon'=>'&#xe6f5;','url'=>'./postcard.php','title'=>'身份证'],
             ['icon'=>'&#xe758;','url'=>'./cardType.php','title'=>'发卡'],
             ['icon'=>'&#xe6f5;','url'=>'./cardList.php','title'=>'卡/券/库'],
@@ -249,14 +101,17 @@ if(isset($_POST['phone']) && isset($_POST['type'])){
             ['icon'=>'&#xe6bf;','url'=>'','title'=>'账单明细'],
             ['icon'=>'&#xe6ae;','url'=>'./setup.php','title'=>'设置'],
         ];
+}else{
+	$menu = [
+            ['icon'=>'&#xe6f5;','url'=>'./postcard.php','title'=>'身份证'],
+            ['icon'=>'&#xe6ae;','url'=>'./setup.php','title'=>'设置'],
+        ];
+}
+
+ 
 
 // var_dump(isset($_SESSION));exit();
 
 include display('my');
 echo ob_get_clean();
 exit();
-
-function authentication($uid){
-	return D("User_audit")->where(['uid'=>$uid])->find();
-}
-
