@@ -110,13 +110,12 @@
           </tr> 
         </thead>
         <tbody>
-          <?php for ($i=0; $i < 2; $i++) { ?>
+          <?php foreach ($tranList as $key => $value) { ?>
           <tr>
-            
-            <td>12</td>
-            <td>0.323</td>
-            <td>16-11-29 12:33:14</td>
-            <td>撤销</td>
+            <td ><?php echo $value['num'];?></td>
+            <td><?php echo $value['price'];?></td>
+            <td><?php echo date("Y-m-d H:i:s",$value['num']);?></td>
+            <td id="revoke_<?php echo $value['id']?>">撤销</td>
           </tr>
             <?php }?>
         </tbody>
@@ -151,6 +150,19 @@ layui.use(['form','layer'], function(){
         layer.closeAll("loading");
       },"json");
     return false;
+  });
+  // 点单撤销功能
+  $("td[id^=revoke_]").bind("click",function(){
+    console.log(this);
+    var revokeId = $(this).attr("id");
+    var str = "revoke_";
+    var id = revokeId.substring(str.length);
+    console.log(revokeId,str.length,id);
+    data = {'id': id, "type" : "revoke"}
+    $.post("./transaction",data,function(res){
+      console.log(res);
+
+    },"json");
   });
 
 });

@@ -11,46 +11,15 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
-    .layui-container {
-        line-height: 35px;
-    }
-
-    .layui-container p i {
-        color: red;
-        margin-right: 10px;
-    }
-
-    .layui-tab-content {
-        height: 450px
-    }
-
-    .uploadImg {
-        float: right;
-        margin-right: 24px
-    }
-
-    .uploadImg img {
-        width: 62px
-    }
-
-    .layui-form-label {
-        width: 95px;
-    }
-
-    .layui-input-block {
-        width: 200px;
-        margin-left: 130px;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    .cardBody {
-        width: 100%;
-        margin-top: 46px;
-        text-align: center;
-    }
+    .layui-container p{ line-height: 35px;}
+    .layui-container p i { color: red; margin-right: 10px;}
+    .layui-tab-content { height: 450px}
+    .uploadImg { float: right; margin-right: 24px}
+    .uploadImg img { width: 62px}
+    .layui-form-label { width: 95px;}
+    .layui-input-block { width: 200px; margin-left: 130px;}
+    .hidden { display: none;}
+    .cardBody { width: 100%; margin-top: 46px; text-align: center;}
     </style>
 </head>
 
@@ -218,7 +187,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
 
     var uploadInst1 = upload.render({
         elem: "#upload_1",
-        url: "my.php?type=uploadFile",
+        url: "postcard.php?type=uploadFile",
         before: function() {
             layer.load();
         },
@@ -236,7 +205,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
     });
     var uploadInst2 = upload.render({
         elem: "#upload_2",
-        url: "my.php?type=uploadFile",
+        url: "postcard.php?type=uploadFile",
         before: function() {
             layer.load();
         },
@@ -254,7 +223,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
     });
     var uploadInst3 = upload.render({
         elem: "#upload_3",
-        url: "my.php?type=uploadFile",
+        url: "postcard.php?type=uploadFile",
         before: function() {
             layer.load();
         },
@@ -271,7 +240,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
     });
     var uploadInst3 = upload.render({
         elem: "#upload_business",
-        url: "my.php?type=uploadFile",
+        url: "postcard.php?type=uploadFile",
         before: function() {
             layer.load();
         },
@@ -288,7 +257,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
     });
     var uploadInst3 = upload.render({
         elem: "#upload_oneself",
-        url: "my.php?type=uploadFile",
+        url: "postcard.php?type=uploadFile",
         before: function() {
             layer.load();
         },
@@ -315,13 +284,13 @@ layui.use(["element", "upload", "layer", 'form'], function() {
         }
         beatCount++;
         layer.load();
-        $.post("./my.php?pagetype=postcardBackstage", data.field, function(result) {
+        $.post("./postcard.php?pagetype=postcardBackstage", data.field, function(result) {
             console.log(result);
             layer.closeAll("loading");
             if (!result.res) {
-                // window.location.href = "./my.php?pagetype=postcard";
+                // window.location.href = "./postcard.php?pagetype=postcard";
                 layer.msg(result.msg, { icon: 1, skin: "demo-class" }, function() {
-                    window.location.href = "./my.php?pagetype=postcard";
+                    window.location.href = "./postcard.php?pagetype=postcard";
                 })
             } else {
                 layer.msg(result.msg, { icon: 5, skin: "demo-class" });
@@ -341,12 +310,12 @@ layui.use(["element", "upload", "layer", 'form'], function() {
         }
         beatCount++;
         layer.load();
-        $.post("./my.php?pagetype=postcardBackstage", data.field, function(result) {
+        $.post("./postcard.php?pagetype=postcardBackstage", data.field, function(result) {
             console.log(result);
             layer.closeAll("loading");
             if (!result.res) {
                 layer.msg(result.msg, { icon: 1, skin: "demo-class" }, function() {
-                    window.location.href = './my.php?pagetype=postcard';
+                    window.location.href = './postcard.php?pagetype=postcard';
                 })
             } else {
                 layer.msg(result.msg, { icon: 5, skin: "demo-class" });
