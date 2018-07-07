@@ -34,9 +34,9 @@
             height: 100px;
             width: 25%;
             text-align: center;
-            
+
         }
-       
+
         .home-plugin-menu-img{
             height: 60%;
             margin: 0px auto 5px;
@@ -84,7 +84,7 @@
             line-height: 65px;
         }
         .layui-badge{
-            margin-left: 5px; 
+            margin-left: 5px;
         }
         .home-plugin-info-row, hr{
           width: 95%;
@@ -104,11 +104,11 @@
             <div><img src="https://free.modao.cc/uploads3/images/1907/19079076/raw_1523959218.jpeg"></div>
             <div><img src="https://free.modao.cc/uploads3/images/1907/19079076/raw_1523959218.jpeg"></div>
             <div><img src="https://free.modao.cc/uploads3/images/1907/19079076/raw_1523959218.jpeg"></div>
-        </div>   
+        </div>
     </div>
    <!--  <div class="home-plugin">
        <div class="home-plugin-menu">
-           <div class="home-plugin-menu-img"> 
+           <div class="home-plugin-menu-img">
                <img src="http://img4.imgtn.bdimg.com/it/u=1036044083,1484439347&fm=200&gp=0.jpg" style="height: 100%;width: 100%">
            </div>
            <div class="home-plugin-menu-title">
@@ -116,7 +116,7 @@
            </div>
        </div>
        <div class="home-plugin-menu">
-           <div class="home-plugin-menu-img"> 
+           <div class="home-plugin-menu-img">
                <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=734478096,1857645267&fm=27&gp=0.jpg" style="height: 100%;width: 100%">
            </div>
            <div class="home-plugin-menu-title">
@@ -124,17 +124,20 @@
            </div>
        </div>
        <div class="home-plugin-menu">
-           <div class="home-plugin-menu-img"> 
+           <div class="home-plugin-menu-img">
                <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=681084461,1770331422&fm=200&gp=0.jpg" style="height: 100%;width: 100%">
            </div>
            <div class="home-plugin-menu-title">
                购买会员卡进店打折消费
            </div>
        </div>
-       
+
    </div> -->
     <div class="home-plugin-info">
       <hr>
+        <?php foreach ($UserAud as $key => $value) {
+          foreach ($value as $k => $v) {
+         ?>
          <div class="home-plugin-info-row">
              <div class="home-plugin-info-row-card line-heights">
                 <div class="home-plugin-info-row-card-img">
@@ -143,18 +146,24 @@
              </div>
              <div class="home-plugin-info-row-card row-card2">
                 <div style="height: 40px;line-height: 21px">
-               <p><span style="font-weight: bold">老文</span><span class="layui-badge layui-bg-orange">V1 店铺认证</span></p>
-               <p>单价:0.9CNY 限制500-1000</p>
+               <p><span style="font-weight: bold"><?= $v['name'] ?></span><span class="layui-badge layui-bg-orange">
+                <?php if($v['type']==1){
+                      echo '个人认证';
+                    }elseif($v['type']==2){
+                      echo '店铺认证';
+                    }
+                 ?>
+               </span></p>
+               <p>单价:<?=  floatval($v['price']) ?>CNY 限制<?= floatval($v['limit']) ?>-<?= floatval($v['num']) ?></p>
                </div>
              </div>
              <div class="home-plugin-info-row-card card-3 line-heights" >
-                <a href="./receive.php" class="layui-btn layui-btn-primary">购买</a> 
+                <a href="./receive.php" class="layui-btn layui-btn-primary">购买</a>
              </div>
          </div>
          <hr>
-
-         <?php for ($i=0; $i <3 ; $i++) { ?>
-         <div class="home-plugin-info-row">
+        <?php }} ?>
+         <!-- <div class="home-plugin-info-row">
              <div class="home-plugin-info-row-card line-heights">
                 <div class="home-plugin-info-row-card-img">
                     <img src="http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" style="height:100%;width:100%;border-radius: 50%;">
@@ -170,8 +179,7 @@
                  <a href="./receive.php" class="layui-btn layui-btn-primary">购买</a>
              </div>
          </div>
-          <hr>
-        <?php }?>
+          <hr> -->
     </div>
 
 </div>
