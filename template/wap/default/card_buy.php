@@ -22,7 +22,7 @@
 
 <body>
     <header class="lk-bar lk-bar-nav">
-        <i class="iconfont">&#xe697;</i>
+        <i onclick="javascript:history.back(-1);" class="iconfont">&#xe697;</i>
         <h1 class="lk-title">买入</h1>
     </header>
     <div class="lk-content">

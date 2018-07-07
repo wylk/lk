@@ -23,7 +23,7 @@ class mysql{
 	public function __construct($other=array()){
 
 		if (!function_exists('mysql_connect')){
-			pigcms_tips('服务器空间PHP不支持MySql数据库','none');
+			leka_tips('服务器空间PHP不支持MySql数据库','none');
 		}
 
 		if(empty($other)){
@@ -36,26 +36,26 @@ class mysql{
 		if (!$this->conn = @mysql_connect($_G['system']['DB_HOST'].':'.$_G['system']['DB_PORT'], $_G['system']['DB_USER'], $_G['system']['DB_PWD'])) {
             switch ($this->geterrno()){
                 case 2005:
-                    pigcms_tips('连接数据库失败，数据库地址错误或者数据库服务器不可用','none');
+                    leka_tips('连接数据库失败，数据库地址错误或者数据库服务器不可用','none');
                     break;
                 case 2003:
-                    pigcms_tips('连接数据库失败，数据库端口错误','none');
+                    leka_tips('连接数据库失败，数据库端口错误','none');
                     break;
                 case 2006:
-                    pigcms_tips('连接数据库失败，数据库服务器不可用','none');
+                    leka_tips('连接数据库失败，数据库服务器不可用','none');
                     break;
                 case 1045:
-                    pigcms_tips('连接数据库失败，数据库用户名或密码错误','none');
+                    leka_tips('连接数据库失败，数据库用户名或密码错误','none');
                     break;
                 default :
-                    pigcms_tips('连接数据库失败，请检查数据库信息。错误编号：' . $this->geterrno(),'none');
+                    leka_tips('连接数据库失败，请检查数据库信息。错误编号：' . $this->geterrno(),'none');
                     break;
             }
 		}
 		if ($this->getMysqlVersion() > '4.1') {
 			mysql_query("SET NAMES 'utf8'");
 		}
-		@mysql_select_db($_G['system']['DB_NAME'], $this->conn) OR pigcms_tips('连接数据库失败，未找到您填写的数据库 <b>'.$_G['system']['DB_NAME'].'</b>','none');
+		@mysql_select_db($_G['system']['DB_NAME'], $this->conn) OR leka_tips('连接数据库失败，未找到您填写的数据库 <b>'.$_G['system']['DB_NAME'].'</b>','none');
 	}
     function table($table){
         if(is_array($table)){
@@ -170,7 +170,7 @@ class mysql{
 		$sql = 'UPDATE '.$this->table.' SET '.$now_data;
 
 		if(empty($this->where)){
-			pigcms_tips('为了保证数据库的安全，没有条件的更新不允许执行','none');
+			leka_tips('为了保证数据库的安全，没有条件的更新不允许执行','none');
 		}
 		$sql .= ' WHERE '.$this->where;
 		//logss('order','order',$sql);
@@ -292,7 +292,7 @@ class mysql{
 	function delete(){
 		$sql = 'DELETE FROM '.$this->table;
 		if(empty($this->where)){
-			pigcms_tips('为了保证数据库的安全，没有条件的删除不允许执行','none');
+			leka_tips('为了保证数据库的安全，没有条件的删除不允许执行','none');
 		}
 		$sql .= ' WHERE '.$this->where;
 		$this->clear_data();
