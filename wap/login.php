@@ -31,9 +31,8 @@ if(isset($_POST['phone'])){
 	// 退出登录
 	if(isset($_POST['type']) && $_POST['type'] == "signOut"){
 		session_destroy();
-		if(isset($_SESSION)) echo false;
-		else echo true;
-		exit();
+		dexit(['error'=>0,'msg'=>'退出成功']);
+		
 	}
 	// 验证码登录
 	if(isset($_POST['logintype']) && $_POST['logintype'] == "checkAccount"){

@@ -2,6 +2,7 @@ $(function  () {
   var is_name = false;
      layui.use('form', function(){
        var form = layui.form;
+       var layer = layui.layer;
         form.verify({
           name: function(value) {
               if (value.length < 1) {
@@ -21,19 +22,18 @@ $(function  () {
       });
        //监听提交
        form.on('submit(login)', function(data){
+        layer.load();
           $.post('?c=public&a=login',data.field,function(res){
+             layer.closeAll('loading');
             if(res.status == 0){
-              layer.msg(res.msg,{icon:1,time:2000});
-              setTimeout(function(){
+              layer.msg(res.msg,{icon:1,time:2000},function(){
+               
                 window.location.href="user.php?c=index&a=index";
-              },2000)
+              });
             }else{
               layer.msg(res.msg,{icon:2,time:1000});
             }
           },'json');
-
-         // layer.msg(JSON.stringify(data.field),function(){
-         // });
           return false;
        });
      });
