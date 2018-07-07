@@ -6,7 +6,6 @@ $cardRes = M("Contract")->find();
 dump($wap_user['userid']);
 $res = D("Card_package")->where(['uid'=>$wap_user['userid']])->select();
 $cardtype = array_column($res, "type");
-dump($cardtype);
 $cardtype = array_map(function($value,$key){return $value.="Card";}, $cardtype);
 
 include display('cardType');
