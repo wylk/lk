@@ -218,7 +218,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
 
     var uploadInst1 = upload.render({
         elem: "#upload_1",
-        url: "my.php?type=uploadFile",
+        url: "postcard.php?type=uploadFile",
         before: function() {
             layer.load();
         },
@@ -236,7 +236,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
     });
     var uploadInst2 = upload.render({
         elem: "#upload_2",
-        url: "my.php?type=uploadFile",
+        url: "postcard.php?type=uploadFile",
         before: function() {
             layer.load();
         },
@@ -254,7 +254,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
     });
     var uploadInst3 = upload.render({
         elem: "#upload_3",
-        url: "my.php?type=uploadFile",
+        url: "postcard.php?type=uploadFile",
         before: function() {
             layer.load();
         },
@@ -271,7 +271,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
     });
     var uploadInst3 = upload.render({
         elem: "#upload_business",
-        url: "my.php?type=uploadFile",
+        url: "postcard.php?type=uploadFile",
         before: function() {
             layer.load();
         },
@@ -288,7 +288,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
     });
     var uploadInst3 = upload.render({
         elem: "#upload_oneself",
-        url: "my.php?type=uploadFile",
+        url: "postcard.php?type=uploadFile",
         before: function() {
             layer.load();
         },
@@ -315,13 +315,13 @@ layui.use(["element", "upload", "layer", 'form'], function() {
         }
         beatCount++;
         layer.load();
-        $.post("./my.php?pagetype=postcardBackstage", data.field, function(result) {
+        $.post("./postcard.php?pagetype=postcardBackstage", data.field, function(result) {
             console.log(result);
             layer.closeAll("loading");
             if (!result.res) {
-                // window.location.href = "./my.php?pagetype=postcard";
+                // window.location.href = "./postcard.php?pagetype=postcard";
                 layer.msg(result.msg, { icon: 1, skin: "demo-class" }, function() {
-                    window.location.href = "./my.php?pagetype=postcard";
+                    window.location.href = "./postcard.php?pagetype=postcard";
                 })
             } else {
                 layer.msg(result.msg, { icon: 5, skin: "demo-class" });
@@ -341,12 +341,12 @@ layui.use(["element", "upload", "layer", 'form'], function() {
         }
         beatCount++;
         layer.load();
-        $.post("./my.php?pagetype=postcardBackstage", data.field, function(result) {
+        $.post("./postcard.php?pagetype=postcardBackstage", data.field, function(result) {
             console.log(result);
             layer.closeAll("loading");
             if (!result.res) {
                 layer.msg(result.msg, { icon: 1, skin: "demo-class" }, function() {
-                    window.location.href = './my.php?pagetype=postcard';
+                    window.location.href = './postcard.php?pagetype=postcard';
                 })
             } else {
                 layer.msg(result.msg, { icon: 5, skin: "demo-class" });

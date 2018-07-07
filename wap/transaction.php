@@ -33,6 +33,22 @@ if(isset($_POST['type']) && $_POST['type'] == "transaction"){
 	}
 	dexit(['res'=>1,"msg"=>"卡券发布失败"]);
 }
+if(isset($_POST['type']) && $_POST['type'] == "revoke"){
+	$revokeId = trim($_POST['id']);
+	$revokeNum = trim($_POST['num']);
+	$res = D("Card_transaction")->where(['id'=>$revokeId])->delete();
+	
+	if(!$res) {
+		dexit(['res'=>1,"msg"=>"订单撤销失败"]);
+	}
+	D("Card_package")->data()
+	dexit(['res'=>0,"msg"=>"订单撤销成功"]);
+}
+
+$tranWhere['uid'] = $userId;
+$tranWhere['card_id'] = $cardId;
+$tranList = D("Card_transaction")->where($tranWhere)->select();
+// var_dump($tranList);
 
 // var_dump($userId);
 include display("sell");
