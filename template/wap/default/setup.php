@@ -14,7 +14,7 @@
         .item-row{
             background-color: #fff;
             width: 100%;
-            line-height: 40px;
+            line-height: 45px;
         }
         .item-row-title{
            flex-grow: 1;

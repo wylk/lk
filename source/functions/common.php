@@ -274,7 +274,7 @@ function __autoload($class){
 
 		require_once(LEKA_PATH.'source/class/'.$class.'.class.php');
 	}else{
-		pigcms_tips($class . ' 类不存在。','none');
+		leka_tips($class . ' 类不存在。','none');
 	}
 }
 
@@ -376,14 +376,14 @@ function R($group,$mode,$action){
 		$mode_name = $mode.'_controller';
 		require($mode_file);
 		if(!class_exists($mode_name)){
-			pigcms_tips($mode_name.' 类不存在。','none');
+			leka_tips($mode_name.' 类不存在。','none');
 		}
 		$mode_obj = new $mode_name;
 		if(!method_exists($mode_obj,$action)){
 			if(method_exists($mode_obj,'_empty')){
 				$action = '_empty';
 			}else{
-				pigcms_tips($action.' 方法不存在。','none');
+				leka_tips($action.' 方法不存在。','none');
 			}
 		}
 		$mode_obj->$action();
@@ -391,9 +391,9 @@ function R($group,$mode,$action){
 		display();
 	}else{
 		if(DEBUG){
-			pigcms_tips($mode_file.' 控制器文件不存在。','none');
+			leka_tips($mode_file.' 控制器文件不存在。','none');
 		}else{
-			pigcms_tips($group.'分组 控制器 '.$mode.' 文件不存在。','none');
+			leka_tips($group.'分组 控制器 '.$mode.' 文件不存在。','none');
 		}
 	}
 }
@@ -441,14 +441,14 @@ function M($model){
 		if(!class_exists($model_name,false)){
 			require($model_file);
 			if(!class_exists($model_name)){
-				pigcms_tips($model_name.' 类不存在。','none');
+				leka_tips($model_name.' 类不存在。','none');
 			}
 		}
 		$model_obj = new $model_name($model);
 		$obj_arr[$lower_model] = $model_obj;
 		return $model_obj;
 	}else{
-		pigcms_tips($model_file.' 文件不存在。','none');
+		leka_tips($model_file.' 文件不存在。','none');
 	}
 }
 
@@ -544,7 +544,7 @@ function display($tpl=''){
 				$tpl_file = $tpl_arr[0].'/'.$_G['config']['theme_'.$tpl_arr[0].'_group'].'/'.$tpl_arr[1].'/'.$tpl_arr[2].'.php';
 				break;
 			default:
-				pigcms_tips('参数过多，无法实例化模板！');
+				leka_tips('参数过多，无法实例化模板！');
 		}
 		if($tpl_arr_count == 1){
 
@@ -559,9 +559,9 @@ function display($tpl=''){
 		return TPL_PATH.$tpl_file;
 	}else{
 		if(DEBUG){
-			pigcms_tips('模板文件 template/'.$tpl_file.' 文件不存在。','none');
+			leka_tips('模板文件 template/'.$tpl_file.' 文件不存在。','none');
 		}else{
-			pigcms_tips('模板文件 不存在！');
+			leka_tips('模板文件 不存在！');
 		}
 	}
 }
@@ -590,7 +590,7 @@ function url($url='',$param=array(),$showDomain=false){
 			$return_url .= $url_arr[0].'.php'.'?c='.$url_arr[1].'&a='.$url_arr[2];
 			break;
 		case 4:
-			pigcms_tips('参数过多，只允许接收3个参数！');
+			leka_tips('参数过多，只允许接收3个参数！');
 	}
 	if($param){
 		$return_url .= '&'.http_build_query($param);
@@ -619,7 +619,7 @@ function url_rewrite($url='',$param=array(),$showDomain=false){
 			$return_url .= $url_arr[0].'.php'.'?c='.$url_arr[1].'&a='.$url_arr[2];
 			break;
 		case 4:
-			pigcms_tips('参数过多，只允许接收3个参数！');
+			leka_tips('参数过多，只允许接收3个参数！');
 	}
 	if($param){
 		$return_url .= '&'.http_build_query($param);
@@ -1460,7 +1460,7 @@ function UR($file,$params = array (),$html = ".html",$rewrite = REWRITE){
 			$file_arr=explode(':', $file);
 			$count=count($file_arr);
 			if($count>2){
-				pigcms_tips('参数过多，最多只允许接收2个参数！');
+				leka_tips('参数过多，最多只允许接收2个参数！');
 			}
 			$url    = option('config.site_url').'/'.implode('/', $file_arr);
 		}else{
