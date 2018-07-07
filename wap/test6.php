@@ -28,7 +28,7 @@ $encryptedData = encrypt($token,$public_key);
 $bb = new AccountBook();
 
 //$bb->transferAccounts($encryptedData);//转账
-$bb->addAccount($encryptedData);//添加新地址
+//$bb->addAccount($encryptedData);//添加新地址
 /*$da = D('Account_book')->data(['now'=>1])->where(['id'=>['in',[80,81]]])->save();
 dump($da);*/
 
@@ -50,5 +50,5 @@ $contract = $_GET['card'];
 $hook = new Hook($contract);
 $hook->add($contract);
 $html = $hook->exec('add_tpl');*/
-include display('test6');
+include display('sell');
 echo ob_get_clean();
