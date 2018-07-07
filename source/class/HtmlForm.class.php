@@ -78,6 +78,7 @@ class HtmlForm
                     url && $.post('../user.php?c=config&a=delFile', {url: url},function(){});
                     $('.{$id}hid').val(res.msg);
                     $(".{$id}img").attr('src',res.msg); 
+                    layer.closeAll('loading');
                 }
               console.log(res.msg);
             },
@@ -206,7 +207,7 @@ $this->htmlall.=$str;
 
 	public function resSuccess($res)
 	{
-		$this->resSucce = 'window.location.href="{$res}" ';
+		$this->resSucce = "window.location.href='{$res}';";
 		return $this;
 	}
 
@@ -259,11 +260,11 @@ $this->htmlall.=$str;
 			                console.log(data.field);
 			                $.post('{$this->path}',data.field,function(re){
 			                    if(re.error == 0){
-			                        layer.alert(re.msg, {icon: 6},function () {
+			                        layer.msg(re.msg, {icon: 6,time:2000},function () {
 			                        	{$this->resSucce}
 			                        });
 			                    }else{
-			                        layer.alert('ok', {icon: 6});
+			                        layer.msg('ok', {icon: 6,time:2000});
 			                    }
 
 			                },'json');

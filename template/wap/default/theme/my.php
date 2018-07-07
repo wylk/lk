@@ -12,8 +12,9 @@
     <style type="text/css">
         .item-headers{
             margin: 0px auto 10px;
-            background: #fff;
+            background: #477359;
             height: 100px;
+            color: #fff;
         }
         .item-header-img{
             width: 40%;
@@ -46,7 +47,7 @@
 <body>
 <header class="lk-bar lk-bar-nav">
     <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
-    <h1 class="lk-title">全部交易</h1>
+    <h1 class="lk-title">个人中心</h1>
   </header>
 <div class="lk-content" style="background-color: #f0f0f0;">
 

@@ -52,77 +52,13 @@ if(isset($_POST['phone'])){
 		}else{
 			$userid = $phoneRes[0]['id'];
 		}
-		$_SESSION['loginsign']["phone"] = $phone;
-		$_SESSION['loginsign']['userid'] = $userid;
-		$_SESSION['loginsign']['logintime'] = time();
+		$_SESSION['wap_user']["phone"] = $phone;
+		$_SESSION['wap_user']['userid'] = $userid;
+		$_SESSION['wap_user']['logintime'] = time();
 		dexit(["res"=>0,'msg'=>"登录成功"]);
 	}
 }
 
-// //手机号注册 短信验证
-// $loginType = isset($_GET['logintype']) ? $_GET['logintype'] : false;
-// if($loginType == "register"){
-// 	$subPhone = $_GET['phone'];
-// 	$subPhone = checkTelephone($subPhone) ? $subPhone : "";
-// 	$subCode = $_GET['code'];
-// 	$code = $_SESSION['verify'][$subPhone];
-// 	if($subCode == $code){
-// 		// 将用户添加到数据库中
-// 		$data = ['phone'=>$subPhone];
-// 		$insertRes = M("lk_user")->insert($data);
-// 		if($insertRes) {
-// 			$_SESSION['loginsign']['phone'] = $subPhone;
-// 			$_SESSION['loginsign']['id'] = $insertRes;
-// 			$_SESSION['loginsign']['lasttime'] = time();
-// 			header("location:my.php");
-// 			exit();
-// 		}
-// 	}
-// 	header("location:login.php?pagetype=register");
-// 	exit();
-// }
+include display("login");
 
-
-// // 手机号登录检验
-// if($loginType == "login"){
-// 	$loginPhone = trim($_GET['phone']);
-// 	$loginPwd = trim($_GET['password']);
-// 	$loginPwd = md5($loginPwd);
-// 	$loginWhere = ['phone'=>$loginPhone,"upwd"=>$loginPwd];
-// 	$checkRes = M("lk_user")->findField("id,phone,upwd",$loginWhere);
-// 	if($checkRes){
-// 		$_SESSION['loginsign']['phone'] = $loginPhone;
-// 		// $_SESSION['loginsign']['id'] = $checkRes[''];
-// 		$_SESSION['loginsign']['lasttime'] = time();
-// 		header("location:./my.php");
-// 		exit();
-// 	}
-// 	header("location:./login.php");
-//     exit();
-// }
-// // 短信登录验证
-// if($loginType == "shortLogin"){
-// 	$loginPhone = trim($_GET['phone']);
-// 	$loginCode = trim($_GET['code']);
-// 	if($loginCode == $_SESSION['verify'][$loginPhone]){
-// 		$_SESSION['loginsign']['phone'] = $loginPhone;
-// 		$_SESSION['loginsign']['lasttime'] = time();
-// 		header("location:./my.php");
-// 		exit();
-// 	}
-// 	header("location:./login.php");
-// 	exit();
-// }
-
-
-// 浏览页面判断
-// $pageArr = ['login',"register"];
-// $pageType  = isset($_GET['pagetype']) ? $_GET['pagetype'] : '';
-// if($pageType && in_array($pageType, $pageArr)){
-// 	include display($pageType);
-// }else{
-	include display("login");
-
-// 	exit();
-// }
 

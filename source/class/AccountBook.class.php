@@ -48,13 +48,12 @@ MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCpaBKcZHVDbOwgKCrSGaqHbYG9MarI
     public function addAccount($encryptedData)
     {
     	$encrypte = $this->decrypt($encryptedData);
-
         $address = md5($encrypte['uid'].$encrypte['contract_id']);
         if(!D('Account_book')->where(['address'=>$address])->find()){
             $aa = $this->commAccount($encrypte['contract_id'],$address,$encrypte['account_balance']); 
-            return $address;
+            if($aa) return $address;
         }else{
-            return false;
+            return $address;
         }     
     }
 
