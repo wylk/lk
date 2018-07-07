@@ -57,7 +57,7 @@
                   <span class="x-red">*</span>提交时间
               </label>
               <div class="layui-input-inline" style="margin-top: 10px;">
-                  <?= date('Y-m-d H:i:s',$userAudit['careat_time']); ?>
+                  <?= date('Y-m-d H:i:s',$userAudit['create_time']); ?>
               </div>
           </div>
           <div class="layui-form-item">

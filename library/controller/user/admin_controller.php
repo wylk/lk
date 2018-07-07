@@ -40,6 +40,7 @@ class admin_controller extends base_controller
     public function delAuth()
     {
     	$id = $this->clear_html($_GET['id']);
+        dump($id);
     	$count = D('Auth')->where(['pid'=>$id])->count('id');
     	if($count){
     		$this->dexit(['error'=>1,'msg'=>'该项还有子类不能删除']);
