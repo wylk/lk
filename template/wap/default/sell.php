@@ -130,16 +130,20 @@
 layui.use(['form','layer'], function(){
   var layer = layui.layer;
   var form = layui.form;
+  var beatCount=0;
   //监听提交
   form.on('submit(formDemo)', function(data){
     console.log(JSON.stringify(data.field));
       console.log(data);
       layer.load();
+      if(beatCount >= 1) {
+        layer.msg("不要重复点击",{icon:5,skin:'demo-class'});
+      }
       $.post("./transaction.php",data.field,function(res){
         console.log(res);
         if(!res.res){
-          layer.msg(res.msg,{icon:1,skin:"demo-class"},function(){
-            // window.location.href = ""
+            layer.msg(res.msg,{icon:1,skin:"demo-class"},function(){
+            window.location.href = "./cardList.php";
           })
         }else{
           layer.msg(res.msg,{icon:5,skin:'demo-class'});
@@ -148,25 +152,6 @@ layui.use(['form','layer'], function(){
       },"json");
     return false;
   });
-  // layui.use(['form','layer'],function(){
-  //   var form = layui.form;
-  //   var layer = layui.layer;
-  //   form.on("submit(formDemo)",function(data){
-  //     layer.load();
-  //     console.log(data);
-  //     $.post("./transaction.php",data.field,function(res){
-  //       console.log(res);
-  //       if(!res.res){
-  //         layer.msg(res.msg,{icon:1,skin:"demo-class"},function(){
-  //           // window.location.href = ""
-  //         })
-  //       }else{
-  //         layer.msg(res.msg,{icon:5,skin:'demo-class'});
-  //       }
-  //       layer.closeAll("loading");
-  //     },"json");
-  //     return false;
-  //   });
-  // })
+
 });
 </script>
