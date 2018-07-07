@@ -60,14 +60,14 @@
 			console.log(data);
 			$.post("./transaction.php",data.field,function(res){
 				console.log(res);
-				if(res.res){
+				if(!res.res){
 					layer.msg(res.msg,{icon:1,skin:"demo-class"},function(){
-						layer.colseAll("loading");
 						// window.location.href = ""
 					})
 				}else{
 					layer.msg(res.msg,{icon:5,skin:'demo-class'});
 				}
+				layer.closeAll("loading");
 			},"json");
 			return false;
 		});

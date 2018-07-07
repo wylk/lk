@@ -60,14 +60,14 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">出售价：</label>
                 <div class="layui-input-block">
-                  <input type="text" name="price" required  lay-verify="price" placeholder="请输入出售价" autocomplete="off" class="layui-input">
+                  <input type="text" name="price" required  lay-verify="price|number" placeholder="请输入出售价" autocomplete="off" class="layui-input">
                 </div>
               </div>
               <hr>
               <div class="layui-form-item">
                 <label class="layui-form-label">出售量：</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="num" required lay-verify="num" placeholder="请输出售量" autocomplete="off" class="layui-input">
+                  <input type="text" name="num" required lay-verify="num|number" placeholder="请输出售量" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">可以:1000.32</div>
               </div>
@@ -75,12 +75,14 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">最少购买数:</label>
                 <div class="layui-input-block">
-                  <input type="text" name="limit" required  lay-verify="limit" placeholder="请输入最少购买数" autocomplete="off" class="layui-input">
+                  <input type="text" name="limit" required  lay-verify="limit|number" placeholder="请输入最少购买数" autocomplete="off" class="layui-input">
                 </div>
               </div>
                <hr>
               <div class="layui-form-item">
                 <div class="layui-input-block">
+                  <input type="hidden" name="type" value="transaction" />
+                  <input type="hidden" name="cardId" value="<?php echo $cardId; ?>" />
                   <button class="layui-btn lk-btn" lay-submit lay-filter="formDemo">立即提交</button>
                   <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
@@ -125,29 +127,46 @@
 </body>
 </html>
 <script>
-layui.use('form', function(){
+layui.use(['form','layer'], function(){
+  var layer = layui.layer;
   var form = layui.form;
-  form.verify({
-      price: function(value) {
-          if (value.length < 1) {
-              return '用户名不能为空！';
-          }
-      },
-      num: function(value) {
-          if (value.length < 1) {
-              return '密码不能为空！';
-          }
-      },
-      limit:function(value){
-          if (value.length < 4) {
-              return '验证码不能少得4个字符啊';
-          }
-      }
-  });
   //监听提交
   form.on('submit(formDemo)', function(data){
-    layer.msg(JSON.stringify(data.field));
+    console.log(JSON.stringify(data.field));
+      console.log(data);
+      layer.load();
+      $.post("./transaction.php",data.field,function(res){
+        console.log(res);
+        if(!res.res){
+          layer.msg(res.msg,{icon:1,skin:"demo-class"},function(){
+            // window.location.href = ""
+          })
+        }else{
+          layer.msg(res.msg,{icon:5,skin:'demo-class'});
+        }
+        layer.closeAll("loading");
+      },"json");
     return false;
   });
+  // layui.use(['form','layer'],function(){
+  //   var form = layui.form;
+  //   var layer = layui.layer;
+  //   form.on("submit(formDemo)",function(data){
+  //     layer.load();
+  //     console.log(data);
+  //     $.post("./transaction.php",data.field,function(res){
+  //       console.log(res);
+  //       if(!res.res){
+  //         layer.msg(res.msg,{icon:1,skin:"demo-class"},function(){
+  //           // window.location.href = ""
+  //         })
+  //       }else{
+  //         layer.msg(res.msg,{icon:5,skin:'demo-class'});
+  //       }
+  //       layer.closeAll("loading");
+  //     },"json");
+  //     return false;
+  //   });
+  // })
 });
 </script>
