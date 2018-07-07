@@ -5,18 +5,9 @@ $verifyLen = "6";  //验证码长度
 // $userId = 11;
 
 // 判断是否登录状态中
-if(isset($_SESSION['loginsign']) && time()-$_SESSION['loginsign']['logintime']<3600){
-	// var_dump(time()-$_SESSION['loginsign']['lasttime']);
-	$_SESSION['loginsign']['logintime'] = time();
-	$phone = isset($_SESSION['loginsign']['phone']) ? $_SESSION['loginsign']['phone'] : "";
-	$userId = isset($_SESSION['loginsign']['userid']) ? $_SESSION['loginsign']['userid'] : "";
-	if(empty($phone) || empty($userId)){
-		header("location:login.php");
-	}
-}else{
-	header("location:login.php");
-	exit();
-}
+if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
+$phone = isset($wap_user['phone']) ? $wap_user['phone'] : "";
+$userId = isset($wap_user['userid']) ? $wap_user['userid'] : "";
 
 // 文件上传
 if(isset($_GET['type']) && $_GET['type'] == "uploadFile"){

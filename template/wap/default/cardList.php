@@ -114,7 +114,7 @@
     console.log(res)
     var cardId = $(this).attr("title");
     console.log(cardId);
-    window.location.href = "./transaction.php?card_id="+cardId;
+    window.location.href = "./transaction.php?cardId="+cardId;
   })
 
 </script>
