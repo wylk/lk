@@ -11,46 +11,15 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
-    .layui-container {
-        line-height: 35px;
-    }
-
-    .layui-container p i {
-        color: red;
-        margin-right: 10px;
-    }
-
-    .layui-tab-content {
-        height: 450px
-    }
-
-    .uploadImg {
-        float: right;
-        margin-right: 24px
-    }
-
-    .uploadImg img {
-        width: 62px
-    }
-
-    .layui-form-label {
-        width: 95px;
-    }
-
-    .layui-input-block {
-        width: 200px;
-        margin-left: 130px;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    .cardBody {
-        width: 100%;
-        margin-top: 46px;
-        text-align: center;
-    }
+    .layui-container p{ line-height: 35px;}
+    .layui-container p i { color: red; margin-right: 10px;}
+    .layui-tab-content { height: 450px}
+    .uploadImg { float: right; margin-right: 24px}
+    .uploadImg img { width: 62px}
+    .layui-form-label { width: 95px;}
+    .layui-input-block { width: 200px; margin-left: 130px;}
+    .hidden { display: none;}
+    .cardBody { width: 100%; margin-top: 46px; text-align: center;}
     </style>
 </head>
 
