@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  
+
   <head>
     <meta charset="UTF-8">
     <title>欢迎页面-X-admin2.0</title>
@@ -21,7 +21,7 @@
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/js/xadmin.js"></script>
     <script type="text/javascript" src="<?php echo TPL_URL;?>/js/admin_auth.js?r=<?php echo time();?>"></script>
   </head>
-  
+
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">

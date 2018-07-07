@@ -77,7 +77,7 @@
               <img src="<?= $v['img_back'] ?>" style="width:47px" onclick="previewImg(this,'<?= $v['img_just'] ?>')" >
               <img src="<?= $v['img_oneself'] ?>" style="width:47px" onclick="previewImg(this,'<?= $v['img_just'] ?>')" >
             </td>
-            <td><?= date('Y-m-d H:i:s',$v['careat_time']); ?></td>
+            <td><?= date('Y-m-d H:i:s',$v['create_time']); ?></td>
             <td><?= date('Y-m-d H:i:s',$v['update_time']); ?></td>
             <td>
               <?php if($v['status']==0){

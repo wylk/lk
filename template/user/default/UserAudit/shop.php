@@ -76,7 +76,7 @@
             <td><?= $v['business_license'] ?></td>
             <td><img src="<?= $v['img_oneself'] ?>" onclick="previewImg(this,'<?= $v['img_just'] ?>')"></td>
             <td><img src="<?= $v['business_img'] ?>" onclick="previewImg(this,'<?= $v['img_just'] ?>')"></td>
-            <td><?= date('Y-m-d H:i:s',$v['careat_time']); ?></td>
+            <td><?= date('Y-m-d H:i:s',$v['create_time']); ?></td>
             <td><?= date('Y-m-d H:i:s',$v['update_time']); ?></td>
             <td>
               <?php if($v['status']==0){

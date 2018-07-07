@@ -30,9 +30,8 @@ class user_controller extends base_controller
     public function edit()
     {
         $id = $_GET['id'];
-
-        $user = $this->users->where(" id=$uid ")->find();
-
+        $user = D('User')->where(array('id' =>$id))->find();
+        $this->assign('user',$user);
         $this->display();
     }
 

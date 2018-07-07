@@ -90,7 +90,7 @@
                     <p>累计出售:<?php echo number_format($value['sell_count'],2); ?></p>
                 </div>
                 <div class="info-edit">
-                    <p>未  售:<?php echo number_format($value['num'],2); ?></p> <a class="lk-row-btn info-btn">卖出</a>
+                    <p>未  售:<?php echo number_format($value['num'],2); ?></p> <a class="lk-row-btn info-btn" id="transaction_<?php echo $key;?>" title="<?php echo $value['card_id']; ?>">交易</a>
                 </div>
             </div>
         </div>
@@ -110,5 +110,11 @@
 </body>
 </html>
 <script type="text/javascript">
+  $("a[id^=transaction_]").bind("click",function(res){
+    console.log(res)
+    var cardId = $(this).attr("title");
+    console.log(cardId);
+    window.location.href = "./transaction.php?card_id="+cardId;
+  })
 
 </script>
