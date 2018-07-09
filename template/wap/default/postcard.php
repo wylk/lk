@@ -52,7 +52,7 @@
                         <?php echo $type==2 ? "<p class='cardBody'>您已选择企业认证，不能再进行个人认证</p>" : ""?>
                         <?php echo $type==2 ? "<form class='layui-form hidden'>" : "<form class='layui-form'>"?>
                         <input type="hidden" name="type" value="1">
-                        <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : " "?>">
+                        <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : ""?>">
                         <div class='layui-form-item'>
                             <label class="layui-form-label">姓名：</label>
                             <div class="layui-input-block">
@@ -111,7 +111,8 @@
                     </div>
                     <div class='layui-form-item'>
                         <div class="layui-input-block">
-                            <button lay-submit class='layui-btn layui-btn-warm <?php echo isset($audit[' status '])&&($audit['status ']==0 || $audit['status ']==1) ? "layui-hide" : "";?>' lay-filter="formPerson">提交</button>
+                            <?php echo isset($audit[' status '])&&($audit['status ']==0 || $audit['status ']==1) ? " " : "<button lay-submit class='layui-btn layui-btn-warm ' lay-filter='formPerson'>提交</button>";?>
+                            
                         </div>
                     </div>
                     </form>
@@ -173,7 +174,8 @@
                 </div>
                 <div class='layui-form-item'>
                     <div class="layui-input-block">
-                        <button type="submit" lay-submit class='layui-btn layui-btn-warm <?php echo isset($audit[' status '])&&($audit['status ']==0 || $audit['status ']==1) ? "layui-hide" : "";?>' lay-filter="formBusiness">提交</button>
+                        <?php echo isset($audit[' status '])&&($audit['status '] == 0 || $audit['status ']==1) ? "" : "<button type='submit' lay-submit class='layui-btn layui-btn-warm ' lay-filter='formBusiness'>提交</button>";?>
+                        
                     </div>
                 </div>
                 </form>
@@ -283,11 +285,13 @@ layui.use(["element", "upload", "layer", 'form'], function() {
     });
     var beatCount = 0;
     form.on("submit(formPerson)", function(data) {
+        console.log(data);
         if (beatCount >= 1) {
             layer.msg(beatCount + "只能提交一次", { icon: 5, skin: "demo-class" });
             return false;
         }
-        if (data.field.status == 0 || data.field.status == 1) {
+        // console.log(data.field.status == "0");
+        if (data.field.status == "0" || data.field.status == '1') {
             layer.msg(data.field.status + "此状态不可更改", { icon: 5, skin: "demo-class" });
             return false;
         }
@@ -299,7 +303,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
             if (!result.res) {
                 // window.location.href = "./postcard.php?pagetype=postcard";
                 layer.msg(result.msg, { icon: 1, skin: "demo-class" }, function() {
-                    window.location.href = "./postcard.php?pagetype=postcard";
+                    window.location.href = "./postcard.php";
                 })
             } else {
                 layer.msg(result.msg, { icon: 5, skin: "demo-class" });
@@ -313,7 +317,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
             layer.msg(beatCount + "只能提交一次", { icon: 5, skin: "demo-class" });
             return false;
         }
-        if (data.field.status == 0 || data.field.status == 1) {
+        if (data.field.status == '0' || data.field.status == '1') {
             layer.msg(data.field.status + "此状态不可更改", { icon: 5, skin: "demo-class" });
             return false;
         }
@@ -324,7 +328,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
             layer.closeAll("loading");
             if (!result.res) {
                 layer.msg(result.msg, { icon: 1, skin: "demo-class" }, function() {
-                    window.location.href = './postcard.php?pagetype=postcard';
+                    window.location.href = './postcard.php';
                 })
             } else {
                 layer.msg(result.msg, { icon: 5, skin: "demo-class" });

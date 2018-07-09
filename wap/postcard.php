@@ -67,7 +67,7 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 		$data['img_oneself'] = isset($_POST['uploadImg_3']) ? $_POST['uploadImg_3'] : "";
 		$data['type'] = 1;
 		$data['status'] = 0;
-		if(empty($data['postcards']) || empty($data['img_just']) || empty($data['img_back']) || empty($data['img_oneself'])){
+		if(empty($data['name']) || empty($data['postcards']) || empty($data['img_just']) || empty($data['img_back']) || empty($data['img_oneself'])){
 			dexit(['res'=>1,"msg"=>"请您填写完信息后再提交"]);
 		}
 	}
