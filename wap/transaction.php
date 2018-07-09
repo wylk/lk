@@ -16,6 +16,7 @@ if(isset($_POST['type']) && $_POST['type'] == "transaction"){
 	$data['status'] = '0';
 	$data['uid'] = $userId;
 	$data['createtime'] = time();
+	$data['updatetime'] = time();
 
 	$cardBagInfo = D("Card_package")->field("num,address,is_publisher,frozen")->where(['uid'=>$userId,'card_id'=>$cardId])->find();
 	$cardBagInfo ? true : dexit(["res"=>1,'msg'=>"该卡券失效"]);
@@ -40,7 +41,7 @@ if(isset($_POST['type']) && $_POST['type'] == "revoke"){
 	$revokeId = trim($_POST['id']);
 	$revokeNum = trim($_POST['num']);
 	$revokeCardId = trim($_POST['cardId']);
-	$res = D("Card_transaction")->data(['status'=>2])->where(['id'=>$revokeId])->save();
+	$res = D("Card_transaction")->data(['status'=>2,"updatetime"=>time()])->where(['id'=>$revokeId])->save();
 
 	if(!$res) {
 		dexit(['res'=>1,"msg"=>"订单撤销失败",'other'=>$res]);
@@ -52,7 +53,7 @@ if(isset($_POST['type']) && $_POST['type'] == "revoke"){
 $tranWhere['uid'] = $userId;
 $tranWhere['status'] = 0;
 $tranWhere['card_id'] = $cardId;
-$tranList = D("Card_transaction")->where($tranWhere)->select();
+$tranList = D("Card_transaction")->where($tranWhere)->order("createtime desc")->select();
 $numInfo = D("Card_package")->field("num,frozen")->where(['uid'=>$userId,'card_id'=>$cardId])->find();
 // var_dump($numInfo);
 // var_dump($tranList);

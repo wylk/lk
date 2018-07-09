@@ -151,7 +151,7 @@ layui.use(['form','layer'], function(){
             $("#surplusNum i").html(res.num);
             // window.location.href = "./cardList.php";
             str = "<tr id='"+res.dataInfo.id+"'><td >"+res.dataInfo.num+"</td><td>"+res.dataInfo.price+"</td><td>"+getTime()+"</td><td id='revoke_"+res.dataInfo.id+"' num='"+res.dataInfo.num+"' cardId='"+res.dataInfo.card_id+"' onclick='revoke("+res.dataInfo.id+")'>撤销</td></tr>";
-            $("tbody").append(str);
+            $("tbody").prepend(str);
             layer.msg(res.msg,{icon:1,skin:"demo-class"},function(){
           })
         }else{
