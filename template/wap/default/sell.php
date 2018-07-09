@@ -112,8 +112,8 @@
         <tbody>
           <?php foreach ($tranList as $key => $value) { ?>
           <tr id="<?php echo $value['id']?>">
-            <td ><?php echo $value['num'];?></td>
-            <td><?php echo $value['price'];?></td>
+            <td ><?php echo number_format($value['num'],2);?></td>
+            <td><?php echo number_format($value['price'],2);?></td>
             <td><?php echo date("Y-m-d H:i:s",$value['createtime']);?></td>
             <td  id="revoke_<?php echo $value['id']?>" num="<?php echo $value['num'];?>" cardId="<?php echo $value['card_id'];?>" onclick="revoke(<?php echo $value['id']?>)" >撤销</td>
           </tr>
