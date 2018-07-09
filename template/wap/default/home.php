@@ -156,7 +156,7 @@
                </div>
              </div>
              <div class="home-plugin-info-row-card card-3 line-heights" >
-                <a href="./receive.php" class="layui-btn layui-btn-primary">购买</a>
+                <a href="./receive.php?id=<?= $value['id'] ?>&uid=<?= $value['uid'] ?>" class="layui-btn layui-btn-primary">购买</a>
              </div>
          </div>
          <hr>

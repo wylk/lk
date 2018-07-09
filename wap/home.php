@@ -23,6 +23,5 @@ foreach($tranList as $key=>$value){
 }
 $uidInfo = D("User_audit")->field("uid,type,name")->where(['uid'=>['in',$uids]])->select();
 $type = array_column($uidInfo,null,'uid');
-
 include display('home');
 echo ob_get_clean();
