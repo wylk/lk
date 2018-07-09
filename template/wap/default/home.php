@@ -135,9 +135,7 @@
    </div> -->
     <div class="home-plugin-info">
       <hr>
-        <?php foreach ($UserAud as $key => $value) {
-          foreach ($value as $k => $v) {
-         ?>
+        <?php foreach ($tranList as $key => $value) { ?>
          <div class="home-plugin-info-row">
              <div class="home-plugin-info-row-card line-heights">
                 <div class="home-plugin-info-row-card-img">
@@ -146,15 +144,15 @@
              </div>
              <div class="home-plugin-info-row-card row-card2">
                 <div style="height: 40px;line-height: 21px">
-               <p><span style="font-weight: bold"><?= $v['name'] ?></span><span class="layui-badge layui-bg-orange">
-                <?php if($v['type']==1){
+               <p><span style="font-weight: bold"><?= $type[$value['uid']]['name'] ?></span><span class="layui-badge layui-bg-orange">
+                <?php if($type[$value['uid']]['type']==1){
                       echo '个人认证';
-                    }elseif($v['type']==2){
+                    }elseif($type[$value['uid']]['type']==2){
                       echo '店铺认证';
                     }
                  ?>
                </span></p>
-               <p>单价:<?=  floatval($v['price']) ?>CNY 限制<?= floatval($v['limit']) ?>-<?= floatval($v['num']) ?></p>
+               <p>单价:<?=  floatval($value['price']) ?>CNY 限制<?= floatval($value['limit']) ?>-<?= floatval($value['num']) ?></p>
                </div>
              </div>
              <div class="home-plugin-info-row-card card-3 line-heights" >
@@ -162,7 +160,7 @@
              </div>
          </div>
          <hr>
-        <?php }} ?>
+        <?php } ?>
          <!-- <div class="home-plugin-info-row">
              <div class="home-plugin-info-row-card line-heights">
                 <div class="home-plugin-info-row-card-img">
