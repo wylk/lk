@@ -139,7 +139,6 @@ layui.use(['form','layer'], function(){
       console.log(data);
       layer.load();
       var surplusNum = $("#surplusNum i").html();
-      console.log(data.field.num,surplusNum,data.field.num-surplusNum);
       if(data.field.num-surplusNum > 0){
         layer.msg("发布额度超出现有额度",{icon:5,skin:'demo-class'});
         return false;
@@ -149,8 +148,10 @@ layui.use(['form','layer'], function(){
         if(!res.res){
           // var date = new Date(res.dataInfo.createtime);
             $("#surplusNum i").html(res.num);
+            var resNum = new Number(res.dataInfo.num);
+            var resPrice = new Number(res.dataInfo.price);
             // window.location.href = "./cardList.php";
-            str = "<tr id='"+res.dataInfo.id+"'><td >"+res.dataInfo.num+"</td><td>"+res.dataInfo.price+"</td><td>"+getTime()+"</td><td id='revoke_"+res.dataInfo.id+"' num='"+res.dataInfo.num+"' cardId='"+res.dataInfo.card_id+"' onclick='revoke("+res.dataInfo.id+")'>撤销</td></tr>";
+            str = "<tr id='"+res.dataInfo.id+"'><td >"+resNum.toFixed(2)+"</td><td>"+resPrice.toFixed(2)+"</td><td>"+getTime()+"</td><td id='revoke_"+res.dataInfo.id+"' num='"+res.dataInfo.num+"' cardId='"+res.dataInfo.card_id+"' onclick='revoke("+res.dataInfo.id+")'>撤销</td></tr>";
             $("tbody").prepend(str);
             layer.msg(res.msg,{icon:1,skin:"demo-class"},function(){
           })
