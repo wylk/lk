@@ -13,13 +13,17 @@
     <style type="text/css">
     .layui-container p{ line-height: 35px;}
     .layui-container p i { color: red; margin-right: 10px;}
-    .layui-tab-content { height: 450px}
-    .uploadImg { float: right; margin-right: 24px}
-    .uploadImg img { width: 62px}
-    .layui-form-label { width: 95px;}
-    .layui-input-block { width: 200px; margin-left: 130px;}
+    .layui-tab-content { height: auto}
+    .uploadImg { position: absolute; top:0;right: 0;width: 150px;  height: 95px; overflow: hidden;}
+    .layui-btn {width:40px; height:40px;line-height:40px; border:1px dashed;padding:0;}
+    .layui-btn .layui-icon{font-size:22px;}
+    .uploadImg img {width: 100%; height:100%;}
+    .layui-form-item .layui-form-label{position: relative;width: 84px; padding-right: 8px}
+    .layui-btn-warm{width:100%;height:50px; line-height: 50px; border:0; position: relative;left: -45px }
+    .layui-input-block { width: 200px; margin-left: 110px;}
     .hidden { display: none;}
     .cardBody { width: 100%; margin-top: 46px; text-align: center;}
+    .img-block{height: 95px}
     </style>
 </head>
 
@@ -32,6 +36,11 @@
         <div class="layui-container">
             <p><i>注:</i>普通用户无需认证 发VIP1/VIP2请完成认证</p>
         </div>
+        <hr>
+        <div class="layui-container">
+            <p>认证状态：<font style="color: red">未认证</font></p>
+        </div>
+        <hr>
         <div class="layui-container">
             <div class="layui-tab layui-tab-card" lay-filter="aduitTab">
                 <ul class="layui-tab-title">
@@ -58,10 +67,10 @@
                         </div>
                         <div class='layui-form-item'>
                             <label class="layui-form-label">身份证正面：</label>
-                            <div class="layui-input-block">
-                                <button type="button" class="layui-btn upload" id="upload_1">
-                                    <i class="layui-icon">&#xe67c;</i>
-                                </button>
+                            <div class="layui-input-block img-block">
+                                <a href="javascript:;" type="button" class="layui-btn layui-btn-primary upload" id="upload_1">
+                                    <i class="layui-icon">&#xe654;</i>
+                                </a>
                                 <div id="uploadImg_1" class='uploadImg'>
                                     <img src="<?php echo isset($audit['img_just']) ? $audit['img_just'] : " "?>" />
                                     <input type="hidden" name="uploadImg_1" value="<?php echo isset($audit['img_just']) ? $audit['img_just'] : " "?>">
@@ -70,10 +79,10 @@
                         </div>
                         <div class='layui-form-item'>
                             <label class="layui-form-label">身份证反面：</label>
-                            <div class="layui-input-block">
-                                <button type="button" class="layui-btn upload" id="upload_2">
-                                    <i class="layui-icon">&#xe67c;</i>
-                                </button>
+                            <div class="layui-input-block img-block">
+                                <a href="javascript:;" type="button" class="layui-btn layui-btn-primary upload" id="upload_2">
+                                    <i class="layui-icon">&#xe654;</i>
+                                </a>
                                 <div id="uploadImg_2" class='uploadImg'>
                                     <img src="<?php echo isset($audit['img_back']) ? $audit['img_back'] : " "?>" />
                                     <input type="hidden" name="uploadImg_2" value="<?php echo isset($audit['img_back']) ? $audit['img_back'] : " "?>">
@@ -82,10 +91,10 @@
                         </div>
                         <div class='layui-form-item'>
                             <label class="layui-form-label">手持身份证：</label>
-                            <div class="layui-input-block">
-                                <button type="button" class="layui-btn upload" id="upload_3">
-                                    <i class="layui-icon">&#xe67c;</i>
-                                </button>
+                            <div class="layui-input-block img-block">
+                                <a href="javascript:;" type="button" class="layui-btn layui-btn-primary upload" id="upload_3">
+                                    <i class="layui-icon">&#xe654;</i>
+                                </a>
                                 <div id="uploadImg_3" class='uploadImg'>
                                     <img src="<?php echo isset($audit['img_oneself']) ? $audit['img_oneself'] : " "?>" />
                                     <input type="hidden" name="uploadImg_3" value="<?php echo isset($audit['img_oneself']) ? $audit['img_oneself'] : " "?>">
@@ -102,7 +111,7 @@
                     </div>
                     <div class='layui-form-item'>
                         <div class="layui-input-block">
-                            <button lay-submit class='layui-btn <?php echo isset($audit[' status '])&&($audit['status ']==0 || $audit['status ']==1) ? "layui-hide" : "";?>' lay-filter="formPerson">提交</button>
+                            <button lay-submit class='layui-btn layui-btn-warm <?php echo isset($audit[' status '])&&($audit['status ']==0 || $audit['status ']==1) ? "layui-hide" : "";?>' lay-filter="formPerson">提交</button>
                         </div>
                     </div>
                     </form>
@@ -132,10 +141,10 @@
                     </div>
                     <div class='layui-form-item'>
                         <label class="layui-form-label">营业执照：</label>
-                        <div class="layui-input-block">
-                            <button type="button" class="layui-btn" id="upload_business">
-                                <i class="layui-icon">&#xe67c;</i>
-                            </button>
+                        <div class="layui-input-block img-block">
+                            <a type="button" class="layui-btn layui-btn-primary" id="upload_business">
+                                <i class="layui-icon">&#xe654;</i>
+                            </a>
                             <div id="uploadBusiness" class='uploadImg'>
                                 <img src="<?php echo isset($audit['business_img']) ? $audit['business_img'] : " "?>" />
                                 <input type="hidden" name="uploadBusiness" value="<?php echo isset($audit['business_img']) ? $audit['business_img'] : " "?>">
@@ -144,10 +153,10 @@
                     </div>
                     <div class='layui-form-item'>
                         <label class="layui-form-label">手持身份证：</label>
-                        <div class="layui-input-block">
-                            <button type="button" class="layui-btn upload" id="upload_oneself">
-                                <i class="layui-icon">&#xe67c;</i>
-                            </button>
+                        <div class="layui-input-block img-block">
+                            <a type="button" class="layui-btn layui-btn-primary" id="upload_oneself">
+                                <i class="layui-icon">&#xe654;</i>
+                            </a>
                             <div id="uploadOneself" class='uploadImg'>
                                 <img src="<?php echo isset($audit['img_oneself']) ? $audit['img_oneself'] : " "?>" />
                                 <input type="hidden" name="uploadImg_3" value="<?php echo isset($audit['img_oneself']) ? $audit['img_oneself'] : " "?>">
@@ -164,7 +173,7 @@
                 </div>
                 <div class='layui-form-item'>
                     <div class="layui-input-block">
-                        <button type="submit" lay-submit class='layui-btn <?php echo isset($audit[' status '])&&($audit['status ']==0 || $audit['status ']==1) ? "layui-hide" : "";?>' lay-filter="formBusiness">提交</button>
+                        <button type="submit" lay-submit class='layui-btn layui-btn-warm <?php echo isset($audit[' status '])&&($audit['status ']==0 || $audit['status ']==1) ? "layui-hide" : "";?>' lay-filter="formBusiness">提交</button>
                     </div>
                 </div>
                 </form>
