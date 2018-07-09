@@ -238,7 +238,7 @@ layui.define("layer", function(e) {
 				u = a.originalEvent.dataTransfer.files || [];
 			r.removeAttr("lay-over"), o(u), i.auto ? e.upload(u) : l(u)
 		}), e.elemFile.off("upload.change").on("upload.change", function() {
-			layer.load();
+			//layer.load();
 			var t = this.files || [];
 			o(t), i.auto ? e.upload() : l(t)
 		}), i.bindAction.off("upload.action").on("upload.action", function() {

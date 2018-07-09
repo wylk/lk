@@ -40,6 +40,7 @@ class base_controller extends controller{
         $index = array('auth_c' => 'index','auth_a' => 'index');
         $welcome = array('auth_c' => 'index','auth_a' => 'welcome');
         $logout = array('auth_c' => 'index','auth_a' => 'logout');
+        $logout[] = array('auth_c' => 'config','auth_a' => 'uploadFile');
         array_push($authorityData,$index,$welcome,$logout);
         foreach ($authorityData as $k => $v) {
 
