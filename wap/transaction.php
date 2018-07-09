@@ -7,7 +7,7 @@ if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST
 $userId = $wap_user['userid'];
 
 $cardId = isset($_GET['cardId']) ? trim($_GET['cardId']) : "";
-
+// 添加交易单请求处理
 if(isset($_POST['type']) && $_POST['type'] == "transaction"){
 	$data['card_id'] = $cardId = trim($_POST['cardId']);
 	$data['num'] = $num = trim($_POST['num']);
@@ -15,39 +15,47 @@ if(isset($_POST['type']) && $_POST['type'] == "transaction"){
 	$data['limit'] = trim($_POST['limit']);
 	$data['status'] = '0';
 	$data['uid'] = $userId;
+	$data['createtime'] = time();
+	$data['updatetime'] = time();
 
 	$cardBagInfo = D("Card_package")->field("num,address,is_publisher,frozen")->where(['uid'=>$userId,'card_id'=>$cardId])->find();
 	$cardBagInfo ? true : dexit(["res"=>1,'msg'=>"该卡券失效"]);
 	$cardBagInfo['is_publisher'] == 1 ? true : dexit(["res"=>1,'msg'=>"不是本人发布"]);
-	$numSum = array_sum([$cardBagInfo['frozen'],$num]);
+	
+	$surplusNum = $cardBagInfo['num'] - $cardBagInfo['frozen'] - $num;
 	// 判断发布的数值超出
-	$cardBagInfo['num'] >= $numSum ? true : dexit(["res"=>1,'msg'=>"发布额度超出现有额度"]);
+	$surplusNum >= 0 ? true : dexit(["res"=>1,'msg'=>"发布额度超出现有额度"]);
 	$data['address'] = $cardBagInfo['address'];
 	// 判断是否添加交易成功
-	if(D("Card_transaction")->data($data)->add()){
-		$frozenData['frozen'] = $numSum;
-		$a = [$frozenData['frozen'],$cardBagInfo['frozen'],$num];
-		$res = D("Card_package")->data($frozenData)->where(['uid'=>$userId,'card_id'=>$cardId])->save();
-		$res ? true : dexit(['res'=>1,"msg"=>"冻结修改失败","data"=>$a,"other"=>$res]);
-		dexit(['res'=>0,"msg"=>"卡券发布成功","data"=>$a,"other"=>$res]);
+	$tranId = D("Card_transaction")->data($data)->add();
+	if($tranId){
+		$res = D("Card_package")->where(['uid'=>$userId,'card_id'=>$cardId])->setInc("frozen",$num);
+		$res ? true : dexit(['res'=>1,"msg"=>"冻结修改失败","other"=>$tranInfo]);
+		$tranInfo = D("Card_transaction")->where(['id'=>$tranId])->find();
+		dexit(['res'=>0,"msg"=>"卡券发布成功","dataInfo"=>$tranInfo,"num"=>$surplusNum]);
 	}
 	dexit(['res'=>1,"msg"=>"卡券发布失败"]);
 }
+// 交易单撤销请求
 if(isset($_POST['type']) && $_POST['type'] == "revoke"){
 	$revokeId = trim($_POST['id']);
 	$revokeNum = trim($_POST['num']);
-	$res = D("Card_transaction")->where(['id'=>$revokeId])->delete();
-	
+	$revokeCardId = trim($_POST['cardId']);
+	$res = D("Card_transaction")->data(['status'=>2,"updatetime"=>time()])->where(['id'=>$revokeId])->save();
+
 	if(!$res) {
-		dexit(['res'=>1,"msg"=>"订单撤销失败"]);
+		dexit(['res'=>1,"msg"=>"订单撤销失败",'other'=>$res]);
 	}
-	D("Card_package")->data()
+	$res = D("Card_package")->where(['uid'=>$userId,"card_id"=>$revokeCardId])->setDec("frozen",$revokeNum);
 	dexit(['res'=>0,"msg"=>"订单撤销成功"]);
 }
 
 $tranWhere['uid'] = $userId;
+$tranWhere['status'] = 0;
 $tranWhere['card_id'] = $cardId;
-$tranList = D("Card_transaction")->where($tranWhere)->select();
+$tranList = D("Card_transaction")->where($tranWhere)->order("createtime desc")->select();
+$numInfo = D("Card_package")->field("num,frozen")->where(['uid'=>$userId,'card_id'=>$cardId])->find();
+// var_dump($numInfo);
 // var_dump($tranList);
 
 // var_dump($userId);

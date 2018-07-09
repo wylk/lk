@@ -69,7 +69,7 @@
                 <div class="layui-input-inline">
                   <input type="text" name="num" required lay-verify="num|number" placeholder="请输出售量" autocomplete="off" class="layui-input">
                 </div>
-                <div class="layui-form-mid layui-word-aux">可以:1000.32</div>
+                <div class="layui-form-mid layui-word-aux" id="surplusNum">可以:<i><?php echo $numInfo['num']-$numInfo['frozen']; ?></i></div>
               </div>
                <hr>
               <div class="layui-form-item">
@@ -106,16 +106,16 @@
             <th id="laytable-cell-space">待成交</th>
             <th id="laytable-cell-space">价格</th>
             <th id="laytable-cell-space">时间</th>
-            <th id="laytable-cell-space">操作</th>
+            <th id="laytable-cell-space" >操作</th>
           </tr> 
         </thead>
         <tbody>
           <?php foreach ($tranList as $key => $value) { ?>
-          <tr>
+          <tr id="<?php echo $value['id']?>">
             <td ><?php echo $value['num'];?></td>
             <td><?php echo $value['price'];?></td>
-            <td><?php echo date("Y-m-d H:i:s",$value['num']);?></td>
-            <td id="revoke_<?php echo $value['id']?>">撤销</td>
+            <td><?php echo date("Y-m-d H:i:s",$value['createtime']);?></td>
+            <td  id="revoke_<?php echo $value['id']?>" num="<?php echo $value['num'];?>" cardId="<?php echo $value['card_id'];?>" onclick="revoke(<?php echo $value['id']?>)" >撤销</td>
           </tr>
             <?php }?>
         </tbody>
@@ -126,6 +126,9 @@
 </body>
 </html>
 <script>
+  function get(id){
+    alert(id);
+  }
 layui.use(['form','layer'], function(){
   var layer = layui.layer;
   var form = layui.form;
@@ -135,14 +138,21 @@ layui.use(['form','layer'], function(){
     console.log(JSON.stringify(data.field));
       console.log(data);
       layer.load();
-      if(beatCount >= 1) {
-        layer.msg("不要重复点击",{icon:5,skin:'demo-class'});
+      var surplusNum = $("#surplusNum i").html();
+      console.log(data.field.num,surplusNum,data.field.num-surplusNum);
+      if(data.field.num-surplusNum > 0){
+        layer.msg("发布额度超出现有额度",{icon:5,skin:'demo-class'});
+        return false;
       }
       $.post("./transaction.php",data.field,function(res){
         console.log(res);
         if(!res.res){
+          // var date = new Date(res.dataInfo.createtime);
+            $("#surplusNum i").html(res.num);
+            // window.location.href = "./cardList.php";
+            str = "<tr id='"+res.dataInfo.id+"'><td >"+res.dataInfo.num+"</td><td>"+res.dataInfo.price+"</td><td>"+getTime()+"</td><td id='revoke_"+res.dataInfo.id+"' num='"+res.dataInfo.num+"' cardId='"+res.dataInfo.card_id+"' onclick='revoke("+res.dataInfo.id+")'>撤销</td></tr>";
+            $("tbody").prepend(str);
             layer.msg(res.msg,{icon:1,skin:"demo-class"},function(){
-            window.location.href = "./cardList.php";
           })
         }else{
           layer.msg(res.msg,{icon:5,skin:'demo-class'});
@@ -151,19 +161,44 @@ layui.use(['form','layer'], function(){
       },"json");
     return false;
   });
-  // 点单撤销功能
-  $("td[id^=revoke_]").bind("click",function(){
-    console.log(this);
-    var revokeId = $(this).attr("id");
-    var str = "revoke_";
-    var id = revokeId.substring(str.length);
-    console.log(revokeId,str.length,id);
-    data = {'id': id, "type" : "revoke"}
-    $.post("./transaction",data,function(res){
-      console.log(res);
-
-    },"json");
-  });
+  
 
 });
+// 点单撤销功能
+  function revoke(id){
+    var num = $("#revoke_"+id).attr('num');
+    var cardId = $("#revoke_"+id).attr("cardId");
+    data = {'id': id,"num" : num ,"cardId": cardId, "type" : "revoke"}
+    $.post("./transaction.php",data,function(res){
+      console.log(res);
+      if(!res.res){
+        console.log($(this).parent().remove());
+        $("#"+id).remove();
+        var surplusNum = $("#surplusNum i").html();
+        surplusNum = Number(surplusNum) + Number(num);
+        $("#surplusNum i").html(surplusNum);
+        layer.msg(res.msg,{icon:1,skin:"demo-class"});
+      }else{
+        layer.msg(res.msg,{icon:5,skin:"demo-class"});
+      }
+
+    },"json");
+  }
+function getTime(){
+  var date = new Date();
+  // date.setTime(time * 1000);
+  var y = date.getFullYear();
+  var m = date.getMonth() + 1;
+  m = m < 10 ? ("0"+m) : m;
+  var d = date.getDate();
+  d = d < 10 ? ("0" + d) : d;
+  var h = date.getHours();
+  h = h < 10 ? ("0" + h) : h;
+  var i = date.getMinutes();
+  i = i < 10 ? ("0" + i) : i;
+  var s = date.getSeconds();
+  s = s < 10 ? ("0" + s) : s;
+  // console.log(time,time,y,m,d,h,s);
+  return y+"-"+m+"-"+d+" "+h+":"+i+":"+s;
+}
 </script>
