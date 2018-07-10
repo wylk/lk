@@ -39,12 +39,12 @@
         <div class="layui-form-item">
             <label class="layui-form-label">手机号码</label>
             <div class="layui-input-inline us-input-inline" style="padding-left:0px;">
-                <input type="text" name="phone" id="phone" required lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                <input type="text" name="phone" id="phone" required lay-verify="phoneNumber" placeholder="请输入手机号" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item"  style="border-top:1px solid #F0F0F0">
           <div class="layui-input-inline us-input-inline" style=" border-right:1px solid #F0F0F0">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入手机验证码" autocomplete="off" class="layui-input">
+                <input type="text" name="password" required lay-verify="passVerify" placeholder="请输入手机验证码" autocomplete="off" class="layui-input">
           </div>
             <a href="javascript:;"  id="getVerify" class="layui-btn us-btn">获取验证码</a>
         </div>
@@ -126,9 +126,27 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
         var form = layui.form;
         var layer = layui.layer;
         var element = layui.element;
+        form.verify({
+          phoneNumber : function(value,item){
+            var phoneReg = /^1([0-9]{10})$/;
+            if(!phoneReg.test(value)){
+              return "请输入正确的手机号";
+            }
+          },
+          passVerify : function(value){
+            if(value.length != 6){
+              return "请输入6位的验证码";
+            }
+          }
+        });
         form.on("submit(formDemo)",function(data){
             var data = data.field;
             console.log(data);
+            // var a = $(this).hasClass("layui-btn-disabled");
+            if($(this).hasClass("layui-btn-disabled")){
+              layer.msg("必须同意服务条款",{skin:'demo-class',icon: 5});
+              return false;
+            }
             $.post("./login.php",data,function(result){
                 console.log(result);
                 if(!result['res']){
