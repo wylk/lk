@@ -9,7 +9,7 @@ if(IS_POST){
     $_POST['buy_id'] = $userId;
     $_POST['sole_id'] = $_POST['uid'];
     unset($_POST['uid']);
-    dump($userId);
+    // dump($userId);
     $res = D('Orders')->data($_POST)->add();
     if($res){
        dexit(['error'=>0,'msg'=>'购买成功']);
@@ -18,7 +18,7 @@ if(IS_POST){
     }
 
 
-    $card = $_POST['']
+    // $card = $_POST['']
 }
 
 // dump($_SESSION);
