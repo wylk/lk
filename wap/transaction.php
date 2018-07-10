@@ -6,6 +6,11 @@ require_once dirname(__FILE__).'/global.php';
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
 $userId = $wap_user['userid'];
 
+// 判断用户是否认证
+$userJudge = D("User_audit")->where(['uid'=>$userId,"status"=>1])->find();
+$userJudge ? true : redirect("./postcard.php");
+
+
 $cardId = isset($_GET['cardId']) ? trim($_GET['cardId']) : "";
 // 添加交易单请求处理
 if(isset($_POST['type']) && $_POST['type'] == "transaction"){

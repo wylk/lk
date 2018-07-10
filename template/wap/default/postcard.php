@@ -38,7 +38,7 @@
         </div>
         <hr>
         <div class="layui-container">
-            <p>认证状态：<font style="color: red">未认证</font></p>
+            <p>认证状态：<font style="color: red"><?php echo (isset($audit['status'])&&$audit['status']==1) ? "认证通过" : "认证未通过";?></font></p>
         </div>
         <hr>
         <div class="layui-container">
