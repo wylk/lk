@@ -79,15 +79,15 @@
        <div class="card-data card-data-style">交易限制:<i><?= floatval($UserAud['limit']) ?></i>-<i><?= floatval($UserAud['num']) ?></i> 单价:<i><?= floatval($UserAud['price']) ?></i></div>
        <div class="card-data">购买量:
 
-        <input type="text" name="limit" required  lay-verify="required" autocomplete="off" class="layui-input">
+        <input type="text" name="number" required  lay-verify="required" autocomplete="off" class="layui-input">
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" name="prices" required  lay-verify="required" autocomplete="off" class="layui-input" readonly>
+        <input type="text" name="prices" required  lay-verify="required" autocomplete="off" class="layui-input" >
 
         CNY
     </div>
    </div>
    <div class="card" style="text-align: center;line-height: 120px;">
-        <a href="./receive.php" class="layui-btn layui-btn-primary">购买</a>
+        <a class="layui-btn layui-btn-primary">购买</a>
    </div>
  </form>
 </div>
@@ -96,39 +96,47 @@
 </html>
 
 <script type="text/javascript">
-$(function(){
-  $("input[name='limit']").blur(function(){
-    var limit = $("input[name='limit']").val();
-    var limit = parseFloat(limit);
-    var text = $(".card-data-style i").eq(0).text();
-    var text = parseFloat(text);
-    var num = $(".card-data-style i").eq(1).text();
-    var num = parseFloat(num);
+layui.use(['form', 'layer'],function() {
+    layer = layui.layer;
+
+    var text = parseFloat($(".card-data-style i").eq(0).text());
+    var num = parseFloat($(".card-data-style i").eq(1).text());
     var price = $(".card-data-style i").eq(2).text();
-    // console.log(price);
-      // $("input[name='limit']").val('');
-    if(limit<text || limit>num){
-      alert('不符合交易限制');
-      return false;
-    }else{
-      $("input[name='prices']").val(limit*price);
-      // return true;
-    }
-  })
 
-  $(".layui-btn-primary").click(function(){
-    limit = $("input[name='limit']").val();
-    prices = $("input[name='prices']").val();
-    if(limit=="" || limit==null){
-      alert('购买数量不能为空');return false;
-    }
-      $.post('./receive.php',{limit:limit,prices:prices},function(data){
-        if(data.error==0){
-            alert(data.msg);
-          }
-      },'json');
-      return false;
+     $("input[name='number']").bind('input',function(){
+         $("input[name='prices']").val(price*parseFloat($(this).val()));
 
-  });
+      });
+     $("input[name='prices']").bind('input',function(){
+         $("input[name='number']").val((parseFloat($(this).val())/price));
+      });
+
+    $(".layui-btn-primary").click(function(){
+
+        number = $("input[name='number']").val();
+        prices = $("input[name='prices']").val();
+        uid = '<?php echo $_GET['uid'];?>';
+
+        if(number < text || number>num){
+          layer.msg('输入购买数不合法！',{icon: 5,time:1000},function(){
+              $("input[name='prices']").val('');
+              $("input[name='number']").val('');
+              $("input[name='number']").focus();
+          });
+          return false;
+        }
+
+        $.post('./receive.php',{number:number,prices:prices,uid:uid},function(data){
+            if(data.error==0){
+                layer.msg(data.msg,{icon: 1,time:1000},function(){
+                });
+            }else{
+                layer.msg(data.msg,{icon: 5,time:1000},function(){
+                });
+
+            }
+        },'json');
+
+    });
 });
 </script>
