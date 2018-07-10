@@ -45,6 +45,7 @@
         border: 1px solid #5fb878;
         background-color: #fff;
     }
+    .lk-btn:hover{color: #5fb878;}
   </style>
 </head>
 <body>
