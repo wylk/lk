@@ -56,13 +56,13 @@
                         <div class='layui-form-item'>
                             <label class="layui-form-label">姓名：</label>
                             <div class="layui-input-block">
-                                <input type="text" class='layui-input' name="name" required lay-verify='required' value="<?php echo isset($audit['name']) ? $audit['name'] : " "?>" placeholder="真实姓名" />
+                                <input type="text" class='layui-input' name="name" required lay-verify='name' value="<?php echo isset($audit['name']) ? $audit['name'] : " "?>" placeholder="真实姓名" />
                             </div>
                         </div>
                         <div class='layui-form-item'>
                             <label class="layui-form-label">身份证号：</label>
                             <div class="layui-input-block">
-                                <input type="text" class='layui-input' name="postcard" required lay-verify='required|number' value="<?php echo isset($audit['postcards']) ? $audit['postcards'] : " "?>" placeholder="身份证号" />
+                                <input type="text" class='layui-input' name="postcard" required lay-verify='postcard' value="<?php echo isset($audit['postcards']) ? $audit['postcards'] : " "?>" placeholder="身份证号" />
                             </div>
                         </div>
                         <div class='layui-form-item'>
@@ -111,7 +111,9 @@
                     </div>
                     <div class='layui-form-item'>
                         <div class="layui-input-block">
-                            <?php echo isset($audit[' status '])&&($audit['status ']==0 || $audit['status ']==1) ? " " : "<button lay-submit class='layui-btn layui-btn-warm ' lay-filter='formPerson'>提交</button>";?>
+                        <?php if( !(isset($audit['status']) && ($audit['status'] == 0 || $audit['status'] == 1 ))){ ?>
+                            <button lay-submit class='layui-btn layui-btn-warm ' lay-filter='formPerson'>提交</button>
+                        <?php } ?>
                             
                         </div>
                     </div>
@@ -125,19 +127,19 @@
                     <div class='layui-form-item'>
                         <label class="layui-form-label">企业名称：</label>
                         <div class="layui-input-block">
-                            <input type="text" class='layui-input' name="enterprise" required lay-verify='required' value="<?php echo isset($audit['enterprise']) ? $audit['enterprise'] : " "?>" placeholder="企业名称" />
+                            <input type="text" class='layui-input' name="enterprise" required lay-verify='enterprise' value="<?php echo isset($audit['enterprise']) ? $audit['enterprise'] : " "?>" placeholder="企业名称" />
                         </div>
                     </div>
                     <div class='layui-form-item'>
                         <label class="layui-form-label">法人姓名：</label>
                         <div class="layui-input-block">
-                            <input type="text" class='layui-input' name="name" required lay-verify='required' value="<?php echo isset($audit['name']) ? $audit['name'] : " "?>" placeholder="法人姓名" />
+                            <input type="text" class='layui-input' name="name" required lay-verify='name' value="<?php echo isset($audit['name']) ? $audit['name'] : " "?>" placeholder="法人姓名" />
                         </div>
                     </div>
                     <div class='layui-form-item'>
                         <label class="layui-form-label">营业执照号：</label>
                         <div class="layui-input-block">
-                            <input type="text" class='layui-input' name="businessLicense" required lay-verify='required|number' value="<?php echo isset($audit['business_img']) ? $audit['business_license'] : " "?>" placeholder="营业执照号" />
+                            <input type="text" class='layui-input' name="businessLicense" required lay-verify='busiNumber' value="<?php echo isset($audit['business_img']) ? $audit['business_license'] : " "?>" placeholder="营业执照号" />
                         </div>
                     </div>
                     <div class='layui-form-item'>
@@ -173,10 +175,12 @@
                     </div>
                 </div>
                 <div class='layui-form-item'>
+                        <?php if( !(isset($audit['status']) && ($audit['status'] == 0 || $audit['status'] == 1))){ ?>
                     <div class="layui-input-block">
-                        <?php echo isset($audit[' status '])&&($audit['status '] == 0 || $audit['status ']==1) ? "" : "<button type='submit' lay-submit class='layui-btn layui-btn-warm ' lay-filter='formBusiness'>提交</button>";?>
+                        <button type='submit' lay-submit class='layui-btn layui-btn-warm ' lay-filter='formBusiness'>提交</button>
                         
                     </div>
+                        <?php } ?>
                 </div>
                 </form>
             </div>
@@ -192,9 +196,40 @@ layui.use(["element", "upload", "layer", 'form'], function() {
     var upload = layui.upload;
     var layer = layui.layer;
     var form = layui.form;
-    element.on("tab(aduitTab)", function() {
-        element
-    })
+    // element.on("tab(aduitTab)", function() {
+    //     element
+    // })
+    form.verify({
+        name : function(value){
+            value = $.trim(value);
+            var nameReg = /^[\u4e00-\u9fa5]+$/;
+            if(!nameReg.test(value)){
+                return "姓名只允许输入汉字";
+            }
+        },
+        postcard : function(value){
+            value = $.trim(value);
+            var num = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+            if(!num.test(value) || value == ""){
+                return "请输入正确的身份证号";
+            }
+        },
+        enterprise : function(value){
+            value = $.trim(value);
+            var entrReg = /^[\u4E00-\u9FA5\uF900-\uFA2D\w]+$/;
+            if(!entrReg.test(value)){
+                return "企业名称不能有特殊字符";
+            }
+        },
+        busiNumber : function(value){
+            value = $.trim(value);
+            var num = /^[0-9]*$/;
+            if(!num.test(value) || value == ""){
+                return "营业执照只能为数字";
+            }
+        }
+
+    });
 
     var uploadInst1 = upload.render({
         elem: "#upload_1",
@@ -295,6 +330,10 @@ layui.use(["element", "upload", "layer", 'form'], function() {
             layer.msg(data.field.status + "此状态不可更改", { icon: 5, skin: "demo-class" });
             return false;
         }
+        if(data.field.uploadImg_1 == " " || data.field.uploadImg_2 == " " || data.field.uploadImg_3 == " "){
+            layer.msg("身份证正反面照片，以及手持照片都需正确上传",{ icon: 5, skin: "demo-class" });
+            return false;
+        }
         beatCount++;
         layer.load();
         $.post("./postcard.php?pagetype=postcardBackstage", data.field, function(result) {
@@ -319,6 +358,10 @@ layui.use(["element", "upload", "layer", 'form'], function() {
         }
         if (data.field.status == '0' || data.field.status == '1') {
             layer.msg(data.field.status + "此状态不可更改", { icon: 5, skin: "demo-class" });
+            return false;
+        }
+        if(data.field.uploadBusiness == " " || data.field.uploadImg_3 == " "){
+            layer.msg("请您上传营业执照或者手持身份证照片",{ icon: 5, skin: "demo-class" });
             return false;
         }
         beatCount++;
