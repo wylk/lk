@@ -7,12 +7,20 @@ if(IS_POST){
     $_POST['buy_id'] = $_SESSION['admin']['id'];
     // $_POST['uid'] = $uid;
     // dump($_POST);
-    if(D('Orders')->data($_POST)->add()){
+    $res = D('Orders')->data($_POST)->add();
+    if($res){
+         import('LkApi');
+         $api = new LkApi(['appid'=>'23432','mchid'=>'1273566173','key'=>'sdagjjjjjk']);
+         $payData['order_id'] = $res;
+         $rwx = $api->weixinPay($payData);
+         dump($rwx);
+         die;
        dexit(['error'=>0,'msg'=>'购买成功']);
     }else{
        dexit(['error'=>1,'msg'=>'购买失败']);
     }
 }
+
 $UserAud = D("Card_transaction")->where(array('id'=>$_GET['id']))->find();
 
 include display('receive');
