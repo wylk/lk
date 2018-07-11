@@ -108,14 +108,15 @@ layui.use(['form', 'layer'],function() {
 
       });
      $("input[name='prices']").bind('input',function(){
-         $("input[name='number']").val((parseFloat($(this).val())/price));
+         $("input[name='number']").val(parseFloat($(this).val())/price);
       });
 
     $(".layui-btn-primary").click(function(){
 
         number = $("input[name='number']").val();
         prices = $("input[name='prices']").val();
-        uid = '<?php echo $_GET['uid'];?>';
+        card_id = "<?php echo $UserAud['card_id'] ?>";
+        uid = "<?php echo $_GET['uid'] ?>";
 
         if(number < text || number>num){
           layer.msg('输入购买数不合法！',{icon: 5,time:1000},function(){
@@ -126,10 +127,10 @@ layui.use(['form', 'layer'],function() {
           return false;
         }
 
-        $.post('./receive.php',{number:number,prices:prices,uid:uid},function(data){
+        $.post('./receive.php',{number:number,prices:prices,card_id:card_id,uid:uid},function(data){
+            console.log(data.msg);
             if(data.error==0){
-                layer.msg(data.msg,{icon: 1,time:1000},function(){
-                });
+                layer.msg(data.msg,{icon: 1,time:1000});
             }else{
                 layer.msg(data.msg,{icon: 5,time:1000},function(){
                 });
