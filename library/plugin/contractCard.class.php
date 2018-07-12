@@ -6,8 +6,6 @@ class contractCard extends Card
         import('HtmlForm');
 		$html = new HtmlForm('add',"./cardmaking.php");
         $radio = [['val'=>0,'title'=>'免费','checked'=>'checked'],['val'=>1,'title'=>'收费','checked'=>'']];
-        $option = [['val'=>1,'name'=>'北京'],['val'=>2,'name'=>'上海']];
-        $checkbox = [['val'=>1,'title'=>'北京','checked'=>'checked'],['val'=>2,'title'=>'天津','checked'=>'']];
         return $html->input(['name','卡名'],['name',['reg','cn']])
                     //->radio(['is_free','是否收费'],$radio,'price')
                     ->input(['is_limit','限制条件'],['is_limit',['reg','cn']])
@@ -18,9 +16,10 @@ class contractCard extends Card
                     ->addFrom();
 	}
 
-    public function add($data)
+    public function add($datas)
     {
-        $uid = time();
+        $uid =$datas['uid'];
+        $data = $datas['postData'];
 
         $contract_id =  md5($data['contract'].$uid);
 
@@ -33,12 +32,14 @@ class contractCard extends Card
         if(!D('Card')->where(['card_id'=>$contract_id])->find()){
             D('Card')->data($dataArr)->addAll();
             $Account_book = new AccountBook();
+            $json = json_encode(['uid'=>$uid,'contract_id'=>$contract_id,'account_balance'=>$data['sum']]);
             //卡包
             $dataPackage = [];
             $dataPackage['uid'] = $uid;
             $dataPackage['type'] = $data['contract'];
             $dataPackage['card_id'] = $contract_id;
             $dataPackage['num'] = $data['sum'];
+            $dataPackage['is_publisher'] = 1;
             $dataPackage['address'] = $Account_book->addAccount( $this->encrypt(json_encode(['uid'=>$uid,'contract_id'=>$contract_id,'account_balance'=>$data['sum']])));
             if(D('Card_package')->data($dataPackage)->add()) 
                 dexit(['error'=>0,'msg'=>'添加成功']);
