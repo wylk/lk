@@ -40,7 +40,13 @@
         <hr>
         <div class="layui-container">
             <p>认证状态：<font style="color: red">
-                <?php if($audit['status']==1) echo "恭喜您，通过认证"; elseif($audit['status']==0) echo  "审核中，请耐心等待..."; else echo "未通过，查看驳回原因，修改后重新提交。"; ?> </font></p>
+                <?php
+                if($audit['status']==1) echo "恭喜您，通过认证";
+                elseif($audit['status']==2) echo "未通过，查看驳回原因，修改后重新提交。";
+                elseif($audit['status']=="0") echo  "审核中，请耐心等待...";
+                else echo "请添加您的信息";
+                ?> </font>
+            </p>
         </div>
         <hr>
         <div class="layui-container">
@@ -188,7 +194,7 @@
     <?php include display('public_menu');?>
 </body>
 <script type="text/javascript">
-<?php if($audit['status'] == 1 || $audit['status'] == 0){ ?>
+<?php if($audit['status'] == 1 || $audit['status'] == "0"){ ?>
     $(".uploadImg").css('left','0');
     $('button[lay-submit]').css('display','none');
     $('input[type="text"]').attr('disabled','disabled');
