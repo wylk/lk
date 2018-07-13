@@ -49,7 +49,7 @@ if(isset($_GET['type']) && $_GET['type'] == "uploadFile"){
 // 	$where['uid'] = $uid;
 // 	$postcardInfo = M("lk_user_audit")->select($where);
 // 	$postcardInfo = transformArray($postcardInfo);
-	
+
 // 	include display("postcard");
 // 	exit();
 // }
@@ -88,14 +88,14 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 			$data['update_time'] = time();
 			$res = D("User_audit")->data($data)->where(['uid'=>$userId])->save();
 		}else{
-			$data['uid'] = $userId;	
+			$data['uid'] = $userId;
 			$data['create_time'] = time();
 			$data['update_time'] = time();
 			$res = D("User_audit")->data($data)->add();
 		}
 		if(!$res){
 			dexit(['res'=>1,"msg"=>"信息错误，请您重新填写","other"=>$res]);
-		}		
+		}
 		dexit(['res'=>0,"msg"=>"提交成功，请您耐心等待审核","other"=>$res]);
 	}
 	dexit(['res'=>1,"msg"=>"请您填写完信息后再提交",'other'=>$data]);
