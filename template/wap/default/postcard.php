@@ -25,6 +25,7 @@
     .cardBody { width: 100%; margin-top: 46px; text-align: center;}
     .img-block{height: 95px}
     </style>
+
 </head>
 
 <body>
@@ -38,7 +39,8 @@
         </div>
         <hr>
         <div class="layui-container">
-            <p>认证状态：<font style="color: red"><?php echo (isset($audit['status'])&&$audit['status']==1) ? "认证通过" : "认证未通过";?></font></p>
+            <p>认证状态：<font style="color: red">
+                <?php if($audit['status']==1) echo "恭喜您，通过认证"; elseif($audit['status']==0) echo  "审核中，请耐心等待..."; else echo "未通过，查看驳回原因，修改后重新提交。"; ?> </font></p>
         </div>
         <hr>
         <div class="layui-container">
@@ -111,10 +113,7 @@
                     </div>
                     <div class='layui-form-item'>
                         <div class="layui-input-block">
-                        <?php if( !(isset($audit['status']) && ($audit['status'] == 0 || $audit['status'] == 1 ))){ ?>
                             <button lay-submit class='layui-btn layui-btn-warm ' lay-filter='formPerson'>提交</button>
-                        <?php } ?>
-                            
                         </div>
                     </div>
                     </form>
@@ -166,6 +165,7 @@
                             </div>
                         </div>
                     </div>
+
                     <?php echo (isset($audit['status']) && $audit['status'] == 2 ) ? "<div class='layui-form-item'>" : "<div class='layui-form-item hidden'>"?>
                     <label class="layui-form-label">驳回原因：</label>
                     <div class="layui-input-block">
@@ -175,12 +175,9 @@
                     </div>
                 </div>
                 <div class='layui-form-item'>
-                        <?php if( !(isset($audit['status']) && ($audit['status'] == 0 || $audit['status'] == 1))){ ?>
                     <div class="layui-input-block">
                         <button type='submit' lay-submit class='layui-btn layui-btn-warm ' lay-filter='formBusiness'>提交</button>
-                        
                     </div>
-                        <?php } ?>
                 </div>
                 </form>
             </div>
@@ -191,6 +188,11 @@
     <?php include display('public_menu');?>
 </body>
 <script type="text/javascript">
+<?php if($audit['status'] == 1 || $audit['status'] == 0){ ?>
+    $(".uploadImg").css('left','0');
+    $('button[lay-submit]').css('display','none');
+    $('input[type="text"]').attr('disabled','disabled');
+<?php } ?>
 layui.use(["element", "upload", "layer", 'form'], function() {
     var element = layui.element;
     var upload = layui.upload;
@@ -380,6 +382,8 @@ layui.use(["element", "upload", "layer", 'form'], function() {
         return false;
     })
 })
+
+
 </script>
 
 </html>
