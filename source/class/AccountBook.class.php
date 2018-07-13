@@ -17,10 +17,11 @@ MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCpaBKcZHVDbOwgKCrSGaqHbYG9MarI
     //账户余额转账$uid,$contract_id,$sendAddress,$num,$getAddress
     public function transferAccounts($encryptedData)
     {
-    	$encrypte = $this->decrypt($encryptedData);
 
+        $encrypte = $this->decrypt($encryptedData);
         $address1 = md5($encrypte['uid'].$encrypte['contract_id']);
         if($address1 == $encrypte['sendAddress']){
+
         	$num = $encrypte['num'];
         	$sendAddress = $encrypte['sendAddress'];
         	$getAddress = $encrypte['getAddress'];
@@ -37,10 +38,10 @@ MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCpaBKcZHVDbOwgKCrSGaqHbYG9MarI
                 	return true;
                 }
             }else{
-                return "false";
+                return false;
             }
         }else{
-            return "false";
+            return false;
         }
     }
 

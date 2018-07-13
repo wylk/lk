@@ -31,7 +31,7 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	import("AccountBook");
 	$Account_book = new AccountBook();
 	$bookJson = json_encode(['uid'=>$userId,"contract_id"=>$cardId,'sendAddress'=>$sendAddress,"num"=>$num,"getAddress"=>$getAddress]);
-	$bookRes = $Account_book->transferAccounts(encrypt($bookJson));
+	$bookRes = $Account_book->transferAccounts(encrypt($bookJson,option('version.public_key')));
 	// dexit(['res'=>1,"msg"=>"添加账本错误","other"=>$bookRes]);
 	if(!$bookRes){
 		dexit(['res'=>1,"msg"=>"添加账本错误","other"=>$bookRes]);
@@ -63,22 +63,3 @@ $id = clear_html($_GET['id']);
 $cardInfo = D("Card_package")->where(['id'=>$id])->find();
 // dump($cardInfo);
 include display("transferBill");
-
-function encrypt($data)
-{
-	$key = '-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqWgSnGR1Q2zsICgq0hmqh22BvTGqyPelEv3mXzuQ9CNq6xmxYHPzcGqabjP0r/2tJE465AfD2Gf6EGT6LU2h6qxx0Jw3firixZmwyWJ6M5lqWJA0p2bjdUCqK2H7/+s6J3uTXJvLNggoaI2SXaJOoACq5uk4Rm6g7CN9TJNdxTlga6fOSUjzI6N3ba27Jmp4laWHFhHl93rKPSx/mv08p7P5sj9GMJMAHwFvjq+/xiUlX2kzW0qqQT3eXv7I8J6Qu6J8vb3K8UqUGd2DOoC9iVOiqtcp2u5uMSk+pgQqMK6UvnTQ838WxbEy9tnAB5MWzEmZETvC+5OHGTdEBqnCUQIDAQAB
------END PUBLIC KEY-----';
-    $encryptedList = array();
-    $step          = 11700;
-    $encryptedData = '';
-    $len = strlen($data);
-    for ($i = 0; $i < $len; $i += $step) {
-       $tmpData   = substr($data, $i, $step);
-       $encrypted = '';
-        openssl_public_encrypt($tmpData, $encrypted, $key,OPENSSL_PKCS1_PADDING);
-       $encryptedList[] = ($encrypted);
-    }
-     $encryptedData = base64_encode(join('', $encryptedList));
-    return $encryptedData;
-}
