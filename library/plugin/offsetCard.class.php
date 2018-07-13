@@ -15,28 +15,27 @@ class offsetCard extends Card
                     ->input(['group','发布几份'],['group',['reg','int']])
                     ->upload('会员卡log','img_id','card_log')
                     ->textarea(['describe','卡券描述'])
-                    ->resSuccess('./cardType.php') 
+                    ->resSuccess('./cardType.php')
                     ->addFrom();
 	}
 
+    //发卡
     public function add($datas)
     {
         $uid =$datas['uid'];
         $data = $datas['postData'];
-       
+
         $contract_id =  md5($data['contract'].$uid);
         $dataArr = [];
         foreach ($data as $key => $value) {
             $field = D('Contract_field')->where(['val'=>$key])->find();
             $dataArr[] = array('uid'=>$uid,'val'=>$value,'c_id'=>$field['id'],'card_id'=>$contract_id);
-        } 
+        }
 
         $Account_book = new AccountBook();
         $json = json_encode(['uid'=>$uid,'contract_id'=>$contract_id,'account_balance'=>$data['sum']]);
-        $public_key = '-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqWgSnGR1Q2zsICgq0hmqh22BvTGqyPelEv3mXzuQ9CNq6xmxYHPzcGqabjP0r/2tJE465AfD2Gf6EGT6LU2h6qxx0Jw3firixZmwyWJ6M5lqWJA0p2bjdUCqK2H7/+s6J3uTXJvLNggoaI2SXaJOoACq5uk4Rm6g7CN9TJNdxTlga6fOSUjzI6N3ba27Jmp4laWHFhHl93rKPSx/mv08p7P5sj9GMJMAHwFvjq+/xiUlX2kzW0qqQT3eXv7I8J6Qu6J8vb3K8UqUGd2DOoC9iVOiqtcp2u5uMSk+pgQqMK6UvnTQ838WxbEy9tnAB5MWzEmZETvC+5OHGTdEBqnCUQIDAQAB
------END PUBLIC KEY-----';
-        $address = $Account_book->addAccount($this->encrypt($json,$public_key));
+
+        $address = $Account_book->addAccount($this->encrypt($json,option('version.public_key')));
         if(empty($address)){
             dexit(['error'=>1,'msg'=>'添加账本错误！']);
         }
@@ -50,15 +49,29 @@ MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqWgSnGR1Q2zsICgq0hmqh22BvTGqyPelEv3m
             $dataPackage['num'] = $data['sum'];
             $dataPackage['is_publisher'] = 1;
             $dataPackage['address'] = $address;
-            if(D('Card_package')->data($dataPackage)->add()) 
+            if(D('Card_package')->data($dataPackage)->add())
                 dexit(['error'=>0,'msg'=>'添加成功']);
-            else 
+            else
                 dexit(['error'=>1,'msg'=>'添加失败']);
         }else{
             dexit(['error'=>1,'msg'=>'只能使用一次喔']);
         }
     }
 
+    //添加新卡包
+    public function addCardPackage($data)
+    {
+        import('AccountBook');
+        $Account_book = new AccountBook();
+        $json = json_encode(['uid'=>$data['uid'],'contract_id'=>$data['card_id'],'account_balance'=>0]);
+        $address = $Account_book->addAccount(encrypt($json,option('version.public_key')));
+        $card['address'] = $address;
+        $card['type'] = 'offset';
+        $card['card_id'] = $data['card_id'];
+        $card['uid'] = $data['uid'];
+        return D('Card_package')->data($card)->add();
+
+    }
     public function receive()
     {
     	echo "in receive";
@@ -68,22 +81,6 @@ MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqWgSnGR1Q2zsICgq0hmqh22BvTGqyPelEv3m
     {
     	echo "in verification";
     }
-    public function encrypt($data,$key)
-    {
-        $encryptedList = array();
-        $step          = 11700;
-        $encryptedData = '';
-        $len = strlen($data);
-        for ($i = 0; $i < $len; $i += $step) {
-           $tmpData   = substr($data, $i, $step);
-           $encrypted = '';
-            openssl_public_encrypt($tmpData, $encrypted, $key,OPENSSL_PKCS1_PADDING);
-           $encryptedList[] = ($encrypted);
-        }
-         $encryptedData = base64_encode(join('', $encryptedList));
-        return $encryptedData;
-    }
-
 }
 
 

@@ -1,17 +1,17 @@
-<?php 
+<?php
 
 /**
 *   账单类
 */
-class AccountBook 
+class AccountBook
 {
     private $private_key = '-----BEGIN RSA PRIVATE KEY-----
 MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCpaBKcZHVDbOwgKCrSGaqHbYG9MarI96US/eZfO5D0I2rrGbFgc/NwappuM/Sv/a0kTjrkB8PYZ/oQZPotTaHqrHHQnDd+KuLFmbDJYnozmWpYkDSnZuN1QKorYfv/6zone5Ncm8s2CChojZJdok6gAKrm6ThGbqDsI31Mk13FOWBrp85JSPMjo3dtrbsmaniVpYcWEeX3eso9LH+a/Tyns/myP0YwkwAfAW+Or7/GJSVfaTNbSqpBPd5e/sjwnpC7ony9vcrxSpQZ3YM6gL2JU6Kq1yna7m4xKT6mBCowrpS+dNDzfxbFsTL22cAHkxbMSZkRO8L7k4cZN0QGqcJRAgMBAAECggEAaapeoWoPsoTIK66iNvaHZX2qhQXrzvqY3mW8Qf53hbBpykb2WoE4gRAdT0vc/cEvNAwPs5gcUmlYks1JNuTLcAMr4sDt5CZ/2Fzq5lIkgvbYXHFmRlxo2AQDoJe3hYOFfIcZ/ZO3hvZDriNP/lN001xXPTyPO29ZtLDWQONSg+cnVxBaPubL9v3THqjxZwL90nzXs1EUhHHKPtUT1tK/rjyb3TlS7HgtX/5w7MgtyLxcjuXrK1Bo1Q0IW5cnPti1A9rIA2TiwRJTqRxzsUCqsVQZL7mo0X/wB+U0hYiecq4xfQ0ZZu51hsaYj4aVwT66Eaf6quV1xFWqIZawg/rcAQKBgQDhymCgFeLbcnYtoEmeaIFffi6L4w/Wx/BcLapA6k1v0ilnqh8FzdVa4zvb3ll6F84jz+sw9x9dJY2Ld85/OC1lwqn7Jd0OuT3Gujv9jG3rfXGMJ3ZIdBWbdt54ij0Wak6UENU3H1V0LWXzxI6h8HH/IlzdeDfsUnmQQE70Z/Uk4QKBgQDAEngVKvaAULwy3akmbIuRbF47A3U9rofSBPEc1eUg9Xp5nxVQ8fVIZYTd2spDa7fUT+MMd1w18K2ygMljpbrajtwM0ibDEgeWVFHyAt2ztfGUBy/hBMvDL2TPldo3NnU4FNONVBttyA0ga+04uD+yC6HuWAWGdrqodSCpIejbcQKBgCq/njuw6RqTOTy6NDYBozzpLvbdLoqDoEZTfwB7W93n9F7kHquCpPpoO1UNa/NpvmWZX/YNU6rXCU12iWocwLubd4NNT+URvVh6uhDvHYCQZ4cZkZN2JwEgKE66HYa46deuuC+PhyZP0hWtCTQvyeV8JAjqUew0UT+2bTxo0kkBAoGAN89mCyiPtds/xDv6YYraxyfI/bbUg1bKanE7KljQmlIaA2sBQ6L61c2B3QEtEogjQ1LvM3kfVyEXJ64aVpUahVVLhYIu9zGu+LSJlxvUFdsBVjT8aZL+LjoAPf1aCf8N8nzCt+c/jRe7ELerl3aaM38Dz4DOIjMvq7FVCzAqPFECgYAh3nn1JpYmudyiHW/Ie78u7z9kV0C2IC0ZfvmA4NfKqRrUub2HGuzq7kFsWA7xVjBVsUZqtoZtAMetoTrJCVPuldzlo+7ovhHu+99AgRfnr8QIXgQe/NyO61DU14GXNSWN8Ck2dDYiBV7Xml9A+1T1NnXpsz6hayWGQCvLDQiwkw==
 -----END RSA PRIVATE KEY-----';
-    
+
     public function __construct()
     {
-        
+
     }
 
     //账户余额转账$uid,$contract_id,$sendAddress,$num,$getAddress
@@ -47,20 +47,24 @@ MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCpaBKcZHVDbOwgKCrSGaqHbYG9MarI
     //添加账户
     public function addAccount($encryptedData)
     {
+
     	$encrypte = $this->decrypt($encryptedData);
+        if (empty($encrypte['contract_id'])) {
+            return '数据错误';
+        }
         $address = md5($encrypte['uid'].$encrypte['contract_id']);
         if(!D('Account_book')->where(['address'=>$address])->find()){
-            $aa = $this->commAccount($encrypte['contract_id'],$address,$encrypte['account_balance']); 
+            $aa = $this->commAccount($encrypte['contract_id'],$address,$encrypte['account_balance']);
             if($aa) return $address;
         }else{
             return $address;
-        }     
+        }
     }
 
     //数据修改
     public function commAccount($contract_id,$address,$account_balance = 0)
     {
-    	
+
     	if(!$this->verify()){
     		die(dexit(['error'=>1,'msg'=>'账单不对']));
     	}
@@ -158,63 +162,63 @@ MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCpaBKcZHVDbOwgKCrSGaqHbYG9MarI
 
 
 class blockBill
-{  
-    private $address_send;  
-    private $address_get;  
-    private $num;  
-    private $card_id;  
-    private $time; 
-    private $previous_hash; 
+{
+    private $address_send;
+    private $address_get;
+    private $num;
+    private $card_id;
+    private $time;
+    private $previous_hash;
     private $hash;
 
-    public function __construct($address_send,$address_get,$num,$card_id,$time,$previous_hash)  
-    {  
-        $this->address_send = $address_send;  
-        $this->address_get = $address_get;  
-        $this->num = $num;  
-        $this->card_id = $card_id;  
-        $this->time = $time; 
-        $this->previous_hash = $previous_hash;  
-        $this->hash = $this->hash_block();  
+    public function __construct($address_send,$address_get,$num,$card_id,$time,$previous_hash)
+    {
+        $this->address_send = $address_send;
+        $this->address_get = $address_get;
+        $this->num = $num;
+        $this->card_id = $card_id;
+        $this->time = $time;
+        $this->previous_hash = $previous_hash;
+        $this->hash = $this->hash_block();
     }
 
-    public function __get($name){  
-        return $this->$name;  
+    public function __get($name){
+        return $this->$name;
     }
 
-    private function hash_block(){  
-        $str = $this->address_send.$this->address_get.round($this->num).$this->card_id.$this->time.$this->previous_hash; 
-        return hash("sha256",$str);  
+    private function hash_block(){
+        $str = $this->address_send.$this->address_get.round($this->num).$this->card_id.$this->time.$this->previous_hash;
+        return hash("sha256",$str);
     }
 
 }
 
 class block
-{  
-    private $address;  
-    private $account_balance;  
-    private $card_id;  
-    private $time; 
-    private $previous_hash; 
+{
+    private $address;
+    private $account_balance;
+    private $card_id;
+    private $time;
+    private $previous_hash;
     private $hash;
 
-    public function __construct($address,$account_balance,$card_id,$time,$previous_hash)  
-    {  
-        $this->address = $address;  
-        $this->account_balance = $account_balance;  
-        $this->card_id = $card_id;  
-        $this->time = $time; 
-        $this->previous_hash = $previous_hash;  
-        $this->hash = $this->hash_block();  
+    public function __construct($address,$account_balance,$card_id,$time,$previous_hash)
+    {
+        $this->address = $address;
+        $this->account_balance = $account_balance;
+        $this->card_id = $card_id;
+        $this->time = $time;
+        $this->previous_hash = $previous_hash;
+        $this->hash = $this->hash_block();
     }
 
-    public function __get($name){  
-        return $this->$name;  
+    public function __get($name){
+        return $this->$name;
     }
 
-    private function hash_block(){  
-        $str = $this->address.round($this->account_balance).$this->card_id.$this->time.$this->previous_hash; 
-        return hash("sha256",$str);  
+    private function hash_block(){
+        $str = $this->address.round($this->account_balance).$this->card_id.$this->time.$this->previous_hash;
+        return hash("sha256",$str);
     }
 
 }

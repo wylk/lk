@@ -79,32 +79,25 @@
             </th>
             <th>订单编号</th>
             <th>收货人</th>
-            <th>总金额</th>
-            <th>应付金额</th>
+            <th>购买数量</th>
+            <th>成交价格</th>
             <th>订单状态</th>
-            <th>支付状态</th>
-            <th>发货状态</th>
-            <th>支付方式</th>
-            <th>配送方式</th>
             <th>下单时间</th>
             <th >操作</th>
             </tr>
         </thead>
         <tbody>
+          <?php foreach($order as $k=>$v){ ?>
           <tr>
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td>2017009171822298053</td>
+            <td><?= $v['onumber'] ?></td>
             <td>老王:18925139194</td>
-            <td>7829.10</td>
-            <td>7854.10</td>
-            <td>待确认</td>
-            <td>未支付</td>
-            <td>未发货</td>
-            <td>其他方式</td>
-            <td>申通物流</td>
-            <td>2017-08-17 18:22</td>
+            <td><?= $v['number'] ?></td>
+            <td><?= $v['prices'] ?></td>
+            <td><?= $v['status'] ?></td>
+            <td><?= $v['carated_time'] ?></td>
             <td class="td-manage">
               <a title="查看"  onclick="x_admin_show('编辑','order-view.html')" href="javascript:;">
                 <i class="layui-icon">&#xe63c;</i>
@@ -114,6 +107,8 @@
               </a>
             </td>
           </tr>
+
+          <?php } ?>
         </tbody>
       </table>
       <div class="page">

@@ -64,6 +64,7 @@ foreach ($_GET as &$get_value ) {
 
 doStripslashes();
 $_G['system'] = require_file(LEKA_PATH . 'config/config.php');
+$_G['version'] = require_file(LEKA_PATH . 'config/version.php');
 $config = F('config');
 if (empty($config)) {
 	$configs = D('Config')->field('`name`,`value`')->select();
