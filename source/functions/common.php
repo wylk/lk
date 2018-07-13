@@ -323,7 +323,7 @@ function import_plugin($file)
 	$file_arr = explode('.',$file);
 	$file_arr_count = count($file_arr);
 	include LEKA_PATH.'library/plugin/Card.class.php';
-	
+
 	switch ($file_arr_count) {
 		case 1:
 			$load_file = LEKA_PATH.'library/plugin/'.substr($file_arr[0],0).'Card.class.php';
@@ -1542,9 +1542,6 @@ function Convert_GCJ02_To_BD09($lat,$lng){
         return array('lng'=>$lng,'lat'=>$lat);
 }
 
-function logs($title,$content){
-	D('Aaep_api_log')->data(['type'=>$title,'time'=>date('YmdHis'),'content'=>$content])->add();
-}
 
 function logss($data,$title = 'log',$filename = 'log'){
 	$fp = fopen(LEKA_PATH.'/upload/log/'.$filename.'.txt','a');
@@ -1556,6 +1553,13 @@ function logss($data,$title = 'log',$filename = 'log'){
 	fclose($fp);
 }
 
+function logs($data,$filename = 'log'){
+    $file = LEKA_PATH.'/upload/log/'.$filename.'.txt';
+    if(is_array($data)){
+        $data = json_encode($data);
+    }
+    file_put_contents($file,$data);
+}
 function dexit($data = '')
 {
 	if (is_array($data)) {
@@ -1595,7 +1599,7 @@ function transformArray($array,$keyWord=null){
 	if($count == 1){
 		foreach($array as $key=>$val){
 			if(empty($keyWord)) $arr = $val;
-			else $arr = $val[$keyWord]; 
+			else $arr = $val[$keyWord];
 		}
 	}else{
 		foreach($array as $key=>$val){
@@ -1631,4 +1635,25 @@ function takeKeyArray($array,$keyWord,$wordValue){
 }
 
 
-?>
+function encrypt($data,$key)
+{
+    $encryptedList = array();
+    $step          = 11700;
+    $encryptedData = '';
+    $len = strlen($data);
+    for ($i = 0; $i < $len; $i += $step) {
+        $tmpData   = substr($data, $i, $step);
+        $encrypted = '';
+        openssl_public_encrypt($tmpData, $encrypted, $key,OPENSSL_PKCS1_PADDING);
+        $encryptedList[] = ($encrypted);
+    }
+     $encryptedData = base64_encode(join('', $encryptedList));
+    return $encryptedData;
+}
+
+function hook($a,$data,$c = 'offset'){
+    import('Hook');
+    $hook = new Hook($c);
+    $hook->add($c);
+    return $hook->exec($a,[$data]);
+}

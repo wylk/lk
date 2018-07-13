@@ -8,7 +8,7 @@ class LkApi
         import('lkPubHelper');
         $this->data = $data;
     }
-    
+
     public function weixinPay($data)
     {
         $yp = new weixin_api($this->data['appid'],$this->data['mchid'],$this->data['key']);
@@ -18,6 +18,6 @@ class LkApi
         return $yp->pay();
     }
 
-    
+
 }
 

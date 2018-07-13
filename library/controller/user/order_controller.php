@@ -3,8 +3,8 @@
 class order_controller extends base_controller
 {
     public function index(){
-        // $user = D('User')->select();
-        // $this->assign('user',$user);
+        $order = D('Orders')->select();
+        $this->assign('order',$order);
         $this->display();
     }
 
