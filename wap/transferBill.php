@@ -48,9 +48,9 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 if(IS_POST && $_POST['type'] == "getRemark"){
 	$addresList = D("User_address")->where(['uid'=>$userId])->select();
 	if($addresList){
-		dexit(['res'=>1,"msg"=>"请选择转账地址","list"=>$addresList]);
+		dexit(['res'=>0,"msg"=>"请选择转账地址","list"=>$addresList]);
 	}
-	dexit(['res'=>0,"msg"=>"还未保存转账地址"]);
+	dexit(['res'=>1,"msg"=>"还未保存转账地址"]);
 }
 
 if($identityJudge){

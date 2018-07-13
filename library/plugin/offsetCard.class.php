@@ -35,7 +35,7 @@ class offsetCard extends Card
         $Account_book = new AccountBook();
         $json = json_encode(['uid'=>$uid,'contract_id'=>$contract_id,'account_balance'=>$data['sum']]);
 
-        $address = $Account_book->addAccount($this->encrypt($json,option('version.public_key')));
+        $address = $Account_book->addAccount(encrypt($json,option('version.public_key')));
         if(empty($address)){
             dexit(['error'=>1,'msg'=>'添加账本错误！']);
         }

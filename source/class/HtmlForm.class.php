@@ -256,7 +256,7 @@ $this->htmlall.=$str;
 			                //layer.msg(JSON.stringify(data.field.checkbox));
 			                {$checkbox}
 			                data.field.file == '' && delete data.field.file;
-			                console.log(data.field['file']);
+			                // console.log(data.field['file']);
 			                console.log(data.field);
 			                $.post('{$this->path}',data.field,function(re){
 			                    if(re.error == 0){

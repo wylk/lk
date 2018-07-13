@@ -147,20 +147,24 @@
             
             $.post("./transferBill.php",data,function(res){
                 console.log(res);
-                var str = "<div class='remarkList'>";
-                $.each(res.list,function(item,value){
-                    str += "<div class='remark' onclick='getInfo(\""+value.name+"\",\""+value.address+"\")' ><span class='remarkName'>"+value.name+"</span>";
-                    str += "<span class='remarkAddress'>"+value.address+"</span></div>";
-                })
-                str += "</div>";
-                layer.open({
-                    type:3
-                    ,area: ['390px']
-                    ,shade: 0
-                    ,offset: [0,0]
-                    ,maxmin: false
-                    ,content:str
-                })
+                if(!res.res){
+                    var str = "<div class='remarkList'>";
+                    $.each(res.list,function(item,value){
+                        str += "<div class='remark' onclick='getInfo(\""+value.name+"\",\""+value.address+"\")' ><span class='remarkName'>"+value.name+"</span>";
+                        str += "<span class='remarkAddress'>"+value.address+"</span></div>";
+                    })
+                    str += "</div>";
+                    layer.open({
+                        type:3
+                        ,area: ['390px']
+                        ,shade: 0
+                        ,offset: [0,0]
+                        ,maxmin: false
+                        ,content:str
+                    })
+                }else{
+                    layer.msg(res.msg,{icon:5,skin:"demo-class"});
+                }
                 // str += "</div>";
                 // $(".remarkList").html(str);
             },"json");
@@ -168,11 +172,11 @@
         })
     })
     // 获取好友账户
-    $("input[name=address]").bind("click",function(){
-        $.post("./transferBill.php",data,function(res){
-            console.log(res);
-        },"json");
-    })
+    // $("input[name=address]").bind("click",function(){
+    //     $.post("./transferBill.php",data,function(res){
+    //         console.log(res);
+    //     },"json");
+    // })
 function getInfo(name,address){
     $("input[name=getAddress]").val(address);
     $("input[name=addressName]").val(name);
