@@ -152,7 +152,7 @@
                     }
                  ?>
                </span></p>
-               <p>单价:<?=  floatval($value['price']) ?>CNY 限制<?= floatval($value['limit']) ?>-<?= floatval($value['num']) ?></p>
+               <p>单价:<?=  number_format($value['price'],2) ?>CNY 限制<?= number_format($value['limit'],2) ?>-<?= number_format($value['num'],2) ?></p>
                </div>
              </div>
              <div class="home-plugin-info-row-card card-3 line-heights" >
