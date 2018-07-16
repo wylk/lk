@@ -9,16 +9,11 @@ class Page{
 	//总行数
 	public $totalRows;
 	//分页的条数
-	public $listRows;
+	public $page_rows;
 	//架构函数
-	public function __construct($totalRows,$listRows, $nowPage = ''){
+	public function __construct($totalRows,$listRows){
 		$this->totalRows = $totalRows;
-		$this->nowPage  = !empty($_POST['p']) ? intval($_POST['p']) : 1;
-
-		if (!empty($nowPage)) {
-			$this->nowPage = $nowPage;
-		}
-
+		$this->nowPage  = !empty($_GET['page']) ? intval($_GET['page']) : 1;
 		$this->listRows = $listRows;
 		$this->totalPage = ceil($totalRows/$listRows);
 		if($this->nowPage > $this->totalPage && $this->totalPage>0){
@@ -31,15 +26,21 @@ class Page{
 		$now = $this->nowPage;
 		$total = $this->totalPage;
 		
-		$str = '<span class="total">共 '.$this->totalRows.' 条，每页 '.$this->listRows.' 条</span> ';
+		$url  =  $_SERVER['REQUEST_URI'].(strpos($_SERVER['REQUEST_URI'],'?')?'':"?");
+        $parse = parse_url($url);
+        if(isset($parse['query'])) {
+            parse_str($parse['query'],$params);
+            unset($params['page']);
+            $url   =  $parse['path'].'?'.http_build_query($params);
+        }
+		$url .= '&page=';
 		
-		if($total == 1) return $str;
-		
+		$str = '<span class="total"><span id="row_count">'.$this->totalRows.'</span> 条记录 '.$now.'/'.$total.'页</span>';
 		if($now > 1){
-			$str.= '<a class="prev fetch_page" data-page-num="'.($now-1).'" href="javascript:void(0);">上一页</a>';
+			$str .= '<a href="'.$url.($now-1).'" class="prev" title="上一页">上一页</a>';
 		}
 		if($now!=1 && $now>4 && $total>6){
-			$str .= ' ... ';
+			$str .= '<a href="'.$url.'1" title="1">1</a><div class="page-numbers dots">…</div>';
 		}
 		for($i=1;$i<=5;$i++){
 			if($now <= 1){
@@ -51,20 +52,21 @@ class Page{
 			}
 			if($page != $now  && $page>0){
 				if($page<=$total){
-					$str .= '<a class="fetch_page num" data-page-num="'.$page.'" href="javascript:void(0);">'.$page.'</a>';
+					$str .= '<a href="'.$url.$page.'" title="第'.$page.'页">'.$page.'</a>';
 				}else{
 					break;
 				}
 			}else{
-				if($page == $now) $str .= '<a class="num active" data-page-num="'.$page.'" href="javascript:void(0);">'.$page.'</a>';
+				if($page == $now) $str.='<span class="current">'.$page.'</span>';
 			}
 		}
-		if ($now != $total){
-			$str .= '<a class="fetch_page next" data-page-num="'.($now+1).'" href="javascript:void(0);">下一页</a>';
+		if($total != $now && $now<$total-5 && $total>10){
+			$str .= '<span class="dots">…</span><a href="'.$url.$total.'" title="第'.$total.'页">'.$total.'</a>';
 		}
-		// if($total != $now && $now<$total-5 && $total>10){
-			// $str .= '<a class="fetch_page num" data-page-num="'.$total.'" href="javascript:void(0);">尾页&nbsp;&rsaquo;</a>';
-		// }
+		if ($now != $total){
+			$str .= '<a href="'.$url.($now+1).'" class="next">下一页</a>';
+		}
+		
 		return $str;
     }
 }
