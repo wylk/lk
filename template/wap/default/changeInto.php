@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>js/clipboard.min.js" charset="utf-8"></script>
     <style type="text/css">
         .codeAddress{padding: 10px 15px; line-height: 22px; color: #666;border: 1px solid #0f7f7a; margin: 10px; border-radius: 10px;}
         .code{width:202px;height:202px;margin:auto;}
@@ -28,7 +29,8 @@
         <div class="codeAddress">
             <h2>收款方：</h2>
             <div class="code"><img src="<?php echo $code; ?>" /></div>
-            <p id="getAddress"><?php echo $userInfo['address'] ?></p>
+            <p id="getAddress" ><?php echo $userInfo['address'] ?></p>
+            <p id="copyAddress" data-clipboard-target="#getAddress">点击复制</p>
             <p>此地址用于对应卡片转账收款地址，每卡券每用户都有对应地址</p>
         </div>
         <div class="otherFunc">
@@ -41,7 +43,18 @@
     layui.use(['layer','element'],function(){
         var layer = layui.layer;
         var element = layui.element;
+        // 点击复制功能
+        $("#copyAddress").bind("click",function(){
+            var clipboard = new ClipboardJS("#copyAddress");
+            clipboard.on("success",function(e){
+                e.clearSelection();
+                layer.msg("复制成功",{ icon: 1, skin: "demo-class" });
+            })
+            clipboard.on("error",function(e){
+                layer.msg("复制失败",{ icon: 5, skin: "demo-class" });
+            })
 
+        })
     })
 </script>
 </html>

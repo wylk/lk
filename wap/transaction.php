@@ -36,6 +36,7 @@ if(isset($_POST['type']) && $_POST['type'] == "transaction"){
 	if($tranId){
 		$res = D("Card_package")->where(['uid'=>$userId,'card_id'=>$cardId])->setInc("frozen",$num);
 		$res ? true : dexit(['res'=>1,"msg"=>"冻结修改失败","other"=>$tranInfo]);
+		D("Card_package")->where(['uid'=>$userId,"card_id"=>$cardId])->setDec("num",$num);
 		$tranInfo = D("Card_transaction")->where(['id'=>$tranId])->find();
 		dexit(['res'=>0,"msg"=>"卡券发布成功","dataInfo"=>$tranInfo,"num"=>$surplusNum]);
 	}
