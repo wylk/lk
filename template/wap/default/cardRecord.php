@@ -38,18 +38,20 @@
         <thead >
           <tr >
             <th id="laytable-cell-space">类别</th>
-            <th id="laytable-cell-space">交易量</th>
-            <th id="laytable-cell-space">价格</th>
-            <th id="laytable-cell-space">时间</th>
+            <th id="laytable-cell-space">用户</th>
+            <th id="laytable-cell-space">现有数量</th>
+            <th id="laytable-cell-space">卖出数量</th>
+            <th id="laytable-cell-space">核销数量</th>
           </tr> 
         </thead>
         <tbody>
           <?php foreach($recordList as $key=>$value) { ?>
           <tr>
             <td>买</td>
+            <td><?php echo $userInfo[$value['uid']]['name'] ?></td>
             <td><?php echo number_format($value['num'],2) ?></td>
-            <td><?php echo number_format($value['price'],2); ?></td>
-            <td><?php echo date("Y-m-d H:i:s",$value['createtime']) ?></td>
+            <td><?php echo number_format($value['sell_count']) ?></td>
+            <td><?php echo number_format($value['recovery_count']) ?></td>
            
           </tr>
             <?php }?>
@@ -64,9 +66,9 @@
 var table = layui.table;
  console.log(table);
 //转换静态表格
-table.init('demo', {
-  height: 315 //设置高度
-  ,limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
-  //支持所有基础参数
-});
+// table.init('demo', {
+//   height: 315 //设置高度
+//   ,limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
+//   //支持所有基础参数
+// });
 </script>

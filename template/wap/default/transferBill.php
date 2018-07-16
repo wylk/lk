@@ -40,6 +40,10 @@
         }
         .remarkName{width:20%;height:35px;float:left;text-align:center;}
         .remarkAddress{width:70%;height:18px;float:left;}
+        .evaluate{width:90%;margin:10px;padding:10px;display: none;}
+        .evaluate{width: 80%;margin:10px auto;}
+        .evaluate textarea{width:280px;height:80px;}
+        .evaluate button{float:left; margin-left: 50px;}
     </style>
 </head>
 
@@ -84,20 +88,15 @@
                 <button lay-submit class='layui-btn layui-btn-warm' lay-filter="subTransfer" >确认转账</button>
             </div>
         </form>
-        <!-- <div class="remarkList">
-            <div class="remark">
-                <span class='remarkName'>备注名:</span>
-                <span class="remarkAddress">地址</span>
+        <div class="evaluate">
+            <div class="text">
+                <textarea></textarea>
             </div>
-            <div class="remark">
-                <span class='remarkName'>备注名:</span>
-                <span class="remarkAddress">地址</span>
+            <div class="btnStyle">
+                <button class="layui-btn layui-btn-warm" id="cancleEval">取消</button>
+                <button class="layui-btn layui-btn-warm" id="addEval">确定</button>
             </div>
-            <div class="remark">
-                <span class='remarkName'>备注名:</span>
-                <span class="remarkAddress">地址</span>
-            </div>
-        </div> -->
+        </div>
     </div>
     <?php include display('public_menu');?>
 </body>
@@ -134,8 +133,13 @@
             $.post("./transferBill.php",data,function(res){
                 console.log(res);
                 if(!res.res){
-                    layer.msg(res.msg,{icon:1,skin:"demo-class"});
-                    window.location.href = "./card_package.php"
+                    // layer.msg(res.msg,{icon:1,skin:"demo-class"});
+                    if(res.isPublisher){
+                        $(".evaluate").show();
+                    }else{
+                        layer.msg(res.msg,{icon:1,skin:"demo-class"});
+                        window.location.href = "./card_package.php"
+                    }
                 }else{
                     layer.msg(res.msg,{icon:5,skin:"demo-class"});
                 }
@@ -165,18 +169,27 @@
                 }else{
                     layer.msg(res.msg,{icon:5,skin:"demo-class"});
                 }
-                // str += "</div>";
-                // $(".remarkList").html(str);
             },"json");
-            // $(".remarkList").slideUp("fast");
+        })
+        $("#cancleEval").bind("click",function(){
+            $(".evaluate").hide();
+        })
+        $("#addEval").bind("click",function(){
+            var content = $("textarea").val();
+            var cardId = $('input[name=cardId]').val();
+            var data = {'content':content,"cardId":cardId,"type":"addEval"};
+            console.log(data);
+            $.post("./transferBill.php",data,function(res){
+                console.log(res);
+                if(!res.res){
+                    layer.msg(res.msg,{icon:1,skin:"demo-class"});
+                }else{
+                    layer.msg(res.msg,{icon:5,skin:"demo-class"});
+                }
+                $(".evaluate").hide();
+            },"json");
         })
     })
-    // 获取好友账户
-    // $("input[name=address]").bind("click",function(){
-    //     $.post("./transferBill.php",data,function(res){
-    //         console.log(res);
-    //     },"json");
-    // })
 function getInfo(name,address){
     $("input[name=getAddress]").val(address);
     $("input[name=addressName]").val(name);

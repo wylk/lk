@@ -16,6 +16,7 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	$addressName = $post['addressName'];
 	// 转账信息判断
 	$getAddressInfo = D("Card_package")->where(['address'=>$getAddress])->find();
+	$isPublisher = $getAddressInfo['is_publisher'] == 1 ? true : false;
 	$getAddressInfo ? true : dexit(['res'=>1,"msg"=>"您输入的地址不正确"]);
 	$sendAdressInfo = D("Card_package")->where(['uid'=>$userId,'address'=>$sendAddress])->find();
 	$sendAdressInfo['num'] >= $num ? true : dexit(['res'=>1,"msg"=>"您转账的数目已超支"]);
@@ -32,7 +33,6 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	$Account_book = new AccountBook();
 	$bookJson = json_encode(['uid'=>$userId,"contract_id"=>$cardId,'sendAddress'=>$sendAddress,"num"=>$num,"getAddress"=>$getAddress]);
 	$bookRes = $Account_book->transferAccounts(encrypt($bookJson,option('version.public_key')));
-	// dexit(['res'=>1,"msg"=>"添加账本错误","other"=>$bookRes]);
 	if(!$bookRes){
 		dexit(['res'=>1,"msg"=>"添加账本错误","other"=>$bookRes]);
 	}
@@ -43,14 +43,25 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 		dexit(['res'=>1,"msg"=>"转账失败！"]);
 	}
 
-	dexit(['res'=>0,"msg"=>"转账成功！"]);
+	dexit(['res'=>0,"msg"=>"转账成功！","isPublisher"=>$isPublisher]);
 }
+// 获取保存的地址
 if(IS_POST && $_POST['type'] == "getRemark"){
 	$addresList = D("User_address")->where(['uid'=>$userId])->select();
 	if($addresList){
 		dexit(['res'=>0,"msg"=>"请选择转账地址","list"=>$addresList]);
 	}
 	dexit(['res'=>1,"msg"=>"还未保存转账地址"]);
+}
+//添加评价
+if(IS_POST && $_POST['type'] == "addEval"){
+	$cardId = clear_html($_POST['cardId']);
+	$content = clear_html($_POST['content']);
+	$addEvalRes = D("Evaluate")->data(['uid'=>$userId,"content"=>$content,"card_id"=>$cardId,"createtime"=>time()])->add();
+	if($addEvalRes){
+		dexit(['res'=>0,"msg"=>"评价成功"]);
+	}
+	dexit(['res'=>1,"msg"=>"评价失败",'other'=>$addEvalRes]);
 }
 
 if($identityJudge){
