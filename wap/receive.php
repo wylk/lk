@@ -16,9 +16,12 @@ if(IS_POST){
     $data['carated_time'] = time();
     $data['onumber'] = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
 
-    if($data['number'] <= $_POST['quantity']){
+    if($data['number'] <= $datas['quantity']){
+        dump($data);
         $order_id = D('Orders')->data($data)->add();
-        $orders = D('Card_transaction')->where(array('id'=>$datas['tranId']))->setInc('frozen',$datas['number']);
+
+        //$orders = D('Card_transaction')->where(array('id'=>$datas['tranId']))->setInc('frozen',$datas['number']);
+        dump($order_id);
         if($order_id && $orders){
 
             //调用支付接口上线再做
@@ -32,7 +35,7 @@ if(IS_POST){
 
             dexit(['error'=>0,'msg'=>'购买成功',"other"=>$rwx]);
         }else{
-            dexit(['error'=>1,'msg'=>'购买失败']);
+            dexit(['error'=>1,'msg'=>'购买失败1']);
         }
     }
 
