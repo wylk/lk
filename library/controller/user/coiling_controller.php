@@ -19,14 +19,11 @@ class coiling_controller extends base_controller
         $Contract_fields = [];
         foreach ($Contract_field as $kk => $vv) {
             $Contract_fields[$vv['id']] = $vv['val'];
-
         }
         // dump($Contract_fields);
         foreach ($card as $k => $v) {
             $cards[$v['card_id']][$Contract_fields[$v['c_id']]] = $v['val'];
             $cards[$v['card_id']]['uid'] = $v['uid'];
-            $uname = D('User_audit')->where(['uid'=>$v['uid']])->find();
-            $cards[$v['card_id']]['uname'] = $uname['name'];
         }
         // dump($cards);
         $this->assign('cards',$cards);

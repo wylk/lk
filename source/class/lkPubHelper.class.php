@@ -291,7 +291,7 @@ class weixin_api extends yp_client_pub
             $this->parameters["mch_id"] = $this->mchid;//商户号
             //$this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
             $this->parameters["sign"] = $this->getSign($this->parameters);//签名
-            return  $this->arrayToXml($this->parameters);
+            return  $this->parameters;
         }catch(Exception $e){
             print $e->getMessage(); exit();
         }
