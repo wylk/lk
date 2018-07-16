@@ -18,6 +18,7 @@
        .lk-container-flex {padding: 0 5px;}
        .order-left{width: 63%}
         .order-right{width: 37%;text-align: right;}
+
     </style>
 </head>
 
@@ -79,16 +80,41 @@
                                 <p>数量：<?php echo number_format($value['number'],2)?></p>
                             </div>
                             <div class="order-right">
-                                <p><a class="layui-bg-cyan" style="padding: 5px 7px" href="">查看详情</a></p>
+                                <p><a class="layui-bg-cyan" style="padding: 5px 7px" href="">未评价</a></p>
                                 <p>价格：<?php echo number_format($value['prices'],2); ?></p>
-                                <p style="color: #2F4056"><?php echo $value['status'] ? "已付款" : "未付款" ?></p>
+                                <p style="color: #2F4056">未付款</p>
                                 <p>总金额：<span class="total"><?php echo number_format(($value['prices']*$value['number']),2); ?></span></p>
                             </div>
                         </div>
                         <?php } ?>
                     </div>
-                    <div class="layui-tab-item layui-show ">
-                        评价
+                    <div class="layui-tab-item ">
+                        <table lay-skin="line" class="layui-table laytable-cell-space">
+                        <colgroup>
+                          <col width="5%">
+                          <col width="">
+                          <col width="30%">
+                          <col width="25%">
+                        </colgroup>
+                        <thead >
+                          <tr >
+                            <th id="laytable-cell-space">序号</th>
+                            <th id="laytable-cell-space">内容</th>
+                            <th id="laytable-cell-space">卡券</th>
+                            <th id="laytable-cell-space">时间</th>
+                          </tr> 
+                        </thead>
+                        <tbody>
+                          <?php foreach($evaluate as $key=>$value) { ?>
+                          <tr>
+                            <td><?php echo $key ?></td>
+                            <td><?php echo $value['content'] ?></td>
+                            <td><?php echo $value['card_id'] ?></td>
+                            <td><?php echo date("Y-m-d H:i:s",$value['createtime']); ?></td>
+                          </tr>
+                            <?php }?>
+                        </tbody>
+                      </table>
                     </div>
                 </div>
             </div>
