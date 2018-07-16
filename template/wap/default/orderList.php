@@ -52,6 +52,7 @@
                                 <p>总金额：<span class="total"><?php echo number_format(($value['prices']*$value['number']),2); ?></span></p>
                             </div>
                         </div>
+                        <hr>
                         <?php } ?>
                     </div>
                     <div class="layui-tab-item ">
@@ -69,6 +70,7 @@
                                 <p>总金额：<span class="total"><?php echo number_format(($value['prices']*$value['number']),2); ?></span></p>
                             </div>
                         </div>
+                        <hr>
                         <?php } ?>
                     </div>
                     <div class="layui-tab-item ">
@@ -86,6 +88,7 @@
                                 <p>总金额：<span class="total"><?php echo number_format(($value['prices']*$value['number']),2); ?></span></p>
                             </div>
                         </div>
+                        <hr>
                         <?php } ?>
                     </div>
                     <div class="layui-tab-item ">
