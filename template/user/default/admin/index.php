@@ -34,11 +34,6 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-          <input type="text" name="name"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-        </form>
-      </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>

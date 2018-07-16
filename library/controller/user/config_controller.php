@@ -2,13 +2,10 @@
 /*
   系统设置
  */
-<<<<<<< HEAD
 
 class config_controller extends base_controller{
-=======
-// class config_controller extends base_controller{
-class config_controller extends controller{
->>>>>>> 0bd7226b82d2cf33b763b824a6efd14989a5e52a
+
+
 	public function index()
 	{
 		$where['gid'] = '1';

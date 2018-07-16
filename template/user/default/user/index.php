@@ -35,7 +35,7 @@
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so" method="get">
           <input type="text" name="name"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+          <button class="layui-btn"  ><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
@@ -154,6 +154,20 @@
             },'json')
 
           });
+      }
+
+      function selects(obj,id){
+            $.get("?c=user&a=index",{name:name},function(data){
+              console.log(data);
+              // if(data.status==0){
+              //   //发异步删除数据
+              //   $(obj).parents("tr").remove();
+              //   layer.msg('已删除!',{icon:1,time:1000});
+              // }else{
+              //   layer.msg('删除失败!',{icon:1,time:1000});
+              // }
+            },'json')
+
       }
       // function delAll (argument) {
 

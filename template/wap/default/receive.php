@@ -87,7 +87,7 @@
     </div>
    </div>
    <div class="card" style="text-align: center;line-height: 120px;">
-        <a class="layui-btn layui-btn-primary">购买</a>
+        <a class="layui-btn layui-btn-primary"  href="./success.php" >购买</a>
    </div>
  </form>
 </div>

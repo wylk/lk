@@ -43,3 +43,10 @@ $config = option('config');
 
 -----------刷新当前页面-----------
 location.replace(location.href);
+
+-----------分页-------------------
+import('user_page');
+$page = new Page($bank_count, 20);
+$banks = $bank->order('`bank_id` DESC')->limit($page->firstRow, $page->listRows)->select();
+$this->assign('banks',$banks);
+$this->assign('page', $page->show());
