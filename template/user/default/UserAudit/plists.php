@@ -44,9 +44,9 @@
                   <span class="x-red">*</span>身份证图片
               </label>
               <div class="layui-input-inline" style="margin-top: 10px;">
-                  <img src="<?= $userAudit['img_just'] ?>" style="width:47px" onclick="previewImg(this,'<?= $userAudit['img_just'] ?>')" >
-                  <img src="<?= $userAudit['img_back'] ?>" style="width:47px" onclick="previewImg(this,'<?= $v['img_just'] ?>')" >
-                  <img src="<?= $userAudit['img_oneself'] ?>" style="width:47px" onclick="previewImg(this,'<?= $userAudit['img_just'] ?>')" >
+                  <img src="<?= $userAudit['img_just'] ?>"  onclick="previewImg(this,'<?= $userAudit['img_just'] ?>')" >
+                  <img src="<?= $userAudit['img_back'] ?>"  onclick="previewImg(this,'<?= $v['img_just'] ?>')" >
+                  <img src="<?= $userAudit['img_oneself'] ?>"  onclick="previewImg(this,'<?= $userAudit['img_just'] ?>')" >
               </div>
               <div class="layui-form-mid layui-word-aux">
                   <span class="x-red">*</span>

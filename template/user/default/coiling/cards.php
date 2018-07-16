@@ -70,7 +70,7 @@
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td><?= $v['uid'] ?></td>
-            <td>admin</td>
+            <td><?= $v['uname'] ?></td>
             <td><?= $v['name'] ?></td>
             <td><?= $v['price'] ?></td>
             <td><?= $v['sum'] ?></td>

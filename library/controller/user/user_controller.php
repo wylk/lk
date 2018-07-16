@@ -3,7 +3,7 @@
 class user_controller extends base_controller
 {
     public function index(){
-        $user = D('User')->select();
+        $user = D('User')->where()->select();
         $this->assign('user',$user);
         $this->display();
     }
@@ -54,10 +54,11 @@ class user_controller extends base_controller
     {
         $data = $this->clear_html($_POST);
         // (D('User')->data($data)->where(array('id' =>$data['id']))->save());
-        if((D('User')->where(array('id' =>$data['id']))->delete())) {
-            $arr=['status'=>0,'msg'=>'修改成功'];
+
+        if(D('User')->data(['isdelete'=>3])->where(array('id' =>$data['id']))->save()) {
+            $arr=['status'=>0,'msg'=>'删除成功'];
         } else{
-            $arr=['status'=>1,'msg'=>'修改失败'];
+            $arr=['status'=>1,'msg'=>'删除失败'];
         }
         $this->dexit($arr);
     }

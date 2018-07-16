@@ -51,15 +51,14 @@
             <th>ID</th>
             <th>用户名</th>
             <th>手机</th>
-            <th>性别</th>
-            <th>加入时间</th>
-            <th>状态</th>
+            <th>是否认证</th>
             <th>操作</th></tr>
         </thead>
         <tbody>
 
           <?php
             foreach($user as $k=>$v){
+            if(!$v['isdelete']==3){
           ?>
 
           <tr>
@@ -70,22 +69,15 @@
             <td><?= $v["name"] ?></td>
             <td><?= $v["phone"] ?></td>
             <td>
-              <?php if($v['sex'] == 0){
-                        echo '未知';
-                    }else if($v['sex'] == 1){
-                        echo '男';
-                    }else{
-                        echo '女';
-                    }
+              <?php
+                if($v['status']==0){
+                  echo '未认证';
+                }elseif($v['status']==1){
+                  echo '个人认证';
+                }elseif($v['status']==2){
+                  echo '企业认证';
+                }
               ?>
-            </td>
-            <td><?= date('Y-m-d H:i:s',$v["timestamp"]) ?></td>
-            <td class="td-status">
-                <?php if( $v["status"] ==0){ ?>
-                  <button class="btn-success member_stop layui-btn layui-btn-normal"   data-id="<?= $v['id'] ?>" data-status="<?= $v['status'] ?>">已启用</button>
-                <?php }else{ ?>
-                  <button class="btn-danger member_stop layui-btn layui-btn-normal"  data-id="<?= $v['id'] ?>" data-status=status="<?= $v['status'] ?>">已禁用</button>
-                <?php } ?>
             </td>
             <td class="td-manage">
               <a title="编辑"  onclick="x_admin_show('编辑','?c=user&a=edit',600,400) href="javascript:;">
@@ -98,7 +90,7 @@
             </td>
           </tr>
 
-          <?php } ?>
+          <?php }} ?>
 
         </tbody>
       </table>

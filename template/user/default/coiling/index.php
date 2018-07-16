@@ -38,11 +38,11 @@
               <span><?= $v['contract_name'] ?></span>
                 <h2 style="color:red">21366</h2>
               <ul>
-                <li>已发抵现卡：300</li>
-                <li>抵现卡总数：300</li>
+                <li>发布卡数量：<?= count($Contract) ?></li>
+                <li>发布人数：300</li>
               </ul>
               <ul style="margin-left: 145px;margin-top: -69px;">
-                <li>已发抵现卡：300</li>
+                <li>交易量：300</li>
                 <li>抵现卡总数：300</li>
               </ul>
               <a class="layui-btn layui-btn-primary layui-btn-lg" href="?c=coiling&a=cards">详情</a>

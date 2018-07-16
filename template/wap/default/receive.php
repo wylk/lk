@@ -116,7 +116,7 @@ layui.use(['form', 'layer'],function() {
         data.number = $("input[name='number']").val();
         data.prices = $("input[name='prices']").val();
         data.card_id = "<?php echo $UserAud['card_id'] ?>";
-        data.sole_id = "<?php echo $_GET['uid'] ?>";
+        data.sell_id = "<?php echo $_GET['uid'] ?>";
         data.quantity = "<?php echo floatval($UserAud['num']) ?>";
         data.tranId = "<?php echo floatval($UserAud['id']) ?>";
 
@@ -128,12 +128,16 @@ layui.use(['form', 'layer'],function() {
           });
           return false;
         }
-
+        layer.load();
         $.post('./receive.php',data,function(data){
-            console.log(data);
+            // console.log(data);
             if(data.error==0){
+                //此处演示关闭
+                layer.closeAll('loading');
                 layer.msg(data.msg,{icon: 1,time:1000});
             }else{
+                //此处演示关闭
+                layer.closeAll('loading');
                 layer.msg(data.msg,{icon: 5,time:1000},function(){
                 });
 

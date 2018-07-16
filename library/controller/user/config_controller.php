@@ -2,6 +2,7 @@
 /*
   系统设置
  */
+
 class config_controller extends base_controller{
 	public function index()
 	{
@@ -36,46 +37,7 @@ class config_controller extends base_controller{
 
 	}
 
-	//ajax图片上传
-	public function uploadFile()
-	{
-		if(!empty($_FILES['file']) && $_FILES['file']['error'] != 4){
-			$img_id = sprintf("%09d",1);
-			$rand_num = 'images/'.substr($img_id,0,3).'/'.substr($img_id,3,3).'/'.substr($img_id,6,3).'/'.date('Ym',$_SERVER['REQUEST_TIME']).'/';
-			$upload_dir = './upload/' . $rand_num;
-			if (!is_dir($upload_dir)) {
-				mkdir($upload_dir, 0777, true);
-			}
 
-			import('UploadFile');
-			$upload = new UploadFile();
-			$upload->maxSize = 1*1024*1024;
-			$upload->allowExts = array('jpg','jpeg','png','gif');
-			$upload->allowTypes = array('image/png','image/jpg','image/jpeg','image/gif');
-			$upload->savePath = $upload_dir;
-			$upload->saveRule = 'uniqid';
-			if($upload->upload()){
-				$uploadList = $upload->getUploadFileInfo();
-				$this->dexit(['error'=>0,'msg'=>getAttachmentUrl($rand_num.$uploadList[0]['savename'])]);
-			}else{
-				$this->dexit(['error'=>1,'msg'=>$upload->getErrorMsg()]);
-			}
-		}
-	}
-
-	//
-	public function delFile()
-	{
-		if(isset($_POST['url'])){
-			$_POST['url'] = '.'.substr($_POST['url'],strrpos($_POST['url'],'/upload'));
-			if(isset($_POST['url'])){
-				if(file_exists($_POST['url'])){
-			        unlink($_POST['url']);
-			    }
-			}
-		}
-
-	}
 	//合约管理
 	public function application()
 	{
