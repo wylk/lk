@@ -25,18 +25,6 @@
         <form class="layui-form">
           <input type="hidden" name="id" value="<?= $user['id'] ?>" >
           <div class="layui-form-item">
-              <label for="username" class="layui-form-label">
-                  <span class="x-red">*</span>登录名
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="username" name="name" required="" lay-verify="required"
-                  autocomplete="off" class="layui-input" value="<?= $user['name'] ?>">
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-                  <span class="x-red">*</span>将会成为您唯一的登入名
-              </div>
-          </div>
-          <div class="layui-form-item">
               <label for="phone" class="layui-form-label">
                   <span class="x-red">*</span>手机
               </label>
@@ -47,12 +35,6 @@
               <div class="layui-form-mid layui-word-aux">
                   <span class="x-red">*</span>将会成为您唯一的登入名
               </div>
-          </div>
-          <div class="layui-form-item">
-              <label class="layui-form-label"><span class="x-red">*</span>性别</label>
-                  <input type="radio" name="sex" value="1" title="男" <?= ($user['sex']==1) ? 'checked' : ''; ?> >
-                  <input type="radio" name="sex" value="2" title="女" <?= ($user['sex']==2) ? 'checked' : ''; ?> >
-                  <input type="radio" name="sex" value="0" title="未知" <?= ($user['sex']==0) ? 'checked' : ''; ?> >
           </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">

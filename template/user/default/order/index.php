@@ -34,8 +34,6 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-          <input class="layui-input" placeholder="开始日" name="start" id="start">
-          <input class="layui-input" placeholder="截止日" name="end" id="end">
           <div class="layui-input-inline">
             <select name="contrller">
               <option>支付状态</option>
@@ -48,17 +46,13 @@
               <option>支付方式</option>
               <option>支付宝</option>
               <option>微信</option>
-              <option>货到付款</option>
             </select>
           </div>
           <div class="layui-input-inline">
             <select name="contrller">
               <option value="">订单状态</option>
-              <option value="0">待确认</option>
-              <option value="1">已确认</option>
-              <option value="2">已收货</option>
-              <option value="3">已取消</option>
-              <option value="4">已完成</option>
+              <option value="0">待付款</option>
+              <option value="3">已付款</option>
               <option value="5">已作废</option>
             </select>
           </div>
@@ -78,7 +72,6 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>订单编号</th>
-            <th>收货人</th>
             <th>购买数量</th>
             <th>成交价格</th>
             <th>订单状态</th>
@@ -93,11 +86,18 @@
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td><?= $v['onumber'] ?></td>
-            <td>老王:18925139194</td>
             <td><?= $v['number'] ?></td>
             <td><?= $v['prices'] ?></td>
-            <td><?= $v['status'] ?></td>
-            <td><?= $v['carated_time'] ?></td>
+            <td><?php
+              if($v['status']==0){
+                echo '待付款';
+              }elseif($v['status']==1){
+                echo '已完成';
+              }elseif($v['status']==2){
+                echo '已作废';
+              }
+            ?></td>
+            <td><?= date('Y-m-d H:i:s',$v['create_time']) ?></td>
             <td class="td-manage">
               <a title="查看"  onclick="x_admin_show('编辑','order-view.html')" href="javascript:;">
                 <i class="layui-icon">&#xe63c;</i>

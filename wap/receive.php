@@ -8,16 +8,18 @@ if(IS_POST){
     //添加订单
     $data = [];
     $data['card_id'] = $datas['card_id'];
-    $data['sole_id'] = $datas['sole_id'];
+    $data['sell_id'] = $datas['sell_id'];
     $data['buy_id'] = $userId;
     $data['number'] = $datas['number'];
     $data['prices'] = $datas['prices'];
     $data['tran_id'] = $datas['tranId'];
-    $data['carated_time'] = time();
+    $data['create_time'] = time();
     $data['onumber'] = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
 
-    if($data['number'] <= $_POST['quantity']){
+    if($data['number'] <= $datas['quantity']){
+        
         $order_id = D('Orders')->data($data)->add();
+
         $orders = D('Card_transaction')->where(array('id'=>$datas['tranId']))->setInc('frozen',$datas['number']);
         if($order_id && $orders){
 
@@ -32,7 +34,7 @@ if(IS_POST){
 
             dexit(['error'=>0,'msg'=>'购买成功',"other"=>$rwx]);
         }else{
-            dexit(['error'=>1,'msg'=>'购买失败']);
+            dexit(['error'=>1,'msg'=>'购买失败1']);
         }
     }
 

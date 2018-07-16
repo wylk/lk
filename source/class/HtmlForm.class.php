@@ -60,24 +60,24 @@ class HtmlForm
               </div>
               <input type="hidden" name="{$name}" class="{$id}hid">
               <div style="width:50%;"><img src="http://lk.com/upload/images/000/000/001/201806/5b2c98275e959.jpg" style="width:80px;height:80px;" class="{$id}img"></div>
-           
+
             </div>
         </div>
         <script>
         layui.use('upload', function(){
           var upload = layui.upload;
-           
+
           //执行实例
           var uploadInst = upload.render({
             elem: '#{$id}',
-            url: '../user.php?c=config&a=uploadFile',
+            url: '../user.php?c=public&a=uploadFile',
             done: function(res){
                 if(res.error == 0){
                     var url = $('.{$id}hid').val();
                     console.log(url);
-                    url && $.post('../user.php?c=config&a=delFile', {url: url},function(){});
+                    url && $.post('../user.php?c=public&a=delFile', {url: url},function(){});
                     $('.{$id}hid').val(res.msg);
-                    $(".{$id}img").attr('src',res.msg); 
+                    $(".{$id}img").attr('src',res.msg);
                     layer.closeAll('loading');
                 }
               console.log(res.msg);
@@ -134,7 +134,7 @@ $this->htmlall.=$str;
         </div>
 EOM;
 $this->htmlall.=$str;
-        return $this;    
+        return $this;
     }
 
     //单选
@@ -159,7 +159,7 @@ $this->htmlall.=$str;
             });
 EOS;
         $this->required[$data[0]]['is_reg']  = 0;
-             
+
         }
         $this->htmlall.=$str;
         return $this;
@@ -211,7 +211,7 @@ $this->htmlall.=$str;
 		return $this;
 	}
 
-/*nikename: function(value){ if(value.length < 5){ }}  
+/*nikename: function(value){ if(value.length < 5){ }}
 */
     public function addFrom()
     {
@@ -238,7 +238,7 @@ $this->htmlall.=$str;
             		default:
             			# code...
             			break;
-            	}        
+            	}
             }
         }
 
@@ -280,7 +280,7 @@ $this->htmlall.=$str;
 			            $("input:checkbox[name="+name+"]:checked").each(function() {
 			                     standards += "," + $(this).val();
 			            });
-			            return standards; 
+			            return standards;
 			        }
 			    </script>
 EOM;

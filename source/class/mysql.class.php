@@ -190,8 +190,8 @@ class mysql{
 		}
 
 		$sql = 'INSERT INTO '.$this->table.' '.$sql_str;
-
 		$rows = $this->execute($sql);
+
 		if($this->lastInsID){
 			return $this->lastInsID;
 		}elseif($rows > 0){
