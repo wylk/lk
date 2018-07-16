@@ -20,7 +20,7 @@ if(IS_POST){
         
         $order_id = D('Orders')->data($data)->add();
 
-        //$orders = D('Card_transaction')->where(array('id'=>$datas['tranId']))->setInc('frozen',$datas['number']);
+        $orders = D('Card_transaction')->where(array('id'=>$datas['tranId']))->setInc('frozen',$datas['number']);
         if($order_id && $orders){
 
             //调用支付接口上线再做
