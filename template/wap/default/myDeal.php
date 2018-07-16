@@ -44,13 +44,12 @@
           </tr> 
         </thead>
         <tbody>
-          <?php for ($i=0; $i < 5; $i++) { ?>
+          <?php foreach($orderList as $key=>$value) { ?>
           <tr>
-            <td>买</td>
-            <td>12</td>
-            <td>0.323</td>
-            <td>16-11-29 12:33:14</td>
-           
+            <td>卖</td>
+            <td><?php echo number_format($value['number'],2); ?></td>
+            <td><?php echo number_format($value['prices'],2); ?></td>
+            <td><?php echo date("Y-m-d H:i:s",$value['create_time']); ?></td>
           </tr>
             <?php }?>
         </tbody>

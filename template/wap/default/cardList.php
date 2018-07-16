@@ -96,9 +96,9 @@
         </div>
         <div class="lk-row-btns">
             <a href="" class="lk-row-btn">设置</a>
-            <a href="myDeal.php" class="lk-row-btn">我的交易</a>
-            <a href="transactionRecord.php" class="lk-row-btn">全部交易</a>
-            <a href="cardRecord.php" class="lk-row-btn">持卡记录</a>
+            <a href="myDeal.php?cardId=<?php echo $value['card_id']; ?>" class="lk-row-btn">我的交易</a>
+            <a href="transactionRecord.php?cardId=<?php echo $value['card_id']; ?>" class="lk-row-btn">全部交易</a>
+            <a href="cardRecord.php?cardId=<?php echo $value['card_id'] ?>" class="lk-row-btn">持卡记录</a>
         </div>
       </div>
       <hr class="layui-bg-gray">

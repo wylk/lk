@@ -22,6 +22,8 @@
             margin: 30px auto;
            /*  border: 1px solid red; */
         }
+        .beatBtn{width:120px;height: 30px;text-align: center;display: block;float: left;}
+        .store{width:100%;}
     </style>
 </head>
 <body>
@@ -39,7 +41,18 @@
     </div>
   </div>
 </form>
+<div class="store">
+<?php foreach ($storeInfo as $key => $value) { ?>
+         <div class="">
+                <span  class="beatBtn"><?php echo $value['name'] ?></span>
+                <span class="beatBtn"><?php echo $value['enterprise'] ?></span>
+                <a href="./home.php?shoreUid=<?php echo $value['uid'] ?>" class="beatBtn">店铺</a>
+         </div>
+         <hr>
+<?php } ?>
 </div>
+</div>
+
    
   	<?php include display('public_menu');?>
 </body>
