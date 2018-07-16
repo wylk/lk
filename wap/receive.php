@@ -8,12 +8,12 @@ if(IS_POST){
     //添加订单
     $data = [];
     $data['card_id'] = $datas['card_id'];
-    $data['sole_id'] = $datas['sole_id'];
+    $data['sell_id'] = $datas['sell_id'];
     $data['buy_id'] = $userId;
     $data['number'] = $datas['number'];
     $data['prices'] = $datas['prices'];
     $data['tran_id'] = $datas['tranId'];
-    $data['carated_time'] = time();
+    $data['create_time'] = time();
     $data['onumber'] = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
 
     if($data['number'] <= $datas['quantity']){
