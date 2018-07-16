@@ -6,6 +6,11 @@ $verifyLen = "6";  //验证码长度
 // $userId = 11;
 $phone = isset($wap_user['phone']) ? $wap_user['phone'] : "";
 $userId = isset($wap_user['userid']) ? $wap_user['userid'] : 1;
+
+// 清除超时订单
+$where = ['create_time'=>["<=",time()-60*30],"status"=>"0"];
+$orderRes = D("Orders")->where($where)->setField("status",2);
+
 // 钱包
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == "purse"){
 	$userInfo = M("lk_user")->findField("point_balance,phone,id,upwd","phone=".$phone);

@@ -15,8 +15,15 @@ if(IS_POST){
     $data['tran_id'] = $datas['tranId'];
     $data['create_time'] = time();
     $data['onumber'] = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+<<<<<<< HEAD
     if($data['number'] <= $_POST['quantity']){
+=======
+
+    if($data['number'] <= $datas['quantity']){
+        
+>>>>>>> 1a8d3da0c51f968da97797011d0b8066eb655bae
         $order_id = D('Orders')->data($data)->add();
+
         $orders = D('Card_transaction')->where(array('id'=>$datas['tranId']))->setInc('frozen',$datas['number']);
 
         if($order_id && $orders){
@@ -31,7 +38,7 @@ if(IS_POST){
             D('Orders')->data(['status'=>1])->where(array('onumber'=>$data['onumber']))->save();
             dexit(['error'=>0,'msg'=>'购买成功',"other"=>$rwx]);
         }else{
-            dexit(['error'=>1,'msg'=>'购买失败']);
+            dexit(['error'=>1,'msg'=>'购买失败1']);
         }
     }
 

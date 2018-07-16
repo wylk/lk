@@ -71,6 +71,6 @@ background-position-y: -23px;
 <div class="wx_nav">
 	<a href="./index.php" class="nav_index <?php if($php_self == 'index.php'){ echo 'on';}?>">首页</a>
 	<a href="./card_package.php" class="card_buy <?php if($php_self == 'card_package.php' || $php_self == 'card_buy.php' || $php_self == 'card_sell.php' || $php_self == 'card_order.php' || $php_self == 'card_orderlist.php'){ echo 'on';}?>">卡包</a>
-	<a href="" class="nav_shopcart <?php if($php_self == 'weidian.php'){ echo 'on';}?>">核销</a>
+	<a href="./orderList.php" class="nav_shopcart <?php if($php_self == 'weidian.php'){ echo 'on';}?>">订单</a>
 	<a href="./my.php" class="nav_me <?php if($php_self == 'my.php'){ echo 'on';}?>">个人中心</a>
 </div>

@@ -33,7 +33,7 @@
 
           <?php foreach ($Contract as $k => $v) { ?>
 
-          <li class="layui-col-xs2">
+          <li class="layui-col-xs2" style="height: 220px;">
             <img src="http://lk.com/upload/images/000/000/001/201806/5b32f7ecc1ab4.jpg">
               <span><?= $v['contract_name'] ?></span>
                 <h2 style="color:red">21366</h2>
