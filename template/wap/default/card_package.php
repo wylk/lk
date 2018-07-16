@@ -75,7 +75,7 @@
                     <a class="card-handle" href="./transferBill.php?id=<?php echo $value['id'] ?>">核销</a>
                     <a class="card-handle" href="./changeInto.php?id=<?php echo $value['id'] ?>">充值</a>
                     <a class="card-handle" href="./transaction.php">出售</a>
-                    <a class="card-handle" href="">账单</a>
+                    <a class="card-handle" href="./recordBooks.php?id=<?php echo $value['id'] ?>"">账单</a>
                     <a class="card-handle" href="">暂定</a>
                 </ul>
             </div>
