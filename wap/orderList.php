@@ -7,7 +7,7 @@ $userId = $wap_user['userid'];
 // 为付账订单
 $unpaidOrderList = D("Orders")->where(['buy_id'=>$userId,"status"=>0])->select();
 // 付款订单
-$paidOrderList = D("Orders")->where(['buy_id'=>$userId,"status"=>0])->select();
+$paidOrderList = D("Orders")->where(['buy_id'=>$userId,"status"=>1])->select();
 // var_dump($paidOrderList);
 // 全部订单
 $orderList = D("Orders")->where(['buy_id'=>$userId])->select();
