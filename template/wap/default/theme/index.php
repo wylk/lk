@@ -24,7 +24,6 @@
           color: red;
         }
         .stores{
-          border: 1px solid red;
           margin: 0 auto;
           text-align: center;
           width: 95%;
@@ -35,16 +34,22 @@
           line-height: 50px;
         }
         .img{
-          border: 1px solid red;
           width: 20%;
         }
         .price{
-           border: 1px solid red;
-           width: 45%;
+           width: 50%;
         }
         .num{
-           border: 1px solid red;
-           width: 40%;
+           width: 35%;
+        }
+        .imgs{
+          height: 37px;
+          width: 37px;
+          margin: 5px auto;
+          border-radius:50%;
+        }
+        .num a{
+          border-radius: 5px;
         }
     </style>
 </head>
@@ -63,10 +68,13 @@
 <div class="stores">
     <?php foreach ($storeInfo as $k => $v) { ?>
       <div class="store">
-        <div class="img"><img src="<?php echo $value['img_oneself']?>" style="width: 100%;height: 100%;"></div>
-        <div class="price"><?php echo $value['enterprise'] ?></div>
-        <div class="num"><a href="./home.php?shoreUid=<?php echo $value['uid'] ?>" class="layui-btn">交易</a></div>
+        <div class="img">
+            <img src="<?php echo $v['img_oneself']?>" class="imgs"/>
+        </div >
+        <div class="price"><?php echo $v['enterprise'] ?></div>
+        <div class="num"><a href="./home.php?shoreUid=<?php echo $v['uid'] ?>" class="layui-btn layui-btn-radius layui-btn-primary">交易</a></div>
       </div>
+      <hr>
     <?php } ?>
 </div>
 
