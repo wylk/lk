@@ -35,7 +35,7 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so layui-form-pane">
+        <form class="layui-form layui-col-md12 x-so layui-  form-pane">
           <div class="layui-input-inline">
              <input class="layui-input" placeholder="权限名称" name="name" lay-verify="name">
           </div>
@@ -64,16 +64,10 @@
         </form>
 
       </div>
-      <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
-      </xblock>
       <table class="layui-table">
         <thead>
           <tr>
-            <th>
-              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
-            </th>
             <th>ID</th>
             <th>权限名称</th>
             <th>请求控制器</th>
@@ -84,9 +78,6 @@
         <tbody>
           <?php foreach ($auth as $k => $v){?>
           <tr>
-            <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
-            </td>
             <td><?php echo $v['id'];?></td>
             <td><?php echo $v['name'];?></td>
             <td><?php echo $v['auth_c'];?></td>
@@ -104,16 +95,6 @@
           <?php }?>
         </tbody>
       </table>
-      <div class="page">
-        <div>
-          <a class="prev" href="">&lt;&lt;</a>
-          <a class="num" href="">1</a>
-          <span class="current">2</span>
-          <a class="num" href="">3</a>
-          <a class="num" href="">489</a>
-          <a class="next" href="">&gt;&gt;</a>
-        </div>
-      </div>
     </div>
   </body>
 </html>
