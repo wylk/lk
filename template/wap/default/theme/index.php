@@ -36,8 +36,6 @@
     <div class="input-m"></div>
   <div class="layui-form-item">
     <div class="layui-input-block">
-      
-      <a href="./home.php" class="layui-btn layui-btn-primary" >购买</a>
     </div>
   </div>
 </form>
@@ -46,14 +44,14 @@
          <div class="">
                 <span  class="beatBtn"><?php echo $value['name'] ?></span>
                 <span class="beatBtn"><?php echo $value['enterprise'] ?></span>
-                <a href="./home.php?shoreUid=<?php echo $value['uid'] ?>" class="beatBtn">店铺</a>
+                <a href="./home.php?shoreUid=<?php echo $value['uid'] ?>" class="beatBtn">购买</a>
          </div>
          <hr>
 <?php } ?>
 </div>
 </div>
 
-   
+
   	<?php include display('public_menu');?>
 </body>
 </html>
