@@ -40,17 +40,10 @@
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
-      <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','./member-add.html',600,400)"><i class="layui-icon"></i>添加</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
-      </xblock>
       <table class="layui-table">
         <thead>
           <tr>
-            <th>
-              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
-            </th>
             <th style="width:17px;">ID</th>
             <th>姓名</th>
             <th>身份证号</th>
@@ -66,9 +59,6 @@
         ?>
         <tbody>
           <tr>
-            <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
-            </td>
             <td><?= $v['id'] ?></td>
             <td><?= $v['name'] ?></td>
             <td><?= $v['postcards'] ?></td>

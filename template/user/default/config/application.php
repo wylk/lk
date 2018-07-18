@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  
+
   <head>
     <meta charset="UTF-8">
     <title>欢迎页面-X-admin2.0</title>
@@ -14,7 +14,7 @@
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/js/xadmin.js"></script>
   </head>
-  
+
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
@@ -34,9 +34,6 @@
       <table class="layui-table layui-form">
         <thead>
           <tr>
-            <th width="20">
-              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
-            </th>
             <th width="70">ID</th>
             <th width="70">合约名</th>
             <th width="70">合约logo</th>
@@ -49,9 +46,6 @@
         <tbody class="x-cate">
           <?php if(isset($contracts)){ foreach($contracts as $k => $v){?>
           <tr cate-id='1' fid='0' >
-            <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
-            </td>
             <td><?php echo $v['id']?></td>
             <td><?php echo $v['contract_name']?> </td>
             <td><img src="<?php echo $v['pc_logo']?>" style="width: 60px;height: 60px;border-radius: 10%"></td>
