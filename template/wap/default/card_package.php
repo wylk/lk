@@ -35,7 +35,7 @@
             <i class="layui-icon layui-icon-layer" style="font-size: 35px; color:#1E9FFF">&#xe638;</i>
             <h1 style="font-size:18px; line-height: 38px; margin-left:15px">卡包</h1>
         </div>
-        <!-- <hr style="height:5px; margin:10px 0;">
+        <hr style="height:5px; margin:10px 0;">
         <div class="lk-container-flex lk-card-package lk-flex-direction-c">
             <div class="lk-container-flex" style="padding:10px 0">
                 <div class="item-flex card-info">
@@ -56,7 +56,7 @@
                     <a class="card-handle" href="card_buy.php">交易</a>
                 </ul>
             </div>
-        </div> -->
+        </div>
         <?php foreach($cardList as $key=>$value){ ?>
         <hr class="cut-off-rule">
         <div class="lk-container-flex lk-card-package lk-flex-direction-c">
