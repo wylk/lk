@@ -142,6 +142,7 @@ layui.use(['form','layer'], function(){
       var surplusNum = $("#surplusNum i").html();
       if(data.field.num-surplusNum > 0){
         layer.msg("发布额度超出现有额度",{icon:5,skin:'demo-class'});
+        layer.closeAll("loading");
         return false;
       }
       $.post("./transaction.php",data.field,function(res){
