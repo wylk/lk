@@ -21,16 +21,9 @@ if(IS_POST){
 	$payData['order_id'] = $orderinfo['id'];
 	$rwx = $api->weixinPay($payData);
 	// dump($rwx);
-	D('Orders')->data(['status'=>1])->where(array('onumber'=>$orderinfo['onumber']))->save();
+	// D('Orders')->data(['status'=>1])->where(array('onumber'=>$orderinfo['onumber']))->save();
 	dexit(['res'=>0,"msg"=>"购买成功","orderId"=>$orderinfo['id']]);
 }
-
-// import('LkApi');
-// $api = new LkApi(['appid'=>'23432','mchid'=>'1273566173','key'=>'sdagjjjjjk']);
-// $payData['order_id'] = 347;
-// $rwx = $api->weixinPay($payData);
-// dump($rwx);
-
 
 
 // 判断是否有支付密码

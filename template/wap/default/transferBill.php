@@ -183,6 +183,7 @@
                 console.log(res);
                 if(!res.res){
                     layer.msg(res.msg,{icon:1,skin:"demo-class"});
+                    window.location.href = "./card_package.php"
                 }else{
                     layer.msg(res.msg,{icon:5,skin:"demo-class"});
                 }

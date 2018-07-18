@@ -15,46 +15,17 @@ if(IS_POST){
     $data['tran_id'] = $datas['tranId'];
     $data['create_time'] = time();
     $data['onumber'] = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
-<<<<<<< HEAD
-
-    if($data['number'] <= $_POST['quantity']){
-
-=======
 
     if($data['number'] <= $datas['quantity']){
-
->>>>>>> 1769a648b07095d0f5e770f86afbcd139947271b
         $order_id = D('Orders')->data($data)->add();
 
         $orders = D('Card_transaction')->where(array('id'=>$datas['tranId']))->setInc('frozen',$datas['number']);
 
         if($order_id){
             //调用支付接口上线再做
-
-<<<<<<< HEAD
-            //模拟支付回调
-            $package = D('Card_transaction')->where(array('uid' =>$datas['sell_id']))->find();
-            $cards = D('Card_package')->where(array('uid' =>$userId))->find();
-            $books['send_address'] = $package['address'];
-            $books['get_address'] = $cards['address'];
-            $books['num'] = $datas['number'];
-            $books['createtime'] = time();
-            $books = D('Record_books')->data($books)->add();
-            import('LkApi');
-            $api = new LkApi(['appid'=>'23432','mchid'=>'1273566173','key'=>'sdagjjjjjk']);
-            $payData['order_id'] = $order_id;
-            $rwx = $api->weixinPay($payData);
-            // dump($rwx);
-            $order_id = D('Record_books')->data($data)->add();
-            D('Orders')->data(['status'=>1])->where(array('onumber'=>$data['onumber']))->save();
-            dexit(['error'=>0,'msg'=>'购买成功',"other"=>$rwx]);
-        }else{
-            dexit(['error'=>1,'msg'=>'购买失败']);
-=======
             dexit(['error'=>0,'msg'=>'已生成订单',"orderId"=>$order_id]);
         }else{
             dexit(['error'=>1,'msg'=>'订单生成失败']);
->>>>>>> 1769a648b07095d0f5e770f86afbcd139947271b
         }
     }
 
