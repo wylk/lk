@@ -89,7 +89,7 @@
               ?>
             </td>
             <td class="td-manage">
-              <a title="详情"  onclick="x_admin_show('详情','?c=UserAudit&a=lists&id=<?= $v['id'] ?>',700)" href="javascript:;">
+              <a title="详情"  onclick="x_admin_show('详情','?c=UserAudit&a=lists&id=<?= $v['id'] ?>',1000)" href="javascript:;">
                 <i class="layui-icon">&#xe705;</i>
               </a>
               <?php if($v['status']==0 || $v['status']==2){ ?>

@@ -4,7 +4,7 @@ class user_controller extends base_controller
 {
     public function index(){
         import('user_page');
-        new
+
         $user = D('User')->where()->select();
         $this->assign('user',$user);
         $this->display();
