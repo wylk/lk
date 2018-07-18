@@ -11,7 +11,9 @@ $storeInfo = D("User_audit")->where(['status'=>1,"type"=>2])->select();
 // $storeUids = array_column($storeInfo,"uid");
 
 // 获取卡券的id
-D("Card_package")->where(['type'=>"offset"])->select();
+$cardPackage = D("Card_package")->where(['type'=>"offset"])->select();
+$cardIds = array_column($cardPackage,'card_id');
+// D("Card")->where([''])->select();
 
 
 

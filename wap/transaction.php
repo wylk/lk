@@ -28,7 +28,7 @@ if(isset($_POST['type']) && $_POST['type'] == "transaction"){
 	$cardBagInfo ? true : dexit(["res"=>1,'msg'=>"该卡券失效"]);
 	// $cardBagInfo['is_publisher'] == 1 ? true : dexit(["res"=>1,'msg'=>"不是本人发布"]);
 	
-	$surplusNum = $cardBagInfo['num'] - $cardBagInfo['frozen'] - $num;
+	$surplusNum = $cardBagInfo['num'] - $num;
 	// 判断发布的数值超出
 	$surplusNum >= 0 ? true : dexit(["res"=>1,'msg'=>"发布额度超出现有额度"]);
 	$data['address'] = $cardBagInfo['address'];
