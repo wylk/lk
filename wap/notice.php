@@ -29,6 +29,8 @@ D('Card_package')->where(array('uid'=>$order['sell_id'],'card_id'=>$order['card_
 D('Card_package')->where(array('uid'=>$order['sell_id'],'card_id'=>$order['card_id']))->setInc('sell_count',$order['number']);
 D('Card_package')->where(array('uid'=>$order['buy_id'],'card_id'=>$order['card_id']))->setInc('num',$order['number']);
 D('Orders')->data(['status'=>1])->where(array('id' =>$data['order_id']))->save();
+// 添加交易记录
+D("Record_books")->data(['card_id'=>$order['card_id'],"send_address"=>$sendAddress['address'],'get_address'=>$getAddress['address'],'num'=>$order['number'],'createtime'=>time()])->add();
 // 判断商家交易单是否销售完
 $judgeOver = D("Card_transaction")->where(['id'=>$order['tran_id']])->find();
 if($judgeOver['num'] == '0'){

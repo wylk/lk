@@ -16,11 +16,14 @@ if(IS_POST){
     $data['create_time'] = time();
     $data['onumber'] = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
 
+    // 判断购买卡片是否是本人发布
+    $tranInfo = D("Card_transaction")->where(['id'=>$data['tran_id']])->find();
+    $tranInfo['uid'] != $userId ? true : dexit(['error'=>1,'msg'=>'此交易为本人发布']);
+
     if($data['number'] <= $datas['quantity']){
         $order_id = D('Orders')->data($data)->add();
 
         $orders = D('Card_transaction')->where(array('id'=>$datas['tranId']))->setInc('frozen',$datas['number']);
-
         if($order_id){
             //调用支付接口上线再做
             dexit(['error'=>0,'msg'=>'已生成订单',"orderId"=>$order_id]);

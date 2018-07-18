@@ -70,7 +70,7 @@
                 <div class="layui-input-inline">
                   <input type="text" name="num" required lay-verify="num|number" placeholder="请输出售量" autocomplete="off" class="layui-input">
                 </div>
-                <div class="layui-form-mid layui-word-aux" id="surplusNum">可以:<i><?php echo $numInfo['num']-$numInfo['frozen']; ?></i></div>
+                <div class="layui-form-mid layui-word-aux" id="surplusNum">可以:<i><?php echo number_format($numInfo['num']); ?></i></div>
               </div>
                <hr>
               <div class="layui-form-item">

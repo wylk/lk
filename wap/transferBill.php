@@ -16,10 +16,11 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	$addressName = $post['addressName'];
 	// 转账信息判断
 	$getAddressInfo = D("Card_package")->where(['address'=>$getAddress])->find();
+	$getAddressInfo['uid'] != $userId ? true : dexit(['res'=>1,"msg"=>"转账账户不能为本人账户"]);
 	$isPublisher = $getAddressInfo['is_publisher'] == 1 ? true : false;
 	$getAddressInfo ? true : dexit(['res'=>1,"msg"=>"您输入的地址不正确"]);
 	$sendAdressInfo = D("Card_package")->where(['uid'=>$userId,'address'=>$sendAddress])->find();
-	$num['num'] > 0 ? true : dexit(['res'=>1,"msg"=>"您转账的数目不能低于0"]);
+	$num > 0 ? true : dexit(['res'=>1,"msg"=>"您转账的数目不能低于0"]);
 	$sendAdressInfo['num'] >= $num ? true : dexit(['res'=>1,"msg"=>"您转账的数目已超支"]);
 	// 判断地址是否保存过
 	$remarkCheckRes = D("User_address")->where(['uid'=>$userId,"address"=>$getAddress])->find();
