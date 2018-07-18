@@ -87,11 +87,7 @@
     </div>
    </div>
    <div class="card" style="text-align: center;line-height: 120px;">
-<<<<<<< HEAD
         <a class="layui-btn layui-btn-primary" >购买</a>
-=======
-        <a class="layui-btn layui-btn-primary"  >购买</a>
->>>>>>> 1769a648b07095d0f5e770f86afbcd139947271b
    </div>
  </form>
 </div>

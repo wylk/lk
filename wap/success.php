@@ -21,7 +21,7 @@ if(IS_POST){
 	$payData['order_id'] = $orderinfo['id'];
 	$rwx = $api->weixinPay($payData);
 	// dump($rwx);
-	D('Orders')->data(['status'=>1])->where(array('onumber'=>$orderinfo['onumber']))->save();
+	// D('Orders')->data(['status'=>1])->where(array('onumber'=>$orderinfo['onumber']))->save();
 	dexit(['res'=>0,"msg"=>"购买成功","orderId"=>$orderinfo['id']]);
 }
 
