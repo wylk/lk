@@ -87,7 +87,11 @@
     </div>
    </div>
    <div class="card" style="text-align: center;line-height: 120px;">
+<<<<<<< HEAD
         <a class="layui-btn layui-btn-primary" >购买</a>
+=======
+        <a class="layui-btn layui-btn-primary"  >购买</a>
+>>>>>>> 1769a648b07095d0f5e770f86afbcd139947271b
    </div>
  </form>
 </div>
@@ -130,16 +134,17 @@ layui.use(['form', 'layer'],function() {
         }
         layer.load();
         $.post('./receive.php',data,function(data){
-            // console.log(data);
+            console.log(data);
             if(data.error==0){
                 //此处演示关闭
                 layer.closeAll('loading');
                 layer.msg(data.msg,{icon: 1,time:1000});
+                window.location.href = './success.php?id='+data.orderId;
             }else{
                 //此处演示关闭
                 layer.closeAll('loading');
-                layer.msg(data.msg,{icon: 5,time:1000},function(){
-                });
+                layer.msg(data.msg,{icon: 5,time:1000});
+                
 
             }
         },'json');

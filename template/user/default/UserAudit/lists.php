@@ -18,6 +18,10 @@
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+      .layui-input-inline img{width: 95%; margin:4%; padding:1%; border:1px solid #e0e0e0; border-radius: 5px;}
+      .layui-form-item{border-bottom:1px solid #e0e0e0;}
+    </style>
   </head>
 
   <body>
@@ -41,22 +45,20 @@
           </div>
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
-                  <span class="x-red">*</span>营业执照编号
+                  <span class="x-red">*</span>执照编号
               </label>
               <div class="layui-input-inline" style="margin-top: 10px;">
                   <?= $userAudit['business_license'] ?>
               </div>
-              <div class="layui-form-mid layui-word-aux">
-                  <span class="x-red">*</span>
-              </div>
           </div>
-          <div class="layui-form-item">
+          <div class="row">
+            <div class="layui-col-md4">
               <label class="layui-form-label"><span class="x-red">*</span>身份证</label>
-              <div class="layui-input-block" style="margin-top: 10px;">
+              <div class="layui-input-inline" style="margin-top: 10px;">
                 <img src="<?= $userAudit['img_oneself'] ?>">
               </div>
           </div>
-          <div class="layui-form-item">
+          <div class="layui-col-md4">
               <label for="L_pass" class="layui-form-label">
                   <span class="x-red">*</span>营业执照
               </label>
@@ -64,6 +66,7 @@
                   <img src="<?= $userAudit['business_img'] ?>">
               </div>
           </div>
+        </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
                   <span class="x-red">*</span>提交时间

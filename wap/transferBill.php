@@ -34,7 +34,11 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	$bookJson = json_encode(['uid'=>$userId,"contract_id"=>$cardId,'sendAddress'=>$sendAddress,"num"=>$num,"getAddress"=>$getAddress]);
 	$bookRes = $Account_book->transferAccounts(encrypt($bookJson,option('version.public_key')));
 	if(!$bookRes){
-		dexit(['res'=>1,"msg"=>"添加账本错误","other"=>$bookRes]);
+		dexit(['res'=>1,"msg"=>"添加账本错误"]);
+	}
+	$recodRes = D("Record_books")->data(['card_id'=>$cardId,'send_address'=>$sendAddress,'get_address'=>$getAddress,'num'=>$num,"createtime"=>time()])->add();
+	if(!$recodRes){
+		dexit(['res'=>1,"msg"=>"记录添加失败","other"=>$recodRes]);
 	}
 	// 卡包数据处理
 	$sendRes = D("Card_package")->where(['uid'=>$userId,'address'=>$sendAddress])->setDec("num",$num);

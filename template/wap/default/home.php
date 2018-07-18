@@ -52,13 +52,13 @@
             min-height: 100px;
         }
         .home-plugin-info-row{
-            height: 65px;
+            height: 80px;
             display: flex;
             justify-content: space-between;
         }
         .line-heights{
-            width: 22%;
-            line-height: 65px;
+            width: 20%;
+            line-height: 80px;
         }
         .row-card2{
            flex-grow: 1;
@@ -87,7 +87,7 @@
             margin-left: 5px;
         }
         .home-plugin-info-row, hr{
-          width: 95%;
+          width: 97%;
           margin: 0px auto;
         }
     </style>
@@ -143,7 +143,7 @@
                 </div>
              </div>
              <div class="home-plugin-info-row-card row-card2">
-                <div style="height: 40px;line-height: 21px">
+                <div style="height: 50px;line-height: 28px">
                <p><span style="font-weight: bold"><?= $type[$value['uid']]['name'] ?></span><span class="layui-badge layui-bg-orange">
                 <?php if($type[$value['uid']]['type']==1){
                       echo '个人认证';
@@ -152,7 +152,7 @@
                     }
                  ?>
                </span></p>
-               <p>单价:<?=  number_format($value['price'],2) ?>CNY 限制<?= number_format($value['limit'],2) ?>-<?= number_format($value['num'],2) ?></p>
+               <p>单价:<?=  number_format($value['price'],2) ?>CNY 限制<?= number_format($value['limit'],0) ?>-<?= number_format($value['num'],0) ?></p>
                </div>
              </div>
              <div class="home-plugin-info-row-card card-3 line-heights" >

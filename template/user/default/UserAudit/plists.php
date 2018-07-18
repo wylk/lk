@@ -18,6 +18,10 @@
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+      .layui-input-inline img{width: 95%; margin:4%; padding:1%; border:1px solid #e0e0e0; border-radius: 15px;}
+      .layui-form-item{border-bottom:1px solid #e0e0e0;}
+    </style>
   </head>
 
   <body>
@@ -39,18 +43,32 @@
                 <?= $userAudit['postcards'] ?>
               </div>
           </div>
-          <div class="layui-form-item">
+          <div class="row">
+            <div class="layui-col-md4">
+                <label for="L_email" class="layui-form-label">
+                    <span class="x-red">*</span>身份证正面
+                </label>
+                <div class="layui-input-inline" style="margin-top: 10px;">
+                    <!-- <img src="<?= $userAudit['img_just'] ?>"  onclick="previewImg(this,'<?= $userAudit['img_just'] ?>')" class="layui-input-inline"> -->
+                    <img src="<?= $userAudit['img_just'] ?>"  onclick="previewImg(this,'<?= $v['img_just'] ?>')" class="layui-input-inline">
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <label for="L_email" class="layui-form-label">
+                    <span class="x-red">*</span>身份证反面
+                </label>
+                <div class="layui-input-inline" style="margin-top: 10px;">
+                    <img src="<?= $userAudit['img_back'] ?>"  onclick="previewImg(this,'<?= $v['img_just'] ?>')" >
+                </div>
+            </div>
+          <div class="layui-col-md4">
               <label for="L_email" class="layui-form-label">
-                  <span class="x-red">*</span>身份证图片
+                  <span class="x-red">*</span>手持身份证
               </label>
               <div class="layui-input-inline" style="margin-top: 10px;">
-                  <img src="<?= $userAudit['img_just'] ?>"  onclick="previewImg(this,'<?= $userAudit['img_just'] ?>')" >
-                  <img src="<?= $userAudit['img_back'] ?>"  onclick="previewImg(this,'<?= $v['img_just'] ?>')" >
                   <img src="<?= $userAudit['img_oneself'] ?>"  onclick="previewImg(this,'<?= $userAudit['img_just'] ?>')" >
               </div>
-              <div class="layui-form-mid layui-word-aux">
-                  <span class="x-red">*</span>
-              </div>
+          </div>
           </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
