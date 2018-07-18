@@ -25,7 +25,7 @@ if(isset($_POST['type']) && $_POST['type'] == "transaction"){
 
 	$cardBagInfo = D("Card_package")->field("num,address,is_publisher,frozen")->where(['uid'=>$userId,'card_id'=>$cardId])->find();
 	$cardBagInfo ? true : dexit(["res"=>1,'msg'=>"该卡券失效"]);
-	$cardBagInfo['is_publisher'] == 1 ? true : dexit(["res"=>1,'msg'=>"不是本人发布"]);
+	// $cardBagInfo['is_publisher'] == 1 ? true : dexit(["res"=>1,'msg'=>"不是本人发布"]);
 	
 	$surplusNum = $cardBagInfo['num'] - $cardBagInfo['frozen'] - $num;
 	// 判断发布的数值超出

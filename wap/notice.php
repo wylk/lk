@@ -29,6 +29,12 @@ D('Card_package')->where(array('uid'=>$order['sell_id'],'card_id'=>$order['card_
 D('Card_package')->where(array('uid'=>$order['sell_id'],'card_id'=>$order['card_id']))->setInc('sell_count',$order['number']);
 D('Card_package')->where(array('uid'=>$order['buy_id'],'card_id'=>$order['card_id']))->setInc('num',$order['number']);
 D('Orders')->data(['status'=>1])->where(array('id' =>$data['order_id']))->save();
+// 判断商家交易单是否销售完
+$judgeOver = D("Card_transaction")->where(['id'=>$order['tran_id']])->find();
+if($judgeOver['num'] == '0'){
+	D("Card_transaction")->where(['id'=>$order['tran_id']])->setField("status","1");
+}
 dexit(['error'=>0,"msg"=>"ok"]);
 //账本转账
 // dump($order);
+
