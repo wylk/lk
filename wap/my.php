@@ -10,17 +10,18 @@ $userId = isset($wap_user['userid']) ? $wap_user['userid'] : 1;
 // 清除超时订单
 $where = ['create_time'=>["<=",time()-60*30],"status"=>"0"];
 $orderlist = D("Orders")->where($where)->select();
-foreach ($orderlist as $key => $value) {
-	$tranIds[] = $value['tran_id'];
-	$frozenList[$value['tran_id']] += $value['number'];
+if($orderlist){
+	foreach ($orderlist as $key => $value) {
+		$tranIds[] = $value['tran_id'];
+		$frozenList[$value['tran_id']] += $value['number'];
+	}
+
+	if(is_array($tranIds) && count($tranIds)>1) $tranWhere['id'] = ['in',$tranIds];
+	else $tranWhere['id'] = $tranIds[0];
+	$tranList = D("Card_transaction")->where($tranWhere)->select();
+	M("Card_transaction")->saveAll($tranList,$frozenList);
+	D("Orders")->where(['create_time'=>["<=",time()-60*30],"status"=>"0"])->setField("status",2);
 }
-
-if(is_array($tranIds) && count($tranIds)>1) $tranWhere['id'] = ['in',$tranIds];
-else $tranWhere['id'] = $tranIds[0];
-$tranList = D("Card_transaction")->where($tranWhere)->select();
-M("Card_transaction")->saveAll($tranList,$frozenList);
-D("Orders")->where(['create_time'=>["<=",time()-60*30],"status"=>"0"])->setField("status",2);
-
 
 // 钱包
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == "purse"){

@@ -25,13 +25,6 @@ if(IS_POST){
 	dexit(['res'=>0,"msg"=>"购买成功","orderId"=>$orderinfo['id']]);
 }
 
-// import('LkApi');
-// $api = new LkApi(['appid'=>'23432','mchid'=>'1273566173','key'=>'sdagjjjjjk']);
-// $payData['order_id'] = 347;
-// $rwx = $api->weixinPay($payData);
-// dump($rwx);
-
-
 
 // 判断是否有支付密码
 // $userInfo = D("User")->where(["id"=>$userId])->find();
