@@ -49,7 +49,7 @@
           <tr>
             <td>买</td>
             <td><?php echo $userInfo[$value['uid']]['name'] ?></td>
-            <td><?php echo number_format($value['num'],2) ?></td>
+            <td><?php echo number_format($value['num']+$value['frozen'],2) ?></td>
             <td><?php echo number_format($value['sell_count']) ?></td>
             <td><?php echo number_format($value['recovery_count']) ?></td>
            

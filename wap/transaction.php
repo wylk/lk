@@ -22,6 +22,7 @@ if(isset($_POST['type']) && $_POST['type'] == "transaction"){
 	$data['uid'] = $userId;
 	$data['createtime'] = time();
 	$data['updatetime'] = time();
+	$data['num'] > 0 ? true : dexit(["res"=>1,'msg'=>"发布额度不能为0"]);
 
 	$cardBagInfo = D("Card_package")->field("num,address,is_publisher,frozen")->where(['uid'=>$userId,'card_id'=>$cardId])->find();
 	$cardBagInfo ? true : dexit(["res"=>1,'msg'=>"该卡券失效"]);
