@@ -30,13 +30,11 @@
     <div class="lk-content">
         <div class="container">
            <h3><?php echo $orderInfo['card_id'] ?></h3>
-           <h1><?php echo number_format($orderInfo['number']*$orderInfo['prices'],2)?></h1>
+           <h1><?php echo number_format($orderInfo['prices'],2)?></h1>
            <p style="color:gray;"><?php echo $orderInfo['status'] == '1' ? "交易成功" : ($orderInfo['status'] == '2' ? "订单超时" : "未付款"); ?></p>
         </div>
         <div class="detail">
             <div class='menuStyle'><span class="spanLeft">数量：</span><span class="spanRight"><?php echo number_format($orderInfo['number'],2); ?></span></div>
-           <p class="line"></p>
-           <div class='menuStyle'><span class="spanLeft">价格：</span><span class="spanRight"><?php echo number_format($orderInfo['prices'],2); ?></span></div>
            <p class="line"></p>
            <div class='menuStyle'><span class="spanLeft">创建时间：</span><span class="spanRight"><?php echo date("Y-m-d H:i:s",$orderInfo['create_time']) ?></span></div>
            <p class="line"></p>

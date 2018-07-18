@@ -22,19 +22,12 @@ if(IS_POST){
 
         $orders = D('Card_transaction')->where(array('id'=>$datas['tranId']))->setInc('frozen',$datas['number']);
 
-        if($order_id && $orders){
+        if($order_id){
             //调用支付接口上线再做
 
-            //模拟支付回调
-            import('LkApi');
-            $api = new LkApi(['appid'=>'23432','mchid'=>'1273566173','key'=>'sdagjjjjjk']);
-            $payData['order_id'] = $order_id;
-            $rwx = $api->weixinPay($payData);
-            // dump($rwx);
-            D('Orders')->data(['status'=>1])->where(array('onumber'=>$data['onumber']))->save();
-            dexit(['error'=>0,'msg'=>'购买成功',"other"=>$rwx]);
+            dexit(['error'=>0,'msg'=>'已生成订单',"orderId"=>$order_id]);
         }else{
-            dexit(['error'=>1,'msg'=>'购买失败1']);
+            dexit(['error'=>1,'msg'=>'订单生成失败']);
         }
     }
 
