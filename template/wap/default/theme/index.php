@@ -42,7 +42,7 @@
 <div class="store">
 <?php foreach ($storeInfo as $key => $value) { ?>
          <div class="">
-                <span  class="beatBtn"><?php echo $value['name'] ?></span>
+                <span  class="beatBtn"><img src="<?php echo $value['img_oneself']?>" style="height: 60px;width: 60px;"></span>
                 <span class="beatBtn"><?php echo $value['enterprise'] ?></span>
                 <a href="./home.php?shoreUid=<?php echo $value['uid'] ?>" class="beatBtn">购买</a>
          </div>
