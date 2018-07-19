@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
 $verifyLen = "6";  //验证码长度
+$referer=clear_html($_GET['referer']);
 
 // 判断是否是微信、支付宝、手机号登录
 // 1、微信号
@@ -54,7 +55,7 @@ if(isset($_POST['phone'])){
 		$_SESSION['wap_user']["phone"] = $phone;
 		$_SESSION['wap_user']['userid'] = $userid;
 		$_SESSION['wap_user']['logintime'] = time();
-		dexit(["res"=>0,'msg'=>"登录成功"]);
+		dexit(["res"=>0,'msg'=>"登录成功","referer"=>$referer]);
 	}
 }
 

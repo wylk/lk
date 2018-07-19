@@ -103,7 +103,6 @@ if($type == 2 && $status == 1 ){
             ['icon'=>'&#xe6f5;','url'=>'./cardList.php','title'=>'卡/券/库'],
             ['icon'=>'&#xe803;','url'=>'','title'=>'API接口'],
             ['icon'=>'&#xe83a;','url'=>'','title'=>'店员管理'],
-            ['icon'=>'&#xe6bf;','url'=>'','title'=>'账单明细'],
             ['icon'=>'&#xe6ae;','url'=>'./setup.php','title'=>'设置'],
         ];
 }else{
