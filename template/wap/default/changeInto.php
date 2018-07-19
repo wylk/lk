@@ -19,6 +19,7 @@
         .codeAddress h2{text-align: center;color: #abaf05}
         .getAdd{
             display: flex;
+            margin-top: 25px; 
         }
         .lk-btn{
             width: 85px;
