@@ -6,11 +6,14 @@ $userId = $wap_user['userid'];
 
 $storeUid = clear_html($_GET['shoreUid']);
 // 获取该店铺中发布所有的卡片
-$shoreInfos = D("Card_package")->where(['uid'=>$storeUid])->select();
+$shoreInfos = D("Card_package")->where(['uid'=>$storeUid,'is_publisher'=>1])->select();
 $cardIds = array_column($shoreInfos, "card_id");
-if(count($cardIds)>1) $where['card_id'] = ['in',$cardIds];
-else $where['card_id'] = $cardIds[0];
-$where['status'] = 0;
+if(count($cardIds)>1) {
+	$where = " card_id in ('".implode("','", $cardIds)."') and status = 0";
+}else {
+	$where['card_id'] = $cardIds[0];
+	$where['status'] = 0;
+}
 $tranList = D("Card_transaction")->where($where)->order('createtime desc')->select();
 foreach($tranList as $key=>$value){
 	if(!in_array($value['uid'],$uids)){
