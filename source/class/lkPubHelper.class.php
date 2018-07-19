@@ -135,6 +135,7 @@ class comm_util_pub
      */
     public function postXmlCurl($xml,$url,$second=30)
     {
+
         //初始化curl
         $ch = curl_init();
         //设置超时
