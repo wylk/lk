@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
+
 $userId = $wap_user['userid'];
 // $res = D('Card')->where(array('uid' =>38,'c_id' =>6))->find();
 if(IS_POST){
@@ -18,7 +19,7 @@ if(IS_POST){
 
     // 判断购买用户是否存在
     if(!D("User")->where(['id'=>$userId])->find()) {
-        dexit(['error'=>1,'msg'=>'请登录后再购买','referer'=>'./login.php?referer='.urlencode($_SERVER['REQUEST_URI'])]);
+        dexit(['error'=>1,'msg'=>'请登录后再购买','referer'=>'./login.php?referer='.urlencode($_SERVER['REQUEST_URI']."?id=".$data['tran_id'])]);
     }
 
     // 判断购买卡片是否是本人发布
