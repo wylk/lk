@@ -1,10 +1,8 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
-// 判断是否登录状态中
+
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
 $userId = $wap_user['userid'];
-// 转账是否需要身份认证 true:需要身份认证 false:不需要身份认证
-$identityJudge = false;
 
 // 判断地址是否存在
 if(IS_POST && $_POST['type'] == "transferBill"){
@@ -53,7 +51,6 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 
 	dexit(['res'=>0,"msg"=>"转账成功！","isPublisher"=>$isPublisher]);
 }
-// 获取保存的地址
 if(IS_POST && $_POST['type'] == "getRemark"){
 	$cardId = $_POST['cardId'];
 	$addresList = D("User_address")->where(['uid'=>$userId,"card_id"=>$cardId])->select();
@@ -62,24 +59,21 @@ if(IS_POST && $_POST['type'] == "getRemark"){
 	}
 	dexit(['res'=>1,"msg"=>"还未保存转账地址"]);
 }
-//添加评价
-if(IS_POST && $_POST['type'] == "addEval"){
-	$cardId = clear_html($_POST['cardId']);
-	$content = clear_html($_POST['content']);
-	$addEvalRes = D("Evaluate")->data(['uid'=>$userId,"content"=>$content,"card_id"=>$cardId,"createtime"=>time()])->add();
-	if($addEvalRes){
-		dexit(['res'=>0,"msg"=>"评价成功"]);
-	}
-	dexit(['res'=>1,"msg"=>"评价失败",'other'=>$addEvalRes]);
-}
 
-if($identityJudge){
-	$identityJudgeRes = D("User_audit")->where(['uid'=>$userId])->find();
-	if(!$identityJudgeRes){
-		header("location:postcard.php");
-	}
-}
-$id = clear_html($_GET['id']);
+$id = $_GET['id'];
 $cardInfo = D("Card_package")->where(['id'=>$id])->find();
-// dump($cardInfo);
-include display("transferBill");
+
+
+// 二维码显示
+require_once('../wap/phpqrcode.php');
+$codePath = $_SERVER['DOCUMENT_ROOT']."/upload/qrcode";
+if(!file_exists($codePath)) {
+	mkdir($codePath, 0777, true);
+}
+$codeFile = $codePath."/qrcode.png";
+QRcode::png($cardInfo['address'],$codeFile,2,6,2);
+$code = "/upload/qrcode/qrcode.png";
+
+
+
+include display("shopAccount");

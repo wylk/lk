@@ -140,6 +140,9 @@ layui.use(['form', 'layer'],function() {
                 //此处演示关闭
                 layer.closeAll('loading');
                 layer.msg(data.msg,{icon: 5,time:1000});
+                if(data.referer){
+                  window.location.href = data.referer;
+                }
                 
 
             }

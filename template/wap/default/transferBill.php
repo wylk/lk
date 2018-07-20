@@ -147,7 +147,8 @@
             return false;
         })
         $("#addRemark").bind("click",function(){
-            var data = {"type":"getRemark"};
+            var cardId = $("input[name=cardId]").val();
+            var data = {"type":"getRemark","cardId":cardId};
             
             $.post("./transferBill.php",data,function(res){
                 console.log(res);

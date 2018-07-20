@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
 $verifyLen = "6";  //验证码长度
+$referer=clear_html($_GET['referer']);
 
 // 判断是否是微信、支付宝、手机号登录
 // 1、微信号
@@ -43,7 +44,18 @@ if(isset($_POST['phone'])){
 		// }
 		$phoneRes = D("User")->field("id")->where(['phone'=>$phone])->select();
 		if(!$phoneRes){
-			$addAccountRes = D("User")->data(['phone'=>$phone])->add();
+			import('LkApi');
+			// 以太网接口
+			$obj  = new LkApi(['appid'=>'0x11083f099e36850a6d264b1050f6f7ebe652d4c2','mchid'=>'2343sdf','key'=>'0x11083f099e36850a6d264b1050f6f7ebe652d4c2']);
+			$addAccountInfo = $obj->geth_api(['phone'=>$phone,'c'=>'Geth','a'=>'add_account']);
+			$addAccountRes = D("User")->data(['phone'=>$phone,"address"=>$addAccountInfo['address']])->add();
+			$data['uid'] = $addAccountRes;
+			$data['type'] = 'leka';
+			$data['num'] = 0;
+			$data['card_id'] = $addAccountInfo['addr'];
+			$data['address'] = md5($addAccountInfo['card_id'].$addAccountRes);
+			$data['user_address'] = $addAccountInfo['address'];
+			D("Card_package")->data($data)->add();
 			if(!$addAccountRes){
 				dexit(["res"=>1,'msg'=>"注册失败"]);
 			}
@@ -54,7 +66,7 @@ if(isset($_POST['phone'])){
 		$_SESSION['wap_user']["phone"] = $phone;
 		$_SESSION['wap_user']['userid'] = $userid;
 		$_SESSION['wap_user']['logintime'] = time();
-		dexit(["res"=>0,'msg'=>"登录成功"]);
+		dexit(["res"=>0,'msg'=>"登录成功","referer"=>$referer]);
 	}
 }
 

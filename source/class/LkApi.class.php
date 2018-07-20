@@ -18,6 +18,18 @@ class LkApi
         return $yp->pay();
     }
 
+    //测试
+    public function geth_api($data)
+    {
+
+        $geth = new geth_api($this->data['appid'],$this->data['mchid'],$this->data['key']);
+        foreach ($data as $k => $v) {
+            $geth->setParameter($k,$v);
+        }
+        return $geth->execute();
+
+    }
+
 
 }
 

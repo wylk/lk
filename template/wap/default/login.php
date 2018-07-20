@@ -150,8 +150,8 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
             $.post("./login.php",data,function(result){
                 console.log(result);
                 if(!result['res']){
-                    window.location.href = './my.php';
-                    layer.msg(result['msg'],{skin:'demo-class',icon: 1});
+                  layer.msg(result['msg'],{skin:'demo-class',icon: 1});
+                  window.location.href =  "<?php echo $referer ? $referer : './my.php'; ?>";
                 }else{
                     layer.msg(result['msg'],{skin:'demo-class',icon: 5});
                 }
