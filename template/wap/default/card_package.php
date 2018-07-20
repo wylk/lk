@@ -77,7 +77,7 @@
                     <a class="card-handle" href="./transaction.php?cardId=<?php echo $value['card_id'] ?>">出售</a>
                     <a class="card-handle" href="./recordBooks.php?id=<?php echo $value['id'] ?>"">账单</a>
                     <?php if($value['type'] == 'leka'){ ?>
-                    <a class="card-handle" href="card_buy.php">交易</a>
+                    <a class="card-handle" href="card_buy.php?uid=<?php echo $value['uid'] ?>">交易</a>
                     <?php }else{ ?>
                     <a class="card-handle" href="">暂定</a>
                     <?php } ?>

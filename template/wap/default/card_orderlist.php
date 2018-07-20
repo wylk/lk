@@ -68,6 +68,28 @@
             </div>
         </div>
         <hr>
+        <?php foreach ($orderList as $key => $value) { ?>
+        <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
+            <div class="order-left">
+                <p>
+                <?php if($value['sell_id'] == $userId){ ?>
+                    <span class="s">卖出</span>
+                <?php }else{ ?>
+                    <span class="b">买入</span>
+                <?php } ?>
+                 单号：<?php echo $value['onumber'] ?></p>
+                <p><?php echo date("Y-m-d H:i:s",$value['create_time']) ?>下单</p>
+                <p>数量：<?php echo number_format($value['number'],2) ?></p>
+            </div>
+            <div class="order-right">
+                <p><a class="layui-bg-cyan" style="padding: 5px 7px" href="">查看详情</a></p>
+                <p>价格：￥<?php echo number_format($value['price'],2) ?></p>
+                <p style="color: #2F4056">已完成</p>
+                <p>总金额：<span class="total">￥<?php echo number_format($value['number']*$value['price'],2) ?></span></p>
+            </div>
+        </div>
+        <hr>
+        <?php } ?>
 
     </div>
     <?php include display('public_menu');?>
