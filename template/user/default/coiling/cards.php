@@ -40,19 +40,11 @@
           <button class="layui-btn"  lay-submit="" lay-filter="sreach" ><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
-      <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','./admin-add.html')"><i class="layui-icon"></i>添加</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
-      </xblock>
       <table class="layui-table">
         <thead>
           <tr>
-            <th>
-              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
-            </th>
-            <th>ID</th>
-            <th>发卡用户</th>
+            <th>用户ID</th>
             <th>合约名</th>
             <th>价格</th>
             <th>量</th>
@@ -64,31 +56,16 @@
         <tbody>
 
           <?php foreach($cards as $k=>$v){ ?>
-
           <tr>
-            <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
-            </td>
             <td><?= $v['uid'] ?></td>
-            <td><?= $v['uname'] ?></td>
             <td><?= $v['name'] ?></td>
             <td><?= $v['price'] ?></td>
             <td><?= $v['sum'] ?></td>
             <td><?= $v['group'] ?></td>
             <td><img src="<?= $v['card_log'] ?>"></td>
             <td><?= $v['describe'] ?></td>
-            <!-- <td class="td-status">
-              <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td> -->
-            <td class="td-manage">
-              <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
-                <i class="layui-icon">&#xe601;</i>
-              </a>
-              <a title="编辑"  onclick="x_admin_show('编辑','admin-edit.html')" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
-              </a>
-              <a title="删除" onclick="member_del(this,'要删除的id')" href="  :;">
-                <i class="layui-icon">&#xe640;</i>
-              </a>
+            <td>
+              <button class="layui-btn layui-bg-red" onclick="x_admin_show('交易信息','?c=coiling&a=lists&uid=<?= $v['uid'] ?>&card_id=<?= $v['card_id'] ?>',600,400)" style="height:44px"><i class="layui-icon"></i>交易信息</button>
             </td>
           </tr>
 

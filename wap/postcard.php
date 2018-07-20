@@ -92,6 +92,7 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 			$data['create_time'] = time();
 			$data['update_time'] = time();
 			$res = D("User_audit")->data($data)->add();
+			D('User')->data(['status'=>$data['type']])->where(array('uid' =>$userId))->save();
 		}
 		if(!$res){
 			dexit(['res'=>1,"msg"=>"信息错误，请您重新填写","other"=>$res]);
