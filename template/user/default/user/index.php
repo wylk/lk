@@ -33,9 +33,9 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so layui-  form-pane">
+        <form class="layui-form layui-col-md12 x-so layui-form-pane" action="?c=user&a=index" method="post">
           <div class="layui-input-inline">
-             <input class="layui-input" placeholder="用户名" name="name" lay-verify="name">
+             <input class="layui-input" placeholder="手机号" name="phone" lay-verify="name">
           </div>
           <button class="layui-btn"  lay-submit="" lay-filter="shows" ><i class="layui-icon">&#xe615;</i></button>
         </form>
@@ -47,7 +47,7 @@
             <th>ID</th>
             <th>用户名</th>
             <th>手机</th>
-            <th>是否认证</th>
+            <th>认证类型</th>
             <th>操作</th></tr>
         </thead>
         <tbody>

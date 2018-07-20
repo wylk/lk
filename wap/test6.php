@@ -3,6 +3,7 @@ require_once dirname(__FILE__).'/global.php';
 
 import('LkApi');
 $obj  = new LkApi(['appid'=>'0x11083f099e36850a6d264b1050f6f7ebe652d4c2','mchid'=>'2343sdf','key'=>'0x11083f099e36850a6d264b1050f6f7ebe652d4c2']);
+<<<<<<< HEAD
 
 // // $res = $obj->geth_api(['phone'=>'13967426223','c'=>'Geth','a'=>'add_account']);
 // // 查询账户余额
@@ -11,6 +12,10 @@ $res = $obj->geth_api(['address'=>'0x7a7ef60170e17f5099f3e8d0f5272a55af61ed1b','
 // $res = $obj->geth_api(['phone'=>'13967426223','c'=>'Geth','a'=>'add_account']);
 
 // $res = $obj->geth_api(['from'=>'0x7a7ef60170e17f5099f3e8d0f5272a55af61ed1b','to'=>'0x669a4060c43a2687f03487fb188ca20c97e63688','val'=>1,'c'=>'Contracts','a'=>'transfer_contract']);
+=======
+//$res = $obj->geth_api(['phone'=>'13967426223','c'=>'Geth','a'=>'add_account']);
+$res = $obj->geth_api(['to'=>'0x669a4060c43a2687f03487fb188ca20c97e63688','from'=>'0xf7466b9a2020f08319b553088b381cfdc12eb0d3','val'=>1,'c'=>'Contracts','a'=>'transfer_contract']);
+>>>>>>> 2cbd32ee015beaa6a76c29972b50815bcee7010d
 //$res = $obj->geth_api(['address'=>'0xf7466b9a2020f08319b553088b381cfdc12eb0d3','c'=>'Contracts','a'=>'balance_contract']);
 dump($res);
 /*function encrypt($data,$key){

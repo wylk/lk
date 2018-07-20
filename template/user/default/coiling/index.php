@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
 
   <head>
@@ -31,23 +31,40 @@
     <div class="flex-direction">
         <ul class="layui-row layui-col-space10 layui-this" style="padding-top: 35px;padding-left:58px;">
 
-          <?php foreach ($Contract as $k => $v) { ?>
+          <?php foreach ($contract as $k => $v) {
+              if($v['contract_title']=='offsetCard'){
+           ?>
 
           <li class="layui-col-xs2" style="height: 220px;">
             <img src="http://lk.com/upload/images/000/000/001/201806/5b32f7ecc1ab4.jpg">
               <span><?= $v['contract_name'] ?></span>
-                <h2 style="color:red">21366</h2>
+                <h2 style="color:red"><?= $v['out'] ?></h2>
               <ul>
-                <li>发布卡数量：<?= count($Contract) ?></li>
-                <li>发布人数：300</li>
+                <li>发布卡数量：<?= $v['out'] ?></li>
+                <li>发布店铺：<?= $v['audit'] ?></li>
               </ul>
               <ul style="margin-left: 145px;margin-top: -69px;">
-                <li>交易量：300</li>
-                <li>抵现卡总数：300</li>
+                <li>交易量：<?= $v['tran'] ?></li>
+                <li>用户数量：<?= $v['user'] ?></li>
               </ul>
               <a class="layui-btn layui-btn-primary layui-btn-lg" href="?c=coiling&a=cards">详情</a>
           </li>
-          <?php } ?>
+          <?php }else{ ?>
+            <li class="layui-col-xs2" style="height: 220px;">
+            <img src="http://lk.com/upload/images/000/000/001/201806/5b32f7ecc1ab4.jpg">
+              <span>积分会员卡</span>
+                <h2 style="color:red">0</h2>
+              <ul>
+                <li>发布卡数量：0</li>
+                <li>发布店铺：0</li>
+              </ul>
+              <ul style="margin-left: 145px;margin-top: -69px;">
+                <li>交易量：0</li>
+                <li>用户数量：0</li>
+              </ul>
+              <a class="layui-btn layui-btn-primary layui-btn-lg" href="">详情</a>
+          </li>
+          <?php }} ?>
           </ul>
     </div>
 
