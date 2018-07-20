@@ -16,14 +16,17 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	$addressName = $post['addressName'];
 	// 转账信息判断
 	$getAddressInfo = D("Card_package")->where(['address'=>$getAddress])->find();
+	$getAddressInfo['uid'] != $userId ? true : dexit(['res'=>1,"msg"=>"转账账户不能为本人账户"]);
+	$getAddressInfo['card_id'] == $cardId ? true : dexit(['res'=>1,"msg"=>"不同种类型卡券不可转账"]);
 	$isPublisher = $getAddressInfo['is_publisher'] == 1 ? true : false;
 	$getAddressInfo ? true : dexit(['res'=>1,"msg"=>"您输入的地址不正确"]);
 	$sendAdressInfo = D("Card_package")->where(['uid'=>$userId,'address'=>$sendAddress])->find();
+	$num > 0 ? true : dexit(['res'=>1,"msg"=>"您转账的数目不能低于0"]);
 	$sendAdressInfo['num'] >= $num ? true : dexit(['res'=>1,"msg"=>"您转账的数目已超支"]);
 	// 判断地址是否保存过
 	$remarkCheckRes = D("User_address")->where(['uid'=>$userId,"address"=>$getAddress])->find();
 	if(!$remarkCheckRes){
-		$res = D("User_address")->data(['uid'=>$userId,"address"=>$getAddress,"name"=>$addressName,'createtime'=>time()])->add();
+		$res = D("User_address")->data(['uid'=>$userId,"address"=>$getAddress,"card_id"=>$cardId,"name"=>$addressName,'createtime'=>time()])->add();
 	}elseif($remarkCheckRes['name'] != $addressName){
 		$res = D("User_address")->data(['name'=>$addressName])->where(['uid'=>$userId,"address"=>$getAddress])->save();
 	}
@@ -43,6 +46,7 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	// 卡包数据处理
 	$sendRes = D("Card_package")->where(['uid'=>$userId,'address'=>$sendAddress])->setDec("num",$num);
 	$getRes = D("Card_package")->where(['address'=>$getAddress])->setInc("num",$num);
+	D("Card_package")->where(['address'=>$getAddress])->setInc("recovery_count",$num);
 	if(!($getRes || $sendRes)){
 		dexit(['res'=>1,"msg"=>"转账失败！"]);
 	}
@@ -51,7 +55,8 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 }
 // 获取保存的地址
 if(IS_POST && $_POST['type'] == "getRemark"){
-	$addresList = D("User_address")->where(['uid'=>$userId])->select();
+	$cardId = $_POST['cardId'];
+	$addresList = D("User_address")->where(['uid'=>$userId,"card_id"=>$cardId])->select();
 	if($addresList){
 		dexit(['res'=>0,"msg"=>"请选择转账地址","list"=>$addresList]);
 	}

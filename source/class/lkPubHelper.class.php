@@ -104,6 +104,7 @@ class comm_util_pub
                 $xml.="<".$key."><![CDATA[".$val."]]></".$key.">";
         }
         $xml.="</xml>";
+
         return $xml;
     }
 
@@ -134,6 +135,7 @@ class comm_util_pub
      */
     public function postXmlCurl($xml,$url,$second=30)
     {
+
         //初始化curl
         $ch = curl_init();
         //设置超时
@@ -257,7 +259,6 @@ class yp_client_pub extends comm_util_pub
     function postXmlSSL()
     {
         $xml = $this->createXml();
-        arrlog($xml,'xml1');
         $this->response = $this->postXmlSSLCurl($xml,$this->url,$this->curl_timeout);
         return $this->response;
     }
@@ -291,13 +292,46 @@ class weixin_api extends yp_client_pub
             $this->parameters["mch_id"] = $this->mchid;//商户号
             //$this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
             $this->parameters["sign"] = $this->getSign($this->parameters);//签名
-            return  $this->parameters;
+            return  $this->arrayToXml($this->parameters);
         }catch(Exception $e){
             print $e->getMessage(); exit();
         }
     }
 
     public function pay()
+    {
+        $this->postXml();
+        return $this->jsonArray($this->response);
+    }
+
+}
+
+
+//以太坊测试
+class geth_api extends yp_client_pub
+{
+    public function __construct($appid,$mchid,$key)
+    {
+        comm_util_pub::__construct($appid,$mchid,$key);
+        // $this->url = 'http://geth.com/api.php';
+        $this->url = 'http://172.16.23.117/api.php';
+        $this->curl_timeout = 60;
+    }
+
+    public function createXml()
+    {
+        try{
+            $this->parameters["appid"] = $this->appid;//公众账号ID
+            $this->parameters["mch_id"] = $this->mchid;//商户号
+            $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
+            $this->parameters["sign"] = $this->getSign($this->parameters);//签名
+            return  $this->arrayToXml($this->parameters);
+        }catch(Exception $e){
+            print $e->getMessage(); exit();
+        }
+    }
+
+    public function execute()
     {
         $this->postXml();
         return $this->jsonArray($this->response);

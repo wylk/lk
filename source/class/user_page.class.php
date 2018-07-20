@@ -25,7 +25,7 @@ class Page{
 		if($this->totalRows == 0) return false;
 		$now = $this->nowPage;
 		$total = $this->totalPage;
-		
+
 		$url  =  $_SERVER['REQUEST_URI'].(strpos($_SERVER['REQUEST_URI'],'?')?'':"?");
         $parse = parse_url($url);
         if(isset($parse['query'])) {
@@ -34,8 +34,8 @@ class Page{
             $url   =  $parse['path'].'?'.http_build_query($params);
         }
 		$url .= '&page=';
-		
-		$str = '<span class="total"><span id="row_count">'.$this->totalRows.'</span> 条记录 '.$now.'/'.$total.'页</span>';
+
+		$str = '<span class="total" style="border:0px"><span id="row_count">'.$this->totalRows.'</span> 条记录 '.$now.'/'.$total.'页</span>';
 		if($now > 1){
 			$str .= '<a href="'.$url.($now-1).'" class="prev" title="上一页">上一页</a>';
 		}
@@ -66,7 +66,7 @@ class Page{
 		if ($now != $total){
 			$str .= '<a href="'.$url.($now+1).'" class="next">下一页</a>';
 		}
-		
+
 		return $str;
     }
 }

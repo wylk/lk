@@ -147,7 +147,8 @@
             return false;
         })
         $("#addRemark").bind("click",function(){
-            var data = {"type":"getRemark"};
+            var cardId = $("input[name=cardId]").val();
+            var data = {"type":"getRemark","cardId":cardId};
             
             $.post("./transferBill.php",data,function(res){
                 console.log(res);
@@ -183,6 +184,7 @@
                 console.log(res);
                 if(!res.res){
                     layer.msg(res.msg,{icon:1,skin:"demo-class"});
+                    window.location.href = "./card_package.php"
                 }else{
                     layer.msg(res.msg,{icon:5,skin:"demo-class"});
                 }

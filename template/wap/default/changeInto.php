@@ -12,11 +12,21 @@
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/clipboard.min.js" charset="utf-8"></script>
     <style type="text/css">
-        .codeAddress{padding: 10px 15px; line-height: 22px; color: #666;border: 1px solid #0f7f7a; margin: 10px; border-radius: 10px;}
+        .codeAddress{padding: 10px 15px; line-height: 40px; color: #666;border: 1px solid #0f7f7a; margin:70px 10px; border-radius: 10px;}
         .code{width:202px;height:202px;margin:auto;}
-        #getAddress{text-align:center;margin:10px 0;}
+        #getAddress{text-align:center;}
         .otherFunc{padding:10px 25px;margin:20px;}
-        .otherFunc h2{background-color: #72add8; padding: 10px; border-radius: 5px;}
+        .codeAddress h2{text-align: center;color: #abaf05}
+        .getAdd{
+            display: flex;
+            margin-top: 25px; 
+        }
+        .lk-btn{
+            width: 85px;
+            margin-left: 10px;
+            padding: 0px 0px;
+            border: 1px solid #5fb878;
+        }
     </style>
 </head>
 
@@ -27,14 +37,16 @@
     </header>
     <div class="lk-content">
         <div class="codeAddress">
-            <h2>收款方：</h2>
+            <h2>收款二维码</h2>
             <div class="code"><img src="<?php echo $code; ?>" /></div>
-            <p id="getAddress" ><?php echo $userInfo['address'] ?></p>
-            <p id="copyAddress" data-clipboard-target="#getAddress">点击复制</p>
-            <p>此地址用于对应卡片转账收款地址，每卡券每用户都有对应地址</p>
+            <div class="getAdd">
+                <p id="getAddress" ><?php echo $userInfo['address'] ?></p>
+                <a class="layui-btn layui-btn-primary lk-btn" id="copyAddress" data-clipboard-target="#getAddress">点击复制</a>
+            </div>
+            <p style="font-size: 12px;color: red;text-align: center;">此地址为此卡的收款地址,妥善保管</p>
         </div>
         <div class="otherFunc">
-            <h2>付款方</h2>
+            <!-- <h2 >付款方</h2> -->
         </div>
     </div>
     <?php include display('public_menu');?>

@@ -161,23 +161,7 @@
          </div>
          <hr>
         <?php } ?>
-         <!-- <div class="home-plugin-info-row">
-             <div class="home-plugin-info-row-card line-heights">
-                <div class="home-plugin-info-row-card-img">
-                    <img src="http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" style="height:100%;width:100%;border-radius: 50%;">
-                </div>
-             </div>
-             <div class="home-plugin-info-row-card row-card2">
-              <div style="height: 40px;line-height: 21px">
-                 <p><span style="font-weight: bold">老文</span><span class="layui-badge layui-bg-orange">V2 个人认证</span></p>
-                 <p>单价:0.92CNY 限制1-100</p>
-               </div>
-             </div>
-             <div class="home-plugin-info-row-card card-3 line-heights">
-                 <a href="./receive.php" class="layui-btn layui-btn-primary">购买</a>
-             </div>
-         </div>
-          <hr> -->
+  
     </div>
 
 </div>

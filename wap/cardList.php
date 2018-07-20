@@ -5,7 +5,7 @@ require_once dirname(__FILE__).'/global.php';
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
 $userId = $wap_user['userid'];
 // 获取店铺发卡的类型
-$cardBagList = D("Card_package")->where(['uid'=>$userId])->select();
+$cardBagList = D("Card_package")->where(['uid'=>$userId,'is_publisher'=>1])->select();
 
 
 include display("cardList");

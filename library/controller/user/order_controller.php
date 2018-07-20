@@ -3,7 +3,12 @@
 class order_controller extends base_controller
 {
     public function index(){
-        $order = D('Orders')->select();
+        import('user_page');
+
+        $orders = D('Orders')->select();
+        $page = new Page(count($orders),2);
+        $order = D('Orders')->order('`id` DESC')->limit($page->firstRow, $page->listRows)->select();
+        $this->assign('page', $page->show());
         $this->assign('order',$order);
         $this->display();
     }

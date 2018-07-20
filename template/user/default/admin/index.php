@@ -34,16 +34,10 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-      <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
-      </xblock>
       <table class="layui-table">
         <thead>
           <tr>
-            <th>
-              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
-            </th>
             <th>ID</th>
             <th>登录名</th>
             <th>手机</th>
@@ -58,9 +52,6 @@
           ?>
 
           <tr>
-            <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
-            </td>
             <td><?= $vv['id'] ?></td>
             <td><?= $vv['name'] ?></td>
             <td><?= $vv['phone'] ?></td>
@@ -87,16 +78,6 @@
 
         </tbody>
       </table>
-      <div class="page">
-        <div>
-          <a class="prev" href="">&lt;&lt;</a>
-          <a class="num" href="">1</a>
-          <span class="current">2</span>
-          <a class="num" href="">3</a>
-          <a class="num" href="">489</a>
-          <a class="next" href="">&gt;&gt;</a>
-        </div>
-      </div>
     </div>
   </body>
 </html>

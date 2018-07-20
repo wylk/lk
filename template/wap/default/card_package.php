@@ -62,8 +62,8 @@
         <div class="lk-container-flex lk-card-package lk-flex-direction-c">
             <div class="lk-container-flex" style="padding:10px 0">
                 <div class="item-flex card-info">
-                    <p>乐卡币：LKB</p>
-                    <p style="font-size: 12px"><b style="margin-right: 20px;font-size:16px"><?php echo number_format($value['num'],2) ?></b> 锁定：<?php echo number_format($value['frozen'],2) ?></p>
+                    <p>乐卡币：LKB<?php echo $value['type'] ?></p>
+                    <p style="font-size: 12px"><b style="margin-right: 20px;font-size:16px">可用：<?php echo number_format($value['num'],2) ?></b> 锁定：<?php echo number_format($value['frozen'],2) ?></p>
                 </div>
                 <div class="item-flex card-logo">
                     <p></p>
@@ -74,9 +74,13 @@
                 <ul class="lk-container-flex lk-justify-content-sa">
                     <a class="card-handle" href="./transferBill.php?id=<?php echo $value['id'] ?>">核销</a>
                     <a class="card-handle" href="./changeInto.php?id=<?php echo $value['id'] ?>">充值</a>
-                    <a class="card-handle" href="./transaction.php">出售</a>
+                    <a class="card-handle" href="./transaction.php?cardId=<?php echo $value['card_id'] ?>">出售</a>
                     <a class="card-handle" href="./recordBooks.php?id=<?php echo $value['id'] ?>"">账单</a>
+                    <?php if($value['type'] == 'leka'){ ?>
+                    <a class="card-handle" href="card_buy.php">交易</a>
+                    <?php }else{ ?>
                     <a class="card-handle" href="">暂定</a>
+                    <?php } ?>
                 </ul>
             </div>
         </div>

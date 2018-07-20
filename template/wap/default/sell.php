@@ -70,7 +70,7 @@
                 <div class="layui-input-inline">
                   <input type="text" name="num" required lay-verify="num|number" placeholder="请输出售量" autocomplete="off" class="layui-input">
                 </div>
-                <div class="layui-form-mid layui-word-aux" id="surplusNum">可以:<i><?php echo $numInfo['num']-$numInfo['frozen']; ?></i></div>
+                <div class="layui-form-mid layui-word-aux" id="surplusNum">可以:<i><?php echo number_format($numInfo['num']); ?></i></div>
               </div>
                <hr>
               <div class="layui-form-item">
@@ -142,6 +142,7 @@ layui.use(['form','layer'], function(){
       var surplusNum = $("#surplusNum i").html();
       if(data.field.num-surplusNum > 0){
         layer.msg("发布额度超出现有额度",{icon:5,skin:'demo-class'});
+        layer.closeAll("loading");
         return false;
       }
       $.post("./transaction.php",data.field,function(res){
