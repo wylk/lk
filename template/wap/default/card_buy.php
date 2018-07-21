@@ -13,7 +13,12 @@
     <style type="text/css">
         .lk-container-flex {padding: 0 5px;}
         .lk-content hr{margin: 0}
-        .lk-deal-link a{width: 30%;text-align: center; line-height: 45px; font-size:.5rem;}
+        .lk-nav-link a{width:30%;text-align: center; line-height: 45px; font-size:.5rem;}
+        .lk-deal-link a{text-align: center; line-height: 45px; font-size:.5rem;padding: 0 20px;}
+        .lk-deal-link a input[type='text']{
+            display: inline;
+            border:none;
+        }
         .lk-justify-content-c{padding:25px;}
         .lk-bazaar-sell p{width:38%; padding-left:3%; line-height: 25px}
         .item-buy{align-self:center;  border:1px solid #FF5722; width:45px; border-radius: 50px; line-height: 45px; text-align: center;}
@@ -26,7 +31,7 @@
         <h1 class="lk-title">买入</h1>
     </header>
     <div class="lk-content">
-        <div class="lk-container-flex lk-deal-link">
+        <div class="lk-container-flex lk-nav-link">
                 <a href="card_buy.php" class="layui-bg-orange">买入</a>
                 <a href="card_sell.php">卖出</a>
                 <a href="card_order.php">订单</a>
@@ -34,22 +39,27 @@
         </div>
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                <a href="">买入价：1.01</a>
-                <a href="">余额：221</a>
+                <a href="javascript:;">买入价：<input type='text' name="buyPrice" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
+                <a href="javascript:;">余额：<?php echo number_format($platformInfo['num'],2); ?></a>
         </div>
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                <a href="">买入数量：1760
-                <a href="">WLK</a>
+                <a href="javascript:;">买入数量：<input type='text' name="buyNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+                <a href="javascript:;">WLK</a>
         </div>
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                <a href="">兑换资金：122</a>
-                <a href="">CNY</a>
+                <a href="javascript:;">最低买入量：<input type='text' name="limitNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+                <a href="javascript:;">WLK</a>
+        </div>
+        <hr>
+        <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
+                <a href="javascript:;">兑换资金：<span id="money">0.00</span></a>
+                <a href="javascript:;">CNY</a>
         </div>
         <hr>
         <div class="lk-container-flex lk-justify-content-c">
-            <a href="" class="layui-btn layui-btn-warm" style="width: 90%">买入</a>
+            <a href="javascript:;" id="buyTran" class="layui-btn layui-btn-warm" style="width: 90%">买入</a>
         </div>
         <div class="lk-container-flex">
             <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
@@ -69,24 +79,59 @@
             </div>
         </div>
         <hr>
+        <?php foreach ($sellList as $key => $value) { ?>
         <div class="lk-container-flex">
             <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
                 <p class="item-flex">王**</p>
-                <p class="item-flex">900WLK</p>
+                <p class="item-flex"><?php echo number_format($value['num'],2) ?>WLK</p>
                 <p class="item-flex">在线</p>
-                <p class="item-flex">价格：1</p>
+                <p class="item-flex">价格：<?php echo number_format($value['price'],2) ?></p>
                 <p class="item-flex">logo</p>
-                <p class="item-flex">限额：100-900</p>
+                <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?>-<?php echo number_format($value['num'],2) ?></p>
             </div>
             <div class="lk-container-flex">
                 <p class="item-buy"><a href="">买入</a></p>
             </div>
         </div>
         <hr>
+        <?php } ?>
     </div>
     <?php include display('public_menu');?>
-    <script type="text/javascript">
-    </script>
+<script type="text/javascript">
+    layui.use(['layer'],function(){
+        $("#buyTran").bind("click",function(){
+            layer.load();
+            var buyPrice = $("[name=buyPrice]").val();
+            var buyNum = $("[name=buyNum]").val();
+            var limitNum = $("[name=limitNum]").val();
+            var money = buyPrice*buyNum;
+            var id = "<?php echo $platformInfo['id']; ?>";
+            var data = {"buyPrice":buyPrice,"buyNum":buyNum,'id':id,"limitNum":limitNum};
+            $.post("./card_buy.php",data,function(result){
+                console.log(result);
+                layer.closeAll("loading");
+                if(!result.res){
+                    layer.msg(result.msg,{icon:1,skin:"demo-class"});
+                }else{
+                    layer.msg(result.msg,{icon:5,skin:"demo-class"});
+                }
+            },"json");
+        });
+        $("input[name^=buy]").bind("keyup",function(){
+            var buyPrice = $("[name=buyPrice]").val();
+            var buyNum = $("[name=buyNum]").val();
+            var money = buyPrice*buyNum;
+            $("#money").html(money);
+        })
+        $("[name=limitNum]").bind("keyup",function(){
+            var buyNum = $("[name=buyNum").val();
+            var limitNum = $("[name=limitNum]").val();
+            if(limitNum > buyNum){
+                layer.msg('最低购买数量不得大于购买数量',{icon:5,skin:"demo-class"});
+            }
+        });
+    })
+</script>
 </body>
 
 </html>

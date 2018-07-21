@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/global.php';
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
 $userId = $wap_user['userid'];
 
-// 为付账订单
+// 未付账订单
 $unpaidOrderList = D("Orders")->where(['buy_id'=>$userId,"status"=>0])->order("create_time desc")->select();
 // 付款订单
 $paidOrderList = D("Orders")->where(['buy_id'=>$userId,"status"=>1])->order("create_time desc")->select();
