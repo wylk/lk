@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
+
 $userId = $wap_user['userid'];
 // $res = D('Card')->where(array('uid' =>38,'c_id' =>6))->find();
 if(IS_POST){
