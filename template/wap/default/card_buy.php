@@ -123,13 +123,13 @@
             var money = buyPrice*buyNum;
             $("#money").html(money);
         })
-        $("[name=limitNum]").bind("keyup",function(){
-            var buyNum = $("[name=buyNum").val();
-            var limitNum = $("[name=limitNum]").val();
-            if(limitNum > buyNum){
-                layer.msg('最低购买数量不得大于购买数量',{icon:5,skin:"demo-class"});
-            }
-        });
+        // $("[name=limitNum]").bind("keyup",function(){
+        //     var buyNum = $("[name=buyNum").val();
+        //     var limitNum = $("[name=limitNum]").val();
+        //     if(limitNum > buyNum){
+        //         layer.msg('最低购买数量不得大于购买数量',{icon:5,skin:"demo-class"});
+        //     }
+        // });
     })
 </script>
 </body>
