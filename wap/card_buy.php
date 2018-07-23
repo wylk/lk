@@ -15,9 +15,7 @@ if(IS_POST){
 	$matchingList = D("Card_transaction")->where(['uid'=>["not in",[$userId]],'price'=>$buyPrice,"limit"=>["<=",$buyNum],"type"=>2])->order("createtime asc")->select();
 	if($matchingList){
 		foreach($matchingList as $key=>$value){
-			// echo $key;
 			$orderNum = 0;
-			// dump($buyNum);
 			if($value['num'] >= $buyNum && $buyNum >= $value['limit']){
 				$orderNum = $buyNum;
 				$buyNum = 0;
@@ -67,40 +65,6 @@ if(IS_POST){
 $platformInfo = D("Card_package")->where(['uid'=>$userId,"type"=>"leka"])->find();
 // 查询当前卖单信息
 $sellList = D("Card_transaction")->where(['card_id'=>$platformInfo['card_id'],"type"=>"2"])->select();
-
-// $buyPrice = 4;$buyNum=36;$limitNum=3;$id=66;
-// $matchingList = D("Card_transaction")->where(['uid'=>["not in",[$userId]],'price'=>$buyPrice,"limit"=>["<=",$buyNum],"type"=>2])->order("createtime asc")->select();
-// dump($matchingList);
-// if($matchingList){
-// 	foreach($matchingList as $key=>$value){
-// 		echo $key;
-// 		$orderNum = 0;
-// 		dump($buyNum);
-// 		if($value['num'] >= $buyNum && $buyNum >= $value['limit']){
-// 			$orderNum = $buyNum;
-// 			$buyNum = 0;
-// 		}
-// 		if($value['num'] < $buyNum && $value['num'] >= $limitNum){
-// 			$orderNum = $value['num'];
-// 			$buyNum -= $value['num'];
-// 		}
-// 		if($orderNum == 0) continue;
-// 		$orderData[$key]['tran_id'] = $value['id'];
-// 		$orderData[$key]['card_id'] = $value['card_id'];
-// 		$orderData[$key]['sell_id'] = $value['uid'];
-// 		$orderData[$key]['buy_id'] = $userId;
-// 		$orderData[$key]['number'] = $orderNum;
-// 		$orderData[$key]['onumber'] = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
-// 		$orderData[$key]['price'] = $buyPrice;
-// 		$orderData[$key]['create_time'] = time();
-// 		if($buyNum == 0) break;
-// 	}
-// 	dump($orderData);
-// 	dump($buyNum);
-// 	$res = D('Orders')->data($orderData)->addAll();
-// 	dump($res);
-// }
-// die();
 
 include display('card_buy');
 echo ob_get_clean();

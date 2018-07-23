@@ -6,15 +6,17 @@ $userId = $wap_user['userid'];
 // 卖单挂单处理
 if(IS_POST){
 	$sellPrice = clear_html($_POST['price']);
-	$sellNum = clear_html($_POST['num']);
+	$frozen = $sellNum = clear_html($_POST['num']);
 	$limitNum = clear_html($_POST['limitNum']);
 	$id = clear_html($_POST['id']);
 	// 判断售卖规则是否符合
+	$platform = D("Card_package")->where(['id'=>$id])->find();
+	$platform['num'] >= $sellNum ? true : dexit(['res'=>1,"msg"=>"售出数量不能超出现有数量"]);
 	($sellPrice > 0 && $sellNum > 0 ) ? true : dexit(['res'=>1,"msg"=>"销售单价或者数量不能小于0"]);
 	$sellNum >= $limitNum ? true : dexit(['res'=>1,"msg"=>"购买的限制最低数量不得大于购买量"]);
 
 	// 自动匹配交易单并生成订单
-	$matchingList = D("Card_transaction")->where(['price'=>$sellPrice,"limit"=>["<=",$sellNum],"type"=>1])->order("createtime asc")->select();
+	$matchingList = D("Card_transaction")->where(['uid'=>["not in",[$userId]],'price'=>$sellPrice,"limit"=>["<=",$sellNum],"type"=>1])->order("createtime asc")->select();
 	if($matchingList){
 		foreach ($matchingList as $key => $value) {
 			$orderNum = 0;
@@ -47,7 +49,7 @@ if(IS_POST){
 	}
 
 	// 挂单添加到数据库
-	$platform = D("Card_package")->where(['id'=>$id])->find();
+	
 	$data['uid'] = $userId;
 	$data['card_id'] = $platform['card_id'];
 	$data['address'] = $platform['address'];
@@ -58,7 +60,10 @@ if(IS_POST){
 	$data['createtime'] = time();
 	$data['updatetime'] = time();
 	$res = D("Card_transaction")->data($data)->add();
-	if(!$res){
+	$editData[] = ['field'=>'num',"step"=>$frozen,"operator"=>"-"];
+	$editData[] = ['field'=>'frozen',"step"=>$frozen,"operator"=>"+"];
+	$editRes = M("Card_package")->setData($editData,['id',$id]);
+	if(!($res || $editRes)){
 		dexit(['res'=>1,"msg"=>"挂单失败"]);
 	}
 	dexit(['res'=>0,"msg"=>"挂单成功"]);
