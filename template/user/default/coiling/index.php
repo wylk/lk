@@ -15,8 +15,8 @@
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/js/xadmin.js"></script>
   </head>
-
   <body>
+
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -27,8 +27,11 @@
       <a class="layui-btn layui-btn-small" href="javascript:location.replace(location.href);" title="刷新" style="margin-left: 870px;">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
+    <div class="layui-container">
+    <div class="layui-row">
     <div class="x-body">
-    <div class="flex-direction">
+    <div class="flex-direction" style="margin-left: -105px;width: 1129px;height: 480px;">
+        <div class="layui-row">
         <ul class="layui-row layui-col-space10 layui-this" style="padding-top: 35px;padding-left:58px;">
 
           <?php foreach ($contract as $k => $v) {
@@ -49,6 +52,7 @@
               </ul>
               <a class="layui-btn layui-btn-primary layui-btn-lg" href="?c=coiling&a=cards">详情</a>
           </li>
+
           <?php }else{ ?>
             <li class="layui-col-xs2" style="height: 220px;">
             <img src="http://lk.com/upload/images/000/000/001/201806/5b32f7ecc1ab4.jpg">
@@ -66,8 +70,10 @@
           </li>
           <?php }} ?>
           </ul>
+        </div>
     </div>
-
+    </div>
+    </div>
     <script>
       layui.use('laydate', function(){
         var laydate = layui.laydate;
