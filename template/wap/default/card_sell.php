@@ -13,6 +13,7 @@
     <style type="text/css">
         .lk-container-flex {padding: 0 5px;}
         .lk-content hr{margin: 0}
+        .lk-nav-link a{width:30%;text-align: center; line-height: 45px; font-size:.5rem;}
         .lk-deal-link a{text-align: center; line-height: 45px; font-size:.5rem;padding: 0 20px;}
         .lk-deal-link a input[type='text']{
             display: inline;
@@ -30,7 +31,7 @@
         <h1 class="lk-title">卖出</h1>
     </header>
     <div class="lk-content">
-        <div class="lk-container-flex lk-deal-link">
+        <div class="lk-container-flex lk-nav-link">
                 <a href="card_buy.php">买入</a>
                 <a href="card_sell.php" class="layui-bg-orange">卖出</a>
                 <a href="card_order.php">订单</a>
@@ -39,7 +40,7 @@
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
                 <a href="javascript:;">卖出价：<input type='text' name="sellPrice" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
-                <a href="javascript:;">余额：<?php echo $platformInfo['num'] ?></a>
+                <a href="javascript:;">余额：<?php echo number_format($platformInfo['num'],2); ?></a>
         </div>
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
@@ -115,13 +116,13 @@ layui.use(['layer'],function(){
             }
         },"json");
     })
-    $("[name=limitNum]").bind("keyup",function(){
-        var sellNum = $("[name=sellNum]").val();
-        var limitNum = $("[name=limitNum]").val();
-        if(limitNum > sellNum){
-            layer.msg("售卖最低限制数量不得大于售卖数量",{icon:5,skin:"demo-class"});
-        }
-    })
+    // $("[name=limitNum]").bind("keyup",function(){
+    //     var sellNum = $("[name=sellNum]").val();
+    //     var limitNum = $("[name=limitNum]").val();
+    //     if(limitNum > sellNum){
+    //         layer.msg("售卖最低限制数量不得大于售卖数量",{icon:5,skin:"demo-class"});
+    //     }
+    // })
 })
 $('input[name^=sell]').bind("keyup",function(){
     var price = $("[name=sellPrice]").val();

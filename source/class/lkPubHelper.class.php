@@ -314,7 +314,7 @@ class geth_api extends yp_client_pub
     {
         comm_util_pub::__construct($appid,$mchid,$key);
         // $this->url = 'http://geth.com/api.php';
-        $this->url = 'http://172.16.23.117/api.php';
+        $this->url = 'http://172.16.22.71/api.php';
         $this->curl_timeout = 60;
     }
 
