@@ -40,7 +40,7 @@
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
                 <a href="javascript:;">买入价：<input type='text' name="buyPrice" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
-                <a href="javascript:;">余额：<?php echo number_format($platformInfo['num'],2); ?></a>
+                <a href="javascript:;">余额：<?php echo number_format($$card['num'],2); ?></a>
         </div>
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
@@ -61,37 +61,37 @@
         <div class="lk-container-flex lk-justify-content-c">
             <a href="javascript:;" id="buyTran" class="layui-btn layui-btn-warm" style="width: 90%">买入</a>
         </div>
-        <div class="lk-container-flex">
-            <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
-        </div>
-        <hr>
-        <div class="lk-container-flex">
-            <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
-                <p class="item-flex">王**</p>
-                <p class="item-flex">900WLK</p>
-                <p class="item-flex">在线</p>
-                <p class="item-flex">价格：1</p>
-                <p class="item-flex">logo</p>
-                <p class="item-flex">限额：100-900</p>
-            </div>
             <div class="lk-container-flex">
-                <p class="item-buy"><a href="">买入</a></p>
+                <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
             </div>
-        </div>
-        <hr>
-        <?php foreach ($sellList as $key => $value) { ?>
-        <div class="lk-container-flex">
-            <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
-                <p class="item-flex">王**</p>
-                <p class="item-flex"><?php echo number_format($value['num'],2) ?>WLK</p>
-                <p class="item-flex">在线</p>
-                <p class="item-flex">价格：<?php echo number_format($value['price'],2) ?></p>
-                <p class="item-flex">logo</p>
-                <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?>-<?php echo number_format($value['num'],2) ?></p>
-            </div>
+            <hr>
             <div class="lk-container-flex">
-                <p class="item-buy"><a href="">买入</a></p>
+                <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
+                    <p class="item-flex">王**</p>
+                    <p class="item-flex">900WLK</p>
+                    <p class="item-flex">在线</p>
+                    <p class="item-flex">价格：1</p>
+                    <p class="item-flex">logo</p>
+                    <p class="item-flex">限额：100-900</p>
+                </div>
+                <div class="lk-container-flex">
+                    <p class="item-buy"><a href="">买入</a></p>
+                </div>
             </div>
+            <hr>
+            <?php foreach ($sellList as $key => $value) { ?>
+            <div class="lk-container-flex">
+                <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
+                    <p class="item-flex">王**</p>
+                    <p class="item-flex"><?php echo number_format($value['num'],2) ?>WLK</p>
+                    <p class="item-flex">在线</p>
+                    <p class="item-flex">价格：<?php echo number_format($value['price'],2) ?></p>
+                    <p class="item-flex">logo</p>
+                    <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?>-<?php echo number_format($value['num'],2) ?></p>
+                </div>
+                <div class="lk-container-flex">
+                    <p class="item-buy"><a href="">买入</a></p>
+                </div>
         </div>
         <hr>
         <?php } ?>

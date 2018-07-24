@@ -56,37 +56,37 @@
       <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
-
     <div class="left">
-        <ul class="layui-nav" lay-filter="">
-            <li class="layui-nav-item layui-this"><a href="" class="site-demo-active">买入</a></li>
-            <li class="layui-nav-item"><a href="" class="site-demo-active">买出</a></li>
-        </ul>
-        <div class="lk-content" style="margin-top: -50px;">
-            <hr>
-            <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                    <a href="javascript:;">买入价：<input type='text' name="buyPrice" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
-                    <a href="javascript:;">余额：<?= number_format($card['num'],2); ?></a>
-            </div>
-            <hr>
-            <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                    <a href="javascript:;">买入数量：<input type='text' name="buyNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
-                    <a href="javascript:;">WLK</a>
-            </div>
-            <hr>
-            <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                    <a href="javascript:;">最低买入量：<input type='text' name="limitNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
-                    <a href="javascript:;">WLK</a>
-            </div>
-            <hr>
-            <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                    <a href="javascript:;">兑换资金：<span id="money">0.00</span></a>
-                    <a href="javascript:;">CNY</a>
-            </div>
-            <hr>
-            <div class="lk-container-flex lk-justify-content-c">
-                <a href="javascript:;" id="buyTran" class="layui-btn" style="width: 90%">买入</a>
-            </div>
+    <div class="lk-content">
+        <div class="lk-container-flex lk-nav-link">
+                <a href="card_buy.php" class="layui-bg-orange">买入</a>
+                <a href="card_sell.php">卖出</a>
+                <a href="card_order.php">订单</a>
+                <a href="card_orderlist.php">订单记录</a>
+        </div>
+        <hr>
+        <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
+                <a href="javascript:;">买入价：<input type='text' name="buyPrice" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
+                <a href="javascript:;">余额：<?= number_format($platformInfo['num'],2); ?></a>
+        </div>
+        <hr>
+        <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
+                <a href="javascript:;">买入数量：<input type='text' name="buyNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+                <a href="javascript:;">WLK</a>
+        </div>
+        <hr>
+        <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
+                <a href="javascript:;">最低买入量：<input type='text' name="limitNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+                <a href="javascript:;">WLK</a>
+        </div>
+        <hr>
+        <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
+                <a href="javascript:;">兑换资金：<span id="money">0.00</span></a>
+                <a href="javascript:;">CNY</a>
+        </div>
+        <hr>
+        <div class="lk-container-flex lk-justify-content-c">
+            <a href="javascript:;" id="buyTran" class="layui-btn layui-btn-warm" style="width: 90%">买入</a>
         </div>
         <div class="lk-container-flex">
             <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
@@ -103,6 +103,7 @@
             </div>
         </div>
   </div>
+</div>
   <div class="right" style="color:#000000">
         <div class="lk-container-flex">
             <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
@@ -135,17 +136,17 @@
             var buyNum = $("[name=buyNum]").val();
             var limitNum = $("[name=limitNum]").val();
             var money = buyPrice*buyNum;
-            var id = "<?php echo $card['id']; ?>";
+            var id = "<?php echo $platformInfo['id']; ?>";
             var data = {"buyPrice":buyPrice,"buyNum":buyNum,'id':id,"limitNum":limitNum};
-            $.post("?c=hairpin&a=index",data,function(result){
-                console.log(result);
-                layer.closeAll("loading");
-                if(!result.res){
-                    layer.msg(result.msg,{icon:1,skin:"demo-class"});
-                }else{
-                    layer.msg(result.msg,{icon:5,skin:"demo-class"});
-                }
-            },"json");
+            // $.post("./card_buy.php",data,function(result){
+            //     console.log(result);
+            //     layer.closeAll("loading");
+            //     if(!result.res){
+            //         layer.msg(result.msg,{icon:1,skin:"demo-class"});
+            //     }else{
+            //         layer.msg(result.msg,{icon:5,skin:"demo-class"});
+            //     }
+            // },"json");
         });
         $("input[name^=buy]").bind("keyup",function(){
             var buyPrice = $("[name=buyPrice]").val();
@@ -161,61 +162,6 @@
         //     }
         // });
     })
-    //注意：导航 依赖 element 模块，否则无法进行功能性操作
-    layui.use(['element', 'layer', 'jquery'], function () {
-        var element = layui.element;
-        // var layer = layui.layer;
-        var $ = layui.$;
-        // 配置tab实践在下面无法获取到菜单元素
-        $('.site-demo-active').on('click', function () {
-            var dataid = $(this);
-            //这时会判断右侧.layui-tab-title属性下的有lay-id属性的li的数目，即已经打开的tab项数目
-            if ($(".layui-tab-title li[lay-id]").length <= 0) {
-                //如果比零小，则直接打开新的tab项
-                active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id"), dataid.attr("data-title"));
-            } else {
-                //否则判断该tab项是否以及存在
-                var isData = false; //初始化一个标志，为false说明未打开该tab项 为true则说明已有
-                $.each($(".layui-tab-title li[lay-id]"), function () {
-                    //如果点击左侧菜单栏所传入的id 在右侧tab项中的lay-id属性可以找到，则说明该tab项已经打开
-                    if ($(this).attr("lay-id") == dataid.attr("data-id")) {
-                        isData = true;
-                    }
-                })
-                if (isData == false) {
-                    //标志为false 新增一个tab项
-                    active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id"), dataid.attr("data-title"));
-                }
-            }
-            //最后不管是否新增tab，最后都转到要打开的选项页面上
-            active.tabChange(dataid.attr("data-id"));
-        });
-
-        var active = {
-            //在这里给active绑定几项事件，后面可通过active调用这些事件
-            tabAdd: function (url, id, name) {
-                //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
-                //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
-                element.tabAdd('demo', {
-                    title: name,
-                    content: '<iframe data-frameid="' + id + '" scrolling="auto" frameborder="0" src="' + url + '" style="width:100%;height:99%;"></iframe>',
-                    id: id //规定好的id
-                })
-                FrameWH();  //计算ifram层的大小
-            },
-            tabChange: function (id) {
-                //切换到指定Tab项
-                element.tabChange('demo', id); //根据传入的id传入到指定的tab项
-            },
-            tabDelete: function (id) {
-                element.tabDelete("demo", id);//删除
-            }
-        };
-        function FrameWH() {
-            var h = $(window).height();
-            $("iframe").css("height",h+"px");
-        }
-    });
 </script>
 
 
