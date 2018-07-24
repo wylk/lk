@@ -12,7 +12,15 @@
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
       .layui-input-block{margin-right: 50px;}
+<<<<<<< HEAD
+<<<<<<< HEAD
+      .layui-input{border:0;padding-left: 7px;}
+=======
+      .layui-input{border:0; padding-left: 6px;}
+>>>>>>> 4fd027db8890dd24cd15e6c688788886b391214a
+=======
       .layui-input{border:0; padding-left:6px;}
+>>>>>>> 63b03d7a41512cc62fc54a24b09cfb1c11ea4514
       .layui-form-item .layui-input-inline.us-input-inline{display: inline-block; float: none; left: 0;  width: auto; margin: 0; padding: 10px 0 10px 0px;}
       .layui-form-item{margin: 0; line-height: 45px;}
       .us-btn{background-color: #FFF; color:#FF5722; font-weight: 500}
