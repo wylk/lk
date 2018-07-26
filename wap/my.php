@@ -14,6 +14,10 @@ if($orderlist){
 	foreach ($orderlist as $key => $value) {
 		$tranIds[] = $value['tran_id'];
 		$frozenList[$value['tran_id']] += $value['number'];
+		if(isset($value['tran_other']) && $value['tran_other'] != $value['tran_id']){
+			$tranIds[] =  $value['tran_other'];
+			$frozenList[$value['tran_other']] += $value['number'];
+		}
 	}
 
 	if(is_array($tranIds) && count($tranIds)>1) $tranWhere['id'] = ['in',$tranIds];

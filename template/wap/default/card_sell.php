@@ -65,21 +65,9 @@
             <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
         </div>
         <hr>
-        <div class="lk-container-flex">
-            <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
-                <p class="item-flex">王**</p>
-                <p class="item-flex">900WLK</p>
-                <p class="item-flex">在线</p>
-                <p class="item-flex">价格：1</p>
-                <p class="item-flex">logo</p>
-                <p class="item-flex">限额：100-900</p>
-            </div>
-            <div class="lk-container-flex">
-                <p class="item-buy"><a href="">卖出</a></p>
-            </div>
-        </div>
         <hr>
         <?php foreach($buyList as $key=>$value){ ?>
+        <?php if($value['num'] <= $value['frozen']) continue; ?>
         <div class="lk-container-flex">
             <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
                 <p class="item-flex">王**</p>
@@ -90,7 +78,7 @@
                 <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?> - <?php echo number_format($value['num'],2) ?></p>
             </div>
             <div class="lk-container-flex">
-                <p class="item-buy"><a href="">卖出</a></p>
+                <p class="item-buy"><a href="javascript:;" id="transaction_<?php echo $value['id'] ?>">卖出</a></p>
             </div>
         </div>
         <hr>
@@ -105,7 +93,7 @@ layui.use(['layer'],function(){
         var num = $("[name=sellNum]").val();
         var limit = $('[name=limitNum]').val();
         var id = "<?php echo $platformInfo['id'] ?>";
-        var data = {"price":price,"num":num,"id":id,"limitNum":limit};
+        var data = {"price":price,"num":num,"id":id,"limitNum":limit,"type":"register"};
         $.post("./card_sell.php",data,function(res){
             console.log(res);
             layer.closeAll("loading");
@@ -123,6 +111,21 @@ layui.use(['layer'],function(){
     //         layer.msg("售卖最低限制数量不得大于售卖数量",{icon:5,skin:"demo-class"});
     //     }
     // })
+    $("[id^=transaction]").bind("click",function(){
+        var idStr = $(this).attr("id");
+        var tranId = idStr.substring(idStr.indexOf("_")+1);
+        var packageId = "<?php echo $platformInfo['id']; ?>";
+        var data = {'type':"transaction","tranId":tranId,"packageId":packageId};
+        $.post("./card_sell.php",data,function(result){
+            console.log(result);
+            if(!result.res){
+                layer.msg(result.msg,{icon:1,skin:"demo-class"});
+                window.location.href = "./card_order.php";
+            }else{
+                layer.msg(result.msg,{icon:5,skin:"demo-class"});
+            }
+        },'json');
+    });
 })
 $('input[name^=sell]').bind("keyup",function(){
     var price = $("[name=sellPrice]").val();
