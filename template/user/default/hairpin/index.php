@@ -12,7 +12,6 @@
     </head>
     <body>
     <div class="x-body layui-anim layui-anim-up">
-
         <fieldset class="layui-elem-field">
             <legend>交易统计</legend>
             <div class="layui-field-box">

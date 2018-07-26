@@ -61,7 +61,6 @@
         <div class="lk-container-flex lk-justify-content-c">
             <a href="javascript:;" id="buyTran" class="layui-btn layui-btn-warm" style="width: 90%">买入</a>
         </div>
-<<<<<<< HEAD
         <div class="lk-container-flex">
             <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
         </div>
@@ -77,43 +76,10 @@
                 <p class="item-flex">价格：<?php echo number_format($value['price'],2) ?></p>
                 <p class="item-flex">logo</p>
                 <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?>-<?php echo number_format($value['num'],2) ?></p>
-=======
-            <div class="lk-container-flex">
-                <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
->>>>>>> a19f19ee3833a254b2d5c73e868d745fe7d34a25
             </div>
-            <hr>
             <div class="lk-container-flex">
-<<<<<<< HEAD
                 <p class="item-buy"><a href="javascript:;" id="transaction_<?php echo $value['id'] ?>">买入</a></p>
-=======
-                <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
-                    <p class="item-flex">王**</p>
-                    <p class="item-flex">900WLK</p>
-                    <p class="item-flex">在线</p>
-                    <p class="item-flex">价格：1</p>
-                    <p class="item-flex">logo</p>
-                    <p class="item-flex">限额：100-900</p>
-                </div>
-                <div class="lk-container-flex">
-                    <p class="item-buy"><a href="">买入</a></p>
-                </div>
->>>>>>> a19f19ee3833a254b2d5c73e868d745fe7d34a25
             </div>
-            <hr>
-            <?php foreach ($sellList as $key => $value) { ?>
-            <div class="lk-container-flex">
-                <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
-                    <p class="item-flex">王**</p>
-                    <p class="item-flex"><?php echo number_format($value['num'],2) ?>WLK</p>
-                    <p class="item-flex">在线</p>
-                    <p class="item-flex">价格：<?php echo number_format($value['price'],2) ?></p>
-                    <p class="item-flex">logo</p>
-                    <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?>-<?php echo number_format($value['num'],2) ?></p>
-                </div>
-                <div class="lk-container-flex">
-                    <p class="item-buy"><a href="">买入</a></p>
-                </div>
         </div>
         <hr>
         <?php } ?>
@@ -172,5 +138,4 @@
     })
 </script>
 </body>
-
 </html>

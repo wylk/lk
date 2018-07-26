@@ -120,11 +120,11 @@
                     <col width="25%">
                   </colgroup>
                   <tbody>
-                    <?php for($i = 0; $i < 23 ; $i++){?>
+                    <?php foreach ($buyList as $key => $value) { ?>
                     <tr>
                       <td style="color:#008069">买</td>
-                      <td>2412</td>
-                      <td>123</td>
+                      <td><?php echo number_format($value['num'],2) ?></td>
+                      <td><?php echo number_format($value['price']*$value['num'],2) ?></td>
                       <td><a href="javascript:;"  class="layui-btn layui-btn-xs">卖出</a></td>
                     </tr>
                     <?php } ?>
@@ -141,11 +141,12 @@
                     <col width="25%">
                   </colgroup>
                   <tbody>
-                    <?php for($i = 0; $i < 6 ; $i++){?>
+                    <?php foreach ($sellList as $key => $value) { ?>
                     <tr>
                       <td style="color:red">卖</td>
-                      <td>2412</td>
-                      <td>123</td><!-- onclick="x_admin_show('卖出','?c=hairpin&a=transaction&type=0&id=<?= 1 ?>',500,500)" -->
+                      <td><?php echo number_format($value['num'],2) ?></td>
+                      <td><?php echo number_format($value['price']*$value['num'],2) ?></td>
+                      <!-- onclick="x_admin_show('卖出','?c=hairpin&a=transaction&type=0&id=<?= 1 ?>',500,500)" -->
                       <td><a href="javascript:;" class="layui-btn layui-btn-xs" >买入</a></td>
                     </tr>
                     <?php } ?>
@@ -163,10 +164,10 @@
                 <!-- 待处理订单 -->
                     <div class="layui-tab-item layui-show">
                         <div class="order div-overflow content-div">
-                            <?php for($i = 0;$i < 25;$i++){?>
+                            <?php foreach ($orderingList as $key => $value) { ?>
                             <div class="order-list">
                                 <div class="order-list-title div-div lk-container-flex lk-justify-content-sb">
-                                    <div class=""><span style="color: red">买入</span> 单号:234322</div>
+                                    <div class=""><span style="color: red">买入</span> 单号:<?php echo $value['onumber'] ?></div>
                                     <div class="order-list-title-right text-r" onclick="x_admin_show('订单详情','?c=hairpin&a=orderList&type=0&id=<?= 1 ?>',400,450)">订单详情</div>
                                 </div>
                                 <div class="order-list-content div-div div-div-hight lk-container-flex lk-justify-content-sb">
