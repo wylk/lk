@@ -264,7 +264,7 @@ $this->htmlall.=$str;
 			                        	{$this->resSucce}
 			                        });
 			                    }else{
-			                        layer.msg('ok', {icon: 6,time:2000});
+			                        layer.msg(re.msg, {icon: 5,time:2000});
 			                    }
 
 			                },'json');
