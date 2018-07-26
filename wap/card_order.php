@@ -4,9 +4,9 @@ if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST
 $userId = $wap_user['userid'];
 
 
-$packageInfo = D("Card_package")->where(['uid'=>$userId,"type"=>'leka'])->find();
-$orderWhere = "( `buy_id` = ".$userId." or `sell_id` = ".$userId." ) and `card_id` =  '".$packageInfo['card_id']."' and status = 0";
-$orderList = D("Orders")->where($orderWhere)->order("create_time desc")->select();
+import("PlatformCurrency");
+$platformObj = new PlatformCurrency();
+$orderList = $platformObj->selectOrderList(['userId'=>$userId,'status'=>0]);
 
 include display('card_order');
 echo ob_get_clean();

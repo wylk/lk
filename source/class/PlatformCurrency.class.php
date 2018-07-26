@@ -279,4 +279,18 @@ class PlatformCurrency{
         }
         return ['res'=>0,"msg"=>"转账成功"];
     }
+    // 委托列表
+    public function selectRegister($data){
+        // 查询当前卖单信息
+        $list = D("Card_transaction")->where(['uid'=>['not in',[$data['userId']]],'card_id'=>$data['cardId'],"type"=>$data['type'],"status"=>'0'])->select();
+        return $list;
+    }
+    // 交易记录列表
+    public function selectOrderList($data){
+        $packageInfo = D("Card_package")->where(['uid'=>$data['userId'],"type"=>"leka"])->find();
+        $orderWhere = "(`buy_id` = ".$data['userId']." or `sell_id` = ".$data['userId'].") and `card_id` = '".$packageInfo['card_id']."' and status = ".$data['status'];
+        return D("Orders")->where($orderWhere)->order("create_time desc")->select();
+    }
+    public function selectOrder(){
+    }
 }

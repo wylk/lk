@@ -40,34 +40,6 @@
                 <a href="card_orderlist.php" class="layui-bg-orange">订单记录</a>
         </div>
         <hr>
-        <!-- <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
-            <div class="order-left">
-                <p><span class="b">买入</span> 单号：2049023</p>
-                <p>2018.07.06 14:36:55下单</p>
-                <p>数量：150.0000</p>
-            </div>
-            <div class="order-right">
-                <p><a class="layui-bg-cyan" style="padding: 5px 7px" href="">查看详情</a></p>
-                <p>价格：1.00</p>
-                <p style="color: #2F4056">已完成</p>
-                <p>总金额：<span class="total">￥12500.00</span></p>
-            </div>
-        </div>
-        <hr>
-        <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
-            <div class="order-left">
-                <p><span class="s">卖出</span> 单号：2049023</p>
-                <p>2018.07.06 14:36:55下单</p>
-                <p>数量：150.0000</p>
-            </div>
-            <div class="order-right">
-                <p><a class="layui-bg-cyan" style="padding: 5px 7px" href="">查看详情</a></p>
-                <p>价格：1.00</p>
-                <p style="color: #2F4056">已完成</p>
-                <p>总金额：<span class="total">￥12500.00</span></p>
-            </div>
-        </div>
-        <hr> -->
         <?php foreach ($orderList as $key => $value) { ?>
         <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
             <div class="order-left">
