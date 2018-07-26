@@ -61,11 +61,32 @@
         <div class="lk-container-flex lk-justify-content-c">
             <a href="javascript:;" id="buyTran" class="layui-btn layui-btn-warm" style="width: 90%">买入</a>
         </div>
+<<<<<<< HEAD
+        <div class="lk-container-flex">
+            <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
+        </div>
+        <hr>
+        <hr>
+        <?php foreach ($sellList as $key => $value) { ?>
+        <?php if($value['num'] <= $value['frozen']) continue; ?>
+        <div class="lk-container-flex">
+            <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
+                <p class="item-flex">王**</p>
+                <p class="item-flex"><?php echo number_format($value['num'],2) ?>WLK</p>
+                <p class="item-flex">在线</p>
+                <p class="item-flex">价格：<?php echo number_format($value['price'],2) ?></p>
+                <p class="item-flex">logo</p>
+                <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?>-<?php echo number_format($value['num'],2) ?></p>
+=======
             <div class="lk-container-flex">
                 <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
+>>>>>>> a19f19ee3833a254b2d5c73e868d745fe7d34a25
             </div>
             <hr>
             <div class="lk-container-flex">
+<<<<<<< HEAD
+                <p class="item-buy"><a href="javascript:;" id="transaction_<?php echo $value['id'] ?>">买入</a></p>
+=======
                 <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
                     <p class="item-flex">王**</p>
                     <p class="item-flex">900WLK</p>
@@ -77,6 +98,7 @@
                 <div class="lk-container-flex">
                     <p class="item-buy"><a href="">买入</a></p>
                 </div>
+>>>>>>> a19f19ee3833a254b2d5c73e868d745fe7d34a25
             </div>
             <hr>
             <?php foreach ($sellList as $key => $value) { ?>
@@ -106,7 +128,7 @@
             var limitNum = $("[name=limitNum]").val();
             var money = buyPrice*buyNum;
             var id = "<?php echo $platformInfo['id']; ?>";
-            var data = {"buyPrice":buyPrice,"buyNum":buyNum,'id':id,"limitNum":limitNum};
+            var data = {"buyPrice":buyPrice,"buyNum":buyNum,'id':id,"limitNum":limitNum,"type":"register"};
             $.post("./card_buy.php",data,function(result){
                 console.log(result);
                 layer.closeAll("loading");
@@ -130,6 +152,23 @@
         //         layer.msg('最低购买数量不得大于购买数量',{icon:5,skin:"demo-class"});
         //     }
         // });
+        $("[id^=transaction]").bind("click",function(){
+            var idStr = $(this).attr("id");
+            var tranId = idStr.substring(idStr.indexOf("_")+1);
+            // console.log(idStr,idStr.indexOf("_"),id);
+            var packageId = "<?php echo $platformInfo['id']; ?>";
+            var data = {"type":"transaction","tranId":tranId,"packageId":packageId}
+            console.log(data);
+            $.post("./card_buy.php",data,function(result){
+                console.log(result);
+                if(!result.res){
+                    layer.msg(result.msg,{icon:1,skin:"demo-class"});
+                }else{
+                    layer.msg(result.msg,{icon:5,skin:"demo-class"});
+                }
+            },"json");
+        });
+        
     })
 </script>
 </body>
