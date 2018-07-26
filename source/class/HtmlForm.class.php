@@ -43,7 +43,7 @@ class HtmlForm
             $this->required[$required[0]]['is_reg'] = 1;
         }
         $type = isset($data[2])?$data[2]:'text';
-        $str = '<div class="layui-form-item '.$data[0].'radio"><label class="layui-form-label" id="label-form">'.$data[1].'</label><div class="layui-input-block" id="input-bloc"><input type="'.$type.'" name="'.$data[0].'" value="'.$data[3].'"  lay-verify="'.$required[0].'" placeholder="请输入'.$data[1].'" autocomplete="off" class="layui-input" id="laui-input"></div></div>';
+        $str = '<div class="layui-form-item '.$data[0].'radio"><label class="layui-form-label" id="label-form">'.$data[1].':</label><div class="layui-input-block" id="input-bloc"><input type="'.$type.'" name="'.$data[0].'" value="'.$data[3].'"  lay-verify="'.$required[0].'" placeholder="请输入'.$data[1].'" autocomplete="off" class="layui-input" id="laui-input"></div></div>';
         $this->htmlall.=$str;
         return $this;
     }
@@ -52,7 +52,7 @@ class HtmlForm
     {
         $str = <<<EOM
         <div class="layui-form-item">
-            <label class="layui-form-label" id="label-form">{$title}</label>
+            <label class="layui-form-label" id="label-form">{$title}:</label>
             <div class="layui-input-block" id="input-bloc" style="height:80px;display:flex;justify-content:space-between">
               <div>
                 <a herf="javascript:;" class="layui-btn" id="{$id}" style="height:80px;line-height:80px;width:80px;">
@@ -105,7 +105,7 @@ $this->htmlall.=$str;
         }
         $str = <<<EOM
         <div class="layui-form-item">
-            <label class="layui-form-label" id="label-form">{$data[1]}</label>
+            <label class="layui-form-label" id="label-form">{$data[1]}:</label>
             <div class="layui-input-block" id="input-bloc">
             <select name="{$data[0]}" lay-verify="required" >
                 {$op}
@@ -127,7 +127,7 @@ $this->htmlall.=$str;
         $this->checkbox[] = $data[0];
         $str = <<<EOM
         <div class="layui-form-item">
-            <label class="layui-form-label" id="label-form">{$data[1]}</label>
+            <label class="layui-form-label" id="label-form">{$data[1]}:</label>
             <div class="layui-input-block" id="input-bloc">
               {$cx}
             </div>
@@ -140,7 +140,8 @@ $this->htmlall.=$str;
     //单选
     public function radio($data,$radio,$display = false)
     {
-        $str = '<div class="layui-form-item"><label class="layui-form-label" style="width:40px" id="label-form">'.$data[1].'</label><div class="layui-input-block" id="input-bloc">';
+        $width = $data[2]?$data[2]:40;
+        $str = '<div class="layui-form-item"><label class="layui-form-label" style="width:'.$width.'px" id="label-form">'.$data[1].':</label><div class="layui-input-block" id="input-bloc">';
         foreach ($radio as $k => $v) {
             $str .= '<input type="radio" lay-filter="'.$data[0].'" name="'.$data[0].'" value="'.$v['val'].'" title="'.$v['title'].'" '.$v['checked'].'>';
         }
@@ -170,9 +171,9 @@ EOS;
     {
         $str = <<<EOM
         <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label" id="label-form">{$name[1]}</label>
+        <label class="layui-form-label" id="label-form">{$name[1]}:</label>
         <div class="layui-input-block" id="input-bloc">
-          <textarea name="{$name[0]}" placeholder="请输入{$name[1]}" class="layui-textarea"></textarea>
+          <textarea name="{$name[0]}" placeholder="请输入{$name[1]}" class="layui-textarea">{$name[2]}</textarea>
         </div>
       </div>
 EOM;
@@ -205,9 +206,14 @@ $this->htmlall.=$str;
 		return $regex;
 	}
 
-	public function resSuccess($res)
+	public function resSuccess($res,$refresh = false)
 	{
-		$this->resSucce = "window.location.href='{$res}';";
+        if($refresh){
+            $this->resSucce = "window.location.replace(location.href);";
+        }else{
+
+		  $this->resSucce = "window.location.href='{$res}';";
+        }
 		return $this;
 	}
 
@@ -230,10 +236,10 @@ $this->htmlall.=$str;
 						$required .= $kk.": [{$a[0]}, '{$a[1]}'],";
             			break;
             		case 'max':
-            			 $required .= $kk.": function(value){if(value.length > ".$vv[1]."){layer.msg('".$vv[2]."', {icon: 5,time:2000}) ; }},";
+            			 $required .= $kk.": function(value){if(value.length > ".$vv[1]."){return '".$vv[2]."不能多于".$vv[1]."字符'; }},";
             			break;
             		case 'min':
-            			 $required .= $kk.": function(value){if(value.length < ".$vv[1]."){layer.msg('".$vv[2]."', {icon: 5,time:2000}) ; }},";
+            			 $required .= $kk.": function(value){if(value.length < ".$vv[1]."){return '".$vv[2]."不能少于".$vv[1]."字符'; }},";
             			break;
             		default:
             			# code...
