@@ -139,7 +139,10 @@ class PlatformCurrency{
         $tranData['price'] = $this->price;
         $tranData['createtime'] = time();
         $tranData['updatetime'] = time();
-        return D("Card_transaction")->data($tranData)->add();
+        if(!D("Card_transaction")->data($tranData)->add()){
+            return ['res'=>1,"msg"=>"添加失败"];
+        }
+        return ['res'=>0,"msg"=>"添加成功"];
     }
 // 自动匹配相应的订单
     public function matching($data){
@@ -183,7 +186,7 @@ class PlatformCurrency{
         $tranId = $data['tranId'];
         $this->userId = $data['userId'];
         $this->type = $type;
-        $this->packageId = $data['packageId'];
+        // $this->packageId = $data['packageId'];
 
         if(empty($data) || empty($type)) 
             return ['res'=>1,"数据错误"];
@@ -291,6 +294,15 @@ class PlatformCurrency{
         $orderWhere = "(`buy_id` = ".$data['userId']." or `sell_id` = ".$data['userId'].") and `card_id` = '".$packageInfo['card_id']."' and status = ".$data['status'];
         return D("Orders")->where($orderWhere)->order("create_time desc")->select();
     }
-    public function selectOrder(){
+    public function selectPersonRegister($data){
+        // $packageInfo = D("Card_package")->where(['uid'=>$data['userId'],"type"=>"leka"])->find();
+        $tranWhere = ['uid'=>$data['userId'],"card_id"=>$data['card_id'],"status"=>0];
+        return D("Card_transaction")->where($tranWhere)->order("createtime desc")->select();
+    }
+    public function revokeRegister($tranId){
+        if(!D("Card_transaction")->where(['id'=>$tranId])->setField("status",3)){
+            return ['res'=>1,"msg"=>"撤销失败"];
+        }
+        return ['res'=>0,"msg"=>"撤销成功"];
     }
 }

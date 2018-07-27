@@ -125,7 +125,7 @@
                       <td style="color:#008069">买</td>
                       <td><?php echo number_format($value['num'],2) ?></td>
                       <td><?php echo number_format($value['price']*$value['num'],2) ?></td>
-                      <td><a href="javascript:;"  class="layui-btn layui-btn-xs">卖出</a></td>
+                      <td><a href="javascript:;" id="sellTran_<?php echo $value['id']; ?>"  class="layui-btn layui-btn-xs">卖出</a></td>
                     </tr>
                     <?php } ?>
                   </tbody>
@@ -147,7 +147,7 @@
                       <td><?php echo number_format($value['num'],2) ?></td>
                       <td><?php echo number_format($value['price']*$value['num'],2) ?></td>
                       <!-- onclick="x_admin_show('卖出','?c=hairpin&a=transaction&type=0&id=<?= 1 ?>',500,500)" -->
-                      <td><a href="javascript:;" class="layui-btn layui-btn-xs" >买入</a></td>
+                      <td><a href="javascript:;" id="buyTran_<?php echo $value['id'] ?>"  class="layui-btn layui-btn-xs" >买入</a></td>
                     </tr>
                     <?php } ?>
                   </tbody>
@@ -163,22 +163,29 @@
               <div class="layui-tab-content">
                 <!-- 待处理订单 -->
                     <div class="layui-tab-item layui-show">
-                        <div class="order div-overflow content-div">
+                        <div class="order div-overflow content-div" id="ordering">
                             <?php foreach ($orderingList as $key => $value) { ?>
                             <div class="order-list">
                                 <div class="order-list-title div-div lk-container-flex lk-justify-content-sb">
-                                    <div class=""><span style="color: red">买入</span> 单号:<?php echo $value['onumber'] ?></div>
-                                    <div class="order-list-title-right text-r" onclick="x_admin_show('订单详情','?c=hairpin&a=orderList&type=0&id=<?= 1 ?>',400,450)">订单详情</div>
+                                    <div class="" style="width:80%">
+                                        <?php if($value['sell_id'] == $userId){ ?>
+                                        <span style="color: red">卖出</span>
+                                        <?php }else{ ?>
+                                        <span style="color: green">买入</span>
+                                        <?php } ?>
+                                    单号:<?php echo $value['onumber'] ?>
+                                    </div>
+                                    <div class="order-list-title-right text-r" onclick="x_admin_show('订单详情','?c=hairpin&a=orderList&orderId=<?= $value['id'] ?>',400,450)">订单详情</div>
                                 </div>
                                 <div class="order-list-content div-div div-div-hight lk-container-flex lk-justify-content-sb">
                                     <div id="order-list-content-left">
-                                        <p>2018-06-23 17:21:12</p>
-                                        <p>单价:¥1</p>
-                                        <p>数量:1000</p>
+                                        <p><?php echo date("Y-m-d H:i:s",$value['create_time']) ?></p>
+                                        <p>单价:¥<?php echo number_format($value['price'],2); ?></p>
+                                        <p>数量:<?php echo number_format($value['number'],2); ?></p>
                                     </div>
                                     <div class="order-list-content-right text-r">
-                                        <p>未付款</p>
-                                        <p>金额:¥132423</p>
+                                        <p><?php echo $value['sell_id'] == $userId ? "未收款" : "未付款" ?></p>
+                                        <p>金额:¥<?php echo number_format($value['number']*$value['price'],2); ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -188,21 +195,27 @@
                     <!-- 完成订单 -->
                     <div class="layui-tab-item">
                         <div class="order div-overflow content-div">
-                            <?php for($i = 0;$i < 5;$i++){?>
+                            <?php foreach ($finishOrderList as $key => $value) { ?>
                             <div class="order-list">
                                 <div class="order-list-title div-div lk-container-flex lk-justify-content-sb">
-                                    <div class=""><span style="color: red">买入</span> 单号:234322</div>
-                                    <div class="order-list-title-right text-r" onclick="x_admin_show('订单详情','?c=hairpin&a=orderList&type=0&id=<?= 1 ?>',400,450)">订单详情</div>
+                                    <div style="width:80%">
+                                        <?php if($value['sell_id'] == $userId){ ?>
+                                        <span style="color: red">卖出</span> 
+                                        <?php }else{ ?>
+                                        <span style="color: green">买入</span> 
+                                        <?php } ?>
+                                        单号:<?php echo $value['onumber'];?></div>
+                                    <div class="order-list-title-right text-r" onclick="x_admin_show('订单详情','?c=hairpin&a=orderList&orderId=<?= $value['id'] ?>',400,450)">订单详情</div>
                                 </div>
                                 <div class="order-list-content div-div div-div-hight lk-container-flex lk-justify-content-sb">
                                     <div id="order-list-content-left">
-                                        <p>2018-06-23 17:21:12</p>
-                                        <p>单价:¥1</p>
-                                        <p>数量:1000</p>
+                                        <p><?php echo date("Y-m-d",$value['create_time']) ?></p>
+                                        <p>单价:¥<?php echo number_format($value['price'],2); ?></p>
+                                        <p>数量:<?php echo number_format($value['number'],2); ?></p>
                                     </div>
                                     <div class="order-list-content-right text-r">
-                                        <p>未付款</p>
-                                        <p>金额:¥132423</p>
+                                        <p>已付款</p>
+                                        <p>金额:¥<?php echo number_format($value['number']*$value['price'],2); ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +239,7 @@
                             <hr>
                             <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
                                     <a href="javascript:;">买入价：<input type='text' name="buyPrice" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
-                                    <a href="javascript:;">余额：<?= number_format($card['num'],2); ?></a>
+                                    <a href="javascript:;">余额：<?php echo number_format($packageInfo['num'],2); ?></a>
                             </div>
                             <hr>
                             <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
@@ -235,12 +248,12 @@
                             </div>
                             <hr>
                             <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                                    <a href="javascript:;">最低买入量：<input type='text' name="limitNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+                                    <a href="javascript:;">最低买入量：<input type='text' name="limitBuy" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
                                     <a href="javascript:;">WLK</a>
                             </div>
                             <hr>
                             <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                                    <a href="javascript:;">兑换资金：<span id="money">0.00</span></a>
+                                    <a href="javascript:;">兑换资金：<span id="buyMoney"></span></a>
                                     <a href="javascript:;">CNY</a>
                             </div>
                             <hr>
@@ -254,27 +267,27 @@
                         <div class="lk-content" style="margin-top: -50px;">
                             <hr>
                             <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                                    <a href="javascript:;">卖入价：<input type='text' name="buyPrice" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
-                                    <a href="javascript:;">余额：<?= number_format($card['num'],2); ?></a>
+                                    <a href="javascript:;">卖入价：<input type='text' name="sellPrice" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
+                                    <a href="javascript:;">余额：<?php echo number_format($packageInfo['num'],2); ?></a>
                             </div>
                             <hr>
                             <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                                    <a href="javascript:;">卖入数量：<input type='text' name="buyNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+                                    <a href="javascript:;">卖入数量：<input type='text' name="sellNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
                                     <a href="javascript:;">WLK</a>
                             </div>
                             <hr>
                             <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                                    <a href="javascript:;">最低卖入量：<input type='text' name="limitNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+                                    <a href="javascript:;">最低卖入量：<input type='text' name="limitSell" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
                                     <a href="javascript:;">WLK</a>
                             </div>
                             <hr>
                             <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                                    <a href="javascript:;">兑换资金：<span id="money">0.00</span></a>
+                                    <a href="javascript:;">兑换资金：<span id="sellMoney">0.00</span></a>
                                     <a href="javascript:;">CNY</a>
                             </div>
                             <hr>
                             <div class="lk-container-flex lk-justify-content-c">
-                                <a href="javascript:;" id="buyTran" class="layui-btn" style="width: 90%">卖出</a>
+                                <a href="javascript:;" id="sellTran" class="layui-btn" style="width: 90%">卖出</a>
                             </div>
                         </div>
                     </div>
@@ -300,12 +313,16 @@
                                     <col width="25%">
                                   </colgroup>
                                   <tbody>
-                                    <?php for($i = 0; $i < 6 ; $i++){?>
-                                    <tr>
+                                    <?php foreach ($registerList as $key => $value) { ?>
+                                    <tr id="strRevoke_<?php echo $value['id'] ?>">
+                                    <?php if($value['type'] == '1'){ ?>
                                       <td style="color:#008069">买</td>
-                                      <td>2412</td>
-                                      <td>123</td>
-                                      <td><a href="javascript:;"  class="layui-btn layui-btn-xs">撤销</a></td>
+                                    <?php }else{ ?>
+                                      <td style="color:red">卖</td>
+                                    <?php } ?>
+                                      <td><?php echo number_format($value['num'],2); ?></td>
+                                      <td><?php echo number_format($value['price'],2); ?></td>
+                                      <td><a href="javascript:;" id="revoke_<?php echo $value['id'] ?>"  class="layui-btn layui-btn-xs">撤销</a></td>
                                     </tr>
                                     <?php } ?>
                                   </tbody>
@@ -322,9 +339,145 @@
 </html>
 <script>
 //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
-layui.use('element', function(){
+layui.use(["layer",'element'], function(){
   var element = layui.element;
-  
+  // var layer = layui.layer;
+
+  $("[id^=sellTran_]").bind("click",function(){
+    layer.load();
+    var idStr = $(this).attr("id");
+    var tranId = idStr.substring(idStr.indexOf("_")+1);
+    console.log(tranId);
+    var data = {"tranId":tranId};
+    $.post("?c=hairpin&a=sellTran",data,function(result){
+        console.log(result);
+        layer.closeAll("loading");
+        if(!result.res){
+            layer.msg(result.msg,{icon:1,skin:"demo-class"});
+            var price = new Number(result.data.price);
+            var number = new Number(result.data.number);
+            var prices = new Number(result.data.number*result.data.price);
+            var str = "<div class='order-list'>";
+            str += "<div class='order-list-title div-div lk-container-flex lk-justify-content-sb'>";
+            str += "<div style='width:80%'>";
+            str += "<span style='color: green'>卖出</span>";
+            str += result.data.onumber + "</div>";
+            str += "<div class='order-list-title-right text-r' onclick='x_admin_show(\"订单详情\",\"?c=hairpin&a=orderList&type=0&id=<?= 1 ?>\",400,450)'>订单详情</div></div>";
+            str += "<div class='order-list-content div-div div-div-hight lk-container-flex lk-justify-content-sb'>";
+            str += "<div id='order-list-content-left'>";
+            str += "<p>"+result.data.create_time+"</p><p>单价:¥"+price.toFixed(2)+"</p><p>数量:"+number.toFixed(2)+"</p>";
+            str += "</div>";
+            str += "<div class='order-list-content-right text-r'>";
+            str += "<p>未收款</p><p>金额:¥"+prices.toFixed(2)+"</p>";
+            str += "</div></div></div>";
+            $("#ordering").prepend(str);
+        }else{
+            layer.msg(result.msg,{icon:5,skin:"demo-class"});
+        }
+    },"json");
+  })
+  $("[id^=buyTran_]").bind("click",function(){
+    layer.load();
+    var idStr = $(this).attr("id");
+    var tranId = idStr.substring(idStr.indexOf("_")+1);
+    console.log(tranId);
+    var data = {"tranId":tranId};
+    $.post("?c=hairpin&a=buyTran",data,function(result){
+        console.log(result);
+        layer.closeAll("loading");
+        if(!result.res){
+            layer.msg(result.msg,{icon:1,skin:"demo-class"});
+            var price = new Number(result.data.price);
+            var number = new Number(result.data.number);
+            var prices = new Number(result.data.price*result.data.number);
+            var str = "<div class='order-list'>";
+            str += "<div class='order-list-title div-div lk-container-flex lk-justify-content-sb'>";
+            str += "<div style='width:80%'>";
+            str += "<span style='color: green'>买入</span>";
+            str += result.data.onumber + "</div>";
+            str += "<div class='order-list-title-right text-r' onclick='x_admin_show(\"订单详情\",\"?c=hairpin&a=orderList&type=0&id=<?= 1 ?>\",400,450)'>订单详情</div></div>";
+            str += "<div class='order-list-content div-div div-div-hight lk-container-flex lk-justify-content-sb'>";
+            str += "<div id='order-list-content-left'>";
+            str += "<p>"+result.data.create_time+"</p><p>单价:¥"+price.toFixed(2)+"</p><p>数量:"+number.toFixed(2)+"</p>";
+            str += "</div>";
+            str += "<div class='order-list-content-right text-r'>";
+            str += "<p>未付款</p><p>金额:¥"+prices.toFixed(2)+"</p>";
+            str += "</div></div></div>";
+            $("#ordering").prepend(str);
+        }else{
+            layer.msg(result.msg,{icon:5,skin:"demo-class"});
+        }
+    },"json");
+  })
+  // 买入委单
+  $("#buyTran").bind("click",function(){
+    layer.load();
+    var buyPrice = $("[name=buyPrice]").val();
+    var buyNum = $("[name=buyNum]").val();
+    var limitNum = $("[name=limitBuy]").val();
+    var packageId = "<?php echo $packageInfo['id'] ?>";
+    var data = {"price":buyPrice,"tranNum":buyNum,"limitNum":limitNum,"packageId":packageId,"type":"1"};
+    $.post("?c=hairpin&a=addRegister",data,function(result){
+        console.log(result);
+        layer.closeAll("loading");
+        if(!result.res){
+            layer.msg(result.msg,{icon:1,skin:"demo-class"});
+        }else{
+            layer.msg(result.msg,{icon:5,skin:"demo-class"});
+        }
+    },"json");
+  });
+    // 卖出委单
+  $("#sellTran").bind("click",function(){
+    layer.load();
+    var sellPrice = $("[name=sellPrice]").val();
+    var sellNum = $("[name=sellNum").val();
+    var limitNum = $("[name=limitSell]").val();
+    var packageId = "<?php echo $packageInfo['id'] ?>";
+    var data = {"price":sellPrice,"tranNum":sellNum,"limitNum":limitNum,"packageId":packageId,"type":"2"};
+    $.post("?c=hairpin&a=addRegister",data,function(result){
+        layer.closeAll("loading");
+        if(!result.res){
+            layer.msg(result.msg,{icon:1,skin:"demo-class"});
+        }else{
+            layer.msg(result.msg,{icon:5,skin:"demo-class"});
+        }
+    },"json");
+  });
+  $("[name^=buy]").bind("keyup",function(){
+    var buyPrice = $("[name=buyPrice]").val();
+    var buyNum = $("[name=buyNum]").val();
+    var buyMoney = new Number(buyPrice*buyNum);
+    $("#buyMoney").html(buyMoney.toFixed(2));
+  });
+  $("[name^=sell]").bind("keyup",function(){
+    var sellPrice = $("[name=sellPrice]").val();
+    var sellNum = $("[name=sellNum]").val();
+    var sellMoney = new Number(sellPrice*sellNum);
+    console.log(sellMoney);
+    $("#sellMoney").html(sellMoney.toFixed(2));
+  });
+
+  // 撤销委单
+  $("[id^=revoke_]").bind("click",function(){
+    var idStr = $(this).attr("id");
+    var tranId = idStr.substring(idStr.indexOf("_")+1);
+    layer.confirm("确定要撤销吗?",function(){
+    layer.load();
+        var data = {"tranId":tranId};
+        console.log(data);
+        $.post("?c=hairpin&a=revokeRegister",data,function(result){
+            layer.closeAll("loading");
+            if(!result.res){
+                layer.msg(result.msg,{icon:1,skin:"demo-class"});
+                $("#strRevoke_"+tranId).remove();
+            }else{
+                layer.msg(result.msg,{icon:5,skin:"demo-class"});
+            }
+        },"json");
+    })
+  })
+
   //…
 });
 </script>
