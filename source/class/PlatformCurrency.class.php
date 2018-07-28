@@ -4,6 +4,8 @@
 *   关于平台币的类
 */
 class PlatformCurrency{
+    public $tradingSwitch =  true;
+    public $tradingMsg = "暂时停止交易";
     public $matchOrderData = [];
     public $tranList = [];
     public $tranNum;       //交易数量
@@ -18,55 +20,18 @@ class PlatformCurrency{
     public $lkApiObj;
     public function __construct($data=null){
         $this->userId = $data['userid'];
-        $this->price = $data['price'];
+        $this->price = option('hairpan_set.price');
         $this->initialNum = $this->tranNum = $data['tranNum'];
-        $this->limitNum = $data['limitNum'];
+        $this->limitNum = option('hairpan_set.limit') ? option('hairpan_set.limit') : $data['limitNum'];
         $this->packageId = $data['packageId'];
         $this->type = $data['type'];
     }
-    // public function currencyBuy(){
-    //     // 判断购买规则是否符合
-    //     if(!($this->tranNum > 0 && $this->price > 0)){
-    //         return ['res'=>1,"msg"=>"购买价格或者数量不能为0"];
-    //     }
-    //     if($this->tranNum < $this->limitNum){
-    //         return ['res'=>1,"msg"=>"购买的限制最低数量不得大于购买量"];
-    //     }
 
-    //     // 自动检测交易单生成订单
-    //     $matchWhere = ['uid'=>["not in",[$this->userId]],'price'=>$this->price,"limit"=>["<=",$this->tranNum],"type"=>2,"status"=>0];
-    //     $matchingList = D("Card_transaction")->where($matchWhere)->order("createtime asc")->select();
-    //     if($matchingList){
-    //        $res = $this->matching($matchingList,'buy');
-    //        if($res) return $res;
-    //     }
-
-    //     // 挂单到数据库
-    //      $res = $this->addTransaction(1);
-
-    //     // 自动检测订单添加
-    //     if(count($this->matchOrderData) > 0){
-    //         foreach($this->matchOrderData as $key=>$value){
-    //             $this->matchOrderData[$key]['tran_other'] = $res;
-    //         }
-    //         if(count($this->matchOrderData) == 1){
-    //             $matchOrderData = array_values($this->matchOrderData);
-    //             $matchOrderNum = D("Orders")->data($matchOrderData[0])->add();
-    //             $num = 1;
-    //         }else{
-    //             $num = $matchOrderNum = D("Orders")->data($matchOrderData)->addAll();
-    //         }
-    //         M("Card_transaction")->setData($this->tranList);
-    //         if($this->tranNum == 0){
-    //             return ['res'=>0,"msg"=>"已生成".$num."条订单，请查看"];
-    //         }
-    //     }
-    //     if(!$res){
-    //         return ['res'=>1,"msg"=>"挂单失败"]; 
-    //     }
-    //     return ['res'=>0,"msg"=>"挂单成功"];
-    // }
     public function currency(){
+        // 判断是否可以交易
+        if(!option('hairpan_set.coin_open')){
+            return ['res'=>1,"msg"=>"暂时停止交易"];
+        }
         // 判断售卖规则是否符合
         if($this->type == '2'){
             $this->platform[$this->packageId] = D("Card_package")->where(['id'=>$this->packageId])->find();
@@ -74,11 +39,11 @@ class PlatformCurrency{
                 return ['res'=>1,"msg"=>"售出数量不能超出现有数量"];
             }
         }
-        if(!($this->price > 0 && $this->tranNum > 0 )){
-            return ['res'=>1,"msg"=>"销售单价或者数量不能小于0"];
+        if(!$this->tranNum > 0 ){
+            return ['res'=>1,"msg"=>"购买数量不能小于0"];
         }
         if($this->tranNum < $this->limitNum){
-            return ['res'=>1,"msg"=>"购买的限制最低数量不得大于购买量"];
+            return ['res'=>1,"msg"=>"限制最低数量不得大于发布量"];
         }
 
         // 自动匹配交易单并生成订单
@@ -186,6 +151,10 @@ class PlatformCurrency{
     // $type :1买方，2卖方
     // $data 交易单id ，以及当前用户uid
     public function createOrder($data,$type){
+        // 判断是否可以交易
+        if(!option('hairpan_set.coin_open')){
+            return ['res'=>1,"msg"=>"暂时停止交易"];
+        }
         $tranId = $data['tranId'];
         $this->userId = $data['userId'];
         $this->type = $type;

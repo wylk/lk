@@ -73,9 +73,30 @@ if (empty($config)) {
 
 	F('config', $config);
 }
-
-
 $_G['config'] = $config;
+
+// 平台币的设置
+$hairpanSet = F('hairpan_set');
+if(empty($hairpanSet)){
+	$hairpanSetRes = D("Hairpan_set")->field("name,value")->select();
+	foreach($hairpanSetRes as $key=>$value){
+		$hairpanSet[$value['name']] = $value['value'];
+	}
+	F("hairpan_set",$hairpanSet);
+}
+$_G['hairpan_set'] = $hairpanSet;
+
+// 卡券的设置
+$cardSet = D("card_set");
+if(empty($cardSet)){
+	$cardSetRes = D("Card_set")->select();
+	foreach($cardSetRes as $key=>$value){
+		$cardSet[$value['name']] = $value['value'];
+	}
+	F("card_set",$cardSet);
+}
+$_G['card_set'] = $cardSet;
+
 $static_domain = rtrim(CND_PATH, '/');
 
 if (option('system.STATIC_RESOURCE') == 'off') {
