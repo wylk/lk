@@ -3,21 +3,22 @@ require_once dirname(__FILE__).'/global.php';
 
 import('LkApi');
 $obj  = new LkApi(['appid'=>'0x11083f099e36850a6d264b1050f6f7ebe652d4c2','mchid'=>'2343sdf','key'=>'0x11083f099e36850a6d264b1050f6f7ebe652d4c2']);
-<<<<<<< HEAD
-
-// // $res = $obj->geth_api(['phone'=>'13967426223','c'=>'Geth','a'=>'add_account']);
-// // 查询账户余额
-$res = $obj->geth_api(['address'=>'0x7a7ef60170e17f5099f3e8d0f5272a55af61ed1b','c'=>'Contracts','a'=>'balance_contract']);
-// $res = $obj->geth_api(['form'=>'0xf7466b9a2020f08319b553088b381cfdc12eb0d3','to'=>'0x669a4060c43a2687f03487fb188ca20c97e63688','val'=>100,'c'=>'Contracts','a'=>'transfer_contract']);
-// $res = $obj->geth_api(['phone'=>'13967426223','c'=>'Geth','a'=>'add_account']);
-
-// $res = $obj->geth_api(['from'=>'0x7a7ef60170e17f5099f3e8d0f5272a55af61ed1b','to'=>'0x669a4060c43a2687f03487fb188ca20c97e63688','val'=>1,'c'=>'Contracts','a'=>'transfer_contract']);
-=======
 //$res = $obj->geth_api(['phone'=>'13967426223','c'=>'Geth','a'=>'add_account']);
-$res = $obj->geth_api(['to'=>'0x669a4060c43a2687f03487fb188ca20c97e63688','from'=>'0xf7466b9a2020f08319b553088b381cfdc12eb0d3','val'=>1,'c'=>'Contracts','a'=>'transfer_contract']);
->>>>>>> 2cbd32ee015beaa6a76c29972b50815bcee7010d
-//$res = $obj->geth_api(['address'=>'0xf7466b9a2020f08319b553088b381cfdc12eb0d3','c'=>'Contracts','a'=>'balance_contract']);
-dump($res);
+// $res = $obj->geth_api(['address'=>'0xc07156ce9c7ba085e81cd77fd451ce4211ad3e2f','c'=>'Contracts','a'=>'unlock']);
+// $res = $obj->geth_api(['to'=>'0xc07156ce9c7ba085e81cd77fd451ce4211ad3e2f','from'=>'0x56ed6901879d9dcb7d469ce4c6de2de09ded3e3d','c'=>'Geth','a'=>'transaction']);
+// dump($res);
+// $res = $obj->geth_api(['to'=>'0x1a505191de91f3b4fca2e259add4c45ff0d3e35e','from'=>'0x56ed6901879d9dcb7d469ce4c6de2de09ded3e3d','val'=>5.0000,'c'=>'Contracts','a'=>'transfer_contract']);
+// $res = $obj->geth_api(['from'=>'0xc07156ce9c7ba085e81cd77fd451ce4211ad3e2f','to'=>'0x1a505191de91f3b4fca2e259add4c45ff0d3e35e','val'=>100,'c'=>'Contracts','a'=>'transfer_contract']);
+// dump($res);
+// // $res = $obj->geth_api(['address'=>'0xf68b5c7ada07c77b51d83642c888d6bdfb816d52','c'=>'Contracts','a'=>'transaction']);
+$res1 = $obj->geth_api(['address'=>'0x1a505191de91f3b4fca2e259add4c45ff0d3e35e','c'=>'Contracts','a'=>'balance_contract']);
+dump($res1);
+$res2 = $obj->geth_api(['address'=>'0xc07156ce9c7ba085e81cd77fd451ce4211ad3e2f','c'=>'Contracts','a'=>'balance_contract']);
+dump($res2);
+// $res = $obj->geth_api(['address'=>'0xf68b5c7ada07c77b51d83642c888d6bdfb816d52','c'=>'Contracts','a'=>'balance_contract']);
+D("Card_package")->data(['num'=>$res1['balance']])->where(["user_address"=>"0x1a505191de91f3b4fca2e259add4c45ff0d3e35e"])->save();
+D("Card_package")->data(['num'=>$res2['balance']])->where(["user_address"=>"0xc07156ce9c7ba085e81cd77fd451ce4211ad3e2f"])->save();
+// dump($res);
 /*function encrypt($data,$key){
     $encryptedList = array();
     $step          = 11700;

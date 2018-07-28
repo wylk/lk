@@ -12,11 +12,15 @@
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
         .block{width:100%;height:50px;}
-        .imgstyle{width:30%;float:left;text-align:right;line-height: 50px;}
+        .block-header{width: 90%;height: 100px;margin: 5px auto;}
+        .crad_logo{width:55px;height: 55px;margin: 0px auto}
+        .crad_logo img{width:100%;height: 100%;}
+        .imgstyle{width:15%;float:left;text-align:right;line-height: 50px;}
         .dataTitle i{font-size: 18px;}
-        .dataBox{width:60%;height:50px;float:left;line-height:50px;margin-left: 10px;}
-        .dataBox input{border:0;border-bottom:1px solid gray;height:30px;}
-        .btnStyle{text-align:center;margin-top:20px;}
+        .dataBox{width:70%;height:50px;float:left;line-height:50px;margin-left: 10px;}
+        .dataBox input{border:0px;width: 75%;height: 30px;margin-left: 20px;}
+        /* .dataBox input{border:0;border-bottom:1px solid gray;height:30px;} */
+        .btnStyle{text-align:center;margin-top:40px;}
         .blockLeft,.blockRight{width:40%;height:50px;float:left;text-align:center;}
         /*{border:1px solid red;width:40%;height:50px;float:left;}*/
         .blockRight span,.blockRight span{}
@@ -44,6 +48,14 @@
         .evaluate{width: 80%;margin:10px auto;}
         .evaluate textarea{width:280px;height:80px;}
         .evaluate button{float:left; margin-left: 50px;}
+        .block-line{width: 90%;margin: 0px auto}
+        .block-balance{line-height: 40px;width: 100%;text-align: center;}
+        .layui-btn{
+            width: 70%;
+            background: #fff;
+            color: #000;
+            border: 1px solid green;
+        }
     </style>
 </head>
 
@@ -53,39 +65,45 @@
         <h1 class="lk-title">转  账</h1>
     </header>
     <div class="lk-content">
-        <div class="block">
-            <div class="blockLeft"><span>现有金额：</span><span id="nowCash"><?php echo number_format($cardInfo['num'],2) ?></span></div>
-            <div class="blockRight"><span>冻结金额：</span><span><?php echo number_format($cardInfo['frozen'],2) ?></span></div>
+        <div class="block-header">
+            <div class="crad_logo"><img src="<?php echo STATIC_URL;?>/images/default_send_logo.png" /></div>
+           <div class="block-balance">
+                <span>可用金额：</span><span style="font-weight: bold"><?php echo number_format($cardInfo['num'],2) ?></span>
+           </div>
+          <!--  <div class="blockRight"><span>冻结金额：</span><span><?php echo number_format($cardInfo['frozen'],2) ?></span></div>  -->
+          <hr>
         </div>
+
         <form class="layui-form">
-            <div class="block">
+            <div class="block block-line">
                 <div class="dataTitle">
                     <i class="layui-icon imgstyle">&#xe65e;</i>
                 </div>
                 <div class="dataBox">
                     <input type="text" name="num" required lay-verify="num" placeholder="请输入数量" />
-                </div>
+                </div><hr/>
             </div>
-            <div class="block">
+
+            <div class="block block-line">
                 <div class="dataTitle">
                     <i class="layui-icon imgstyle">&#xe612;</i>
                 </div>
                 <div class="dataBox">
                     <input type="text" name="getAddress" required lay-verify="address" placeholder="请输入对方地址" /><i class="layui-icon" id="addRemark">&#xe61f;</i>
-                </div>
+                </div><hr/>
             </div>
-            <div class="block">
+            <div class="block block-line">
                 <div class="dataTitle">
                     <i class="layui-icon imgstyle">&#xe66f;</i>
                 </div>
                 <div class="dataBox">
                     <input type="text" name="addressName" required lay-verify="addressName" placeholder="请输入地址备注名称" />
-                </div>
+                </div><hr/>
             </div>
             <div class="block btnStyle">
                 <input type="hidden" name="sendAddress" value="<?php echo $cardInfo['address'] ?>">
                 <input type="hidden" name="cardId" value="<?php echo $cardInfo['card_id'] ?>">
-                <button lay-submit class='layui-btn layui-btn-warm' lay-filter="subTransfer" >确认转账</button>
+                <button lay-submit class='layui-btn' lay-filter="subTransfer" >确认转账</button>
             </div>
         </form>
         <div class="evaluate">
@@ -134,12 +152,12 @@
                 console.log(res);
                 if(!res.res){
                     // layer.msg(res.msg,{icon:1,skin:"demo-class"});
-                    if(res.isPublisher){
+                    /*if(res.isPublisher){
                         $(".evaluate").show();
-                    }else{
+                    }else{ }*/
                         layer.msg(res.msg,{icon:1,skin:"demo-class"});
                         window.location.href = "./card_package.php"
-                    }
+                   
                 }else{
                     layer.msg(res.msg,{icon:5,skin:"demo-class"});
                 }

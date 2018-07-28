@@ -131,7 +131,7 @@
       function previewImg(obj) {
              var img = new Image();
              img.src = obj.src;
-             var imgHtml = "<img src='" + obj.src + "' />";
+             var imgHtml = "<img style='width: 500px; margin:4%; padding:1%; border:1px solid #e0e0e0; border-radius: 5px;' src='" + obj.src + "' />";
             //捕获页
              layer.open({
                  type: 1,

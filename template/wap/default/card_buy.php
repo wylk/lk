@@ -39,8 +39,8 @@
         </div>
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                <a href="javascript:;">买入价：<input type='text' name="buyPrice" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
-                <a href="javascript:;">余额：<?php echo number_format($platformInfo['num'],2); ?></a>
+                <a href="javascript:;">买入价：<input type='text' name="buyPrice" value='<?php echo number_format(option('hairpan_set.price'),2) ?>' placeholder="<?php echo number_format(option('hairpan_set.price'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
+                <a href="javascript:;">余额：<?php echo number_format($$card['num'],2); ?></a>
         </div>
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
@@ -65,21 +65,9 @@
             <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
         </div>
         <hr>
-        <div class="lk-container-flex">
-            <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
-                <p class="item-flex">王**</p>
-                <p class="item-flex">900WLK</p>
-                <p class="item-flex">在线</p>
-                <p class="item-flex">价格：1</p>
-                <p class="item-flex">logo</p>
-                <p class="item-flex">限额：100-900</p>
-            </div>
-            <div class="lk-container-flex">
-                <p class="item-buy"><a href="">买入</a></p>
-            </div>
-        </div>
         <hr>
         <?php foreach ($sellList as $key => $value) { ?>
+        <?php if($value['num'] <= $value['frozen']) continue; ?>
         <div class="lk-container-flex">
             <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
                 <p class="item-flex">王**</p>
@@ -90,7 +78,7 @@
                 <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?>-<?php echo number_format($value['num'],2) ?></p>
             </div>
             <div class="lk-container-flex">
-                <p class="item-buy"><a href="">买入</a></p>
+                <p class="item-buy"><a href="javascript:;" id="transaction_<?php echo $value['id'] ?>">买入</a></p>
             </div>
         </div>
         <hr>
@@ -106,7 +94,7 @@
             var limitNum = $("[name=limitNum]").val();
             var money = buyPrice*buyNum;
             var id = "<?php echo $platformInfo['id']; ?>";
-            var data = {"buyPrice":buyPrice,"buyNum":buyNum,'id':id,"limitNum":limitNum};
+            var data = {"buyPrice":buyPrice,"buyNum":buyNum,'id':id,"limitNum":limitNum,"type":"register"};
             $.post("./card_buy.php",data,function(result){
                 console.log(result);
                 layer.closeAll("loading");
@@ -123,15 +111,31 @@
             var money = buyPrice*buyNum;
             $("#money").html(money);
         })
-        $("[name=limitNum]").bind("keyup",function(){
-            var buyNum = $("[name=buyNum").val();
-            var limitNum = $("[name=limitNum]").val();
-            if(limitNum > buyNum){
-                layer.msg('最低购买数量不得大于购买数量',{icon:5,skin:"demo-class"});
-            }
+        // $("[name=limitNum]").bind("keyup",function(){
+        //     var buyNum = $("[name=buyNum").val();
+        //     var limitNum = $("[name=limitNum]").val();
+        //     if(limitNum > buyNum){
+        //         layer.msg('最低购买数量不得大于购买数量',{icon:5,skin:"demo-class"});
+        //     }
+        // });
+        $("[id^=transaction]").bind("click",function(){
+            var idStr = $(this).attr("id");
+            var tranId = idStr.substring(idStr.indexOf("_")+1);
+            // console.log(idStr,idStr.indexOf("_"),id);
+            var packageId = "<?php echo $platformInfo['id']; ?>";
+            var data = {"type":"transaction","tranId":tranId,"packageId":packageId}
+            console.log(data);
+            $.post("./card_buy.php",data,function(result){
+                console.log(result);
+                if(!result.res){
+                    layer.msg(result.msg,{icon:1,skin:"demo-class"});
+                }else{
+                    layer.msg(result.msg,{icon:5,skin:"demo-class"});
+                }
+            },"json");
         });
+        
     })
 </script>
 </body>
-
 </html>

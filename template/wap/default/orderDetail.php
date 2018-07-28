@@ -11,14 +11,25 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
-        .container{flex-direction:column;text-align:center;height:130px;background-color: white;}
-        .container h3,.container h2{margin:10px;padding:10px;}
-        .detail{flex-direction:column;background-color: white;margin-top:30px;}
+        .container{flex-direction:column;text-align:center;line-height:30px;background-color: white;margin-top:50px; }
+        .detail{flex-direction:column;background-color: white;}
         .menuStyle{display:flex;justify-content:space-between;padding:8px;}
         .detail .spanLeft{font-size: 15px;margin:2px 20px;}
         .detail .spanRight{font-size: 15px;margin:2px 20px;}
-        .line{background-color: #e4e0e0;height:2px;margin:0 auto; width:90%;}
-
+        hr{width: 90%;margin: 2px auto;}
+        .title{
+            border-bottom: 1px solid #e6e6e6; 
+            line-height:30px;
+            background: #f1de9b;
+            font-size: 12px;
+            color: red;
+            padding-left: 25px;
+        }
+        .sum{
+            font-size: 18px;
+            font-weight: bold;
+            color: red;
+        }
     </style>
 </head>
 
@@ -28,17 +39,29 @@
         <h1 class="lk-title">订单详情</h1>
     </header>
     <div class="lk-content">
-        <div class="container">
-           <h3><?php echo $orderInfo['card_id'] ?></h3>
-           <h1><?php echo number_format($orderInfo['prices'],2)?></h1>
-           <p style="color:gray;"><?php echo $orderInfo['status'] == '1' ? "交易成功" : ($orderInfo['status'] == '2' ? "订单超时" : "未付款"); ?></p>
+        <div class="title">
+            请收藏该页面地址,方便查询订单状态。
         </div>
         <div class="detail">
-            <div class='menuStyle'><span class="spanLeft">数量：</span><span class="spanRight"><?php echo number_format($orderInfo['number'],2); ?></span></div>
-           <p class="line"></p>
+            <div class='menuStyle'>
+                <span class="spanLeft">订单状态：</span>
+                <span class="spanRight">
+                    <?php echo $orderInfo['status'] == '1' ? "交易成功" : ($orderInfo['status'] == '2' ? "订单超时" : "未付款"); ?>
+                </span>
+            </div>
+            <hr>
+            <div class='menuStyle'>
+                <span class="spanLeft">数量：</span><span class="spanRight"><?php echo number_format($orderInfo['number'],2); ?></span>
+            </div>
+           <hr>
            <div class='menuStyle'><span class="spanLeft">创建时间：</span><span class="spanRight"><?php echo date("Y-m-d H:i:s",$orderInfo['create_time']) ?></span></div>
-           <p class="line"></p>
+          <hr>
            <div class='menuStyle'><span class="spanLeft">订单号：</span><span class="spanRight"><?php echo $orderInfo['onumber'] ?></span></div>
+        </div>
+        <hr>
+        <div class="container">
+            <p>数量:<?php echo number_format($orderInfo['number'],2); ?>&nbsp;&nbsp;  * &nbsp;&nbsp;  单价:<?php echo $orderInfo['price'] ?></p>
+            <p class="sum">实付：¥<?php echo number_format($orderInfo['prices'],2)?></p>
         </div>
     </div>
     <?php include display('public_menu');?>

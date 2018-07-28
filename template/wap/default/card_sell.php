@@ -13,6 +13,7 @@
     <style type="text/css">
         .lk-container-flex {padding: 0 5px;}
         .lk-content hr{margin: 0}
+        .lk-nav-link a{width:30%;text-align: center; line-height: 45px; font-size:.5rem;}
         .lk-deal-link a{text-align: center; line-height: 45px; font-size:.5rem;padding: 0 20px;}
         .lk-deal-link a input[type='text']{
             display: inline;
@@ -30,7 +31,7 @@
         <h1 class="lk-title">卖出</h1>
     </header>
     <div class="lk-content">
-        <div class="lk-container-flex lk-deal-link">
+        <div class="lk-container-flex lk-nav-link">
                 <a href="card_buy.php">买入</a>
                 <a href="card_sell.php" class="layui-bg-orange">卖出</a>
                 <a href="card_order.php">订单</a>
@@ -38,12 +39,12 @@
         </div>
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                <a href="javascript:;">卖出价：<input type='text' name="sellPrice" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
-                <a href="javascript:;">余额：<?php echo $platformInfo['num'] ?></a>
+                <a href="javascript:;">卖出价：<input type='text' name="sellPrice" value='<?php echo number_format(option('hairpan_set.price'),2) ?>' placeholder="<?php echo number_format(option('hairpan_set.price'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
+                <a href="javascript:;">余额：<?php echo number_format($platformInfo['num'],2); ?></a>
         </div>
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                <a href="javascript:;">卖出数量：<input type='text' name="sellNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+                <a href="javascript:;">卖出数量：<input type='text' name="sellNum" value='<?php echo number_format(option('hairpan_set.limit'),2) ?>' placeholder="<?php echo number_format(option('hairpan_set.limit'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
                 <a href="javascript:;">WLK</a>
         </div>
         <hr>
@@ -64,21 +65,9 @@
             <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
         </div>
         <hr>
-        <div class="lk-container-flex">
-            <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
-                <p class="item-flex">王**</p>
-                <p class="item-flex">900WLK</p>
-                <p class="item-flex">在线</p>
-                <p class="item-flex">价格：1</p>
-                <p class="item-flex">logo</p>
-                <p class="item-flex">限额：100-900</p>
-            </div>
-            <div class="lk-container-flex">
-                <p class="item-buy"><a href="">卖出</a></p>
-            </div>
-        </div>
         <hr>
         <?php foreach($buyList as $key=>$value){ ?>
+        <?php if($value['num'] <= $value['frozen']) continue; ?>
         <div class="lk-container-flex">
             <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
                 <p class="item-flex">王**</p>
@@ -89,7 +78,7 @@
                 <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?> - <?php echo number_format($value['num'],2) ?></p>
             </div>
             <div class="lk-container-flex">
-                <p class="item-buy"><a href="">卖出</a></p>
+                <p class="item-buy"><a href="javascript:;" id="transaction_<?php echo $value['id'] ?>">卖出</a></p>
             </div>
         </div>
         <hr>
@@ -104,7 +93,7 @@ layui.use(['layer'],function(){
         var num = $("[name=sellNum]").val();
         var limit = $('[name=limitNum]').val();
         var id = "<?php echo $platformInfo['id'] ?>";
-        var data = {"price":price,"num":num,"id":id,"limitNum":limit};
+        var data = {"price":price,"num":num,"id":id,"limitNum":limit,"type":"register"};
         $.post("./card_sell.php",data,function(res){
             console.log(res);
             layer.closeAll("loading");
@@ -115,13 +104,28 @@ layui.use(['layer'],function(){
             }
         },"json");
     })
-    $("[name=limitNum]").bind("keyup",function(){
-        var sellNum = $("[name=sellNum]").val();
-        var limitNum = $("[name=limitNum]").val();
-        if(limitNum > sellNum){
-            layer.msg("售卖最低限制数量不得大于售卖数量",{icon:5,skin:"demo-class"});
-        }
-    })
+    // $("[name=limitNum]").bind("keyup",function(){
+    //     var sellNum = $("[name=sellNum]").val();
+    //     var limitNum = $("[name=limitNum]").val();
+    //     if(limitNum > sellNum){
+    //         layer.msg("售卖最低限制数量不得大于售卖数量",{icon:5,skin:"demo-class"});
+    //     }
+    // })
+    $("[id^=transaction]").bind("click",function(){
+        var idStr = $(this).attr("id");
+        var tranId = idStr.substring(idStr.indexOf("_")+1);
+        var packageId = "<?php echo $platformInfo['id']; ?>";
+        var data = {'type':"transaction","tranId":tranId,"packageId":packageId};
+        $.post("./card_sell.php",data,function(result){
+            console.log(result);
+            if(!result.res){
+                layer.msg(result.msg,{icon:1,skin:"demo-class"});
+                window.location.href = "./card_order.php";
+            }else{
+                layer.msg(result.msg,{icon:5,skin:"demo-class"});
+            }
+        },'json');
+    });
 })
 $('input[name^=sell]').bind("keyup",function(){
     var price = $("[name=sellPrice]").val();

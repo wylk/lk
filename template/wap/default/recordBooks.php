@@ -11,13 +11,13 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
-        .layui-container p{ line-height: 35px;}
-    .layui-container p i { color: red; margin-right: 10px;}
-    .layui-tab-content { height: auto}
+        .layui-container p{ line-height: 25px;}
+        .layui-container p i { color: red; margin-right: 10px;}
+        .layui-tab-content { height: auto}
         .lk-content hr{margin: 0}
-       .lk-container-flex {padding: 0 5px;}
-       .order-left{width: 63%}
-        .order-right{width: 37%;text-align: right;}
+        .lk-container-flex {padding: 0 5px;}
+        .order-left{width: 63%;}
+        .order-right{width: 36.9%;text-align: right;}
 
     </style>
 </head>
@@ -29,33 +29,29 @@
     </header>
     <div class="lk-content">
          <div class="layui-container">
-            <div class="layui-tab layui-tab-card" lay-filter="aduitTab">
-                <?php foreach($recordList as $key=>$value){ ?>
-                <?php if($value['send_address'] == $address){ ?>
-                <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell" style="background-color: red">
-                    <div class="order-left">
-                        <p>账户：<?php echo $value['get_address'] ?></p>
-                        <p><?php echo date("Y-m-d H:i:s",$value['createtime']) ?></p>
+            <div class="layui-tab" lay-filter="aduitTab">
+                <?php if(!empty($recordList)){?>
+                    <?php  foreach($recordList as $key=>$value){ ?>
+                    <div class="lk-container-flex">
+                        <div class="order-left">
+                            <p>账户:<?php echo substr($value['get_address'],0,16) ?>...</p>
+                            <p>时间:<?php echo date("Y-m-d H:i:s",$value['createtime']) ?></p>
+                        </div>
+                        <div class="order-right">
+                            <?php if($value['send_address'] == $address){ ?>
+                                <p style="color: red">-<span class="total"><?php echo number_format($value['num'],2)?>hsr</span></p>
+                                <p><a class="" style="padding: 5px 7px;font-weight: bold;" href="">转出成功</a></p>
+                            <?php }else{ ?>
+                                <p style="color: green;">+<span class="total"><?php echo number_format($value['num'],2)?>hsr</span></p>
+                                <p><a class="" style="padding: 5px 7px;font-weight: bold;" href="">转入成功</a></p>
+                            <?php }?>
+                        </div>
                     </div>
-                    <div class="order-right">
-                        <p><a class="" style="padding: 5px 7px" href=""></a></p>
-                        <p>总金额：-<span class="total"><?php echo number_format($value['num'],2)?></span></p>
-                    </div>
-                </div>
-                <hr>
-                <?php }else{ ?>
-                <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell" style="background-color: green;">
-                    <div class="order-left">
-                        <p>账户：<?php echo $value['send_address'] ?></p>
-                        <p><?php echo date("Y-m-d H:i:s",$value['createtime']) ?></p>
-                    </div>
-                    <div class="order-right">
-                        <p><a class="" style="padding: 5px 7px" href=""></a></p>
-                        <p>总金额：<span class="total"><?php echo number_format($value['num'],2)?></span></p>
-                    </div>
-                </div>
-                <hr>
-                <?php }} ?>
+                    <hr>
+                    <?php } ?>
+                <?php }else{?>
+                    <div style="margin: 50px auto;text-align: center;"><h3>暂无账单记录</h3></div>
+                <?php }?>
             </div>
                    
             </div>
@@ -63,10 +59,4 @@
     </div>
     <?php include display('public_menu');?>
 </body>
-<script type="text/javascript">
-  layui.use(['element'],function(){
-    var element = layui.element;
-  })
-</script>
-
 </html>
