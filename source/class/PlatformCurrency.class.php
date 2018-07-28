@@ -214,6 +214,7 @@ class PlatformCurrency{
         $orderData['create_time'] = time();
         $orderData['update_time'] = time();
         $res = D("Orders")->data($orderData)->add();
+        $orderData['id'] = $res;
         // if($this->type == '2'){
             // $this->initialNum = $tranList['num'];
             // $this->frozenNum = $tranList['num'];
