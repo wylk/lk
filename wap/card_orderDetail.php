@@ -10,6 +10,13 @@ if(IS_POST && $_POST['type'] == "confirmTran" ){
 	$orderRes = $platformObj->transferCurrency($orderId);
 	dexit($orderRes);
 }
+if(IS_POST && $_POST['type'] == "payMoeny"){
+	$orderId = $_POST['orderId'];
+	import("PlatformCurrency");
+	$platformObj = new PlatformCurrency();
+	$orderRes = $platformObj->orderStatus($orderId);
+	dexit($orderRes);
+}
 
 
 $orderId = $_GET['id'];

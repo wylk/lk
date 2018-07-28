@@ -19,7 +19,8 @@
         .detail .spanLeft{font-size: 15px;margin:2px 20px;}
         .detail .spanRight{font-size: 15px;margin:2px 20px;}
         .spanBtn{height:100px;align-items:center;}
-        .spanBtn .spanRight{flex-wrap:wrap;}
+        .spanBtn .spanRight{display:inline-flex;flex-direction: column;height:100%;justify-content:center;align-items:center;}
+        .spanBtn .spanRight .spanitem{font-size: 15px;margin:2px 20px;}
         hr{margin: 0px;}
        .codeAddress{padding: 5px 5px; line-height: 250px; color: #666;border: 1px solid #0f7f7a; width: 250px; margin:10px auto; border-radius: 10px;display:flex;justify-content:center;}
         .codeAddress img{ height: 100%; width: 100%;}
@@ -50,14 +51,17 @@
           <hr>
           <?php if($orderInfo['sell_id'] == $userId){ ?>
           <div class='menuStyle'><span class="spanLeft">交易状态：</span>
-            <?php echo $orderInfo['status'] == '1' ? "<span class='spanRight' >已收款</span>" : ($orderInfo['status'] == '2' ? "<span class='spanRight'>订单超时</span>" : "<button class='spanRight' id='confirmTran'>确认收款</button>"); ?>
+            <?php echo $orderInfo['status'] == '3' ? "<span class='spanRight' >已收款</span>" : ($orderInfo['status'] != '1' ? "<span class='spanRight'>未收款</span>" : "<span class='spanRight'>已收款</span>"); ?>
+            </div>
+            <div class='menuStyle'><span class="spanLeft"></span>
+            <?php echo $orderInfo['status'] == '1' ? "<span class='spanRight' >已转账</span>" : 
+            "<button class='spanRight' id='confirmTran'>确认收款</button>" ?>
           </div>
           <?php } ?>
           <?php if($orderInfo['buy_id'] == $userId){ ?>
-             <div class='menuStyle spanBtn'><span class="spanLeft">收款人：老王</span>
-              <div class="spanRight"></div>
-              <span class="spanRight">已付款</span><span class="spanRight">聊天</span><span class="spanRight">支付宝</span></div>
-          <hr>
+             <div class='menuStyle'><span class="spanLeft">收款人：老王</span><span class="spanRight">支付宝</span></div>
+              <div class='menuStyle'><span class="spanLeft"></span><button class="spanRight" id="payMoeny">已付款</button></div>
+            <hr>
             <div class='codeStyle'><span class="spanLeft">二维码：</span>
             <div class="codeAddress"><img src="<?php echo STATIC_URL;?>/images/default_qr.png" /></div>
           </div>
@@ -74,7 +78,7 @@
     var layer = layui.layer;
     $("#confirmTran").bind("click",function(){
       layer.confirm("确定收款吗？确定后平台币会转账到对方账户",function(){
-        // layer.load();
+        layer.load();
         var orderId = "<?php echo $orderInfo['id'] ?>";
         var data = {"orderId" : orderId, "type" : "confirmTran"};
         $.post("./card_orderDetail.php",data,function(result){
@@ -89,6 +93,23 @@
           }
         },"json");
       })
+    })
+    $("#payMoeny").bind("click",function(){
+      layer.confirm("确定已经付款了吗？",function(){
+        layer.load()
+        var orderId = "<?php echo $orderInfo['id'] ?>";
+        var data = {'orderId':orderId,"type":"payMoeny"}
+        $.post("./card_orderDetail.php",data,function(result){
+          console.log(result);
+          layer.closeAll("loading");
+          if(!result.res){
+           layer.msg(result.msg,{icon:1,skin:"demo-class"});
+          }else{
+            layer.msg(result.msg,{icon:5,skin:"demo-class"});
+          }
+        },"json");
+      });
+      
     })
   })
 </script>

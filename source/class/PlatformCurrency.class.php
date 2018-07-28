@@ -171,8 +171,8 @@ class PlatformCurrency{
         $orderData['tran_id'] = $tranList['id'];
         $orderData['tran_other'] = $tranList['id'];
         $orderData["card_id"] = $tranList['card_id'];
-        $orderData['sell_id'] = $tranList['uid'];
-        $orderData['buy_id'] = $this->userId;
+        // $orderData['sell_id'] = $tranList['uid'];
+        // $orderData['buy_id'] = $this->userId;
         if($this->type == '1'){
             $orderData['sell_id'] = $tranList['uid'];
             $orderData['buy_id'] = $this->userId;
@@ -219,7 +219,7 @@ class PlatformCurrency{
     // 平台币转账
     public function transferCurrency($orderId){
         $orderInfo = D("Orders")->where(['id'=>$orderId])->find();
-        if($orderInfo['status'] != '0') return ['res'=>1,"msg"=>"订单失效"];
+        if($orderInfo['status'] != '0' && $orderInfo['status'] != '3') return ['res'=>1,"msg"=>"订单失效"];
         $sellInfo = D("Card_package")->where(['uid'=>$orderInfo['sell_id'],"card_id"=>$orderInfo['card_id']])->find();
         $buyInfo = D("Card_package")->where(['uid'=>$orderInfo['buy_id'],"card_id"=>$orderInfo['card_id']])->find();
         $interfaceRes = $this->interfaceCurrency($buyInfo['user_address'],$sellInfo['user_address'],(int)$orderInfo['number']);
@@ -283,5 +283,11 @@ class PlatformCurrency{
             return ['res'=>1,"msg"=>"撤销失败"];
         }
         return ['res'=>0,"msg"=>"撤销成功"];
+    }
+    // 订单的状态
+    public function orderStatus($orderId){
+        $res = D("Orders")->where(['id'=>$orderId])->setField("status",3);
+        if(!$res) return ['res'=>1,"msg"=>"通知失败"];
+        return ['res'=>0,"msg"=>"已成功通知对方"];
     }
 }
