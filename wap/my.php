@@ -8,7 +8,8 @@ $phone = isset($wap_user['phone']) ? $wap_user['phone'] : "";
 $userId = isset($wap_user['userid']) ? $wap_user['userid'] : 1;
 
 // 清除超时订单
-$where = ['create_time'=>["<=",time()-60*30],"status"=>"0"];
+$deadline = option('hairpan_set.expiry_time') ? option('hairpan_set.expiry_time') : 60*30;
+$where = ['create_time'=>["<=",time()-$deadline],"status"=>"0"];
 $orderlist = D("Orders")->where($where)->select();
 if($orderlist){
 	foreach ($orderlist as $key => $value) {
