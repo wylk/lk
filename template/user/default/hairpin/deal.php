@@ -360,9 +360,9 @@ layui.use(["layer",'element'], function(){
             var str = "<div class='order-list'>";
             str += "<div class='order-list-title div-div lk-container-flex lk-justify-content-sb'>";
             str += "<div style='width:80%'>";
-            str += "<span style='color: green'>卖出</span>";
+            str += "<span style='color: red'>卖出</span>";
             str += result.data.onumber + "</div>";
-            str += "<div class='order-list-title-right text-r' onclick='x_admin_show(\"订单详情\",\"?c=hairpin&a=orderList&type=0&id=<?= 1 ?>\",400,450)'>订单详情</div></div>";
+            str += "<div class='order-list-title-right text-r' onclick='x_admin_show(\"订单详情\",\"?c=hairpin&a=orderList&orderId="+result.data.id+"\",400,450)'>订单详情</div></div>";
             str += "<div class='order-list-content div-div div-div-hight lk-container-flex lk-justify-content-sb'>";
             str += "<div id='order-list-content-left'>";
             str += "<p>"+result.data.create_time+"</p><p>单价:¥"+price.toFixed(2)+"</p><p>数量:"+number.toFixed(2)+"</p>";
@@ -395,7 +395,7 @@ layui.use(["layer",'element'], function(){
             str += "<div style='width:80%'>";
             str += "<span style='color: green'>买入</span>";
             str += result.data.onumber + "</div>";
-            str += "<div class='order-list-title-right text-r' onclick='x_admin_show(\"订单详情\",\"?c=hairpin&a=orderList&type=0&id=<?= 1 ?>\",400,450)'>订单详情</div></div>";
+            str += "<div class='order-list-title-right text-r' onclick='x_admin_show(\"订单详情\",\"?c=hairpin&a=orderList&&orderId="+result.data.id+"\",400,450)'>订单详情</div></div>";
             str += "<div class='order-list-content div-div div-div-hight lk-container-flex lk-justify-content-sb'>";
             str += "<div id='order-list-content-left'>";
             str += "<p>"+result.data.create_time+"</p><p>单价:¥"+price.toFixed(2)+"</p><p>数量:"+number.toFixed(2)+"</p>";
