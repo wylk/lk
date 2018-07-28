@@ -119,6 +119,7 @@ layui.use(['form', 'layer'],function() {
         data.sell_id = "<?php echo $_GET['uid'] ?>";
         data.quantity = "<?php echo floatval($UserAud['num']) ?>";
         data.tranId = "<?php echo floatval($UserAud['id']) ?>";
+        data.price = price;
 
         if(data.number < text || data.number>num){
           layer.msg('输入购买数不合法！',{icon: 5,time:1000},function(){

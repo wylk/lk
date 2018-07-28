@@ -26,7 +26,6 @@ if (!(my_session_start())) {
 	session_regenerate_id();
 }
 
-
 setcookie(session_name(), session_id(), $_SERVER['REQUEST_TIME'] + 63072000, '/');
 defined('GROUP_NAME') || define('GROUP_NAME', 'index');
 defined('MODULE_NAME') || define('MODULE_NAME', (isset($_GET['c']) ? strtolower($_GET['c']) : 'index'));

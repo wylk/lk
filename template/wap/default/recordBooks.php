@@ -30,7 +30,7 @@
     <div class="lk-content">
          <div class="layui-container">
             <div class="layui-tab" lay-filter="aduitTab">
-                <?php if(isset($recordList)){?>
+                <?php if(!empty($recordList)){?>
                     <?php  foreach($recordList as $key=>$value){ ?>
                     <div class="lk-container-flex">
                         <div class="order-left">
