@@ -15,9 +15,10 @@
     .layui-container p i { color: red; margin-right: 10px;}
     .layui-tab-content { height: auto}
         .lk-content hr{margin: 0}
-       .lk-container-flex {padding: 0 5px;}
-       .order-left{width: 63%}
+        .lk-container-flex {padding: 0 5px;}
+        .order-left{width: 63%}
         .order-right{width: 37%;text-align: right;}
+        .layui-tab-title li{min-width: 30px;}
 
     </style>
 </head>
@@ -29,7 +30,7 @@
     </header>
     <div class="lk-content">
          <div class="layui-container">
-            <div class="layui-tab layui-tab-card" lay-filter="aduitTab">
+            <div class="layui-tab layui-tab-brief" lay-filter="aduitTab">
                 <ul class="layui-tab-title">
                     <li class="layui-this ">全部订单</li>
                     <li class="">未付款订单</li>

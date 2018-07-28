@@ -12,10 +12,13 @@
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
         .block{width:100%;height:50px;}
-        .imgstyle{width:30%;float:left;text-align:right;line-height: 50px;}
+        .block-header{width: 90%;height: 100px;border: 1px solid red;margin: 5px auto;}
+        .crad_logo{width:45px;height: 45px;margin: 0px auto;border: 1px solid red;border-radius: 50%; }
+        .imgstyle{width:15%;float:left;text-align:right;line-height: 50px;}
         .dataTitle i{font-size: 18px;}
-        .dataBox{width:60%;height:50px;float:left;line-height:50px;margin-left: 10px;}
-        .dataBox input{border:0;border-bottom:1px solid gray;height:30px;}
+        .dataBox{width:70%;height:50px;float:left;line-height:50px;margin-left: 10px;}
+        .dataBox input{border:0px;width: 65%;height: 30px;margin-left: 20px;}
+        /* .dataBox input{border:0;border-bottom:1px solid gray;height:30px;} */
         .btnStyle{text-align:center;margin-top:20px;}
         .blockLeft,.blockRight{width:40%;height:50px;float:left;text-align:center;}
         /*{border:1px solid red;width:40%;height:50px;float:left;}*/
@@ -44,6 +47,7 @@
         .evaluate{width: 80%;margin:10px auto;}
         .evaluate textarea{width:280px;height:80px;}
         .evaluate button{float:left; margin-left: 50px;}
+        .block-line{width: 90%;margin: 0px auto}
     </style>
 </head>
 
@@ -53,34 +57,36 @@
         <h1 class="lk-title">转  账</h1>
     </header>
     <div class="lk-content">
-        <div class="block">
+        <div class="block-header">
+            <div class="crad_logo"></div>
             <div class="blockLeft"><span>现有金额：</span><span id="nowCash"><?php echo number_format($cardInfo['num'],2) ?></span></div>
             <div class="blockRight"><span>冻结金额：</span><span><?php echo number_format($cardInfo['frozen'],2) ?></span></div>
         </div>
         <form class="layui-form">
-            <div class="block">
+            <div class="block block-line">
                 <div class="dataTitle">
                     <i class="layui-icon imgstyle">&#xe65e;</i>
                 </div>
                 <div class="dataBox">
                     <input type="text" name="num" required lay-verify="num" placeholder="请输入数量" />
-                </div>
+                </div><hr>
             </div>
-            <div class="block">
+
+            <div class="block block-line">
                 <div class="dataTitle">
                     <i class="layui-icon imgstyle">&#xe612;</i>
                 </div>
                 <div class="dataBox">
                     <input type="text" name="getAddress" required lay-verify="address" placeholder="请输入对方地址" /><i class="layui-icon" id="addRemark">&#xe61f;</i>
-                </div>
+                </div><hr>
             </div>
-            <div class="block">
+            <div class="block block-line">
                 <div class="dataTitle">
                     <i class="layui-icon imgstyle">&#xe66f;</i>
                 </div>
                 <div class="dataBox">
                     <input type="text" name="addressName" required lay-verify="addressName" placeholder="请输入地址备注名称" />
-                </div>
+                </div><hr>
             </div>
             <div class="block btnStyle">
                 <input type="hidden" name="sendAddress" value="<?php echo $cardInfo['address'] ?>">
