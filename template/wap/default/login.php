@@ -52,7 +52,7 @@
         </div>
         <div class="layui-form-item"  style="border-top:1px solid #F0F0F0">
           <div class="layui-input-inline us-input-inline" style=" border-right:1px solid #F0F0F0">
-                <input type="text" name="password" required lay-verify="passVerify" placeholder="请输入手机验证码" autocomplete="off" class="layui-input">
+                <input type="text" name="password" required lay-verify="passVerify" placeholder="请输入手机验证码" autocomplete="off" class="layui-input" style="float:right; width: 78%">
           </div>
             <a href="javascript:;"  id="getVerify" class="layui-btn us-btn">获取验证码</a>
         </div>
