@@ -92,6 +92,9 @@ class PlatformCurrency{
 
         // 挂单添加到数据库
         $res = $this->addRegister($this->type);
+        if($res['res']){
+            return $res;
+        }
         
         // 自动检测订单添加
         if(count($this->matchOrderData) > 0){
@@ -117,10 +120,8 @@ class PlatformCurrency{
         if($this->tranNum == 0){
             return ['res'=>0,"msg"=>"已生成".$num."条订单，请查看"];
         }
-        if(!$res){
-            return ['res'=>1,"msg"=>"挂单失败","edit"=>$editRes];
-        }
-        return ['res'=>0,"msg"=>"挂单成功"];
+        
+        return $res;
     }
     // 挂单到数据库 $type：1买方，2卖方
     public function addRegister($type){
@@ -139,10 +140,12 @@ class PlatformCurrency{
         $tranData['price'] = $this->price;
         $tranData['createtime'] = time();
         $tranData['updatetime'] = time();
-        if(!D("Card_transaction")->data($tranData)->add()){
-            return ['res'=>1,"msg"=>"添加失败"];
+        $tranRes = D("Card_transaction")->data($tranData)->add();
+        $tranData['id'] = $tranRes;
+        if(!$tranRes){
+            return ['res'=>1,"msg"=>"挂单失败"];
         }
-        return ['res'=>0,"msg"=>"添加成功"];
+        return ['res'=>0,"msg"=>"挂单成功","data"=>$tranData];
     }
 // 自动匹配相应的订单
     public function matching($data){
@@ -236,7 +239,7 @@ class PlatformCurrency{
         $this->lkApiObj->geth_api(['address'=>$sellAddress,'c'=>'Contracts','a'=>'unlock']);
         $res = $this->lkApiObj->geth_api(['to'=>$sellAddress,'from'=>'0x56ed6901879d9dcb7d469ce4c6de2de09ded3e3d','c'=>'Geth','a'=>'transaction']);
         if($res['error'] != '0') return ['res'=>1,"msg"=>"平台连接错误","res"=>$sellAddress,'buy'=>$buyAddress];
-        $tranRes = $this->lkApiObj->geth_api(['to'=>$buyAddress,'from'=>$sellAddress,'val'=>$num,'c'=>'Contracts','a'=>'transfer_contract']);
+        $tranRes = $this->lkApiObj->geth_api(['to'=>$buyAddress,'from'=>$sellAddress,'val'=>(int)$num,'c'=>'Contracts','a'=>'transfer_contract']);
         if($tranRes['error'] != '0') return ['res'=>1,"msg"=>"转账错误","tranres"=>$tranRes];
     }
     public function interfaceBalance($address){
@@ -252,6 +255,8 @@ class PlatformCurrency{
         $buyInfo = D("Card_package")->where(['uid'=>$orderInfo['buy_id'],"card_id"=>$orderInfo['card_id']])->find();
         $interfaceRes = $this->interfaceCurrency($buyInfo['user_address'],$sellInfo['user_address'],(int)$orderInfo['number']);
         if($interfaceRes) return $interfaceRes;
+        // 转账记录
+        $this->recordBooks(["cardId"=>$orderInfo['card_id'],'getAddress'=>$buyInfo['user_address'],"send_address"=>$sellInfo['user_address'],"num"=>$orderInfo['number']]);
         // 交易单数据修改
         D("Card_transaction")->where(['id'=>["in",[$orderInfo['tran_id'],$orderInfo['tran_other']]]])->setDec("num",$orderInfo['number']);
         D("Card_transaction")->where(['id'=>['in',[$orderInfo['tran_id'],$orderInfo['tran_other']]]])->setDec("frozen",$orderInfo['number']);
@@ -282,6 +287,10 @@ class PlatformCurrency{
             return ['res'=>1,"msg"=>"转账失败","balanceRes"=>$balanceRes,"status"=>$statusRes];
         }
         return ['res'=>0,"msg"=>"转账成功"];
+    }
+    // 转账记录
+    public function recordBooks($data){
+        $recordRes = D("Record_books")->data(['card_id'=>$data['cardId'],"send_address"=>$data["sendAddress"],"get_address"=>$data['getAddress'],"num"=>$data['num'],"createtime"=>time()])->add();
     }
     // 委托列表
     public function selectRegister($data){

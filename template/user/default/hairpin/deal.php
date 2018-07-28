@@ -312,7 +312,7 @@
                                     <col width="25%">
                                     <col width="25%">
                                   </colgroup>
-                                  <tbody>
+                                  <tbody id="registerList">
                                     <?php foreach ($registerList as $key => $value) { ?>
                                     <tr id="strRevoke_<?php echo $value['id'] ?>">
                                     <?php if($value['type'] == '1'){ ?>
@@ -422,6 +422,13 @@ layui.use(["layer",'element'], function(){
         layer.closeAll("loading");
         if(!result.res){
             layer.msg(result.msg,{icon:1,skin:"demo-class"});
+            var num = new Number(result.data.num);
+            var price = new Number(result.data.price);
+            var str = "<tr id='strRevoke_"+result.data.id+"'>";
+            str += "<td style='color:#008069'>买</td>";
+            str += "<td>"+num.toFixed(2)+"</td><td>"+price.toFixed(2)+"</td><td><a href='javascript:;' id='revoke_"+result.data.id+"' class='layui-btn layui-btn-xs'>撤销</a></td>";
+            str += "</tr>";
+            $("#registerList").prepend(str);
         }else{
             layer.msg(result.msg,{icon:5,skin:"demo-class"});
         }
@@ -439,6 +446,13 @@ layui.use(["layer",'element'], function(){
         layer.closeAll("loading");
         if(!result.res){
             layer.msg(result.msg,{icon:1,skin:"demo-class"});
+            var num = new Number(result.data.num);
+            var price = new Number(result.data.price);
+            var str = "<tr id='strRevoke_"+result.data.id+"'>";
+            str += "<td style='color:red'>卖</td>";
+            str += "<td>"+num.toFixed(2)+"</td><td>"+price.toFixed(2)+"</td><td><a href='javascript:;' id='revoke_"+result.data.id+"' class='layui-btn layui-btn-xs'>撤销</a></td>";
+            str += "</tr>";
+            $("#registerList").prepend(str);
         }else{
             layer.msg(result.msg,{icon:5,skin:"demo-class"});
         }
