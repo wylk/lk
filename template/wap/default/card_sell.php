@@ -39,12 +39,12 @@
         </div>
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                <a href="javascript:;">卖出价：<input type='text' name="sellPrice" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
+                <a href="javascript:;">卖出价：<input type='text' name="sellPrice" value='<?php echo number_format(option('hairpan_set.price'),2) ?>' placeholder="<?php echo number_format(option('hairpan_set.price'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
                 <a href="javascript:;">余额：<?php echo number_format($platformInfo['num'],2); ?></a>
         </div>
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                <a href="javascript:;">卖出数量：<input type='text' name="sellNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+                <a href="javascript:;">卖出数量：<input type='text' name="sellNum" value='<?php echo number_format(option('hairpan_set.limit'),2) ?>' placeholder="<?php echo number_format(option('hairpan_set.limit'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
                 <a href="javascript:;">WLK</a>
         </div>
         <hr>

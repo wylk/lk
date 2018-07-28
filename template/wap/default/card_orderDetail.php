@@ -18,6 +18,8 @@
         .CodeStyle{display:flex;padding:8px;}
         .detail .spanLeft{font-size: 15px;margin:2px 20px;}
         .detail .spanRight{font-size: 15px;margin:2px 20px;}
+        .spanBtn{height:100px;align-items:center;}
+        .spanBtn .spanRight{flex-wrap:wrap;}
         hr{margin: 0px;}
        .codeAddress{padding: 5px 5px; line-height: 250px; color: #666;border: 1px solid #0f7f7a; width: 250px; margin:10px auto; border-radius: 10px;display:flex;justify-content:center;}
         .codeAddress img{ height: 100%; width: 100%;}
@@ -52,7 +54,9 @@
           </div>
           <?php } ?>
           <?php if($orderInfo['buy_id'] == $userId){ ?>
-             <div class='menuStyle'><span class="spanLeft">收款人：老王</span><span class="spanRight">支付宝</span></div>
+             <div class='menuStyle spanBtn'><span class="spanLeft">收款人：老王</span>
+              <div class="spanRight"></div>
+              <span class="spanRight">已付款</span><span class="spanRight">聊天</span><span class="spanRight">支付宝</span></div>
           <hr>
             <div class='codeStyle'><span class="spanLeft">二维码：</span>
             <div class="codeAddress"><img src="<?php echo STATIC_URL;?>/images/default_qr.png" /></div>

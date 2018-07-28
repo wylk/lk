@@ -225,7 +225,7 @@ class PlatformCurrency{
         $interfaceRes = $this->interfaceCurrency($buyInfo['user_address'],$sellInfo['user_address'],(int)$orderInfo['number']);
         if($interfaceRes) return $interfaceRes;
         // 转账记录
-        $this->recordBooks(["cardId"=>$orderInfo['card_id'],'getAddress'=>$buyInfo['user_address'],"send_address"=>$sellInfo['user_address'],"num"=>$orderInfo['number']]);
+        $this->recordBooks(["cardId"=>$orderInfo['card_id'],'getAddress'=>$buyInfo['user_address'],"sendAddress"=>$sellInfo['user_address'],"num"=>$orderInfo['number']]);
         // 交易单数据修改
         D("Card_transaction")->where(['id'=>["in",[$orderInfo['tran_id'],$orderInfo['tran_other']]]])->setDec("num",$orderInfo['number']);
         D("Card_transaction")->where(['id'=>['in',[$orderInfo['tran_id'],$orderInfo['tran_other']]]])->setDec("frozen",$orderInfo['number']);
