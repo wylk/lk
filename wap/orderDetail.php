@@ -6,6 +6,4 @@ $userId = $wap_user['userid'];
 
 $id = clear_html($_GET['id']);
 $orderInfo = D("Orders")->where(['id'=>$id])->find();
-
-
 include display("orderDetail");
