@@ -175,7 +175,7 @@
                                         <?php } ?>
                                     单号:<?php echo $value['onumber'] ?>
                                     </div>
-                                    <div class="order-list-title-right text-r" onclick="x_admin_show('订单详情','?c=hairpin&a=orderList&orderId=<?= $value['id'] ?>',400,450)">订单详情</div>
+                                    <div class="order-list-title-right text-r" onclick="x_admin_show('订单详情','?c=hairpin&a=orderList&orderId=<?= $value['id'] ?>',400,460)">订单详情</div>
                                 </div>
                                 <div class="order-list-content div-div div-div-hight lk-container-flex lk-justify-content-sb">
                                     <div id="order-list-content-left">
