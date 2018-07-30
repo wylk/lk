@@ -57,9 +57,15 @@
                 <p><a class="layui-bg-cyan" style="padding: 5px 7px" href="card_orderDetail.php?id=<?php echo $value['id'] ?>" >查看详情</a></p>
                 <p>价格：￥<?php echo number_format($value['price'],2) ?></p>
                 <?php if($value['sell_id'] == $userId){ ?>
-                    <p style="color: red">待收款</p>
+                    <p style="color: red">
+                    <?php if($value['status'] == "0") echo "待收款" ?>
+                    <?php if($value['status'] == "3") echo "已收款" ?>
+                    </p>
                 <?php }else{ ?>
-                    <p style="color: green">待付款</p>
+                    <p style="color: green">
+                    <?php if($value['status'] == "0") echo "待付款" ?>
+                    <?php if($value['status'] == "3") echo "已付款" ?>
+                    </p>
                 <?php } ?>
                 </p>
                 <p>总金额：<span class="total">￥<?php echo number_format($value['number']*$value['price'],2) ?></span></p>

@@ -184,7 +184,17 @@
                                         <p>数量:<?php echo number_format($value['number'],2); ?></p>
                                     </div>
                                     <div class="order-list-content-right text-r">
-                                        <p><?php echo $value['sell_id'] == $userId ? "未收款" : "未付款" ?></p>
+                                        <?php if($value['sell_id'] == $userId){ ?>
+                                            <p style="color: red">
+                                                <?php if($value['status'] == "0") echo "待收款" ?>
+                                                <?php if($value['status'] == "3") echo "已收款" ?>
+                                                </p>
+                                            <?php }else{ ?>
+                                                <p style="color: green">
+                                                <?php if($value['status'] == "0") echo "待付款" ?>
+                                                <?php if($value['status'] == "3") echo "已付款" ?>
+                                                </p>
+                                            <?php } ?>
                                         <p>金额:¥<?php echo number_format($value['number']*$value['price'],2); ?></p>
                                     </div>
                                 </div>
@@ -365,10 +375,10 @@ layui.use(["layer",'element'], function(){
             str += "<div class='order-list-title-right text-r' onclick='x_admin_show(\"订单详情\",\"?c=hairpin&a=orderList&orderId="+result.data.id+"\",400,450)'>订单详情</div></div>";
             str += "<div class='order-list-content div-div div-div-hight lk-container-flex lk-justify-content-sb'>";
             str += "<div id='order-list-content-left'>";
-            str += "<p>"+result.data.create_time+"</p><p>单价:¥"+price.toFixed(2)+"</p><p>数量:"+number.toFixed(2)+"</p>";
+            str += "<p>"+getTime()+"</p><p>单价:¥"+price.toFixed(2)+"</p><p>数量:"+number.toFixed(2)+"</p>";
             str += "</div>";
             str += "<div class='order-list-content-right text-r'>";
-            str += "<p>未收款</p><p>金额:¥"+prices.toFixed(2)+"</p>";
+            str += "<p style='color: red'>未收款</p><p>金额:¥"+prices.toFixed(2)+"</p>";
             str += "</div></div></div>";
             $("#ordering").prepend(str);
         }else{
@@ -398,10 +408,10 @@ layui.use(["layer",'element'], function(){
             str += "<div class='order-list-title-right text-r' onclick='x_admin_show(\"订单详情\",\"?c=hairpin&a=orderList&&orderId="+result.data.id+"\",400,450)'>订单详情</div></div>";
             str += "<div class='order-list-content div-div div-div-hight lk-container-flex lk-justify-content-sb'>";
             str += "<div id='order-list-content-left'>";
-            str += "<p>"+result.data.create_time+"</p><p>单价:¥"+price.toFixed(2)+"</p><p>数量:"+number.toFixed(2)+"</p>";
+            str += "<p>"+getTime()+"</p><p>单价:¥"+price.toFixed(2)+"</p><p>数量:"+number.toFixed(2)+"</p>";
             str += "</div>";
             str += "<div class='order-list-content-right text-r'>";
-            str += "<p>未付款</p><p>金额:¥"+prices.toFixed(2)+"</p>";
+            str += "<p style='color: green'>未付款</p><p>金额:¥"+prices.toFixed(2)+"</p>";
             str += "</div></div></div>";
             $("#ordering").prepend(str);
         }else{
@@ -494,4 +504,21 @@ layui.use(["layer",'element'], function(){
 
   //…
 });
+function getTime(){
+  var date = new Date();
+  // date.setTime(time * 1000);
+  var y = date.getFullYear();
+  var m = date.getMonth() + 1;
+  m = m < 10 ? ("0"+m) : m;
+  var d = date.getDate();
+  d = d < 10 ? ("0" + d) : d;
+  var h = date.getHours();
+  h = h < 10 ? ("0" + h) : h;
+  var i = date.getMinutes();
+  i = i < 10 ? ("0" + i) : i;
+  var s = date.getSeconds();
+  s = s < 10 ? ("0" + s) : s;
+  // console.log(time,time,y,m,d,h,s);
+  return y+"-"+m+"-"+d+" "+h+":"+i+":"+s;
+}
 </script>

@@ -28,8 +28,8 @@ class hairpin_controller extends base_controller
         $sellList = $platformObj->selectRegister(['userId'=>$this->userId,'type'=>'2','cardId'=>$packageInfo['card_id']]);
 
         // 订单列表
-        $finishOrderList = $platformObj->selectOrderList(['userId'=>$this->userId,'status'=>1]);
-        $orderingList = $platformObj->selectOrderList(['userId'=>$this->userId,'status'=>0]);
+        $finishOrderList = $platformObj->selectOrderList(['userId'=>$this->userId,'status'=>"in (1)"]);
+        $orderingList = $platformObj->selectOrderList(['userId'=>$this->userId,'status'=>"in (0,3)"]);
         $registerList = $platformObj->selectPersonRegister(['userId'=>$this->userId,"card_id"=>$packageInfo['card_id']]);
 
         $this->assign("packageInfo",$packageInfo);
@@ -89,6 +89,12 @@ class hairpin_controller extends base_controller
             $platformObj = new PlatformCurrency();
             $res = $platformObj->transferCurrency($orderId);
             dexit($res);
+        }
+        if(IS_POST && $_POST['type'] == "payMoeny"){
+            $orderId = $_POST['orderId'];
+            $res = D("Orders")->data(['status'=>3])->where(['id'=>$orderId])->save();
+            if(!$res) dexit(['res'=>1,"msg"=>"付款更新错误"]);
+            dexit(['res'=>0,"msg"=>"已通知对方付款"]);
         }
         $orderId = clear_html($_GET['orderId']);
         $orderInfo = D("Orders")->where(['id'=>$orderId])->find();

@@ -10,7 +10,7 @@ $html = $hook->exec('add_tpl');*/
 // $storeInfo = D("User_audit")->where(['status'=>1,"type"=>2])->select();
 // $storeUids = array_column($storeInfo,"uid");
 $type = "offset";
-$storeInfo = D("Card_package")->where(['type'=>$type])->select();
+$storeInfo = D("Card_package")->where(['type'=>$type,'is_publisher'=>1])->select();
 
 // // // 获取卡券的id
 // $cardPackage = D("Card_package")->where(['type'=>"offset",'is_publisher'=>1])->select();
