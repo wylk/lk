@@ -7,8 +7,10 @@ $hook = new Hook($a);
 $hook->add($a);
 $html = $hook->exec('add_tpl');*/
 // 认证店铺
-$storeInfo = D("User_audit")->where(['status'=>1,"type"=>2])->select();
+// $storeInfo = D("User_audit")->where(['status'=>1,"type"=>2])->select();
 // $storeUids = array_column($storeInfo,"uid");
+$type = "offset";
+$storeInfo = D("Card_package")->where(['type'=>$type])->select();
 
 // // // 获取卡券的id
 // $cardPackage = D("Card_package")->where(['type'=>"offset",'is_publisher'=>1])->select();

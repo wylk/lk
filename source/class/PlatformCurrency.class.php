@@ -270,7 +270,7 @@ class PlatformCurrency{
     // 交易记录列表
     public function selectOrderList($data){
         $packageInfo = D("Card_package")->where(['uid'=>$data['userId'],"type"=>"leka"])->find();
-        $orderWhere = "(`buy_id` = ".$data['userId']." or `sell_id` = ".$data['userId'].") and `card_id` = '".$packageInfo['card_id']."' and status = ".$data['status'];
+        $orderWhere = "(`buy_id` = ".$data['userId']." or `sell_id` = ".$data['userId'].") and `card_id` = '".$packageInfo['card_id']."' and status ".$data['status'];
         return D("Orders")->where($orderWhere)->order("create_time desc")->select();
     }
     public function selectPersonRegister($data){

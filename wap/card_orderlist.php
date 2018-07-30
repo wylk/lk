@@ -5,7 +5,7 @@ $userId = $wap_user['userid'];
 
 import("PlatformCurrency");
 $platformObj = new PlatformCurrency();
-$orderList = $platformObj->selectOrderList(['userId'=>$userId,'status'=>1]);
+$orderList = $platformObj->selectOrderList(['userId'=>$userId,'status'=>"in (1)"]);
 
 include display('card_orderlist');
 echo ob_get_clean();
