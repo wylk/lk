@@ -36,10 +36,20 @@
         <div class="detail">
             <div class='menuStyle'><span class="spanLeft">订单号：<?php echo $orderInfo['onumber'] ?></span><span class="spanRight">
              <?php if($orderInfo['sell_id'] == $userId){ ?>
-            <p style="color:gray;"><?php echo $orderInfo['status'] == '1' ? "交易成功" : ($orderInfo['status'] == '2' ? "订单超时" : "未收款"); ?></p>
+            <p style="color:gray;">
+              <?php if($orderInfo['status'] == '0') echo "未收款" ?> 
+              <?php if($orderInfo['status'] == '1') echo "交易成功" ?> 
+              <?php if($orderInfo['status'] == '2') echo "订单超时" ?> 
+              <?php if($orderInfo['status'] == '3') echo "已收款" ?> 
+            </p>
            <?php } ?>
            <?php if($orderInfo['buy_id'] == $userId){ ?>
-           <p style="color:gray;"><?php echo $orderInfo['status'] == '1' ? "交易成功" : ($orderInfo['status'] == '2' ? "订单超时" : "未付款"); ?></p>
+           <p style="color:gray;">
+              <?php if($orderInfo['status'] == '0') echo "未付款" ?> 
+              <?php if($orderInfo['status'] == '1') echo "交易成功" ?> 
+              <?php if($orderInfo['status'] == '2') echo "订单超时" ?> 
+              <?php if($orderInfo['status'] == '3') echo "已付款" ?> 
+           </p>
            <?php } ?>
           </span></div>
           <hr>
@@ -50,17 +60,19 @@
            <div class='menuStyle'><span class="spanLeft">创建时间：</span><span class="spanRight"><?php echo date("Y-m-d H:i:s",$orderInfo['create_time']) ?></span></div>
           <hr>
           <?php if($orderInfo['sell_id'] == $userId){ ?>
-          <div class='menuStyle'><span class="spanLeft">交易状态：</span>
-            <?php echo $orderInfo['status'] == '3' ? "<span class='spanRight' >已收款</span>" : ($orderInfo['status'] != '1' ? "<span class='spanRight'>未收款</span>" : "<span class='spanRight'>已收款</span>"); ?>
-            </div>
-            <div class='menuStyle'><span class="spanLeft"></span>
+            <div class='menuStyle'><span class="spanLeft">交易状态：</span>
             <?php echo $orderInfo['status'] == '1' ? "<span class='spanRight' >已转账</span>" : 
             "<button class='spanRight' id='confirmTran'>确认收款</button>" ?>
           </div>
           <?php } ?>
           <?php if($orderInfo['buy_id'] == $userId){ ?>
              <div class='menuStyle'><span class="spanLeft">收款人：老王</span><span class="spanRight">支付宝</span></div>
-              <div class='menuStyle'><span class="spanLeft"></span><button class="spanRight" id="payMoeny">已付款</button></div>
+             <?php if($orderInfo['status'] != '1'){ ?>
+              <div class='menuStyle'><span class="spanLeft"></span>
+              <?php if($orderInfo['status'] == '0') echo "<button class='spanRight' id='payMoeny'>已付款</button>" ?> 
+              <?php if($orderInfo['status'] == '3') echo "<span class='spanRight'>已付款</span>" ?> 
+              </div>
+              <?php } ?>
             <hr>
             <div class='codeStyle'><span class="spanLeft">二维码：</span>
             <div class="codeAddress"><img src="<?php echo STATIC_URL;?>/images/default_qr.png" /></div>
