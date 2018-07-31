@@ -69,7 +69,7 @@
     <?php foreach ($storeInfo as $k => $v) { ?>
       <div class="store">
         <div class="img">
-            <img src="<?php echo $v['img_oneself']?>" class="imgs"/>
+            <img src="<?php echo $arrs[$v['uid']]['card_log'] ?>" class="imgs"/>
         </div >
         <div class="price"><?php echo $v['enterprise'] ?></div>
         <div class="num"><a href="./home.php?shoreUid=<?php echo $v['uid'] ?>" class="layui-btn layui-btn-radius layui-btn-primary">交易</a></div>

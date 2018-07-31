@@ -16,7 +16,8 @@ if(IS_POST && $_POST['type'] == "register"){
 	$data['userid'] = $userId;
 	
 	$platformObj = new PlatformCurrency($data);
-	$res = $platformObj->currency();
+	// $res = $platformObj->currency();
+	$res = $platformObj->addEntrust();
 	dexit($res);
 }
 // 进行交易
@@ -24,9 +25,10 @@ if(IS_POST && $_POST['type'] == "transaction"){
 	$orderData['tranId'] = clear_html($_POST['tranId']);
 	$orderData['packageId'] = clear_html($_POST['packageId']);
 	$orderData['userId'] = $userId;
+	$orderData['num'] = clear_html($_POST['num']);
 
 	$platformObj = new PlatformCurrency();
-	$orderRes = $platformObj->createOrder($orderData,"1");
+	$orderRes = $platformObj->marksetTrade($orderData);
 	dexit($orderRes);
 }
 // 查找当前用户卡包信息
@@ -35,7 +37,7 @@ $platformInfo = D("Card_package")->where(['uid'=>$userId,"type"=>"leka"])->find(
 // $sellList = D("Card_transaction")->where(['card_id'=>$platformInfo['card_id'],"type"=>"2","status"=>'0'])->select();
 // 获取卖方委托单
 $platformObj = new PlatformCurrency();
-$sellList = $platformObj->selectRegister(['userId'=>$userId,'type'=>'2','cardId'=>$platformInfo['card_id']]);
+$sellList = $platformObj->selectTradeList(['userId'=>$userId,'type'=>'2','cardId'=>$platformInfo['card_id'],"status"=>'0']);
 // dump($sellList);die();
 include display('card_buy');
 echo ob_get_clean();

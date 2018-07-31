@@ -35,15 +35,15 @@
           <div class='menuStyle'><span class="spanLeft">订单号：<?php echo $orderInfo['onumber'] ?></span><span class="spanRight">
              <?php if($orderInfo['sell_id'] == $userId){ ?>
             <p style="color:gray;">
-              <?php if($orderInfo['status'] == '0') echo "未收款" ?> 
+              <?php if($orderInfo['status'] == '0') echo "待收款" ?> 
               <?php if($orderInfo['status'] == '1') echo "交易成功" ?> 
               <?php if($orderInfo['status'] == '2') echo "订单超时" ?> 
-              <?php if($orderInfo['status'] == '3') echo "已收款" ?> 
+              <?php if($orderInfo['status'] == '3') echo "对方已打款" ?> 
             </p>
            <?php } ?>
            <?php if($orderInfo['buy_id'] == $userId){ ?>
            <p style="color:gray;">
-              <?php if($orderInfo['status'] == '0') echo "未付款" ?> 
+              <?php if($orderInfo['status'] == '0') echo "待付款" ?> 
               <?php if($orderInfo['status'] == '1') echo "交易成功" ?> 
               <?php if($orderInfo['status'] == '2') echo "订单超时" ?> 
               <?php if($orderInfo['status'] == '3') echo "已付款" ?>

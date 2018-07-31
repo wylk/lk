@@ -44,7 +44,7 @@
         </div>
         <hr>
         <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                <a href="javascript:;">卖出数量：<input type='text' name="sellNum" value='<?php echo number_format(option('hairpan_set.limit'),2) ?>' placeholder="<?php echo number_format(option('hairpan_set.limit'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+                <a href="javascript:;">卖出数量：<input type='text' name="sellNum" value='' placeholder="<?php echo number_format(option('hairpan_set.limit'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
                 <a href="javascript:;">WLK</a>
         </div>
         <hr>
@@ -71,7 +71,7 @@
         <div class="lk-container-flex">
             <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
                 <p class="item-flex">王**</p>
-                <p class="item-flex"><?php echo number_format($value['num'],2) ?>WLK</p>
+                <p class="item-flex"><span id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num']-$value['frozen'],2)  ?></span> WLK</p>
                 <p class="item-flex">在线</p>
                 <p class="item-flex">价格：<?php echo number_format($value['price'],2) ?></p>
                 <p class="item-flex">logo</p>
@@ -115,7 +115,8 @@ layui.use(['layer'],function(){
         var idStr = $(this).attr("id");
         var tranId = idStr.substring(idStr.indexOf("_")+1);
         var packageId = "<?php echo $platformInfo['id']; ?>";
-        var data = {'type':"transaction","tranId":tranId,"packageId":packageId};
+        var num = $("#num_"+tranId).html();
+        var data = {'type':"transaction","tranId":tranId,"packageId":packageId,"num":num};
         $.post("./card_sell.php",data,function(result){
             console.log(result);
             if(!result.res){

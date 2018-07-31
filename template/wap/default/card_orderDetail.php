@@ -98,11 +98,9 @@
           layer.closeAll("loading");
           if(!result.res){
             layer.msg(result.msg,{icon:1,skin:"demo-class"});
-            // window.location.href = "./card_orderlist.php";
-            window.location.reload(true);
+            // window.location.reload(true);
           }else{
             layer.msg(result.msg,{icon:5,skin:"demo-class"});
-            // window.location.href = "./card_order.php";
           }
         },"json");
       })
@@ -116,7 +114,7 @@
           console.log(result);
           layer.closeAll("loading");
           if(!result.res){
-           layer.msg(result.msg,{icon:1,skin:"demo-class"});
+            layer.msg(result.msg,{icon:1,skin:"demo-class"});
             window.location.reload(true);
           }else{
             layer.msg(result.msg,{icon:5,skin:"demo-class"});

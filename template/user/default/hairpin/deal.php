@@ -121,9 +121,10 @@
                   </colgroup>
                   <tbody>
                     <?php foreach ($buyList as $key => $value) { ?>
-                    <tr>
+                    <?php if($value['num'] <= $value['frozen']) continue; ?>
+                    <tr id="tr_<?php echo $value['id']; ?>">
                       <td style="color:#008069">买</td>
-                      <td><?php echo number_format($value['num'],2) ?></td>
+                      <td id="num_<?php echo $value['id']; ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></td>
                       <td><?php echo number_format($value['price']*$value['num'],2) ?></td>
                       <td><a href="javascript:;" id="sellTran_<?php echo $value['id']; ?>"  class="layui-btn layui-btn-xs">卖出</a></td>
                     </tr>
@@ -142,9 +143,10 @@
                   </colgroup>
                   <tbody>
                     <?php foreach ($sellList as $key => $value) { ?>
-                    <tr>
+                    <?php if($value['num'] <= $value['frozen']) continue; ?>
+                    <tr id="tr_<?php echo $value['id']; ?>">
                       <td style="color:red">卖</td>
-                      <td><?php echo number_format($value['num'],2) ?></td>
+                      <td id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></td>
                       <td><?php echo number_format($value['price']*$value['num'],2) ?></td>
                       <!-- onclick="x_admin_show('卖出','?c=hairpin&a=transaction&type=0&id=<?= 1 ?>',500,500)" -->
                       <td><a href="javascript:;" id="buyTran_<?php echo $value['id'] ?>"  class="layui-btn layui-btn-xs" >买入</a></td>
@@ -187,7 +189,7 @@
                                         <?php if($value['sell_id'] == $userId){ ?>
                                             <p style="color: red">
                                                 <?php if($value['status'] == "0") echo "待收款" ?>
-                                                <?php if($value['status'] == "3") echo "已收款" ?>
+                                                <?php if($value['status'] == "3") echo "对方已打款" ?>
                                                 </p>
                                             <?php }else{ ?>
                                                 <p style="color: green">
@@ -357,30 +359,17 @@ layui.use(["layer",'element'], function(){
     layer.load();
     var idStr = $(this).attr("id");
     var tranId = idStr.substring(idStr.indexOf("_")+1);
+    var num = $("#num_"+tranId).html();
+    var packageId = "<?php echo $packageInfo['id'] ?>"
     console.log(tranId);
-    var data = {"tranId":tranId};
+    var data = {"tranId":tranId,"num":num,"packageId":packageId};
     $.post("?c=hairpin&a=sellTran",data,function(result){
         console.log(result);
         layer.closeAll("loading");
         if(!result.res){
             layer.msg(result.msg,{icon:1,skin:"demo-class"});
-            var price = new Number(result.data.price);
-            var number = new Number(result.data.number);
-            var prices = new Number(result.data.number*result.data.price);
-            var str = "<div class='order-list'>";
-            str += "<div class='order-list-title div-div lk-container-flex lk-justify-content-sb'>";
-            str += "<div style='width:80%'>";
-            str += "<span style='color: red'>卖出</span>";
-            str += result.data.onumber + "</div>";
-            str += "<div class='order-list-title-right text-r' onclick='x_admin_show(\"订单详情\",\"?c=hairpin&a=orderList&orderId="+result.data.id+"\",400,450)'>订单详情</div></div>";
-            str += "<div class='order-list-content div-div div-div-hight lk-container-flex lk-justify-content-sb'>";
-            str += "<div id='order-list-content-left'>";
-            str += "<p>"+getTime()+"</p><p>单价:¥"+price.toFixed(2)+"</p><p>数量:"+number.toFixed(2)+"</p>";
-            str += "</div>";
-            str += "<div class='order-list-content-right text-r'>";
-            str += "<p style='color: red'>未收款</p><p>金额:¥"+prices.toFixed(2)+"</p>";
-            str += "</div></div></div>";
-            $("#ordering").prepend(str);
+            orderStr(result.data,'2');
+            $("#tr_"+tranId).remove();
         }else{
             layer.msg(result.msg,{icon:5,skin:"demo-class"});
         }
@@ -390,30 +379,17 @@ layui.use(["layer",'element'], function(){
     layer.load();
     var idStr = $(this).attr("id");
     var tranId = idStr.substring(idStr.indexOf("_")+1);
+    var num = $("#num_"+tranId).html();
+    var packageId = "<?php echo $packageInfo['id'] ?>"
     console.log(tranId);
-    var data = {"tranId":tranId};
+    var data = {"tranId":tranId,"num":num,"packageId":packageId};
     $.post("?c=hairpin&a=buyTran",data,function(result){
         console.log(result);
         layer.closeAll("loading");
         if(!result.res){
             layer.msg(result.msg,{icon:1,skin:"demo-class"});
-            var price = new Number(result.data.price);
-            var number = new Number(result.data.number);
-            var prices = new Number(result.data.price*result.data.number);
-            var str = "<div class='order-list'>";
-            str += "<div class='order-list-title div-div lk-container-flex lk-justify-content-sb'>";
-            str += "<div style='width:80%'>";
-            str += "<span style='color: green'>买入</span>";
-            str += result.data.onumber + "</div>";
-            str += "<div class='order-list-title-right text-r' onclick='x_admin_show(\"订单详情\",\"?c=hairpin&a=orderList&&orderId="+result.data.id+"\",400,450)'>订单详情</div></div>";
-            str += "<div class='order-list-content div-div div-div-hight lk-container-flex lk-justify-content-sb'>";
-            str += "<div id='order-list-content-left'>";
-            str += "<p>"+getTime()+"</p><p>单价:¥"+price.toFixed(2)+"</p><p>数量:"+number.toFixed(2)+"</p>";
-            str += "</div>";
-            str += "<div class='order-list-content-right text-r'>";
-            str += "<p style='color: green'>未付款</p><p>金额:¥"+prices.toFixed(2)+"</p>";
-            str += "</div></div></div>";
-            $("#ordering").prepend(str);
+            orderStr(result.data,'1');
+            $("#tr_"+tranId).remove();
         }else{
             layer.msg(result.msg,{icon:5,skin:"demo-class"});
         }
@@ -432,13 +408,17 @@ layui.use(["layer",'element'], function(){
         layer.closeAll("loading");
         if(!result.res){
             layer.msg(result.msg,{icon:1,skin:"demo-class"});
-            var num = new Number(result.data.num);
-            var price = new Number(result.data.price);
-            var str = "<tr id='strRevoke_"+result.data.id+"'>";
-            str += "<td style='color:#008069'>买</td>";
-            str += "<td>"+num.toFixed(2)+"</td><td>"+price.toFixed(2)+"</td><td><a href='javascript:;' id='revoke_"+result.data.id+"' class='layui-btn layui-btn-xs'>撤销</a></td>";
-            str += "</tr>";
-            $("#registerList").prepend(str);
+            // var num = new Number(result.tradeData.num);
+            // var price = new Number(result.tradeData.price);
+            // var str = "<tr id='strRevoke_"+result.tradeData.id+"'>";
+            // str += "<td style='color:#008069'>买</td>";
+            // str += "<td>"+num.toFixed(2)+"</td><td>"+price.toFixed(2)+"</td><td><a href='javascript:;' id='revoke_"+result.tradeData.id+"' class='layui-btn layui-btn-xs'>撤销</a></td>";
+            // str += "</tr>";
+            // $("#registerList").prepend(str);
+            window.location.reload();
+            // $.each(result.orderData,function(item,value){
+            //     orderStr(value,'1');
+            // })
         }else{
             layer.msg(result.msg,{icon:5,skin:"demo-class"});
         }
@@ -456,13 +436,17 @@ layui.use(["layer",'element'], function(){
         layer.closeAll("loading");
         if(!result.res){
             layer.msg(result.msg,{icon:1,skin:"demo-class"});
-            var num = new Number(result.data.num);
-            var price = new Number(result.data.price);
-            var str = "<tr id='strRevoke_"+result.data.id+"'>";
-            str += "<td style='color:red'>卖</td>";
-            str += "<td>"+num.toFixed(2)+"</td><td>"+price.toFixed(2)+"</td><td><a href='javascript:;' id='revoke_"+result.data.id+"' class='layui-btn layui-btn-xs'>撤销</a></td>";
-            str += "</tr>";
-            $("#registerList").prepend(str);
+            window.location.reload();
+            // var num = new Number(result.tradeData.num);
+            // var price = new Number(result.tradeData.price);
+            // var str = "<tr id='strRevoke_"+result.tradeData.id+"'>";
+            // str += "<td style='color:red'>卖</td>";
+            // str += "<td>"+num.toFixed(2)+"</td><td>"+price.toFixed(2)+"</td><td><a href='javascript:;' id='revoke_"+result.tradeData.id+"' class='layui-btn layui-btn-xs'>撤销</a></td>";
+            // str += "</tr>";
+            // $("#registerList").prepend(str);
+            // $.each(result.orderData,function(item,value){
+            //     orderStr(value,'2');
+            // })
         }else{
             layer.msg(result.msg,{icon:5,skin:"demo-class"});
         }
@@ -504,6 +488,33 @@ layui.use(["layer",'element'], function(){
 
   //…
 });
+function orderStr(data,$type){
+    var number = new Number(data.number);
+    var price = new Number(data.price);
+    var prices = new Number(data.number*data.price);
+    var str = "<div class='order-list'>";
+    str += "<div class='order-list-title div-div lk-container-flex lk-justify-content-sb'>";
+    str += "<div style='width:80%'>";
+    if($type == '1'){
+        str += "<span style='color: green'>买入</span>";
+    }else{
+        str += "<span style='color: red'>卖出</span>";
+    }
+    str += data.onumber + "</div>";
+    str += "<div class='order-list-title-right text-r' onclick='x_admin_show(\"订单详情\",\"?c=hairpin&a=orderList&&orderId="+data.id+"\",400,450)'>订单详情</div></div>";
+    str += "<div class='order-list-content div-div div-div-hight lk-container-flex lk-justify-content-sb'>";
+    str += "<div id='order-list-content-left'>";
+    str += "<p>"+getTime()+"</p><p>单价:¥"+price.toFixed(2)+"</p><p>数量:"+number.toFixed(2)+"</p>";
+    str += "</div>";
+    str += "<div class='order-list-content-right text-r'>";
+    if($type == '1'){
+        str += "<p style='color: green'>未付款</p>";
+    }else{
+        str += "<p style='color: red'>未付款</p>";
+    }
+    str += "<p>金额:¥"+prices.toFixed(2)+"</p></div></div></div>";
+    $("#ordering").prepend(str);
+}
 function getTime(){
   var date = new Date();
   // date.setTime(time * 1000);

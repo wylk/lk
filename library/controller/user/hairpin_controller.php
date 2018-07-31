@@ -23,9 +23,9 @@ class hairpin_controller extends base_controller
         $packageInfo = D("Card_package")->where(['uid'=>$this->userId,"type"=>"leka"])->find();
         
         // 市场委托买单
-        $buyList = $platformObj->selectRegister(['userId'=>$this->userId,'type'=>'1','cardId'=>$packageInfo['card_id']]);
+        $buyList = $platformObj->selectTradeList(['userId'=>$this->userId,'type'=>'1','cardId'=>$packageInfo['card_id'],'status'=>'0']);
         // 市场委托卖单
-        $sellList = $platformObj->selectRegister(['userId'=>$this->userId,'type'=>'2','cardId'=>$packageInfo['card_id']]);
+        $sellList = $platformObj->selectTradeList(['userId'=>$this->userId,'type'=>'2','cardId'=>$packageInfo['card_id'],'status'=>'0']);
 
         // 订单列表
         $finishOrderList = $platformObj->selectOrderList(['userId'=>$this->userId,'status'=>"in (1)"]);
@@ -44,18 +44,24 @@ class hairpin_controller extends base_controller
     // 买入平台币
     public function buyTran(){
         $tranId = clear_html($_POST['tranId']);
+        $num = clear_html($_POST['num']);
+        $packageId = clear_html($_POST['packageId']);
         import("PlatformCurrency");
         $platformObj = new PlatformCurrency();
-        $res = $platformObj->createOrder(['tranId'=>$tranId,"userId"=>$this->userId],"1");
+        $orderData = ['tranId'=>$tranId,"userId"=>$this->userId,"num"=>$num,"packageId"=>$packageId];
+        $res = $platformObj->marksetTrade($orderData);
         // dexit(['tranId'=>$tranId,'res'=>$res]);
         dexit($res);
     }
     // 卖出平台币
     public function sellTran(){
         $tranId = clear_html($_POST['tranId']);
+        $num = clear_html($_POST['num']);
+        $packageId = clear_html($_POST['packageId']);
         import("PlatformCurrency");
         $platformObj = new PlatformCurrency();
-        $res = $platformObj->createOrder(['tranId'=>$tranId,"userId"=>$this->userId],"2");
+        $orderData = ['tranId'=>$tranId,"userId"=>$this->userId,"num"=>$num,"packageId"=>$packageId];
+        $res = $platformObj->marksetTrade($orderData);
         // dexit(['tranId'=>$tranId,'res'=>$res,"tranId"=>$tranId]);
         dexit($res);
     }
@@ -69,7 +75,7 @@ class hairpin_controller extends base_controller
         $data['type'] = clear_html($_POST['type']);
         import("PlatformCurrency");
         $platformObj = new PlatformCurrency($data);
-        $res = $platformObj->currency();
+        $res = $platformObj->addEntrust();
         dexit($res);
     }
     public function revokeRegister(){

@@ -59,7 +59,7 @@
                 <?php if($value['sell_id'] == $userId){ ?>
                     <p style="color: red">
                     <?php if($value['status'] == "0") echo "待收款" ?>
-                    <?php if($value['status'] == "3") echo "已收款" ?>
+                    <?php if($value['status'] == "3") echo "对方已付款" ?>
                     </p>
                 <?php }else{ ?>
                     <p style="color: green">

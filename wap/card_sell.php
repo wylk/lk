@@ -14,16 +14,17 @@ if(IS_POST && $_POST['type'] == "register"){
 	$data['userid'] = $userId;
 
 	$platformObj = new PlatformCurrency($data);
-	$res = $platformObj->currency();
+	$res = $platformObj->addEntrust();
 	dexit($res);
 }
 if(IS_POST && $_POST['type'] == "transaction"){
 	$orderData['userId'] = $userId;
 	$orderData['tranId'] = clear_html($_POST['tranId']);
 	$orderData['packageId'] = clear_html($_POST['packageId']);
+	$orderData['num'] = clear_html($_POST['num']);
 
 	$platformObj = new PlatformCurrency();
-	$orderRes = $platformObj->createOrder($orderData,'2');
+	$orderRes = $platformObj->marksetTrade($orderData);
 	dexit($orderRes);
 }
 
@@ -33,6 +34,6 @@ $platformInfo = D("Card_package")->where(['uid'=>$userId,"type"=>"leka"])->find(
 // $buyList = D("Card_transaction")->where(['card_id'=>$platformInfo['card_id'],"type"=>1])->select();
 
 $platformObj = new PlatformCurrency();
-$buyList = $platformObj->selectRegister(['userId'=>$userId,'type'=>'1','cardId'=>$platformInfo['card_id']]);
+$buyList = $platformObj->selectTradeList(['userId'=>$userId,'type'=>'1','cardId'=>$platformInfo['card_id'],"status"=>0]);
 include display('card_sell');
 echo ob_get_clean();
