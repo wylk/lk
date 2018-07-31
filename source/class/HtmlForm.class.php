@@ -195,7 +195,8 @@ $this->htmlall.=$str;
 			"qqRegex"=>['/^[1-9][0-9]{4,10}$/','QQ号格式不对'],																				//QQ验证，最多11位
 			"cnRegex"=>['/[\u4E00-\u9FA5]/','必须包含中文'],																					//包含中文验证
 			"userRegex"=>['/^[a-zA-Z0-9_-]{4,16}$/','必须是字母，数字，下划线，减号'],																//用户名验证，4到16位（字母，数字，下划线，减号）
-			"passwordRegex"=>['/^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/','密码强度不够'],					//密码强度验证
+            "passwordRegex"=>['/^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/','密码强度不够'],                    //密码强度验证
+			"pwdRegex"=>['/^[0-9]{6}$/','请输入6位数字的密码'],					//密码强度验证
 		);
 		$regex = '';
 		foreach ($reg as $k => $v) {
@@ -241,6 +242,9 @@ $this->htmlall.=$str;
             		case 'min':
             			 $required .= $kk.": function(value){if(value.length < ".$vv[1]."){return '".$vv[2]."不能少于".$vv[1]."字符'; }},";
             			break;
+                    case 'with':
+                         $required .= $kk.": function(value){if(value !=  $('input[name=".$vv[1]."]').val()){return '".$vv[2]."'; }},";
+                        break;
             		default:
             			# code...
             			break;

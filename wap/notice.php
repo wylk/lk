@@ -5,7 +5,7 @@
 require_once dirname(__FILE__) . '/global.php';
 $data = json_decode(json_encode(simplexml_load_string(file_get_contents('php://input'), 'SimpleXMLElement', LIBXML_NOCDATA)), true);
  
- $file = LEKA_PATH.'/upload/log/order.txt';
+$file = LEKA_PATH.'/upload/log/order.txt';
 file_put_contents($file,$data['order_id']);
 
 $order  = D('Orders')->where(['id'=>$data['order_id']])->find();
