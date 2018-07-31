@@ -9,7 +9,7 @@ $html = $hook->exec('add_tpl');*/
 // 认证店铺
 // $storeInfo = D("User_audit")->where(['status'=>1,"type"=>2])->select();
 // $storeUids = array_column($storeInfo,"uid");
-$type = "offset";
+$type = $_GET['type']?$_GET['type']:"offset";
 $storeInfo = D("Card_package")->where(['type'=>$type,'is_publisher'=>1])->select();
 
 // // // 获取卡券的id
@@ -20,7 +20,7 @@ $storeInfo = D("Card_package")->where(['type'=>$type,'is_publisher'=>1])->select
 // $cardInfo = D("Card")->where($where)->select();
 // dump($cardInfo);
 
-// //$cardInfos = D("Card")->where(['uid'=>['in',$storeUids]])->group("card_id")->select();
+//$cardInfos = D("Card")->where(['uid'=>['in',$storeUids]])->group("card_id")->select();
 // $cardInfos = D("Card")->where(['uid'=>['in',$storeUids]])->select();
 // $contract_field = D("Contract_field")->select();
 // $arr = array();
