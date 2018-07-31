@@ -39,11 +39,13 @@
     <h1 class="lk-title">设置</h1>
   </header>
 <div class="lk-content" style="background-color: #f0f0f0;">
-    <div class="item-row lk-container-flex" style="margin: 20px auto 0px;">
-        <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe71c;</i></div>
-        <div class="item-row-title row" >账户安全设置</div>
-        <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
-    </div>
+    <a href="./pay_pw.php">
+        <div class="item-row lk-container-flex" style="margin: 20px auto 0px;">
+            <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe71c;</i></div>
+            <div class="item-row-title row" >账户安全设置</div>
+            <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
+        </div>
+    </a>
     <hr class="layui-bg-gray">
     <div class="item-row lk-container-flex" style="margin: 0px auto">
         <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe6ba;</i></div>

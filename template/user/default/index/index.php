@@ -41,7 +41,7 @@
               <dd><a href="?c=index&a=logout">退出</a></dd>
             </dl>
           </li>
-          <li class="layui-nav-item to-index"><a href="/">清除缓存</a></li>
+          <li class="layui-nav-item to-index"><a href="javascript:;" id="del_cache">清除缓存</a></li>
         </ul>
 
     </div>
@@ -104,13 +104,19 @@
     <!-- 底部结束 -->
     <script>
     //百度统计可去掉
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
+   
+
+layui.use(['layer'], function(){
+    $ = layui.jquery;
+    var layer = layui.layer;
+    $('#del_cache').click(function(){
+        $.post('?c=public&a=cache',{},function(i){
+            layer.msg(i.msg, {icon: 1,time:2000},function () {
+                window.location.replace(location.href);
+            });
+        },'json');
+    }) 
+ });
     </script>
 </body>
 </html>

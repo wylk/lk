@@ -3,14 +3,16 @@ require_once dirname(__FILE__).'/global.php';
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
 $userId = $wap_user['userid'];
 //dump($config['reg_readme_content']);
+$userInfo = D("User")->where(["id"=>$userId])->find();
+if($userInfo['pay_password'] == null){
+	redirect('./pay_pw.php?referer='.urlencode($_SERVER['REQUEST_URI']));          
+}
 
 
 if(IS_POST){
 	$orderId = $_POST['orderId'];
 	$payPwd = $_POST['payPwd'];
-	$userInfo = D("User")->where(["id"=>$userId])->find();
-	$userInfo['pay_password'] = "123456";
-	if($userInfo['pay_password'] != $payPwd){
+	if(md5($payPwd) != $userInfo['pay_password']){
 		dexit(['res'=>1,'msg'=>'支付密码错误']);
 	}
 	$orderinfo = D("Orders")->where(['id'=>$orderId])->find();

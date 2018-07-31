@@ -79,9 +79,9 @@
        <div class="card-data card-data-style">交易限制:<i><?= floatval($UserAud['limit']) ?></i>-<i><?= floatval($UserAud['num']) ?></i> 单价:<i><?= floatval($UserAud['price']) ?></i></div>
        <div class="card-data">购买量:
 
-        <input type="text" name="number" required  lay-verify="required" autocomplete="off" class="layui-input">
+        <input type="text" name="number" required  lay-verify="required" autocomplete="off" class="layui-input number">
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" name="prices" required  lay-verify="required" autocomplete="off" class="layui-input" >
+        <input type="text" name="prices" required  lay-verify="required" autocomplete="off" class="layui-input prices" >
 
         CNY
     </div>

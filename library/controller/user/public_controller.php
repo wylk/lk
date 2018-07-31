@@ -82,5 +82,37 @@ class public_controller extends controller
         }
 
     }
+
+    public function cache()
+    {
+        $this->del_cache('./cache');
+        dexit(['error'=>0,'msg'=>'缓存清除成功！']);
+    }
+
+    public function del_cache($directory,$notself=false)
+    {
+        if (is_dir($directory) == false){
+            return '1';
+        }
+        $handle = opendir($directory);
+        while (($file = readdir($handle)) !== false){
+            if ($file != "." && $file != ".."){
+                if(is_dir("$directory/$file")){
+                    $this->del_cache("$directory/$file",true);
+                }else{
+                    unlink("$directory/$file");
+                }
+            }
+        }
+        if (readdir($handle) == false){
+            closedir($handle);
+            if($notself){
+                rmdir($directory);
+            }
+        }
+
+    }
+
+
 }
 
