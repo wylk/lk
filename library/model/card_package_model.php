@@ -21,5 +21,18 @@ class card_package_model extends base_model
 		$sql .= " where ".$where[0]."=".$where[1];
 		return $this->db->query($sql);
 	}
+	public function frozen($frozenList){
+		foreach ($frozenList as $key => $value) {
+			$case[$value['field']] .= " when ".$value['id']." then `".$value['field']."` ".$value['operator'].$value['step'];
+			$ids[] = $value['id'];
+		}
+		foreach($case as $key=>$value){
+			$where .= " `".$key."` = (case id ".$value." end),";
+		}
+		$ids = implode($ids,",");
+		$where = substr($where, 0,-1);
+		$sql = "update lk_card_package set ".$where." where id in (".$ids.")";
+		return $this->db->query($sql);
+	}
 
 }

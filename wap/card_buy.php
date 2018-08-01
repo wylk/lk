@@ -14,7 +14,7 @@ if(IS_POST && $_POST['type'] == "register"){
 	$data['packageId'] = clear_html($_POST['id']);
 	$data['type'] = 1;
 	$data['userid'] = $userId;
-	dexit(['res'=>1,"msg"=>"test"]);
+	
 	$platformObj = new PlatformCurrency($data);
 	// $res = $platformObj->currency();
 	$res = $platformObj->addEntrust();
