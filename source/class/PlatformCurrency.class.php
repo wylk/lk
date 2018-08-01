@@ -50,7 +50,7 @@ class PlatformCurrency{
 
         // 自动匹配订单
         $this->matching();
-        if(!count($this->matchOrderData)) return $res;
+        if(!count($this->matchOrderData)) return $tradeDataRes;
 
         $addOrderRes = $this->addOrder();
         if($addOrderRes['res']) return $addOrderRes;
