@@ -470,15 +470,17 @@ layui.use(["layer",'element'], function(){
   $("[id^=revoke_]").bind("click",function(){
     var idStr = $(this).attr("id");
     var tranId = idStr.substring(idStr.indexOf("_")+1);
+    var packageId = "<?php echo $packageInfo['id'] ?>";
     layer.confirm("确定要撤销吗?",function(){
     layer.load();
-        var data = {"tranId":tranId};
+        var data = {"tranId":tranId,"packageId":packageId};
         console.log(data);
         $.post("?c=hairpin&a=revokeRegister",data,function(result){
             layer.closeAll("loading");
             if(!result.res){
                 layer.msg(result.msg,{icon:1,skin:"demo-class"});
-                $("#strRevoke_"+tranId).remove();
+                window.location.reload(true);
+                // $("#strRevoke_"+tranId).remove();
             }else{
                 layer.msg(result.msg,{icon:5,skin:"demo-class"});
             }

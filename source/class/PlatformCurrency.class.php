@@ -142,8 +142,12 @@ class PlatformCurrency{
     public function selectTradeList($data){
         return D("Card_transaction")->where(["uid"=>['not in',[$data['userId']]],"card_id"=>$data['cardId'],'type'=>$data['type'],"status"=>$data['status'],"frozen"=>['>=',0]])->select();
     }
+    // 查找个人的委托单
     public function selectPersonRegister($data){
         $tranWhere = ['uid'=>$data['userId'],"card_id"=>$data['card_id'],"status"=>0];
+        if($data['type']){
+            $tranWhere['type'] = $data['type'];
+        }
         return D("Card_transaction")->where($tranWhere)->order("createtime desc")->select();
     }
     // 直接与市场中的委托单交易
@@ -200,10 +204,16 @@ class PlatformCurrency{
         return D("Orders")->where($orderWhere)->order("create_time desc")->select();
     }
     // 撤销委托单
-    public function revokeRegister($tranId){
-        if(!D("Card_transaction")->where(['id'=>$tranId])->setField("status",3)){
+    public function revokeRegister($data){
+        if(!D("Card_transaction")->where(['id'=>$data['tranId']])->setField("status",2)){
             return ['res'=>1,"msg"=>"撤销失败"];
         }
+        $revokeInfo = D("Card_transaction")->where(['id'=>$data['tranId']])->find();
+        if($revokeInfo['type'] == '1') return ['res'=>0,"msg"=>"撤销成功"];
+        $frozenList[] = ['id'=>$data['packageId'],"operator"=>"-","step"=>$revokeInfo['num'],"field"=>"frozen"];
+        $frozenList[] = ['id'=>$data['packageId'],"operator"=>"+","step"=>$revokeInfo['num'],"field"=>"num"];
+        // 委托单作废解冻package中的数据
+        $this->packageFrozen($frozenList);
         return ['res'=>0,"msg"=>"撤销成功"];
     }
     // 订单的状态
