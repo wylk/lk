@@ -26,6 +26,13 @@ if(IS_POST && $_POST['type'] == "transaction"){
 	$orderRes = $platformObj->marksetTrade($orderData);
 	dexit($orderRes);
 }
+if(IS_POST && $_POST['type'] == "revoke"){
+	$revoke['tranId'] = $_POST['tranId'];
+	$revoke['packageId'] = $_POST['packageId'];
+	$platformObj = new PlatformCurrency();
+	$revoke = $platformObj->revokeRegister($revoke);
+	dexit($revoke);
+}
 
 
 $platformInfo = D("Card_package")->where(['uid'=>$userId,"type"=>"leka"])->find();
@@ -34,5 +41,8 @@ $platformInfo = D("Card_package")->where(['uid'=>$userId,"type"=>"leka"])->find(
 
 $platformObj = new PlatformCurrency();
 $buyList = $platformObj->selectTradeList(['userId'=>$userId,'type'=>'1','cardId'=>$platformInfo['card_id'],"status"=>0]);
+
+$register = $platformObj->selectPersonRegister(['card_id'=>$platformInfo['card_id'],"userId"=>$userId,'type'=>'2']);
+// dump($register);die();
 include display('card_sell');
 echo ob_get_clean();

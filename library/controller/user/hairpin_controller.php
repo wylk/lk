@@ -79,10 +79,11 @@ class hairpin_controller extends base_controller
         dexit($res);
     }
     public function revokeRegister(){
-        $tranId = $_POST['tranId'];
+        $data['tranId'] = $_POST['tranId'];
+        $data['packageId'] = $_POST['packageId'];
         import("PlatformCurrency");
         $platformObj = new PlatformCurrency();
-        $res = $platformObj->revokeRegister($tranId);
+        $res = $platformObj->revokeRegister($data);
         dexit($res);
     }
 

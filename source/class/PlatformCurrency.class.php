@@ -47,6 +47,12 @@ class PlatformCurrency{
         $data = ['cardId'=>$platform['card_id'],"cardAddress"=>$platform['address']];
         $tradeDataRes = $this->addTradeSheet($data,$this->type);
         if($tradeDataRes['res'] != 0) return $tradeDataRes;
+        // 冻结卡包卖家数据
+        if($this->type == '2'){
+            $frozenList[] = ['id'=>$platform['id'],"operator"=>"+","step"=>$this->tranNum,"field"=>"frozen"];
+            $frozenList[] = ['id'=>$platform['id'],"operator"=>"-","step"=>$this->tranNum,"field"=>"num"];
+            $this->packageFrozen($frozenList);
+        }
 
         // 自动匹配订单
         $this->matching();
@@ -116,8 +122,10 @@ class PlatformCurrency{
         if(!$this->lastTradeId){
             return ['res'=>1,"msg"=>"挂单失败"];
         }
+
         return ['res'=>0,"msg"=>"挂单成功","data"=>$tranData];
     }
+
     // 添加订单
     public function addOrder(){
         if(count($this->matchOrderData) == 1){
@@ -134,8 +142,12 @@ class PlatformCurrency{
     public function selectTradeList($data){
         return D("Card_transaction")->where(["uid"=>['not in',[$data['userId']]],"card_id"=>$data['cardId'],'type'=>$data['type'],"status"=>$data['status'],"frozen"=>['>=',0]])->select();
     }
+    // 查找个人的委托单
     public function selectPersonRegister($data){
         $tranWhere = ['uid'=>$data['userId'],"card_id"=>$data['card_id'],"status"=>0];
+        if($data['type']){
+            $tranWhere['type'] = $data['type'];
+        }
         return D("Card_transaction")->where($tranWhere)->order("createtime desc")->select();
     }
     // 直接与市场中的委托单交易
@@ -177,6 +189,10 @@ class PlatformCurrency{
         $this->tradeSheetFrozen($frozenList);
         return ['res'=>0,"msg"=>"订单已生成",'data'=>$this->matchOrderData[$tranId]];
     }
+    // 卡包数据冻结
+    public function packageFrozen($frozenList){
+        M("Card_package")->frozen($frozenList);
+    }
     // 交易单修改数据冻结
     public function tradeSheetFrozen($frozenList){
         M("Card_transaction")->frozen($frozenList);
@@ -188,10 +204,16 @@ class PlatformCurrency{
         return D("Orders")->where($orderWhere)->order("create_time desc")->select();
     }
     // 撤销委托单
-    public function revokeRegister($tranId){
-        if(!D("Card_transaction")->where(['id'=>$tranId])->setField("status",3)){
+    public function revokeRegister($data){
+        if(!D("Card_transaction")->where(['id'=>$data['tranId']])->setField("status",2)){
             return ['res'=>1,"msg"=>"撤销失败"];
         }
+        $revokeInfo = D("Card_transaction")->where(['id'=>$data['tranId']])->find();
+        if($revokeInfo['type'] == '1') return ['res'=>0,"msg"=>"撤销成功"];
+        $frozenList[] = ['id'=>$data['packageId'],"operator"=>"-","step"=>$revokeInfo['num'],"field"=>"frozen"];
+        $frozenList[] = ['id'=>$data['packageId'],"operator"=>"+","step"=>$revokeInfo['num'],"field"=>"num"];
+        // 委托单作废解冻package中的数据
+        $this->packageFrozen($frozenList);
         return ['res'=>0,"msg"=>"撤销成功"];
     }
     // 订单的状态
@@ -204,6 +226,7 @@ class PlatformCurrency{
     public function recordBooks($data){
         $recordRes = D("Record_books")->data(['card_id'=>$data['cardId'],"send_address"=>$data["sendAddress"],"get_address"=>$data['getAddress'],"num"=>$data['num'],"createtime"=>time()])->add();
     }
+    public $sellOrder = false;  //是否是委托卖单
     // 平台币转账
     public function transferCurrency($orderId){
         $orderInfo = D("Orders")->where(['id'=>$orderId])->find();
@@ -228,11 +251,11 @@ class PlatformCurrency{
         $sellRes = $this->interfaceBalance($sellInfo['user_address']);
         $buyRes = $this->interfaceBalance($buyInfo['user_address']);
 
-        // 检测交易单是否完成
+        // 检测交易单是否完成 并修改状态
         $this->judgeTrade(['tranId'=>$orderInfo['tran_id'],"tranOther"=>$orderInfo['tran_other'],"sellId"=>$orderInfo['sell_id']]);
 
+        // 交易成功减少卖家冻结 卖出的部分
         if($this->sellOrder){
-            // 交易成功减少卖家冻结 卖出的部分
             $a = D("Card_package")->where(['uid'=>$orderInfo['sell_id'],"card_id"=>$orderInfo['card_id']])->setDec("frozen",$orderInfo['number']);
             $data[] = ["id"=>$sellInfo['id'],"num"=>$sellRes-($sellInfo['frozen']-$orderInfo['number'])];
         }else{
@@ -247,7 +270,7 @@ class PlatformCurrency{
         }
         return ['res'=>0,"msg"=>"转账成功"];
     }
-    public $sellOrder = false;  //是否是委托卖单
+    
     // 判断交易单是否完成
     public function judgeTrade($data){
        $tranList = D("Card_transaction")->where(['id'=>["in",[$data['tranId'],$data['tranOther']]]])->select();

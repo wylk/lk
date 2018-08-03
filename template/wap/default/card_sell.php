@@ -61,6 +61,28 @@
         <div class="lk-container-flex lk-justify-content-c">
             <a href="javascript:;" id="sellTran" class="layui-btn layui-btn-warm" style="width: 90%">卖出</a>
         </div>
+        <?php if($register){ ?>
+        <div class="lk-container-flex">
+            <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
+        </div>
+        <hr>
+        <hr>
+        <?php foreach($register as $key=>$value){ ?>
+        <div class="lk-container-flex" id="register_<?php echo $value['id'] ?>">
+            <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
+                <p class="item-flex">王**</p>
+                <p class="item-flex"><span id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num'],2)  ?></span> WLK</p>
+                <p class="item-flex">在线</p>
+                <p class="item-flex">价格：<?php echo number_format($value['price'],2) ?></p>
+                <p class="item-flex">logo</p>
+                <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?> - <?php echo number_format($value['num'],2) ?></p>
+            </div>
+            <div class="lk-container-flex">
+                <p class="item-buy"><a href="javascript:;" id="revoke_<?php echo $value['id'] ?>">撤销</a></p>
+            </div>
+        </div>
+        <hr>
+        <?php } } ?>
         <div class="lk-container-flex">
             <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
         </div>
@@ -99,6 +121,7 @@ layui.use(['layer'],function(){
             layer.closeAll("loading");
             if(!res.res){
                 layer.msg(res.msg,{icon:1,skin:"demo-class"});
+                window.location.reload(true);
             }else{
                layer.msg(res.msg,{icon:1,skin:"demo-class"});
             }
@@ -127,6 +150,22 @@ layui.use(['layer'],function(){
             }
         },'json');
     });
+    $("[id^=revoke_]").bind("click",function(){
+        var idStr = $(this).attr("id");
+        var tranId = idStr.substring(idStr.indexOf("_")+1);
+        var packageId = "<?php echo $platformInfo['id']; ?>";
+        var data = {"tranId":tranId,"packageId":packageId,"type":"revoke"}
+        $.post("./card_sell.php",data,function(result){
+            console.log(result);
+            if(!result.res){
+                layer.msg(result.msg,{icon:1,skin:"demo-class"});
+                $("#register_"+tranId).remove();
+                // window.location.reload(true);
+            }else{
+                layer.msg(result.msg,{icon:5,skin:"demo-class"});
+            }
+        })
+    })
 })
 $('input[name^=sell]').bind("keyup",function(){
     var price = $("[name=sellPrice]").val();
