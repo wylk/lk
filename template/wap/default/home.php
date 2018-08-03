@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
     <style type="text/css">
         #label-form{
             width:40px;
@@ -26,7 +27,6 @@
             margin-top: 10px;
             display:flex;
             justify-content: space-around;
-
         }
         .home-plugin-menu{
             border: 1px solid #259B24;
@@ -92,12 +92,12 @@
         }
     </style>
 </head>
-<body>
+<body >
 <header class="lk-bar lk-bar-nav">
     <i onclick="javascript:history.back(-1);" class="iconfont"  style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">店铺</h1>
 </header>
-<div class="lk-content" style="background: #f0f0f0">
+<div class="lk-content" style="background: #f0f0f0"  id="pullrefreshs">
     <div class="layui-carousel" id="test1">
         <div carousel-item>
             <div><img src="https://free.modao.cc/uploads3/images/1907/19079076/raw_1523959218.jpeg"></div>
@@ -180,4 +180,8 @@ layui.use('carousel', function(){
     //,anim: 'updown' //切换动画方式
   });
 });
+
+ document.getElementById('pullrefreshs').addEventListener("swiperight",function() {
+           document.location.href='./index.php';
+  });
 </script>
