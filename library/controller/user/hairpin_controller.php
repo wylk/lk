@@ -86,6 +86,13 @@ class hairpin_controller extends base_controller
         $res = $platformObj->revokeRegister($data);
         dexit($res);
     }
+    public function revokeOrder(){
+        $orderId = $_POST['orderId'];
+        import("PlatformCurrency");
+        $platformObj = new PlatformCurrency();
+        $orderRes = $platformObj->revokeOrder($orderId);
+        dexit($orderRes);
+    }
 
     //平台币交易
     public function orderList()
