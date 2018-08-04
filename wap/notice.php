@@ -15,6 +15,7 @@ $getAddress = D('Card_package')->field('address')->where(['uid'=>$order['buy_id'
 import("AccountBook");
 $Account_book = new AccountBook();
 $bookJson = json_encode(['uid'=>$order['sell_id'],"contract_id"=>$order['card_id'],'sendAddress'=>$sendAddress['address'],"num"=>$order['number'],"getAddress"=>$getAddress['address']]);
+
 $bookRes = $Account_book->transferAccounts(encrypt($bookJson,option('version.public_key')));
 
 if(!$bookRes){

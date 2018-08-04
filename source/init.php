@@ -111,6 +111,7 @@ if (APP_PATH) {
 
 defined('TPL_PATH') || define('TPL_PATH', LEKA_PATH . 'template/');
 defined('TPL_URL') || define('TPL_URL', (!(IS_SUB_DIR) ? $static_domain . '/template/' . GROUP_NAME . '/' . $_G['config']['theme_' . GROUP_NAME . '_group'] . '/' : $static_domain . '/template/' . GROUP_NAME . '/' . $config['theme_' . GROUP_NAME . '_group'] . '/'));
+
 defined('STATIC_PATH') || define('STATIC_PATH', LEKA_PATH . 'static/');
 defined('STATIC_URL') || define('STATIC_URL', $static_domain . '/static/');
 

@@ -382,6 +382,7 @@ class mysql{
 		$this->clear_data();
 		//logss($sql);
 		//error_log($sql);
+		//echo $sql;
 		$this->last_sql = $sql;
 		$result = @mysql_query($sql,$this->conn);
 		return $result;

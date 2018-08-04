@@ -17,4 +17,12 @@ abstract class Card
     */
 
     abstract public function verification();
+    /***
+    *   首页展示
+    */
+    abstract public function indexHtml($data); 
+    /***
+    *   交易展示
+    */
+    abstract public function homeHtml($data);
 }
