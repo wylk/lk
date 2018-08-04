@@ -19,7 +19,7 @@ class PlatformCurrency{
     public $platform;
     public $type;  //1买家，2卖家
     public $cardType = "leka";
-    public $interfaceType = true; //是否连接区块链 true:连接区块链
+    public $interfaceType = false; //是否连接区块链 true:连接区块链
     public $lkApiObj;
     public $frozenList; //冻结数据数组
     public function __construct($data=null){
@@ -34,15 +34,15 @@ class PlatformCurrency{
     public function addAccountInterface($phone){
         if($this->interfaceType){
             $addAccountInfo = $this->interfaceAddCount($phone);
-            if(!$addAccountInfo['error']) return $addAccountInfo;
-            $userWhere["address"] = $addAccountInfo['address'];
+            if($addAccountInfo['error'] != "0") return $addAccountInfo;
+            $addAccountRes = D("User")->data(['phone'=>$phone,'address'=>$addAccountInfo['address']])->add();
         }else{
-            $addAccountInfo = $this->imitateAccount();
+            $addAccountRes = D("User")->data(['phone'=>$phone])->add();
+            $addAccountInfo = $this->imitateAccount($addAccountRes);
             if($addAccountInfo['res']) return $addAccountInfo;
+            D("User")->data(['address'=>$addAccountInfo['address']])->where(['id'=>$addAccountRes])->save();
         }
 
-        $userWhere['phone'] = $phone,
-        $addAccountRes = D("User")->data($userWhere)->add();
         $data['uid'] = $addAccountRes;
         $data['type'] = $this->cardType;
         $data['num'] = 0;
@@ -278,7 +278,7 @@ class PlatformCurrency{
         $buyInfo = D("Card_package")->where(['uid'=>$orderInfo['buy_id'],"card_id"=>$orderInfo['card_id']])->find();
 
         // 转账接口调用
-        if($interfaceType){
+        if($this->interfaceType){
             // 转账接口
             $blockchainRes = $this->blockchainInterface($sellInfo,$buyInfo,$orderInfo['number']);
             if($blockchainRes['res']) return $blockchainRes;
@@ -287,10 +287,10 @@ class PlatformCurrency{
         }else{
             $imitateRes = $this->imitateInterface($sellInfo,$buyInfo,$orderInfo['number']);
             if($imitateRes['res']) return $imitateRes;
-            $buyRes = $buyInfo['num'];
-            $sellRes = $sellInfo['num'];
+            $buyRes = $buyInfo['num']+$orderInfo['number'];
+            $sellRes = $sellInfo['num']-$orderInfo['number'];
         }
-        dexit(['res'=>1,"msg"=>"test","imitateRes"=>$imitateRes]);
+        // dexit(['res'=>1,"msg"=>"test","imitateRes"=>$imitateRes]);
         
         // 冻结数据修改
         $frozenList[] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"num"];
@@ -315,7 +315,7 @@ class PlatformCurrency{
         $data[] = ["id"=>$buyInfo['id'],"num"=>$buyRes-$buyInfo['frozen']];
         $balanceRes = M("Card_package")->saveAll($data);
         $statusRes = D("Orders")->data(['status'=>1])->where(['id'=>$orderId])->save();
-
+// dexit(['res'=>1,"msg"=>"test","balanceRes"=>$balanceRes,"status"=>$statusRes,"data"=>$data]);
         if(!$statusRes){
             return ['res'=>1,"msg"=>"转账失败","balanceRes"=>$balanceRes,"status"=>$statusRes];
         }
@@ -334,9 +334,9 @@ class PlatformCurrency{
        }
     }
     // 数据库添加平台币账户接口
-    public function imitateAccount(){
+    public function imitateAccount($userId){
         $bookObj = new AccountBook();
-        $bookJson = json_encode(['contract_id'=>"0x837c6c3d09c0b36833ce37193f35e3c7108c22d2"]);
+        $bookJson = json_encode(['uid'=>$userId,'contract_id'=>"0x837c6c3d09c0b36833ce37193f35e3c7108c22d2","account_balance"=>0]);
         $bookRes = $bookObj->addAccount(encrypt($bookJson,option('version.public_key')));
         if(!$bookRes) return ['res'=>1,"msg"=>"账号注册失败"];
         return ['res'=>0,"msg"=>"账号注册成功","addr"=>"0x837c6c3d09c0b36833ce37193f35e3c7108c22d2","address"=>$bookRes];
@@ -347,8 +347,8 @@ class PlatformCurrency{
         $bookObj = new AccountBook();
         $bookJson = json_encode(['uid'=>$sellInfo['uid'],"contract_id"=>$sellInfo['card_id'],'sendAddress'=>$sellInfo['address'],"num"=>$num,"getAddress"=>$buyInfo['address']]);
         $bookRes = $bookObj->transferAccounts(encrypt($bookJson,option('version.public_key')));
-        dexit(['res'=>1,"msg"=>"test","imitateRes"=>$bookRes,"bookJson"=>$bookJson]);
-        if(!$bookRes) return ['res'=>1,"msg"=>"转账失败"];
+        // dexit(['res'=>1,"msg"=>"test","imitateRes"=>$bookRes,"bookJson"=>$bookJson]);
+        if(!$bookRes) return ['res'=>1,"msg"=>"转账失败","other"=>$bookRes];
         return ['res'=>0,"msg"=>"转账成功"];
     }
     // 区块链转账接口

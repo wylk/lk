@@ -50,13 +50,13 @@ if(isset($_POST['phone'])){
 			$addAccountRes = $platformObj->addAccountInterface($phone);
 			if($addAccountRes['res'])	dexit($addAccountRes);
 			$userid = $addAccountRes['data'];
+		// dexit(["res"=>1,'msg'=>"test",'other'=>$addAccountRes]);
 		}else{
 			$userid = $phoneRes[0]['id'];
 		}
 		$_SESSION['wap_user']["phone"] = $phone;
 		$_SESSION['wap_user']['userid'] = $userid;
 		$_SESSION['wap_user']['logintime'] = time();
-		if(empty($referer)) dexit(["res"=>0,'msg'=>"登录成功"]);
 		dexit(["res"=>0,'msg'=>"登录成功","referer"=>$referer]);
 	}
 }
