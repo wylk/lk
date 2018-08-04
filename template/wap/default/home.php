@@ -4,8 +4,10 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
+    <title>交易</title>
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
@@ -91,13 +93,19 @@
           margin: 0px auto;
         }
     </style>
+    <script type="text/javascript">
+        var type = "<?php echo $type;?>";
+        var card_id = "<?php echo $card_id;?>";
+    </script>
 </head>
 <body >
+<div id="pullrefreshs" style="touch-action: none;">
+    <div>
 <header class="lk-bar lk-bar-nav">
     <i onclick="javascript:history.back(-1);" class="iconfont"  style="font-size: 20px;">&#xe697;</i>
-    <h1 class="lk-title">店铺</h1>
+    <h1 class="lk-title">交易</h1>
 </header>
-<div class="lk-content" style="background: #f0f0f0"  id="pullrefreshs">
+<div class="lk-content" style="background: #f0f0f0;margin-bottom:10px;" >
     <div class="layui-carousel" id="test1">
         <div carousel-item>
             <div><img src="https://free.modao.cc/uploads3/images/1907/19079076/raw_1523959218.jpeg"></div>
@@ -106,36 +114,9 @@
             <div><img src="https://free.modao.cc/uploads3/images/1907/19079076/raw_1523959218.jpeg"></div>
         </div>
     </div>
-   <!--  <div class="home-plugin">
-       <div class="home-plugin-menu">
-           <div class="home-plugin-menu-img">
-               <img src="http://img4.imgtn.bdimg.com/it/u=1036044083,1484439347&fm=200&gp=0.jpg" style="height: 100%;width: 100%">
-           </div>
-           <div class="home-plugin-menu-title">
-               购买会员卡进店打折消费
-           </div>
-       </div>
-       <div class="home-plugin-menu">
-           <div class="home-plugin-menu-img">
-               <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=734478096,1857645267&fm=27&gp=0.jpg" style="height: 100%;width: 100%">
-           </div>
-           <div class="home-plugin-menu-title">
-               购买会员卡进店打折消费
-           </div>
-       </div>
-       <div class="home-plugin-menu">
-           <div class="home-plugin-menu-img">
-               <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=681084461,1770331422&fm=200&gp=0.jpg" style="height: 100%;width: 100%">
-           </div>
-           <div class="home-plugin-menu-title">
-               购买会员卡进店打折消费
-           </div>
-       </div>
-
-   </div> -->
-    <div class="home-plugin-info">
+    <div class="home-plugin-info" >
       <hr>
-        <?php foreach ($tranList as $key => $value) { ?>
+        <!-- <?php foreach ($data as $key => $value) { ?>
          <div class="home-plugin-info-row">
              <div class="home-plugin-info-row-card line-heights">
                 <div class="home-plugin-info-row-card-img">
@@ -145,9 +126,9 @@
              <div class="home-plugin-info-row-card row-card2">
                 <div style="height: 50px;line-height: 28px">
                <p><span style="font-weight: bold"><?= $type[$value['uid']]['name'] ?></span><span class="layui-badge layui-bg-orange">
-                <?php if($type[$value['uid']]['type']==1){
+                <?php if($value['b_type']==1){
                       echo '个人认证';
-                    }elseif($type[$value['uid']]['type']==2){
+                    }elseif($value['b_type']==2){
                       echo '店铺认证';
                     }
                  ?>
@@ -160,28 +141,77 @@
              </div>
          </div>
          <hr>
-        <?php } ?>
+        <?php } ?> -->
   
     </div>
-
+   
+</div>
+</div>
 </div>
   	<?php include display('public_menu');?>
 </body>
 </html>
 <script>
 layui.use('carousel', function(){
-  var carousel = layui.carousel;
-  //建造实例
-  carousel.render({
-    elem: '#test1'
-    ,width: '100%' //设置容器宽度
-    ,height:180
-    ,arrow: 'always' //始终显示箭头
-    //,anim: 'updown' //切换动画方式
-  });
+    var carousel = layui.carousel;
+    //建造实例
+    carousel.render({
+        elem: '#test1'
+        ,width: '100%' //设置容器宽度
+        ,height:180
+        ,arrow: 'always' //始终显示箭头
+        //,anim: 'updown' //切换动画方式
+    });
 });
 
- document.getElementById('pullrefreshs').addEventListener("swiperight",function() {
+    var i = 1;
+    mui.init({
+        pullRefresh : {
+            container:'#pullrefreshs',
+            down: {
+                callback: pulldownRefresh
+            },
+            up : {
+                height:50,
+                auto:true,
+                contentrefresh : "正在加载...",
+                contentnomore:'没有更多数据了',
+                callback :pullupRefresh 
+            }
+        }
+    });
+
+    function data(){
+        $.post('home_ajax.php',{i:i,plugin:type,card_id:card_id},function(re){
+            ++i;
+            if(re.error == 0){
+                $('.home-plugin-info').append(re.msg);
+                mui("#pullrefreshs").pullRefresh().endPullupToRefresh(false);
+            }else{
+                mui("#pullrefreshs").pullRefresh().endPullupToRefresh(true);
+            }
+        },'json');
+    }
+
+    function pullupRefresh(){
+        setTimeout(function() {
+            data();
+        },1000); 
+        mui.init();
+    }
+
+    function pulldownRefresh() {
+        i = 1;//当前页码数
+        setTimeout(function() {
+            //mui('#pullrefreshs').pullRefresh().endPulldownToRefresh(); //refresh completed
+            //mui('#pullrefreshs').pullRefresh().refresh(true); //激活上拉加载
+            window.location.reload();
+        }, 1500);
+    }
+
+
+document.getElementById('pullrefreshs').addEventListener("swiperight",function() {
            document.location.href='./index.php';
   });
+mui('body').on('tap','a',function(){document.location.href=this.href;});
 </script>
