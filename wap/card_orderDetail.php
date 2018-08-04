@@ -17,6 +17,13 @@ if(IS_POST && $_POST['type'] == "payMoeny"){
 	$orderRes = $platformObj->orderStatus($orderId);
 	dexit($orderRes);
 }
+if(IS_POST && $_POST['type'] == "revokeOrder"){
+	$orderId = $_POST['orderId'];
+	import("PlatformCurrency");
+	$platformObj = new PlatformCurrency();
+	$orderRes = $platformObj->revokeOrder($orderId);
+	dexit($orderRes);
+}
 
 
 $orderId = $_GET['id'];

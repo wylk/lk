@@ -64,6 +64,9 @@
             <?php echo $orderInfo['status'] == '1' ? "<span class='spanRight' >已转账</span>" : 
             "<button class='spanRight' id='confirmTran'>确认收款</button>" ?>
           </div>
+            <?php if(!in_array($orderInfo['status'],['1','2','3'])){ ?>
+              <div class='menuStyle'><span class="spanLeft"></span><button id="revokeOrder_<?php echo $orderInfo['id']; ?>" class='spanRight' >取消订单</button></div>
+            <?php } ?>
           <?php } ?>
           <?php if($orderInfo['buy_id'] == $userId){ ?>
              <div class='menuStyle'><span class="spanLeft">收款人：老王</span><span class="spanRight">支付宝</span></div>
@@ -72,7 +75,10 @@
               <?php if($orderInfo['status'] == '0') echo "<button class='spanRight' id='payMoeny'>未付款</button>" ?> 
               <?php if($orderInfo['status'] == '3') echo "<span class='spanRight'>已付款</span>" ?> 
               </div>
-              <?php } ?>
+            <?php } ?>
+            <?php if(!in_array($orderInfo['status'],['1','2','3'])){ ?>
+              <div class='menuStyle'><span class="spanLeft"></span><button id="revokeOrder_<?php echo $orderInfo['id']; ?>" class='spanRight' >取消订单</button></div>
+            <?php } ?>
             <hr>
             <div class='codeStyle'><span class="spanLeft">二维码：</span>
             <div class="codeAddress"><img src="<?php echo STATIC_URL;?>/images/default_qr.png" /></div>
@@ -122,6 +128,22 @@
         },"json");
       });
       
+    })
+    $("[id^=revokeOrder_]").bind("click",function(){
+      // layer.load();
+      var idStr = $(this).attr("id");
+      var orderId = idStr.substring(idStr.indexOf("_")+1);
+      var data = {"orderId":orderId,"type":"revokeOrder"};
+      $.post("./card_orderDetail.php",data,function(result){
+        console.log(result);
+        if(!result.res){
+          layer.msg(result.msg,{icon:1,skin:"demo-class"});
+          window.location.reload(true);
+        }else{
+          layer.msg(result.msg,{icon:5,skin:"demo-class"});
+        }
+      },"json");
+
     })
   })
 </script>

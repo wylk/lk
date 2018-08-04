@@ -164,7 +164,7 @@ layui.use(['layer'],function(){
             }else{
                 layer.msg(result.msg,{icon:5,skin:"demo-class"});
             }
-        })
+        },"json")
     })
 })
 $('input[name^=sell]').bind("keyup",function(){

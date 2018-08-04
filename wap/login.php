@@ -44,22 +44,13 @@ if(isset($_POST['phone'])){
 		// }
 		$phoneRes = D("User")->field("id")->where(['phone'=>$phone])->select();
 		if(!$phoneRes){
-			import('LkApi');
-			// 以太网接口
-			$obj  = new LkApi(['appid'=>'0x11083f099e36850a6d264b1050f6f7ebe652d4c2','mchid'=>'2343sdf','key'=>'0x11083f099e36850a6d264b1050f6f7ebe652d4c2']);
-			$addAccountInfo = $obj->geth_api(['phone'=>$phone,'c'=>'Geth','a'=>'add_account']);
-			$addAccountRes = D("User")->data(['phone'=>$phone,"address"=>$addAccountInfo['address']])->add();
-			$data['uid'] = $addAccountRes;
-			$data['type'] = 'leka';
-			$data['num'] = 0;
-			$data['card_id'] = $addAccountInfo['addr'];
-			$data['address'] = md5($addAccountInfo['card_id'].$addAccountRes);
-			$data['user_address'] = $addAccountInfo['address'];
-			D("Card_package")->data($data)->add();
-			if(!$addAccountRes){
-				dexit(["res"=>1,'msg'=>"注册失败"]);
-			}
-			$userid = $addAccountRes;
+			// 注册账户接口
+			import("PlatformCurrency");
+			$platformObj = new PlatformCurrency();
+			$addAccountRes = $platformObj->addAccountInterface($phone);
+			if($addAccountRes['res'])	dexit($addAccountRes);
+			$userid = $addAccountRes['data'];
+		// dexit(["res"=>1,'msg'=>"test",'other'=>$addAccountRes]);
 		}else{
 			$userid = $phoneRes[0]['id'];
 		}

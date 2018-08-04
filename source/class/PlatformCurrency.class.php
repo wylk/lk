@@ -18,6 +18,8 @@ class PlatformCurrency{
     public $packageId;
     public $platform;
     public $type;  //1买家，2卖家
+    public $cardType = "leka";
+    public $interfaceType; //是否连接区块链 true:连接区块链
     public $lkApiObj;
     public $frozenList; //冻结数据数组
     public function __construct($data=null){
@@ -27,7 +29,34 @@ class PlatformCurrency{
         $this->limitNum = option('hairpan_set.limit') ? option('hairpan_set.limit') : $data['limitNum'];
         $this->packageId = $data['packageId'];
         $this->type = $data['type'];
+        $this->interfaceType = option('config.blockchain_switch');
     }
+    // 添加账户接口
+    public function addAccountInterface($phone){
+        if($this->interfaceType){
+            $addAccountInfo = $this->interfaceAddCount($phone);
+            if($addAccountInfo['error'] != "0") return $addAccountInfo;
+            $addAccountRes = D("User")->data(['phone'=>$phone,'address'=>$addAccountInfo['address']])->add();
+        }else{
+            $addAccountRes = D("User")->data(['phone'=>$phone])->add();
+            $addAccountInfo = $this->imitateAccount($addAccountRes);
+            if($addAccountInfo['res']) return $addAccountInfo;
+            D("User")->data(['address'=>$addAccountInfo['address']])->where(['id'=>$addAccountRes])->save();
+        }
+
+        $data['uid'] = $addAccountRes;
+        $data['type'] = $this->cardType;
+        $data['num'] = 0;
+        $data['card_id'] = $addAccountInfo['addr'];
+        $data['address'] = md5($addAccountRes.$addAccountInfo['addr']);
+        $data['user_address'] = $addAccountInfo['address'];
+        D("Card_package")->data($data)->add();
+        if(!$addAccountRes){
+            return ["res"=>1,'msg'=>"注册失败"];
+        }
+        return ["res"=>0,'msg'=>"注册成功","data"=>$addAccountRes];
+    }
+    // 添加交易单
     public function addEntrust(){
         // 判断是否可以交易
         if(!option('hairpan_set.coin_open'))    return ['res'=>1,"msg"=>"暂时停止交易"];
@@ -163,8 +192,10 @@ class PlatformCurrency{
         if($num > $tradeInfo['num']) return ['res'=>1,"msg"=>"交易单已失效，请选择其他订单"];
         if($this->userId == $tradeInfo['uid']) return ['res'=>1,"msg"=>"此单为本人发布"];
         if($tradeInfo['status'] != '0') return ['res'=>1,"msg"=>"此交易单已关闭"];
-        $packageInfo = D("Card_package")->where(['id'=>$data['packageId']])->find();
-        if($packageInfo['num'] < $num)  return ['res'=>1,"现有金额不足","other"=>$packageInfo['num']];
+        if($tradeInfo['type'] == '1'){
+            $packageInfo = D("Card_package")->where(['id'=>$data['packageId']])->find();
+            if($packageInfo['num'] < $num)  return ['res'=>1,"现有金额不足","other"=>$packageInfo['num']];
+        }
 
         $this->matchOrderData[$tranId]['tran_other'] = $tradeInfo['id'];
         $this->matchOrderData[$tranId]['tran_id'] = $tradeInfo['id'];
@@ -199,16 +230,17 @@ class PlatformCurrency{
     }
     // 交易记录列表
     public function selectOrderList($data){
-        $packageInfo = D("Card_package")->where(['uid'=>$data['userId'],"type"=>"leka"])->find();
+        $packageInfo = D("Card_package")->where(['uid'=>$data['userId'],"type"=>$this->cardType])->find();
         $orderWhere = "(`buy_id` = ".$data['userId']." or `sell_id` = ".$data['userId'].") and `card_id` = '".$packageInfo['card_id']."' and status ".$data['status'];
         return D("Orders")->where($orderWhere)->order("create_time desc")->select();
     }
     // 撤销委托单
     public function revokeRegister($data){
+        $revokeInfo = D("Card_transaction")->where(['id'=>$data['tranId']])->find();
+        if((int)$revokeInfo['frozen']) return ['res'=>1,"msg"=>"您还有".number_format($revokeInfo['frozen'],2)."订单未处理，请处理后在撤销"];
         if(!D("Card_transaction")->where(['id'=>$data['tranId']])->setField("status",2)){
             return ['res'=>1,"msg"=>"撤销失败"];
         }
-        $revokeInfo = D("Card_transaction")->where(['id'=>$data['tranId']])->find();
         if($revokeInfo['type'] == '1') return ['res'=>0,"msg"=>"撤销成功"];
         $frozenList[] = ['id'=>$data['packageId'],"operator"=>"-","step"=>$revokeInfo['num'],"field"=>"frozen"];
         $frozenList[] = ['id'=>$data['packageId'],"operator"=>"+","step"=>$revokeInfo['num'],"field"=>"num"];
@@ -222,6 +254,21 @@ class PlatformCurrency{
         if(!$res) return ['res'=>1,"msg"=>"通知失败"];
         return ['res'=>0,"msg"=>"已成功通知对方"];
     }
+    public function revokeOrder($orderId){
+        $res = D("Orders")->where(['id'=>$orderId])->setField("status",2);
+        if(!$res) return ['res'=>1,"msg"=>"撤销失败"];
+        // 解冻package transaction
+        $orderInfo = D("Orders")->where(['id'=>$orderId])->find();
+        if($orderInfo['tran_id'] != $orderInfo['tran_other'] && !empty($orderInfo['tran_other'])){
+            $frozenList[] = ['id'=>$orderInfo['tran_other'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
+        }
+        $frozenList[] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
+
+        $this->tradeSheetFrozen($frozenList);
+        // $this->
+
+        return ['res'=>0,"msg"=>"撤销成功"];
+    }
     // 转账记录
     public function recordBooks($data){
         $recordRes = D("Record_books")->data(['card_id'=>$data['cardId'],"send_address"=>$data["sendAddress"],"get_address"=>$data['getAddress'],"num"=>$data['num'],"createtime"=>time()])->add();
@@ -233,13 +280,21 @@ class PlatformCurrency{
         if($orderInfo['status'] != '0' && $orderInfo['status'] != '3') return ['res'=>1,"msg"=>"订单失效"];
         $sellInfo = D("Card_package")->where(['uid'=>$orderInfo['sell_id'],"card_id"=>$orderInfo['card_id']])->find();
         $buyInfo = D("Card_package")->where(['uid'=>$orderInfo['buy_id'],"card_id"=>$orderInfo['card_id']])->find();
-        $interfaceRes = $this->interfaceCurrency($buyInfo['user_address'],$sellInfo['user_address'],(int)$orderInfo['number']);
-        if($interfaceRes) return $interfaceRes;
-        // 转账记录
-        $this->recordBooks(["cardId"=>$orderInfo['card_id'],'getAddress'=>$buyInfo['address'],"sendAddress"=>$sellInfo['address'],"num"=>$orderInfo['number']]);
 
-        // D("Card_transaction")->where(['id'=>["in",[$orderInfo['tran_id'],$orderInfo['tran_other']]]])->setDec("num",$orderInfo['number']);
-        // D("Card_transaction")->where(['id'=>['in',[$orderInfo['tran_id'],$orderInfo['tran_other']]]])->setDec("frozen",$orderInfo['number']);
+        // 转账接口调用
+        if($this->interfaceType){
+            // 转账接口
+            $blockchainRes = $this->blockchainInterface($sellInfo,$buyInfo,$orderInfo['number']);
+            if($blockchainRes['res']) return $blockchainRes;
+            $buyRes = $blockchainRes['buyRes'];
+            $sellRes = $blockchainRes['sellRes'];
+        }else{
+            $imitateRes = $this->imitateInterface($sellInfo,$buyInfo,$orderInfo['number']);
+            if($imitateRes['res']) return $imitateRes;
+            $buyRes = $buyInfo['num']+$orderInfo['number']+$buyInfo['frozen'];
+            $sellRes = $sellInfo['num']-$orderInfo['number']+$sellInfo['frozen'];
+        }
+        // dexit(['res'=>1,"msg"=>"test","imitateRes"=>$imitateRes]);
         
         // 冻结数据修改
         $frozenList[] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"num"];
@@ -247,9 +302,9 @@ class PlatformCurrency{
         $frozenList[] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
         $frozenList[] = ['id'=>$orderInfo['tran_other'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
         $this->tradeSheetFrozen($frozenList);
-        // 获取平台币数值
-        $sellRes = $this->interfaceBalance($sellInfo['user_address']);
-        $buyRes = $this->interfaceBalance($buyInfo['user_address']);
+
+        // 转账记录
+        $this->recordBooks(["cardId"=>$orderInfo['card_id'],'getAddress'=>$buyInfo['address'],"sendAddress"=>$sellInfo['address'],"num"=>$orderInfo['number']]);
 
         // 检测交易单是否完成 并修改状态
         $this->judgeTrade(['tranId'=>$orderInfo['tran_id'],"tranOther"=>$orderInfo['tran_other'],"sellId"=>$orderInfo['sell_id']]);
@@ -261,10 +316,10 @@ class PlatformCurrency{
         }else{
             $data[] = ["id"=>$sellInfo['id'],"num"=>$sellRes-$sellInfo['frozen']];
         }
-        $data[] = ["id"=>$buyInfo['id'],"num"=>$buyRes];
+        $data[] = ["id"=>$buyInfo['id'],"num"=>$buyRes-$buyInfo['frozen']];
         $balanceRes = M("Card_package")->saveAll($data);
         $statusRes = D("Orders")->data(['status'=>1])->where(['id'=>$orderId])->save();
-
+// dexit(['res'=>1,"msg"=>"test","balanceRes"=>$balanceRes,"status"=>$statusRes,"data"=>$data]);
         if(!$statusRes){
             return ['res'=>1,"msg"=>"转账失败","balanceRes"=>$balanceRes,"status"=>$statusRes];
         }
@@ -281,6 +336,35 @@ class PlatformCurrency{
        if(!empty($tranIds)){
             D("Card_transaction")->where(['id'=>['in',$tranIds]])->setField("status",1);
        }
+    }
+    // 数据库添加平台币账户接口
+    public function imitateAccount($userId){
+        $bookObj = new AccountBook();
+        $bookJson = json_encode(['uid'=>$userId,'contract_id'=>"0x837c6c3d09c0b36833ce37193f35e3c7108c22d2","account_balance"=>0]);
+        $bookRes = $bookObj->addAccount(encrypt($bookJson,option('version.public_key')));
+        if(!$bookRes) return ['res'=>1,"msg"=>"账号注册失败"];
+        return ['res'=>0,"msg"=>"账号注册成功","addr"=>"0x837c6c3d09c0b36833ce37193f35e3c7108c22d2","address"=>$bookRes];
+    }
+    // 数据库转账接口
+    public function imitateInterface($sellInfo,$buyInfo,$num){
+        import("AccountBook");
+        $bookObj = new AccountBook();
+        $bookJson = json_encode(['uid'=>$sellInfo['uid'],"contract_id"=>$sellInfo['card_id'],'sendAddress'=>$sellInfo['address'],"num"=>$num,"getAddress"=>$buyInfo['address']]);
+        $bookRes = $bookObj->transferAccounts(encrypt($bookJson,option('version.public_key')));
+        // dexit(['res'=>1,"msg"=>"test","imitateRes"=>$bookRes,"bookJson"=>$bookJson]);
+        if(!$bookRes) return ['res'=>1,"msg"=>"转账失败","other"=>$bookRes];
+        return ['res'=>0,"msg"=>"转账成功"];
+    }
+    // 区块链转账接口
+    public function blockchainInterface($sellInfo,$buyInfo,$num){
+        $interfaceRes = $this->interfaceCurrency($buyInfo['user_address'],$sellInfo['user_address'],(int)$num);
+        if($interfaceRes) return $interfaceRes;
+        
+        // 获取平台币数值
+        $sellRes = $this->interfaceBalance($sellInfo['user_address']);
+        $buyRes = $this->interfaceBalance($buyInfo['user_address']);
+        // return [$sellRes,$buyRes];
+        return ['res'=>0,"msg"=>"已获取账款余额","sellRes"=>$sellRes,"buyRes"=>$buyRes];
     }
     // 平台币转账接口
     public function interfaceCurrency($buyAddress,$sellAddress,$num){
@@ -299,4 +383,13 @@ class PlatformCurrency{
         if($res['error'] != '0') return ['res'=>1,"msg"=>"数据获取错误"];
         return $res['balance'];
     }
+    // 以太网添加账户接口
+    public function interfaceAddCount($phone){
+        import('LkApi');
+        // 以太网接口
+        $obj  = new LkApi(['appid'=>'0x11083f099e36850a6d264b1050f6f7ebe652d4c2','mchid'=>'2343sdf','key'=>'0x11083f099e36850a6d264b1050f6f7ebe652d4c2']);
+        $addAccountInfo = $obj->geth_api(['phone'=>$phone,'c'=>'Geth','a'=>'add_account']);
+        return $addAccountInfo;
+    }
+
 }
