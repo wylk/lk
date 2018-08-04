@@ -23,7 +23,6 @@ class card_transaction_model extends base_model
 		}
 		$ids = "(".implode(",", $ids).")";
 		$sql .= ' end where id in '.$ids;
-		// return $sql;
 		return $this->db->query($sql);
 	}
 
@@ -39,6 +38,7 @@ class card_transaction_model extends base_model
         $ids = "(".implode(",", $ids).")";
         $where = substr($where,0,-1);
         $sql = "update lk_card_transaction set ".$where." where id in ".$ids;
+        // return $sql;
         return $this->db->query($sql);
         // return mysql_affected_rows($this->conn);
 	}

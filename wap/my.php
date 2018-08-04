@@ -12,20 +12,17 @@ $deadline = option('hairpan_set.expiry_time') ? option('hairpan_set.expiry_time'
 $where = ['create_time'=>["<=",time()-$deadline],"status"=>"0"];
 $orderlist = D("Orders")->where($where)->select();
 if($orderlist){
-	foreach ($orderlist as $key => $value) {
-		$tranIds[] = $value['tran_id'];
-		$frozenList[$value['tran_id']] += $value['number'];
+	foreach($orderlist as $key=>$value){
+		$frozenNum[$value['tran_id']] += $value['number'];
+		$frozenNum[$value['tran_other']] += $value['number'];
+	
+		$frozenList[$value['tran_id']] = ['id'=>$value['tran_id'],"operator"=>"-","step"=>$frozenNum[$value['tran_id']],"field"=>"frozen"];
 		if(isset($value['tran_other']) && $value['tran_other'] != $value['tran_id']){
-			$tranIds[] =  $value['tran_other'];
-			$frozenList[$value['tran_other']] += $value['number'];
+			$frozenList[$value['tran_other']] = ['id'=>$value['tran_other'],"operator"=>"-","step"=>$frozenNum[$value['tran_other']],"field"=>"frozen"];
 		}
 	}
-
-	if(is_array($tranIds) && count($tranIds)>1) $tranWhere['id'] = ['in',$tranIds];
-	else $tranWhere['id'] = $tranIds[0];
-	$tranList = D("Card_transaction")->where($tranWhere)->select();
-	M("Card_transaction")->saveAll($tranList,$frozenList);
-	D("Orders")->where(['create_time'=>["<=",time()-60*30],"status"=>"0"])->setField("status",2);
+	$res = M("Card_transaction")->frozen($frozenList);
+	D("Orders")->where(['create_time'=>["<=",time()-$deadline],"status"=>"0"])->setField("status",2);
 }
 
 // 钱包

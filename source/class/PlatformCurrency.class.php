@@ -192,8 +192,10 @@ class PlatformCurrency{
         if($num > $tradeInfo['num']) return ['res'=>1,"msg"=>"交易单已失效，请选择其他订单"];
         if($this->userId == $tradeInfo['uid']) return ['res'=>1,"msg"=>"此单为本人发布"];
         if($tradeInfo['status'] != '0') return ['res'=>1,"msg"=>"此交易单已关闭"];
-        $packageInfo = D("Card_package")->where(['id'=>$data['packageId']])->find();
-        if($packageInfo['num'] < $num)  return ['res'=>1,"现有金额不足","other"=>$packageInfo['num']];
+        if($tradeInfo['type'] == '1'){
+            $packageInfo = D("Card_package")->where(['id'=>$data['packageId']])->find();
+            if($packageInfo['num'] < $num)  return ['res'=>1,"现有金额不足","other"=>$packageInfo['num']];
+        }
 
         $this->matchOrderData[$tranId]['tran_other'] = $tradeInfo['id'];
         $this->matchOrderData[$tranId]['tran_id'] = $tradeInfo['id'];
@@ -235,7 +237,7 @@ class PlatformCurrency{
     // 撤销委托单
     public function revokeRegister($data){
         $revokeInfo = D("Card_transaction")->where(['id'=>$data['tranId']])->find();
-        if($revokeInfo['frozen']) return ['res'=>1,"msg"=>"您还有".number_format($revokeInfo['frozen'],2)."订单未处理，请处理后在撤销"];
+        if((int)$revokeInfo['frozen']) return ['res'=>1,"msg"=>"您还有".number_format($revokeInfo['frozen'],2)."订单未处理，请处理后在撤销"];
         if(!D("Card_transaction")->where(['id'=>$data['tranId']])->setField("status",2)){
             return ['res'=>1,"msg"=>"撤销失败"];
         }
@@ -258,12 +260,13 @@ class PlatformCurrency{
         // 解冻package transaction
         $orderInfo = D("Orders")->where(['id'=>$orderId])->find();
         if($orderInfo['tran_id'] != $orderInfo['tran_other'] && !empty($orderInfo['tran_other'])){
-            $frozenList[] = ['id'=>$orderInfo['tran_other'],"operator"=>"-","step"=>$orderInfo['num'],"field"=>"frozen"];
+            $frozenList[] = ['id'=>$orderInfo['tran_other'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
         }
-        $frozenList[] = ['id'=>$orderInfo['tran_other'],"operator"=>"-","step"=>$orderInfo['num'],"field"=>"frozen"];
+        $frozenList[] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
+
         $this->tradeSheetFrozen($frozenList);
         // $this->
-        
+
         return ['res'=>0,"msg"=>"撤销成功"];
     }
     // 转账记录
@@ -288,8 +291,8 @@ class PlatformCurrency{
         }else{
             $imitateRes = $this->imitateInterface($sellInfo,$buyInfo,$orderInfo['number']);
             if($imitateRes['res']) return $imitateRes;
-            $buyRes = $buyInfo['num']+$orderInfo['number'];
-            $sellRes = $sellInfo['num']-$orderInfo['number'];
+            $buyRes = $buyInfo['num']+$orderInfo['number']+$buyInfo['frozen'];
+            $sellRes = $sellInfo['num']-$orderInfo['number']+$sellInfo['frozen'];
         }
         // dexit(['res'=>1,"msg"=>"test","imitateRes"=>$imitateRes]);
         
