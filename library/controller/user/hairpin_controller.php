@@ -2,9 +2,9 @@
 //用户
 class hairpin_controller extends base_controller
 {
-    public $userId = 88;
+    public $userId = 108;
     public function __construct(){
-        $this->userId = 88;
+        $this->userId = 108;
     }
     //平台币管理
     public function index()
