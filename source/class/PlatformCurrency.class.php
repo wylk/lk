@@ -19,7 +19,7 @@ class PlatformCurrency{
     public $platform;
     public $type;  //1买家，2卖家
     public $cardType = "leka";
-    public $interfaceType = false; //是否连接区块链 true:连接区块链
+    public $interfaceType; //是否连接区块链 true:连接区块链
     public $lkApiObj;
     public $frozenList; //冻结数据数组
     public function __construct($data=null){
@@ -29,6 +29,7 @@ class PlatformCurrency{
         $this->limitNum = option('hairpan_set.limit') ? option('hairpan_set.limit') : $data['limitNum'];
         $this->packageId = $data['packageId'];
         $this->type = $data['type'];
+        $this->interfaceType = option('config.blockchain_switch');
     }
     // 添加账户接口
     public function addAccountInterface($phone){
