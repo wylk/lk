@@ -7,8 +7,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
+    <!-- <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>  -->
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
     <style type="text/css">
         .lk-titles{
           border-bottom: 1px solid #f0f0f0;
@@ -22,6 +24,7 @@
         }
         .action{
           color: red;
+          border-bottom: 1px solid red; 
         }
         .stores{
           margin: 0 auto;
@@ -54,43 +57,91 @@
     </style>
 </head>
 <body>
+    <div id="pullrefreshs">
+        <div>
 <header class="lk-bar lk-bar-nav">
     <i class="iconfont" style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">首页</h1>
 </header>
-<div class="lk-content">
-<div class="lk-titles">
-  <div class="lk-ti action">抵现卡</div>
-  <div class="lk-ti">积分卡</div>
-  <div class="lk-ti">投票卡</div>
-  <div class="lk-ti">自选</div>
-</div>
-<div class="stores">
-    <?php foreach ($storeInfo as $k => $v) { ?>
-      <div class="store">
-        <div class="img">
-            <img src="<?php echo $arrs[$v['uid']]['card_log'] ?>" class="imgs"/>
-        </div >
-        <div class="price"><?php echo $v['enterprise'] ?></div>
-        <div class="num"><a href="./home.php?shoreUid=<?php echo $v['uid'] ?>" class="layui-btn layui-btn-radius layui-btn-primary">交易</a></div>
+
+    <div class="lk-content" >
+    <div class="lk-titles">
+      <div class="lk-ti action" data-id="1">抵现卡</div>
+      <div class="lk-ti" data-id="2">积分卡</div>
+      <div class="lk-ti" data-id="3"class="">投票卡</div>
+      <div class="lk-ti" data-id="4">自选</div>
+    </div>
+
+        <div class="stores" >
+            <?php foreach ($storeInfo as $k => $v) { ?>
+                  <div class="store">
+                    <div class="img">
+                        <img src="<?php echo $arrs[$v['uid']]['card_log'] ?>" class="imgs"/>
+                    </div >
+                    <div class="price"><?php echo $v['enterprise'] ?></div>
+                    <div class="num">
+                        <a  href="./home.php?shoreUid=<?php echo $v['uid'] ?>" class="layui-btn home">交易</a>
+                    </div>
+                  </div>
+              <hr>
+            <?php } ?>
+        </div>
       </div>
-      <hr>
-    <?php } ?>
 </div>
-
-<!-- <div class="store">
-<?php foreach ($storeInfo as $key => $value) { ?>
-         <div class="">
-                <span  class="beatBtn"><div style="height: 30px;width: 30px;"><img src="<?php echo $value['img_oneself']?>" style="width: 100%;height: 100%;"></div></span>
-                <span class="beatBtn"><?php echo $value['enterprise'] ?></span>
-                <a href="./home.php?shoreUid=<?php echo $value['uid'] ?>" class="beatBtn">购买</a>
-         </div>
-         <hr>
-<?php } ?>
-</div> -->
 </div>
-
 
   	<?php include display('public_menu');?>
 </body>
 </html>
+<script type="text/javascript">
+  document.getElementById('pullrefreshs').addEventListener("swiperight",function() {
+            console.log("你正在向左滑动");
+  });
+  /*document.getElementById('pullrefreshs').addEventListener("swipeleft",function() {
+            console.log("你正在向右滑动");
+  });*/
+  
+  i = 1;
+      mui.init({
+        pullRefresh : {
+          container:'#pullrefreshs',
+           down: {
+                callback: pulldownRefresh
+            },
+            up : {
+            height:50,
+            auto:true,
+            contentrefresh : "正在加载...",
+            contentnomore:'没有更多数据了',
+            callback :pullupRefresh 
+          }
+        }
+      });
+
+      function data(){
+        console.log(i++);
+            mui("#pullrefreshs").pullRefresh().endPullupToRefresh(false);
+      }
+
+      function pullupRefresh(){
+         setTimeout(function() {
+                 data();
+             },1000);
+             
+            mui.init();
+        
+      }
+
+      function pulldownRefresh()
+      {
+        curPage = 1;//当前页码数
+        setTimeout(function() {
+            mui('#pullrefreshs').pullRefresh().endPulldownToRefresh(); //refresh completed
+            mui('#pullrefreshs').pullRefresh().refresh(true); //激活上拉加载
+        }, 1500);
+      }
+        mui('.num').on('tap','a',function(){document.location.href=this.href;});
+
+        mui('.lk-titles').on('tap','div',function(){console.log(this.dataset.id);});
+        
+</script>

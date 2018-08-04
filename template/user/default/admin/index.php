@@ -47,8 +47,8 @@
             <th>操作</th>
         </thead>
         <tbody>
-          <?php foreach($role as $k=>$v){
-                    foreach($v as $kk=>$vv){
+          <?php foreach($role as $kk=>$vv){
+                   
           ?>
 
           <tr>
@@ -58,23 +58,29 @@
             <td><?= $vv['email'] ?>
             <td><?= $vv['role_name'] ?></td>
             <td class="td-status">
-              <?php if( $vv["status"] ==0){ ?>
-                  <button class="btn-success member_stop layui-btn layui-btn-normal"   data-id="<?= $vv['id'] ?>" data-status="<?= $vv['status'] ?>">已启用</button>
+              <?php if($vv['id'] != 1){ ?>
+                  <?php if( $vv["status"] == 0){ ?>
+                      <button class="layui-btn layui-btn-normal member_stop" data-id="<?= $vv['id'] ?>" data-status="<?= $vv['status'] ?>">已启用</button>
+                    <?php }else{ ?>
+                      <button class="layui-btn layui-btn-warm member_stop"  data-id="<?= $vv['id'] ?>" data-status=status="<?= $vv['status'] ?>">已禁用</button>
+                    <?php } ?>
                 <?php }else{ ?>
-                  <button class="btn-danger member_stop layui-btn layui-btn-normal"  data-id="<?= $vv['id'] ?>" data-status=status="<?= $vv['status'] ?>">已禁用</button>
-                <?php } ?>
+                  <button class="layui-btn layui-btn-disabled">已启用</button>
+                <?php }?>
             </td>
             <td class="td-manage">
               <a title="编辑"  onclick="x_admin_show('编辑','?c=admin&a=edit&id=<?= $vv['id'] ?>',700)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
+               <?php if($vv['id'] != 1){ ?>
               <a title="删除" onclick="member_del(this,'<?= $vv['id'] ?>')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
+              <?php } ?>
             </td>
           </tr>
 
-          <?php }} ?>
+          <?php } ?>
 
         </tbody>
       </table>
