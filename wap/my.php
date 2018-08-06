@@ -22,7 +22,7 @@ if($orderlist){
 		}
 	}
 	$res = M("Card_transaction")->frozen($frozenList);
-	D("Orders")->where(['create_time'=>["<=",time()-$deadline],"status"=>"0"])->setField("status",2);
+	D("Orders")->where(['create_time'=>["<=",time()-$deadline],"status"=>"0"])->setField("status",4);
 }
 
 // 钱包

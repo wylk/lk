@@ -84,15 +84,18 @@ class PlatformCurrency{
         }
 
         // 自动匹配订单
-        $this->matching();
-        if(!count($this->matchOrderData)) return $tradeDataRes;
+        if(option('hairpan_set.matching')){
+            $this->matching();
+            if(!count($this->matchOrderData)) return $tradeDataRes;
 
-        $addOrderRes = $this->addOrder();
-        if($addOrderRes['res']) return $addOrderRes;
-        
-        $this->tradeSheetFrozen($this->frozenList);
-        
-        return ['res'=>0,"msg"=>"已匹配到".$addOrderRes['data']."条订单","tradeData"=>$tradeDataRes['data'],'orderData'=>$this->matchOrderData];
+            $addOrderRes = $this->addOrder();
+            if($addOrderRes['res']) return $addOrderRes;
+            
+            $this->tradeSheetFrozen($this->frozenList);
+
+            return ['res'=>0,"msg"=>"已匹配到".$addOrderRes['data']."条订单","tradeData"=>$tradeDataRes['data'],'orderData'=>$this->matchOrderData];
+        }
+        return $tradeDataRes;
     }
     // 自动匹配订单
     public function matching(){
@@ -260,9 +263,9 @@ class PlatformCurrency{
         // 解冻package transaction
         $orderInfo = D("Orders")->where(['id'=>$orderId])->find();
         if($orderInfo['tran_id'] != $orderInfo['tran_other'] && !empty($orderInfo['tran_other'])){
-            $frozenList[] = ['id'=>$orderInfo['tran_other'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
+            $frozenList[$orderInfo['tran_other']] = ['id'=>$orderInfo['tran_other'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
         }
-        $frozenList[] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
+        $frozenList[$orderInfo['tran_id']] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
 
         $this->tradeSheetFrozen($frozenList);
         // $this->
