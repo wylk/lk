@@ -12,7 +12,7 @@ class hairpin_controller extends base_controller
         $phone = D("Admin")->field("phone")->where(['name'=>"admin"])->find();
         $this->userInfo = D("User")->where(['phone'=>$phone['phone']])->find();
         $this->phone = $phone['phone'];
-        $this->userId = $userInfo['id'];
+        $this->userId = $this->userInfo['id'];
     }
     //平台币管理
     public function index()
