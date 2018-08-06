@@ -152,6 +152,6 @@ jQuery("#windowcenter").css("top",popY+scrollHeight).fadeIn("slow");
 	jQuery("#windowcenter").fadeIn("slow"); 
 	jQuery("#txt").html(title);
 //jQuery("#windowcenter").hide("slow"); 
-	setTimeout('jQuery("#windowcenter").fadeOut(500)',5000);
+setTimeout('jQuery("#windowcenter").fadeOut(500)',5000);
 } 
 
