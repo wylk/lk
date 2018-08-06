@@ -4,6 +4,7 @@ class UserAudit_controller extends base_controller
 {
     //商铺认证列表
     public function shop(){
+        echo 2343;
         $User_audit = D('User_audit')->select();
         foreach ($User_audit as $key => $value) {
            if($value['type']==2){

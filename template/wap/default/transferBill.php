@@ -57,6 +57,15 @@
             border: 1px solid green;
         }
     </style>
+     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
+     <script type="text/javascript">
+        $(function(){
+            lk.is_weixin() && function(){
+                $('.lk-bar-nav').css('display','none');
+                $('.lk-content').css({"padding":"0px"});
+            }()
+        })
+    </script>
 </head>
 
 <body>

@@ -4,6 +4,7 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
+  <title>交易</title>
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
   <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
@@ -47,6 +48,15 @@
     }
     .lk-btn:hover{color: #5fb878;}
   </style>
+   <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
+     <script type="text/javascript">
+        $(function(){
+            lk.is_weixin() && function(){
+                $('.lk-bar-nav').css('display','none');
+                $('.lk-content').css({"padding":"0px"});
+            }()
+        })
+    </script>
 </head>
 <body>
    <header class="lk-bar lk-bar-nav">
