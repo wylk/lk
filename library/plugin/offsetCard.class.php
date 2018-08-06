@@ -143,7 +143,7 @@ EOM;
              </div>
              <div class="home-plugin-info-row-card row-card2">
                 <div style="height: 50px;line-height: 28px">
-               <p><span style="font-weight: bold">{$v['b_name']}</span><span class="layui-badge layui-bg-orange">
+               <p><span style="font-weight: bold">{$value['b_name']}</span><span class="layui-badge layui-bg-orange">
                 {$b_type}
                </span></p>
                <p>单价:{$price}CNY 限制{$limit}</p>
@@ -160,8 +160,6 @@ EOM;
         }else{
             dexit(['error'=>1,'msg'=>'加载完成']);
         }
-        dexit(['error'=>0,'msg'=>$datas]);
-
     }
 }
 
