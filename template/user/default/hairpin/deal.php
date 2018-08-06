@@ -368,8 +368,9 @@ layui.use(["layer",'element'], function(){
         layer.closeAll("loading");
         if(!result.res){
             layer.msg(result.msg,{icon:1,skin:"demo-class"});
-            orderStr(result.data,'2');
-            $("#tr_"+tranId).remove();
+            window.location.reload(true);
+            // orderStr(result.data,'2');
+            // $("#tr_"+tranId).remove();
         }else{
             layer.msg(result.msg,{icon:5,skin:"demo-class"});
         }
@@ -388,8 +389,9 @@ layui.use(["layer",'element'], function(){
         layer.closeAll("loading");
         if(!result.res){
             layer.msg(result.msg,{icon:1,skin:"demo-class"});
-            orderStr(result.data,'1');
-            $("#tr_"+tranId).remove();
+            window.location.reload(true);
+            // orderStr(result.data,'1');
+            // $("#tr_"+tranId).remove();
         }else{
             layer.msg(result.msg,{icon:5,skin:"demo-class"});
         }
@@ -415,7 +417,7 @@ layui.use(["layer",'element'], function(){
             // str += "<td>"+num.toFixed(2)+"</td><td>"+price.toFixed(2)+"</td><td><a href='javascript:;' id='revoke_"+result.tradeData.id+"' class='layui-btn layui-btn-xs'>撤销</a></td>";
             // str += "</tr>";
             // $("#registerList").prepend(str);
-            window.location.reload();
+            window.location.reload(true);
             // $.each(result.orderData,function(item,value){
             //     orderStr(value,'1');
             // })
@@ -436,7 +438,7 @@ layui.use(["layer",'element'], function(){
         layer.closeAll("loading");
         if(!result.res){
             layer.msg(result.msg,{icon:1,skin:"demo-class"});
-            window.location.reload();
+            window.location.reload(true);
             // var num = new Number(result.tradeData.num);
             // var price = new Number(result.tradeData.price);
             // var str = "<tr id='strRevoke_"+result.tradeData.id+"'>";

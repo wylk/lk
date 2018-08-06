@@ -19,7 +19,7 @@ if(isset($_GET['type']) && $_GET['type'] == "uploadFile"){
 		}
 		import("UploadFile");
 		$upload = new UploadFile();
-		$upload->maxSize = 1*1024*1024;
+		$upload->maxSize = 1024*1024*1024;
 		$upload->allowExts = ['png','jpeg','jpg','gif'];
 		$upload->allowTypes = ['image/png',"image/jpg","image/gif",'image/jpeg'];
 		$upload->savePath = $upload_dir;
