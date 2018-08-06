@@ -22,6 +22,7 @@
         .lk-justify-content-c{padding:25px;}
         .lk-bazaar-sell p{width:38%; padding-left:3%; line-height: 25px}
         .item-buy{align-self:center;  border:1px solid #FF5722; width:45px; border-radius: 50px; line-height: 45px; text-align: center;}
+        .register div{width:20%;height:38px;line-height:38px;margin-left:20px;}
     </style>
 </head>
 
@@ -65,20 +66,19 @@
         <div class="lk-container-flex">
             <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
         </div>
-        <hr>
+        <div class="lk-container-flex register">
+            <div>数量</div><div>单价</div><div>总价</div><div>操作</div>
+        </div>
         <hr>
         <?php foreach($register as $key=>$value){ ?>
-        <div class="lk-container-flex" id="register_<?php echo $value['id'] ?>">
-            <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
-                <p class="item-flex">王**</p>
-                <p class="item-flex"><span id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num'],2)  ?></span> WLK</p>
-                <p class="item-flex">在线</p>
-                <p class="item-flex">价格：<?php echo number_format($value['price'],2) ?></p>
-                <p class="item-flex">logo</p>
-                <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?> - <?php echo number_format($value['num'],2) ?></p>
+        <div class="lk-container-flex register" id="register_<?php echo $value['id'] ?>">
+            <div>
+                <span id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num'],2) ?></span>WLK
             </div>
-            <div class="lk-container-flex">
-                <p class="item-buy"><a href="javascript:;" id="revoke_<?php echo $value['id'] ?>">撤销</a></p>
+            <div><?php echo number_format($value['price'],2) ?></div>
+            <div><?php echo number_format($value['price']*$value['num'],2) ?></div>
+            <div>
+                <a href="javascript:;" id="revoke_<?php echo $value['id'] ?>"  class="layui-btn">撤销</a>
             </div>
         </div>
         <hr>
