@@ -32,14 +32,14 @@ class PlatformCurrency{
         $this->interfaceType = option('config.blockchain_switch');
     }
     // 添加账户接口
-    public function addAccountInterface($phone){
+    public function addAccountInterface($phone,$balance=0){
         if($this->interfaceType){
             $addAccountInfo = $this->interfaceAddCount($phone);
             if($addAccountInfo['error'] != "0") return $addAccountInfo;
             $addAccountRes = D("User")->data(['phone'=>$phone,'address'=>$addAccountInfo['address']])->add();
         }else{
             $addAccountRes = D("User")->data(['phone'=>$phone])->add();
-            $addAccountInfo = $this->imitateAccount($addAccountRes);
+            $addAccountInfo = $this->imitateAccount($addAccountRes,$balance);
             if($addAccountInfo['res']) return $addAccountInfo;
             D("User")->data(['address'=>$addAccountInfo['address']])->where(['id'=>$addAccountRes])->save();
         }
@@ -338,9 +338,9 @@ class PlatformCurrency{
        }
     }
     // 数据库添加平台币账户接口
-    public function imitateAccount($userId){
+    public function imitateAccount($userId,$balance=0){
         $bookObj = new AccountBook();
-        $bookJson = json_encode(['uid'=>$userId,'contract_id'=>"0x837c6c3d09c0b36833ce37193f35e3c7108c22d2","account_balance"=>0]);
+        $bookJson = json_encode(['uid'=>$userId,'contract_id'=>"0x837c6c3d09c0b36833ce37193f35e3c7108c22d2","account_balance"=>$balance]);
         $bookRes = $bookObj->addAccount(encrypt($bookJson,option('version.public_key')));
         if(!$bookRes) return ['res'=>1,"msg"=>"账号注册失败"];
         return ['res'=>0,"msg"=>"账号注册成功","addr"=>"0x837c6c3d09c0b36833ce37193f35e3c7108c22d2","address"=>$bookRes];
