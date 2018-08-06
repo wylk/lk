@@ -9,9 +9,48 @@
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
         <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css">
+        <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
+        <style type="text/css">
+            .accountBtn{display: flex;justify-content: center;height:300px;align-items:center;}
+            .info{background-color: #a2999966;width:230px;height:130px;border-radius:20px;padding: 40px;}
+            .info span{margin: 10px auto; display: block;}
+        </style>
+<script type="text/javascript">
+    layui.use(['layer'],function(){
+    // layui.use(['element','layer'],function(){
+        // var layer = layyui.layer;
+    
+        $("#addAccount").bind('click',function(){
+            console.log('ddd');
+            var phone = "<?php echo $phone ?>";
+            var data={phone:phone}
+            $.post("?c=hairpin&a=addAdminAccount",data,function(result){
+                console.log(result);
+                if(!result.res){
+                    layer.msg(result.msg,{icon:1,skin:"demo-class"});
+                    // window.location.reload(true);
+                }else{
+                    layer.msg(result.msg,{icon:5,skin:"demo-class"});
+                }
+            },"json");
+        })
+    })
+</script>
     </head>
     <body>
+    <?php if(!$userInfo){ ?>
+        <div class="accountBtn">
+            <div class="info">
+                <p>现在还没有账户，点击下面按钮进行注册</p>
+                <span class="layui-btn layui-btn-normal" id="addAccount">注册平台币账户</span>
+            </div>
+        </div>
+        
+    <div class="x-body layui-anim layui-anim-up" style="display:none;">
+    <?php }else{ ?>
     <div class="x-body layui-anim layui-anim-up">
+    <?php } ?>
         <fieldset class="layui-elem-field">
             <legend>交易统计</legend>
             <div class="layui-field-box">
@@ -108,4 +147,5 @@
     </div>
        
     </body>
+
 </html>

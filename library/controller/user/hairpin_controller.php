@@ -2,18 +2,40 @@
 //用户
 class hairpin_controller extends base_controller
 {
-    public $userId = 108;
+    public $userId;
+    public $phone;
+    public $userInfo;
+    public $balance = 10000;
+    public $cardType = "leka";
     public function __construct(){
-        $this->userId = 108;
+        // $this->userId = 108;
+        $phone = D("Admin")->field("phone")->where(['name'=>"admin"])->find();
+        $this->userInfo = D("User")->where(['phone'=>$phone['phone']])->find();
+        $this->phone = $phone['phone'];
+        $this->userId = $userInfo['id'];
     }
     //平台币管理
     public function index()
     {
-        $datas=[
-
-        ];
+        $datas=[];
+        // $phone = D("Admin")->field("phone")->where(['name'=>"admin"])->find();
+        // $userInfo = D("User")->where(['phone'=>$this->phone])->find();
+        
         $this->assign('datas',$datas);
+        $this->assign('userInfo',$this->userInfo);
+        $this->assign('phone',$this->phone);
         $this->display();
+    }
+
+    public function addAdminAccount(){
+        $phone = $_POST['phone'];
+        import("PlatformCurrency");
+        $platformObj = new PlatformCurrency();
+        $addAccountRes = $platformObj->addAccountInterface($phone,$this->balance);
+
+        $userInfo = D("User")->where(['phone'=>$this->phone])->find();
+        D("Card_package")->data(['num'=>$this->balance])->where(['uid'=>$userInfo['id'],"type"=>$this->cardType])->save();
+        dexit($addAccountRes);
     }
 
     public function deal()
