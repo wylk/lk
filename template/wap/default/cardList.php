@@ -96,7 +96,7 @@
         </div>
         <div class="lk-row-btns">
             <a href="./shopAccount.php?id=<?php echo $value['id'] ?>" class="lk-row-btn">核销</a>
-            <a href="myDeal.php?cardId=<?php echo $value['card_id']; ?>" class="lk-row-btn">我的交易</a>
+            <a href="myDeal.php?id=<?php echo $value['id']; ?>" class="lk-row-btn">我的交易</a>
             <a href="transactionRecord.php?cardId=<?php echo $value['card_id']; ?>" class="lk-row-btn">全部交易</a>
             <a href="cardRecord.php?cardId=<?php echo $value['card_id'] ?>" class="lk-row-btn">持卡记录</a>
         </div>
@@ -111,9 +111,7 @@
 </html>
 <script type="text/javascript">
   $("a[id^=transaction_]").bind("click",function(res){
-    console.log(res)
     var cardId = $(this).attr("title");
-    console.log(cardId);
     window.location.href = "./transaction.php?cardId="+cardId;
   })
 

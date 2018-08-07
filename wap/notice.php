@@ -19,7 +19,7 @@ $bookJson = json_encode(['uid'=>$order['sell_id'],"contract_id"=>$order['card_id
 $bookRes = $Account_book->transferAccounts(encrypt($bookJson,option('version.public_key')));
 
 if(!$bookRes){
-    dexit(['res'=>0,"msg"=>"添加账本错误","other"=>$bookRes]);
+    dexit(['res'=>1,"msg"=>"添加账本错误","other"=>$bookRes]);
 }
 
 //1减去交易单
@@ -37,7 +37,7 @@ $judgeOver = D("Card_transaction")->where(['id'=>$order['tran_id']])->find();
 if($judgeOver['num'] == '0'){
 	D("Card_transaction")->where(['id'=>$order['tran_id']])->setField("status","1");
 }
-dexit(['error'=>0,"msg"=>"ok"]);
+dexit(['res'=>0,"msg"=>"ok"]);
 //账本转账
 // dump($order);
 

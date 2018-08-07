@@ -39,6 +39,7 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	if(!$bookRes){
 		dexit(['res'=>1,"msg"=>"添加账本错误"]);
 	}
+	// 添加交易记录
 	$recodRes = D("Record_books")->data(['card_id'=>$cardId,'send_address'=>$sendAddress,'get_address'=>$getAddress,'num'=>$num,"createtime"=>time()])->add();
 	if(!$recodRes){
 		dexit(['res'=>1,"msg"=>"记录添加失败","other"=>$recodRes]);
@@ -46,6 +47,7 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	// 卡包数据处理
 	$sendRes = D("Card_package")->where(['uid'=>$userId,'address'=>$sendAddress])->setDec("num",$num);
 	$getRes = D("Card_package")->where(['address'=>$getAddress])->setInc("num",$num);
+	
 	D("Card_package")->where(['address'=>$getAddress])->setInc("recovery_count",$num);
 	if(!($getRes || $sendRes)){
 		dexit(['res'=>1,"msg"=>"转账失败！"]);

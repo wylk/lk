@@ -10,14 +10,21 @@
   <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
   <style type="text/css">
-    .lk-rows{
+/*    .lk-rows{
       min-height: 100px;
       margin: 10px auto;
       background-color: #fff;
     }
     #laytable-cell-space{
       text-align: center;
-    }
+    }*/
+    .layui-container p{ line-height: 25px;}
+        .layui-container p i { color: red; margin-right: 10px;}
+        .layui-tab-content { height: auto}
+        .lk-content hr{margin: 0}
+        .lk-container-flex {padding: 0 5px;}
+        .order-left{width: 63%;}
+        .order-right{width: 36.9%;text-align: right;}
   </style>
 </head>
 <body>
@@ -25,36 +32,30 @@
     <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">全部交易</h1>
   </header>
-<div class="lk-content" style="background-color: #f0f0f0;">
-    <div class="lk-rows">     
-       <table lay-skin="line" class="layui-table laytable-cell-space">
-        <colgroup>
-          <col width="20%">
-          <col width="20%">
-          <col width="20%">
-          <col >
-        </colgroup>
-        <thead >
-          <tr >
-            <th id="laytable-cell-space">类别</th>
-            <th id="laytable-cell-space">交易量</th>
-            <th id="laytable-cell-space">价格</th>
-            <th id="laytable-cell-space">时间</th>
-          </tr> 
-        </thead>
-        <tbody>
-          <?php foreach($orderList as $key=>$value) { ?>
-          <tr>
-            <td>买</td>
-            <td><?php echo $value['number'] ?></td>
-            <td><?php echo $value['prices'] ?></td>
-            <td><?php echo date("Y-m-d H:i:s",$value['create_time']); ?></td>
-           
-          </tr>
-            <?php }?>
-        </tbody>
-      </table>
+<div class="lk-content">
+  <div class="layui-container">
+    <div class="layui-tab" lay-filter="aduitTab">
+        <?php if(!empty($orderList)){?>
+            <?php  foreach($orderList as $key=>$value){ ?>
+            <div class="lk-container-flex">
+                <div class="order-left">
+                    <p>账户:<?php echo substr($value['get_address'],0,24) ?>...</p>
+                    <p>转到:<?php echo substr($value['send_address'],0,24) ?>...</p>
+                </div>
+                <div class="order-right">
+                    <p style="color: red"><span class="total"><?php echo number_format($value['num'],2)?>hsr</span></p>
+                    <p><a class="" style="padding: 5px 2px;font-weight: bold;" href=""><?php echo date("Y-m-d H:i:s",$value['createtime']) ?></a></p>
+                </div>
+            </div>
+            <hr>
+            <?php } ?>
+        <?php }else{?>
+            <div style="margin: 50px auto;text-align: center;"><h3>暂无账单记录</h3></div>
+        <?php }?>
     </div>
+           
+    </div>
+   
 </div>
 <?php include display('public_menu');?>
 </body>

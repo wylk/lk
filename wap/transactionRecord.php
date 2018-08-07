@@ -5,6 +5,6 @@ if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST
 $userId = $wap_user['userid'];
 
 $cardId = clear_html($_GET['cardId']);
-$orderList = D("Orders")->where(['card_id'=>$cardId,"status"=>1])->select();
+$orderList = D("Record_books")->where(['card_id'=>$cardId])->select();
 
 include display("transactionRecord");

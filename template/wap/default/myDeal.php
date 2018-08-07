@@ -31,15 +31,15 @@
        <table lay-skin="line" class="layui-table laytable-cell-space">
         <colgroup>
           <col width="20%">
-          <col width="20%">
-          <col width="20%">
+          <col width="17%">
+          <col width="38%">
           <col >
         </colgroup>
         <thead >
           <tr >
-            <th id="laytable-cell-space">类别</th>
+            <th id="laytable-cell-space">用户</th>
             <th id="laytable-cell-space">交易量</th>
-            <th id="laytable-cell-space">价格</th>
+            <th id="laytable-cell-space">对方地址</th>
             <th id="laytable-cell-space">时间</th>
           </tr> 
         </thead>
@@ -47,11 +47,16 @@
           <?php foreach($orderList as $key=>$value) { ?>
           <tr>
             <td>卖</td>
-            <td><?php echo number_format($value['number'],2); ?></td>
-            <td><?php echo number_format($value['prices'],2); ?></td>
-            <td><?php echo date("Y-m-d H:i:s",$value['create_time']); ?></td>
+            <?php if($value['send_address'] == $address){ ?>
+              <td style="color:red;">-<?php echo number_format($value['num'],2); ?></td>
+              <td><?php echo substr($value['get_address'],0,15); ?></td>
+            <?php }else{ ?>
+              <td style="color:green;">+<?php echo number_format($value['num'],2); ?></td>
+              <td><?php echo substr($value['send_address'],0,15); ?></td>
+            <?php } ?>
+            <td><?php echo date("Y-m-d H:i:s",$value['createtime']); ?></td>
           </tr>
-            <?php }?>
+          <?php }?>
         </tbody>
       </table>
     </div>
