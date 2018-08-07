@@ -281,7 +281,7 @@ class weixin_api extends yp_client_pub
     public function __construct($appid,$mchid,$key)
     {
         comm_util_pub::__construct($appid,$mchid,$key);
-        $this->url = 'http://lk.com/wap/notice.php';
+        $this->url = option("config.wap_site_url").'notice.php';
         $this->curl_timeout = 60;
     }
 

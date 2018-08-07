@@ -75,7 +75,17 @@ em, i { font-style: normal; }
 .spxx_shop td{ color:#7b7b7b; font-size:14px; padding:10px 0;}
 .mlr_pm{margin-right:4.35%;}
 </style>
+ <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
+ <script type="text/javascript">
+    $(function(){
+        lk.is_weixin() && function(){
+            $('.lk-bar-nav').css('display','none');
+            $('.lk-content').css({"padding":"0px"});
+        }()
+    })
+</script>
 </head>
+
 <body>
 	<!-- <script src="/demos/googlegg.js"></script>     -->
 <header class="lk-bar lk-bar-nav">

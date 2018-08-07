@@ -25,6 +25,15 @@
       .us-checkbox{background-color: #FFF; color:#000; width: 12px; height: 12px; border:1px solid #ddd; margin:10px; font-size:9px;padding:2px; }
       .layui-layer-btn{background:none;}
     </style>
+     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
+     <script type="text/javascript">
+        $(function(){
+            lk.is_weixin() && function(){
+                $('.lk-bar-nav').css('display','none');
+                $('.lk-content').css({"padding":"0px"});
+            }()
+        })
+    </script>
 </head>
 
 <body style="background-color: rgba(240,240,240,.3);">

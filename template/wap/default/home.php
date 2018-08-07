@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
     <style type="text/css">
@@ -96,6 +97,12 @@
     <script type="text/javascript">
         var type = "<?php echo $type;?>";
         var card_id = "<?php echo $card_id;?>";
+        $(function(){
+            lk.is_weixin() && function(){
+                $('.lk-bar-nav').css('display','none');
+                $('.lk-content').css({"padding":"0px"});
+            }()
+        })
     </script>
 </head>
 <body >
