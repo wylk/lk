@@ -96,7 +96,9 @@
     </div>
    </div>
    <div class="card" style="text-align: center;line-height: 120px;">
-        <a class="layui-btn layui-btn-primary" >购买</a>
+      <a class="layui-btn layui-btn-primary" id="weixin_pay" >微信支付</a>
+      <a class="layui-btn layui-btn-primary" id="platform_pay">平台币支付</a>
+        <!-- <a class="layui-btn layui-btn-primary" >购买</a> -->
    </div>
  </form>
 </div>
@@ -108,6 +110,7 @@
 layui.use(['form', 'layer'],function() {
     layer = layui.layer;
 
+    var paydata;
     var text = parseFloat($(".card-data-style i").eq(0).text());
     var num = parseFloat($(".card-data-style i").eq(1).text());
     var price = $(".card-data-style i").eq(2).text();
@@ -121,6 +124,9 @@ layui.use(['form', 'layer'],function() {
       });
 
     $(".layui-btn-primary").click(function(){
+      var idStr = $(this).attr('id');
+      paydata.payType = idStr.substring(0,idStr.indexOf("_"));
+
       var data = {}
         data.number = $("input[name='number']").val();
         data.prices = $("input[name='prices']").val();
@@ -141,23 +147,30 @@ layui.use(['form', 'layer'],function() {
         layer.load();
         $.post('./receive.php',data,function(data){
             console.log(data);
-            if(data.error==0){
-                //此处演示关闭
-                layer.closeAll('loading');
-                layer.msg(data.msg,{icon: 1,time:1000});
-                window.location.href = './success.php?id='+data.orderId;
-            }else{
-                //此处演示关闭
-                layer.closeAll('loading');
-                layer.msg(data.msg,{icon: 5,time:1000});
-                if(data.referer){
-                  window.location.href = data.referer;
-                }
-                
-
-            }
+            if(data.error==0) paydata.orderId = data.orderId;
+            // if(data.error==0){
+            //     //此处演示关闭
+            //     layer.closeAll('loading');
+            //     layer.msg(data.msg,{icon: 1,time:1000});
+            //     // window.location.href = './success.php?id='+data.orderId;
+            // }else{
+            //     //此处演示关闭
+            //     layer.closeAll('loading');
+            //     layer.msg(data.msg,{icon: 5,time:1000});
+            //     if(data.referer){
+            //       // window.location.href = data.referer;
+            //     }
+            // }
+        },'json');
+        $.post("./pay.php",paydata,function(payinfo){
+          console.log(payinfo);
         },'json');
 
     });
+    // $("[id$=_pay]").bind('click',function(){
+    //   var idStr = $(this).attr('id');
+    //   var pois = idStr.indexOf("_");
+    //   var payType = idStr.substring(0,pois);
+    // })
 });
 </script>

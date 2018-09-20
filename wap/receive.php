@@ -29,11 +29,11 @@ if(IS_POST){
         $order_id = D('Orders')->data($data)->add();
 
         $orders = D('Card_transaction')->where(array('id'=>$datas['tranId']))->setInc('frozen',$datas['number']);
-        if($order_id){
+        if(!$order_id){
+            dexit(['error'=>1,'msg'=>'订单生成失败']);
+        }else{
             //调用支付接口上线再做
             dexit(['error'=>0,'msg'=>'已生成订单',"orderId"=>$order_id]);
-        }else{
-            dexit(['error'=>1,'msg'=>'订单生成失败']);
         }
     }
 

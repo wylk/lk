@@ -8,6 +8,8 @@ $referer=clear_html($_GET['referer']);
 // 2、支付宝
 // 3、手机号登录
 
+
+
 //dump($config['reg_readme_content']);
 // 手机号注册 aja请求处理
 if(isset($_POST['phone'])){
@@ -60,7 +62,10 @@ if(isset($_POST['phone'])){
 		dexit(["res"=>0,'msg'=>"登录成功","referer"=>$referer]);
 	}
 }
+weixin_login();
 
 include display("login");
+
+function weixin_login(){}
 
 
