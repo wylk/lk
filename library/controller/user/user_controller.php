@@ -4,7 +4,7 @@ class user_controller extends base_controller
 {
     public function index(){
         import('user_page');
-        // $page = new Page($bank_count, 1);
+        $page = new Page($bank_count, 1);
         $user = D('User')->where()->order('`id` DESC')->limit($page->firstRow, $page->listRows)->select();
         $page = new Page(count($user),2);
         $this->assign('page', $page->show());

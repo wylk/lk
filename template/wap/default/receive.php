@@ -56,6 +56,8 @@
             border: 1px solid #fff;
             border-bottom: 0.5px solid #000;
         }
+        .paySelect{border: 1px solid red;width: 100%;position: relative;bottom: 0px;left: 0px;}
+        .paySelect div{border: 1px solid green;width: 100%;height: 20px; display: block;}
     </style>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
      <script type="text/javascript">
@@ -96,11 +98,16 @@
     </div>
    </div>
    <div class="card" style="text-align: center;line-height: 120px;">
-      <a class="layui-btn layui-btn-primary" id="weixin_pay" >微信支付</a>
-      <a class="layui-btn layui-btn-primary" id="platform_pay">平台币支付</a>
-        <!-- <a class="layui-btn layui-btn-primary" >购买</a> -->
+      <a class="layui-btn layui-btn-primary" >购买</a>
    </div>
+  
  </form>
+<div class="paySelect">
+    <div></div>
+    <div></div>
+    <!-- <a class="layui-btn layui-btn-primary" id="platform_pay">平台币支付</a> -->
+    <!-- <a class="layui-btn layui-btn-primary" id="weixin_pay" >微信支付</a> -->
+ </div>
 </div>
   	<?php include display('public_menu');?>
 </body>
@@ -123,7 +130,8 @@ layui.use(['form', 'layer'],function() {
          $("input[name='number']").val(parseFloat($(this).val())/price);
       });
 
-    $(".layui-btn-primary").click(function(){
+    $(".layui-btn-primary_").click(function(){
+      var paydata=[];
       var idStr = $(this).attr('id');
       paydata.payType = idStr.substring(0,idStr.indexOf("_"));
 
@@ -145,12 +153,12 @@ layui.use(['form', 'layer'],function() {
           return false;
         }
         layer.load();
+        $.ajaxSettings.async = false;
         $.post('./receive.php',data,function(data){
-            console.log(data);
             if(data.error==0) paydata.orderId = data.orderId;
             // if(data.error==0){
             //     //此处演示关闭
-            //     layer.closeAll('loading');
+                layer.closeAll('loading');
             //     layer.msg(data.msg,{icon: 1,time:1000});
             //     // window.location.href = './success.php?id='+data.orderId;
             // }else{
@@ -165,6 +173,7 @@ layui.use(['form', 'layer'],function() {
         $.post("./pay.php",paydata,function(payinfo){
           console.log(payinfo);
         },'json');
+        $.ajaxSettings.async = true;
 
     });
     // $("[id$=_pay]").bind('click',function(){

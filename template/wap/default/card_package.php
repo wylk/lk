@@ -50,7 +50,7 @@
         <div class="lk-container-flex lk-card-package lk-flex-direction-c">
             <div class="lk-container-flex" style="padding:10px 0">
                 <div class="item-flex card-info">
-                    <p>乐卡币：<?php echo $value['type'] ?></p>
+                    <p>乐卡币：<?php echo isset($cardAttrArr[$value['card_id']]['name']) ? $cardAttrArr[$value['card_id']]['name'] : $value['type'] ?></p>
                     <p style="font-size: 12px"><b style="margin-right: 20px;font-size:16px">可用：<?php echo number_format($value['num'],2) ?></b> 锁定：<?php echo number_format($value['frozen'],2) ?></p>
                 </div>
                 <div class="item-flex card-logo">

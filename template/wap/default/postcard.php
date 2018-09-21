@@ -239,10 +239,17 @@ layui.use(["element", "upload", "layer", 'form'], function() {
         },
         busiNumber : function(value){
             value = $.trim(value);
-            var num = /^[0-9]*$/;
-            if(!num.test(value) || value == ""){
-                return "营业执照只能为数字";
+            if(value.length>18 || value.length<15){
+                return "营业执照号长度不符";
             }
+            var reg = /^([0-9ABCDEFGHJKLMNPQRTUWXY]{2})([0-9]{6})([0-9ABCDEFGHJKLMNPQRTUWXY]{9})([0-9Y])$/;
+            if(!reg.test(value)){
+                return "营业执照号输入错误";
+            }
+            // var num = /^[0-9]*$/;
+            // if(!num.test(value) || value == ""){
+            //     return "营业执照只能为数字";
+            // }
         }
 
     });
@@ -358,7 +365,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
             if (!result.res) {
                 // window.location.href = "./postcard.php?pagetype=postcard";
                 layer.msg(result.msg, { icon: 1, skin: "demo-class" }, function() {
-                    window.location.href = "./postcard.php";
+                    // window.location.href = "./postcard.php";
                 })
             } else {
                 layer.msg(result.msg, { icon: 5, skin: "demo-class" });

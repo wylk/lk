@@ -82,7 +82,7 @@
         <?php if(!in_array($v['contract_title'], $cardtype)){?>
         <i><button  class="layui-btn layui-btn-primary" id="contract_<?php echo $v['contract_title']?>">发布</button></i>
         <?php }else{ ?>
-          <i><button  class="layui-btn layui-btn-primary" name='msg'>发布中</button></i>
+          <i><button  class="layui-btn layui-btn-primary" name='msg'>管理卡券</button></i>
         <?php } ?>
       </div>
     </div>
@@ -97,7 +97,8 @@
   layui.use(['form'],function(){
     var layer = layui.layer;
     $("button[name=msg]").bind("click",function(res){
-      layer.alert("已经在发布中，不能重复发布");
+      // layer.alert("已经在发布中，不能重复发布");
+      window.location.href='http://www.lk.com/wap/cardList.php';
     })
   })
 $("button[id^=contract_]").bind("click",function(res){

@@ -83,6 +83,7 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 			dexit(['res'=>1,"msg"=>"请您填写完信息后再提交","other"=>$data]);
 		}
 	}
+	// dexit(['res'=>1,"msg"=>"信息错误，请您重新填写","other"=>$data]);
 	if(!empty($data)){
 		if($status == 2){
 			$data['update_time'] = time();

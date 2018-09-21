@@ -69,6 +69,7 @@ class offsetCard extends Card
         $card['type'] = 'offset';
         $card['card_id'] = $data['card_id'];
         $card['uid'] = $data['uid'];
+        $card['uid'] = time();
         return D('Card_package')->data($card)->add();
 
     }
