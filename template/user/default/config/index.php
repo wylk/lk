@@ -60,7 +60,7 @@
              <input class="layui-input" placeholder="单选才输入,男,女/验证" name="remark">
           </div>
            <div class="layui-input-inline">
-             <input class="layui-input" placeholder="下拉输入(三个值)" name="select_name">
+             <input class="layui-input" placeholder="下拉输入(三个值,号隔开)" name="select_name">
           </div>
           <button class="layui-btn"  lay-submit="" lay-filter="add" ><i class="layui-icon"></i>增加</button>
         </form>
