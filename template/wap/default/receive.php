@@ -121,7 +121,6 @@
 layui.use(['form', 'layer'],function() {
     layer = layui.layer;
 
-    var paydata;
     var text = parseFloat($(".card-data-style i").eq(0).text());
     var num = parseFloat($(".card-data-style i").eq(1).text());
     var price = $(".card-data-style i").eq(2).text();
@@ -135,11 +134,25 @@ layui.use(['form', 'layer'],function() {
       });
 
     $(".layui-btn-primary").click(function(){
+      var number = $("input[name='number']").val();
+      if(number < text || number>num){
+        layer.msg('输入购买数不合法！',{icon: 5,time:1000},function(){
+            $("input[name='prices']").val('');
+            $("input[name='number']").val('');
+            $("input[name='number']").focus();
+        });
+        return false;
+      }
       $(".paySelect").show();
     });
 
-    $(".layui-btn-primary_").click(function(){
-      var paydata=[];
+    // $(".layui-btn-primary_").click(function(){
+    $("[id$=_pay]").bind('click',function(){
+      $(this).find('span').css('color','#fb113c');
+      $(this).siblings().find('span').css('color','#cac3c3');
+
+      var paydata={};
+      // 支付类型
       var idStr = $(this).attr('id');
       paydata.payType = idStr.substring(0,idStr.indexOf("_"));
 
@@ -162,6 +175,7 @@ layui.use(['form', 'layer'],function() {
         }
         layer.load();
         $.ajaxSettings.async = false;
+        // 支付数据处理
         $.post('./receive.php',data,function(data){
             if(data.error==0) paydata.orderId = data.orderId;
             // if(data.error==0){
@@ -178,16 +192,21 @@ layui.use(['form', 'layer'],function() {
             //     }
             // }
         },'json');
+        // 调取支付接口
+        console.log(paydata);
         $.post("./pay.php",paydata,function(payinfo){
           console.log(payinfo);
         },'json');
         $.ajaxSettings.async = true;
 
     });
-    // $("[id$=_pay]").bind('click',function(){
-    //   var idStr = $(this).attr('id');
-    //   var pois = idStr.indexOf("_");
-    //   var payType = idStr.substring(0,pois);
-    // })
+    $("[id$=_pay]").bind('click',function(){
+      $(this).find('span').css('color','#fb113c');
+      $(this).siblings().find('span').css('color','#cac3c3');
+      // $(this).css('color','#fb113c');
+      // var idStr = $(this).attr('id');
+      // var pois = idStr.indexOf("_");
+      // var payType = idStr.substring(0,pois);   
+    })
 });
 </script>
