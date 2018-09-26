@@ -56,8 +56,11 @@
             border: 1px solid #fff;
             border-bottom: 0.5px solid #000;
         }
-        .paySelect{border: 1px solid red;width: 100%;position: relative;bottom: 0px;left: 0px;}
-        .paySelect div{border: 1px solid green;width: 100%;height: 20px; display: block;}
+        .paySelect{position: relative;bottom: 0px;left: 0px;font-size:15px;margin-left: 10px;/*display: none;*/}
+        /*.paySelect p{margin: 5px;}*/
+        .paySelect div{border: 1px solid green;height: 45px; display: block;margin-top:3px;}
+        .paySelect img{height: 37px;margin: 5px;}
+        .paySelect span{float: right;margin-right: 30px; line-height: 45px; font-size: 25px;}
     </style>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
      <script type="text/javascript">
@@ -103,8 +106,9 @@
   
  </form>
 <div class="paySelect">
-    <div></div>
-    <div></div>
+  <!-- <p>支付方式：</p> -->
+    <div id="platform_pay"><img src="<?php echo STATIC_URL;?>images/wx_logo.png" />微信支付<span class="layui-icon" style="color: #fb113c;">&#x1005;</span></div>
+    <div id="weixin_pay"><img src="<?php echo STATIC_URL;?>images/wx_logo.png" />微信支付<span class="layui-icon" style="color:#cac3c3">&#x1005;</span></div>
     <!-- <a class="layui-btn layui-btn-primary" id="platform_pay">平台币支付</a> -->
     <!-- <a class="layui-btn layui-btn-primary" id="weixin_pay" >微信支付</a> -->
  </div>
@@ -129,6 +133,10 @@ layui.use(['form', 'layer'],function() {
      $("input[name='prices']").bind('input',function(){
          $("input[name='number']").val(parseFloat($(this).val())/price);
       });
+
+    $(".layui-btn-primary").click(function(){
+      $(".paySelect").show();
+    });
 
     $(".layui-btn-primary_").click(function(){
       var paydata=[];
