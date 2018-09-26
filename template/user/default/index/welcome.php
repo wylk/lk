@@ -135,16 +135,12 @@
                     <tbody>
                         <tr>
                             <th>版权所有</th>
-                            <td colspan="4">xxxxx(xxxx)
+                            <td>xxxxx(xxxx)
                                 <a href="http://www.xxx.com/" class='x-a' target="_blank">访问官网</a></td>
                         </tr>
                         <tr>
-                            <th rowspan="2" >开发者</th>
-                            <td>陆江(113664000@qq.com)</td>
-                            <td>张勇(113664000@qq.com)</td></tr>
-                        <tr>
-                            <td>乔彤彤(113664000@qq.com)</td>
-                            <td>郝玉言(113664000@qq.com)</td></tr>
+                            <th>开发者</th>
+                            <td>五一乐卡有限公司</td></tr>
                     </tbody>
                 </table>
             </div>

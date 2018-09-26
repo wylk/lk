@@ -4,9 +4,13 @@ require_once dirname(__FILE__).'/global.php';
 // if(md5($payPwd) != $userInfo['pay_password']){
 // 	dexit(['res'=>1,'msg'=>'支付密码错误']);
 // }
+if(!IS_POST){
+	include display('pay');
+	die();
+}
 $orderId = $_POST['orderId'];
 $orderinfo = D("Orders")->where(['id'=>$orderId])->find();
-$payType = $_POST['payType']	
+$payType = $_POST['payType'];	
 switch ($payType) {
 	case 'weixin':
 		implode('weixin_pay');
@@ -14,7 +18,7 @@ switch ($payType) {
 			'appid' => "wxcf45e0f03cb2fe06", 
 	        'mch_id' => "1504906041", 
 	        'api_key' => "7458e55e72ea67b4e03c8380668a8793",
-		]
+		];
 		$money = '0.01';
 		$order_id = time();
 		$pay = new weixin_pay($data['appid'],$data['mch_id'],$data['api_key']);

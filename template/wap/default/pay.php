@@ -79,36 +79,23 @@
 <body>
 <header class="lk-bar lk-bar-nav">
     <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
-    <h1 class="lk-title">卡券领取</h1>
+    <h1 class="lk-title">支付页面</h1>
 </header>
 <div class="lk-content">
-   <div class="card-logo">
-       <div class="card-img">
-           <img src="https://free.modao.cc/uploads3/images/1907/19079609/raw_1523959707.jpeg" style="width: 100%;height: 100%">
-       </div>
+  <div class="paySelect">
+    <!-- <p>支付方式：</p> -->
+      <div id="platform_pay"><img src="<?php echo STATIC_URL;?>images/wx_logo.png" />微信支付<span class="layui-icon" style="color: #fb113c;">&#x1005;</span></div>
+      <div id="weixin_pay"><img src="<?php echo STATIC_URL;?>images/wx_logo.png" />微信支付<span class="layui-icon" style="color:#cac3c3">&#x1005;</span></div>
+      <!-- <a class="layui-btn layui-btn-primary" id="platform_pay">平台币支付</a> -->
+      <!-- <a class="layui-btn layui-btn-primary" id="weixin_pay" >微信支付</a> -->
+  </div>
+ <div class='platformPay'>
+   <div>平台支付密码：<input type="pwd" name="platform" value=""></div>
+   <div class="platformBtn">
+     <div>取消</div>
+     <div>确定</div>
    </div>
-   <div class="card card-info" style="height: 55px;">
-       <div class="card-info-row">北京川菜馆</div>
-       <div class="card-info-row" style="width: 37%;"><i class="iconfont">&#xe715;</i>北京海淀区苏州街</div>
-   </div>
-   <form>
-   <div class="card card-num">
-       <div class="card-data">你想买多少</div>
-       <div class="card-data card-data-style">交易限制:<i><?= floatval($UserAud['limit']) ?></i>-<i><?= floatval($UserAud['num']) ?></i> 单价:<i><?= floatval($UserAud['price']) ?></i></div>
-       <div class="card-data">购买量:
-
-        <input type="text" name="number" required  lay-verify="required" autocomplete="off" class="layui-input number">
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" name="prices" required  lay-verify="required" autocomplete="off" class="layui-input prices" >
-
-        CNY
-    </div>
-   </div>
-   <div class="card" style="text-align: center;line-height: 120px;">
-      <a class="layui-btn layui-btn-primary" >购买</a>
-   </div>
-  
- </form>
+ </div>
 </div>
   	<?php include display('public_menu');?>
 </body>
@@ -140,7 +127,7 @@ layui.use(['form', 'layer'],function() {
         });
         return false;
       }
-      // $(".paySelect").show();
+      $(".paySelect").show();
     });
 
     $(".layui-btn-primary_").click(function(){
