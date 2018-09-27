@@ -2,11 +2,13 @@
 require_once dirname(__FILE__).'/global.php';
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
 $userId = $wap_user['userid'];
-// dump($userInfo);die();
+
 if(!IS_POST){
 	$orderId = $_GET['id'];
 	$orderinfo = D("Orders")->where(['id'=>$orderId])->find();
-	// dump($orderinfo);
+	if($orderinfo['status']){
+		header('location:orderDetail.php?id='.$orderId);
+	}
 	include display('pay');
 	die();
 }
@@ -18,7 +20,12 @@ if(!IS_POST){
 // 	}
 // }
 $orderId = $_POST['orderId'];
-$orderinfo = D("Orders")->where(['id'=>$orderId])->find();
+if(!empty($orderId)){
+	$orderinfo = D("Orders")->where(['id'=>$orderId])->find();
+	if($orderinfo['status']){
+		dexit(['res'=>2,'msg'=>'已付款']);
+	}
+}
 $payType = $_POST['payType'];	
 switch ($payType) {
 	case 'weixin':
@@ -36,30 +43,25 @@ switch ($payType) {
 
 		break;
 	case 'platform':
-		$payType = $_POST['payType'];
-		$orderId = $_POST['orderId'];
 		$payPwd = $_POST['payPwd'];
+		// 判断密码
 		$userInfo = D('User')->field('pay_password')->where(['id'=>$userId])->find();
 		if(md5($payPwd) != $userInfo['pay_password']){
 			dexit(['res'=>1,'msg'=>'支付密码错误','data'=>md5($payPwd),'id'=>$userId]);
 		}
-		// dexit(['res'=>0,'msg'=>'支付成功']);
-		// 判断平台币是否足够
+		// 判断余额
 		$userPackinfo = D("Card_package")->field('num')->where(['uid'=>$userId,'type'=>'leka'])->find();
-		if($payType - $userPackinfo['num'] > 0) dexit(['res'=>1,'msg'=>'平台币余额不足']);
-		// // 平台币转账
-		// $orderinfo = D("Orders")->where(['id'=>$orderId])->find();
-		// $data[] = ['field'=>'num','opreator'=>'-','step'=>$payPwd,'id'=>$userId];
-		// $data[] = ['field'=>'num','opreator'=>'+','step'=>$payPwd,'id'=>$orderinfo['sell_id']];
-		// M("Card_package")->frozen($data);
-		// D("Orders")->where(['id'=>$orderId,'status'=>3])->save();
+		// if($orderinfo['number'] - $userPackinfo['num'] > 0) dexit(['res'=>1,'msg'=>'平台币余额不足']);
 		// 调用回调
 		import('source.class.Http');
-		// $payment_url = option('config.wap_site_url') . '/paynotice.php';
-		$payment_url = 'lk.com/wap/notice.php';
+		$payment_url = option('config.wap_site_url') . '/notice.php';
+		// $payment_url = 'lk.com/wap/notice.php';
 		$data['order_id'] = $orderId;
 		$result = Http::curlPost($payment_url, $data);
-dexit(['res'=>1,"msg"=>'回调结束','data'=>$result]);
+		if($result['errcode']){
+			dexit(['res'=>1,"msg"=>'支付失败']);
+		}
+		dexit(['res'=>0,"msg"=>'支付成功','orderId'=>$orderId]);
 		// //模拟支付回调
 		// import('LkApi');
 		// $api = new LkApi(['appid'=>'23432','mchid'=>'1273566173','key'=>'sdagjjjjjk']);
@@ -70,6 +72,12 @@ dexit(['res'=>1,"msg"=>'回调结束','data'=>$result]);
 		// dexit(['res'=>0,"msg"=>"购买成功","orderId"=>$orderinfo['id']]);
 		break;
 	case 'platform_pass' :
+	// 判断是否有平台支付密码
+		$payinfo = D('User')->field("pay_password")->where(['id'=>$userId])->find();
+		if(empty($payinfo['pay_password'])){
+			dexit(['res'=>1,'msg'=>'请先设置支付密码']);
+		}
+		dexit(['res'=>0,'msg'=>'已设置支付密码']);
 
 		break;
 	case 'test' :

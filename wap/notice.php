@@ -3,13 +3,14 @@
  *  支付异步通知
  */
 require_once dirname(__FILE__) . '/global.php';
-$data = json_decode(json_encode(simplexml_load_string(file_get_contents('php://input'), 'SimpleXMLElement', LIBXML_NOCDATA)), true);
-// dexit(['errcode'=>100,'msg'=>"回调错误"]);
-// echo "dfdff";
+$data['order_id'] = $_REQUEST['order_id'];
+// $data = json_decode(json_encode(simplexml_load_string(file_get_contents('php://input'), 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+
 $file = LEKA_PATH.'/upload/log/order.txt';
 file_put_contents($file,$data['order_id']);
 
 $order  = D('Orders')->where(['id'=>$data['order_id']])->find();
+// dexit(['errcode'=>3,'msg'=>$data]);
 $sendAddress = D('Card_package')->field('address')->where(['uid'=>$order['sell_id'],'card_id'=>$order['card_id']])->find();
 $getAddress = D('Card_package')->field('address')->where(['uid'=>$order['buy_id'],'card_id'=>$order['card_id']])->find();
 // 记录账单信息
@@ -21,7 +22,7 @@ $bookRes = $Account_book->transferAccounts(encrypt($bookJson,option('version.pub
 
 if(!$bookRes){
 	// $payInfo['err_code'] = 1;
-	dexit(['errcode'=>2,'msg'=>"添加账本错误"]);
+	dexit(['errcode'=>2,'msg'=>"添加账本错误",'data'=>$bookRes]);
 }
 
 //1减去交易单

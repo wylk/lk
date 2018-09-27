@@ -88,7 +88,7 @@ layui.use(['form', 'layer'],function() {
     function payRequest(paydata){
       console.log('payRequest');
         // 调取支付接口
-        paydata.orderId = $('[name=orderId]').val();
+        // paydata.orderId = $('[name=orderId]').val();
         console.log(paydata);
         // paydata.payType = payType;
         $.post("./pay.php",paydata,function(payinfo){
@@ -103,15 +103,29 @@ layui.use(['form', 'layer'],function() {
       
       var paydata={};
       var idStr = $(this).attr('id');
-      var payType = idStr.substring(0,idStr.indexOf("_"));   
+      var payType = idStr.substring(0,idStr.indexOf("_"));
+      paydata.payType = payType;
+      paydata.orderId = $('[name=orderId]').val();   
     
       if(payType == 'platform'){
-        console.log('platform pay');
-        $(".platform").show();
+        // console.log('platform pay');
+        // 判断是否存在平台支付密码
+        // console.log(paydata.orderId);
+        $.post('./pay.php',{'payType':'platform_pass','orderId':paydata.orderId},function(res){
+          console.log(res);
+          if(res.res == 2){
+            window.location.href = './orderDetail.php?id='+paydata.orderId;
+            return;
+          }
+          if(res.res == 1) {
+            window.location.href = './pay_pw.php';
+            return;
+          }
+          $(".platform").show();
+        },'json');
         return;
       }
-      paydata.payType = payType;
-      console.log(paydata);
+      // console.log(paydata);
       payRequest(paydata);
     });
     // 平台币支付
@@ -128,14 +142,14 @@ layui.use(['form', 'layer'],function() {
       paydata.payPwd = payPwd;
       paydata.orderId = $('[name=orderId]').val();
       console.log(paydata);
-      // payRequest(paydata);
       // 平台币支付请求
       $.post("./pay.php",paydata,function(payinfo){
           console.log(payinfo);
           if(!payinfo.res){
-            layer.msg(payinfo.msg,{icon: 1,time:1000});
+            layer.msg(payinfo.msg,{icon:1,skin:"demo-class"});
+            window.location.href = "./orderDetail.php?id="+paydata.orderId;
           }else{
-            layer.msg(payinfo.msg,{icon: 5,time:1000});
+            layer.msg(payinfo.msg,{icon: 5,skin:"demo-class"});
           }
         },'json');
     })
