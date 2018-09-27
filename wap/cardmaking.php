@@ -13,9 +13,9 @@ if(IS_POST){
   	// $a = count($limitArr);
   	$frozenCurrency = $postData['sum']/$limitArr[1]*$limitArr[0];
   	// dexit(['error'=>1,"msg"=>(float)$frozenCurrency."---".(float)$userInfo['num']]);
-  	if((float)$frozenCurrency > (float)$userInfo['num']){
-  		dexit(['error'=>1,"msg"=>"平台币不足"]);
-  	}
+  	// if((float)$frozenCurrency > (float)$userInfo['num']){
+  	// 	dexit(['error'=>1,"msg"=>"平台币不足"]);
+  	// }
   	$frozenList[] = ['id'=>$userInfo['id'],"operator"=>"+","step"=>$frozenCurrency,"field"=>"frozen"];
     $frozenList[] = ['id'=>$userInfo['id'],"operator"=>"-","step"=>$frozenCurrency,"field"=>"num"];
   	M("Card_package")->frozen($frozenList);

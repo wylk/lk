@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
+echo phpinfo();
 // 微信登录
 // $appid = 'wxcf45e0f03cb2fe06';
 // $appSecret = '230bbd5800c6e0fa2524266f03892c3a';
@@ -34,3 +35,4 @@ require_once dirname(__FILE__).'/global.php';
 // var_dump($_SERVER['SERVER_NAME']);	
 // echo get_cfg_var ("upload_max_filesize")?get_cfg_var ("upload_max_filesize"):"不允许上传附件";
 // dump(get_cfg_var ("upload_max_filesize"));
+// include display('testh');

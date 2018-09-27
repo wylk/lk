@@ -11,7 +11,8 @@ class weixin_pay
         // 'notify_url' => 'https://mall.epaikj.com/wap/paynotice.php' 
     );
     public $trade_type;
-    public $notify_url = option("config.wap_site_url").'notice.php'; /*自定义的回调程序地址id*/
+    public $notify_url = 'success.php'; /*自定义的回调程序地址id*/
+    // public $notify_url = option("config.wap_site_url").'notice.php'; /*自定义的回调程序地址id*/
 
     public function  __construct($appid=null,$mch_id=null,$api_key=null) {
         $this->config['appid'] = empty($appid) ? $this->config['appid'] : $appid;

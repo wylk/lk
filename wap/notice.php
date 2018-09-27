@@ -4,7 +4,8 @@
  */
 require_once dirname(__FILE__) . '/global.php';
 $data = json_decode(json_encode(simplexml_load_string(file_get_contents('php://input'), 'SimpleXMLElement', LIBXML_NOCDATA)), true);
- 
+// dexit(['errcode'=>100,'msg'=>"回调错误"]);
+// echo "dfdff";
 $file = LEKA_PATH.'/upload/log/order.txt';
 file_put_contents($file,$data['order_id']);
 
@@ -19,7 +20,8 @@ $bookJson = json_encode(['uid'=>$order['sell_id'],"contract_id"=>$order['card_id
 $bookRes = $Account_book->transferAccounts(encrypt($bookJson,option('version.public_key')));
 
 if(!$bookRes){
-    dexit(['res'=>1,"msg"=>"添加账本错误","other"=>$bookRes]);
+	// $payInfo['err_code'] = 1;
+	dexit(['errcode'=>2,'msg'=>"添加账本错误"]);
 }
 
 //1减去交易单
@@ -38,6 +40,5 @@ if($judgeOver['num'] == '0'){
 	D("Card_transaction")->where(['id'=>$order['tran_id']])->setField("status","1");
 }
 dexit(['res'=>0,"msg"=>"ok"]);
-//账本转账
-// dump($order);
+
 
