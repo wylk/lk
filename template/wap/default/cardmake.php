@@ -7,6 +7,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>LUploader/css/LUploader.css?r=2321">
+    <script src="<?php echo STATIC_URL;?>LUploader/js/LUploader.js?r=32443345"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
@@ -45,11 +47,16 @@
   	<?php include display('public_menu');?>
 </body>
 </html>
-<!-- <script type="text/javascript">
-  $(function(){
-    $('input[name="is_free"]').click(function(){
-      var iddd = $(this).val();
-      console.log(iddd);
-    })
-  })
-</script> -->
+
+ <script>
+    [].slice.call(document.querySelectorAll('input[data-LUploader]')).forEach(function(el) {
+        new LUploader(el, {
+            url: './upload.php',//post请求地址
+            multiple: false,//是否一次上传多个文件 默认false
+            maxsize: 102400,//忽略压缩操作的文件体积上限 默认100kb
+            accept: 'image/*',//可上传的图片类型
+            quality: 0.5,//压缩比 默认0.1  范围0.1-1.0 越小压缩率越大
+            //showsize:true//是否显示原始文件大小 默认false
+        });
+    });
+    </script>

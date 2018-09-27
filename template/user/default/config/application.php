@@ -37,7 +37,6 @@
             <th width="70">ID</th>
             <th width="70">合约名</th>
             <th width="70">合约logo</th>
-            <th>运行监控</th>
             <th width="250" >合约描述</th>
             <th width="50" >排序</th>
             <th width="50" >状态</th>
@@ -49,12 +48,6 @@
             <td><?php echo $v['id']?></td>
             <td><?php echo $v['contract_name']?> </td>
             <td><img src="<?php echo $v['pc_logo']?>" style="width: 60px;height: 60px;border-radius: 10%"></td>
-
-            <td>
-                <div class="layui-progress layui-progress-big" lay-showPercent="yes">
-                  <div class="layui-progress-bar layui-bg-green" lay-percent="80%"></div>
-                </div>
-             </td>
              <td><?php echo $v['contract_explain'];?></td>
             <td><input type="text" class="layui-input x-sort" name="order" data-id='<?php echo $v['id'];?>' value="<?php echo $v['sort']?>"></td>
             <td>

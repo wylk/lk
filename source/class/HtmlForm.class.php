@@ -47,8 +47,39 @@ class HtmlForm
         $this->htmlall.=$str;
         return $this;
     }
-    //文件上传
+
     public function upload($title,$id,$name)
+    {
+        $str = <<<EOM
+        <div class="layui-form-item">
+            <label class="layui-form-label" id="label-form">{$title}:</label>
+            <div class="layui-input-block" id="input-bloc" style="height:100px;display:flex;justify-content:space-between">
+              <div style="width:100%;">
+                <div class="LUploader" id="{$name}">
+                    <div class="LUploader-container">
+                        <input data-LUploader="{$name}" data-form-file='basestr' data-upload-type='front' type="file" />
+                        <ul class="LUploader-list"></ul>
+                    </div>
+                    <div>
+                        <div class="icon icon-camera font20"></div>
+                        <p>单击上传</p>
+                    </div>
+                </div>
+              </div>
+
+            </div>
+        </div>
+        <script>
+        
+        </script>
+EOM;
+$this->htmlall.=$str;
+        return $this;
+
+    }
+
+    //文件上传
+    public function uploads($title,$id,$name)
     {
         $str = <<<EOM
         <div class="layui-form-item">
