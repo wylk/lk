@@ -10,7 +10,7 @@ class offsetCard extends Card
         $checkbox = [['val'=>1,'title'=>'北京','checked'=>'checked'],['val'=>2,'title'=>'天津','checked'=>'']];
         return $html->input(['name','卡名'],['name',['reg','cn']])
                     //->radio(['is_free','是否收费'],$radio,'price')
-                    ->input(['price','单价'],['price',['reg','floa']])
+                    //->input(['price','单价'],['price',['reg','floa']])
                     ->input(['sum','总量'],['sum',['reg','floa']])
                     ->input(['group','发布几份'],['group',['reg','int']])
                     ->upload('会员卡log','img_id','card_log')
@@ -91,7 +91,7 @@ class offsetCard extends Card
         $store_package = D('')->table("Card_package as a")
                               ->join('User_audit as b ON a.uid=b.uid','LEFT')
                               ->join('Card as c ON a.uid=c.uid','LEFT')
-                              ->where("a.type='".$type."' and a.is_publisher=1 and c.c_id=2 and c.type='offset'")
+                              ->where("a.type='".$type."' and a.is_publisher=1 and c.c_id=2 and c.type='offset' and b.status=1 and b.isdelete=0")
                               ->field("a.card_id as card_id,b.*,c.val as logo")
                               ->limit((($data['i']-1)*10).",10")
                               ->select();

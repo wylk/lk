@@ -98,7 +98,7 @@
     var layer = layui.layer;
     $("button[name=msg]").bind("click",function(res){
       // layer.alert("已经在发布中，不能重复发布");
-      window.location.href='http://www.lk.com/wap/cardList.php';
+      window.location.href='./cardList.php';
     })
   })
 $("button[id^=contract_]").bind("click",function(res){
