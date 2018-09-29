@@ -33,11 +33,16 @@ switch ($payType) {
 	case 'weixin':
 	// dexit(['res'=>1,"msg"=>'weixin支付']);
 		implode('weixin_pay');
+		// $data = [
+		// 	'appid' => "wxcf45e0f03cb2fe06", 
+	 //        'mch_id' => "1504906041", 
+	 //        'api_key' => "7458e55e72ea67b4e03c8380668a8793",
+		// ];
 		$data = [
-			'appid' => "wxcf45e0f03cb2fe06", 
-	        'mch_id' => "1504906041", 
-	        'api_key' => "7458e55e72ea67b4e03c8380668a8793",
-		];
+			'appid' => option('config.platform_weixin_appid');
+			'mch_id' => option('config.platform_weixin_mchid');
+			'api_key' => option('config.platform_weixin_key');
+		]
 		$money = '0.01';
 		$out_trade_no = time();
 		// $out_trade_no = $userInfo['trade_no'];

@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
-echo phpinfo();
+dump(md5('111111'));
+dump($userId = $wap_user['userid']);
 // 微信登录
 // $appid = 'wxcf45e0f03cb2fe06';
 // $appSecret = '230bbd5800c6e0fa2524266f03892c3a';
