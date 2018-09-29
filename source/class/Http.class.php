@@ -50,8 +50,6 @@ class Http
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$result = curl_exec($ch);
-		// $er = curl_error($ch);
-		// dexit(['res'=>1,"msg"=>'url','data'=>$er,'h'=>$result]);
 		curl_close($ch);
 
 		$result = json_decode($result, true);

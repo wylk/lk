@@ -85,14 +85,23 @@ layui.use(['form', 'layer'],function() {
       $(".platform").hide();
        $("[name=pwd]").val('');
     })
+    // 调取支付接口
     function payRequest(paydata){
-      console.log('payRequest');
-        // 调取支付接口
-        // paydata.orderId = $('[name=orderId]').val();
         console.log(paydata);
         // paydata.payType = payType;
         $.post("./pay.php",paydata,function(payinfo){
           console.log(payinfo);
+          if(payinfo.res){
+            alert(payinfo.msg);
+            return;
+          }
+          window.WeixinJSBridge.invoke("getBrandWCPayRequest",res.data,function(res1){
+            if(res1.err_msg=="get_brand_wcpay_request:ok"){
+              alert("支付成功");
+            }else{
+              alert("支付失败");
+            }
+          })
         },'json');
         // $.ajaxSettings.async = true;
 

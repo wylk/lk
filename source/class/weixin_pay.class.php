@@ -11,8 +11,10 @@ class weixin_pay
         // 'notify_url' => 'https://mall.epaikj.com/wap/paynotice.php' 
     );
     public $trade_type;
-    public $notify_url = 'success.php'; /*自定义的回调程序地址id*/
-    // public $notify_url = option("config.wap_site_url").'notice.php'; /*自定义的回调程序地址id*/
+    // public $notify_url = 'success.php'; /*自定义的回调程序地址id*/
+    // public $notify_url = option("config.wap_site_url").'/notice.php'; /*自定义的回调程序地址id*/
+    // public $notify_url = option('config.wap_site_url') . '/notice.php';
+    public $notify_url = 'https://bcc.51ao.com/wap/notice.php';
 
     public function  __construct($appid=null,$mch_id=null,$api_key=null) {
         $this->config['appid'] = empty($appid) ? $this->config['appid'] : $appid;
@@ -40,14 +42,12 @@ class weixin_pay
         $this->trade_type = $trade_type;
 
         $s = $this->getSign($data);
-
         $data["sign"] = $s;
-        // dump($data);die;
+// return $data;
         $xml = $this->arrayToXml($data);
-        // var_dump($data);
-        // echo json_encode(array('error'=>1,'msg'=>$data,'xml'=>$xml));exit();
+
         $response = $this->postXmlCurl($xml, $url);
-        // return $response;
+        
         //将微信返回的结果xml转成数组
         $wxdata  = $this->xmlstr_to_array($response);
 
@@ -65,6 +65,7 @@ class weixin_pay
     {
         $timeStamp = time();
         if($this->trade_type == 'APP'){
+          // app
           $data["noncestr"] = $this->getRandChar(32);
           $data["appid"] = $this->config["appid"];
           $data["package"] = "Sign=WXPay";
@@ -73,7 +74,8 @@ class weixin_pay
           $data["timestamp"] = time();
           $data['sign'] = $this->getSign($data, false);
         }else{
-          $sign["appId"] = $this->config["appid"];
+          // 小程序
+          $sign["appId"] = $data['appId'] = $this->config["appid"];
           $sign['package'] = $data['package'] = 'prepay_id='.$prepayId;
           $sign['signType'] = $data['signType'] = "MD5";
           $sign["timeStamp"] = $data["timeStamp"] = "$timeStamp";
