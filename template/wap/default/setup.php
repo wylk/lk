@@ -59,10 +59,10 @@
     </div>
 
 
-    <div class="item-row lk-container-flex" style="margin: 20px auto 0px;">
+    <div class="item-row lk-container-flex" style="margin: 20px auto 0px;" id="map">
         <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe715;</i></div>
         <div class="item-row-title row"  >地理位置设置</div>
-        <div class="item-row-arrow row center"><i class="iconfont"  id="map" style="font-size: 20px;">&#xe6a7;</i></div>
+        <div class="item-row-arrow row center" ><i class="iconfont"   style="font-size: 20px;">&#xe6a7;</i></div>
     </div>
     <hr class="layui-bg-gray">
     <div class="item-row lk-container-flex" style="margin: 0px auto">
