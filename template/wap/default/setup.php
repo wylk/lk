@@ -79,7 +79,11 @@
     <a href="javascript:;" id = "signOut">
      <div class="item-row lk-container-flex" style="margin: 40px auto 10px;">
         <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe718;</i></div>
-        <div class="item-row-title row" >退出登录</div>
+           <?php if(is_weixin()){?>
+              <div class="item-row-title row" >清除缓存</div>
+        <?php }else{?>
+             <div class="item-row-title row" >退出登录</div>
+         <?php } ?>
         <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
     </div>
     </a>

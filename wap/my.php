@@ -3,9 +3,13 @@ require_once dirname(__FILE__).'/global.php';
 //require_once dirname(__FILE__).'/func.php';
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
 $verifyLen = "6";  //验证码长度
-// $userId = 11;
+
+// dump($wap_user);
 $phone = isset($wap_user['phone']) ? $wap_user['phone'] : "";
 $userId = isset($wap_user['userid']) ? $wap_user['userid'] : 1;
+
+ // dump($_SESSION['wx']);die;
+
 
 // 清除超时订单
 $deadline = option('hairpan_set.expiry_time') ? option('hairpan_set.expiry_time') : 60*30;
@@ -15,7 +19,7 @@ if($orderlist){
 	foreach($orderlist as $key=>$value){
 		$frozenNum[$value['tran_id']] += $value['number'];
 		$frozenNum[$value['tran_other']] += $value['number'];
-	
+
 		$frozenList[$value['tran_id']] = ['id'=>$value['tran_id'],"operator"=>"-","step"=>$frozenNum[$value['tran_id']],"field"=>"frozen"];
 		if(isset($value['tran_other']) && $value['tran_other'] != $value['tran_id']){
 			$frozenList[$value['tran_other']] = ['id'=>$value['tran_other'],"operator"=>"-","step"=>$frozenNum[$value['tran_other']],"field"=>"frozen"];
@@ -46,7 +50,6 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "bill"){
 	include display("bill");
 	exit();
 }
-
 
 // ajax请求
 // if(isset($_POST['phone']) && $_POST['phone'] == $phone && isset($_POST['type'])){
@@ -92,6 +95,7 @@ if(isset($_POST['phone']) && isset($_POST['type'])){
 		exit();
 	}
 }
+
 // 判断是否认证
 $ruleJudge = D("User_audit")->field("type,status,uid")->where(['uid'=>$userId])->select();
 foreach($ruleJudge as $key=>$val){
@@ -101,8 +105,8 @@ foreach($ruleJudge as $key=>$val){
 if($type == 2 && $status == 1 ){
 	$menu = [
             ['icon'=>'&#xe6f5;','url'=>'./postcard.php','title'=>'身份认证'],
-            ['icon'=>'&#xe758;','url'=>'./cardType.php','title'=>'卡券'],
-            // ['icon'=>'&#xe6f5;','url'=>'./cardList.php','title'=>'卡/券/库'],
+            ['icon'=>'&#xe758;','url'=>'./cardType.php','title'=>'发卡'],
+            ['icon'=>'&#xe6f5;','url'=>'./cardList.php','title'=>'卡/券/库'],
             ['icon'=>'&#xe803;','url'=>'','title'=>'API接口'],
             ['icon'=>'&#xe83a;','url'=>'','title'=>'店员管理'],
             ['icon'=>'&#xe6ae;','url'=>'./setup.php','title'=>'设置'],
@@ -114,9 +118,7 @@ if($type == 2 && $status == 1 ){
         ];
 }
 
- 
-
-// var_dump(isset($_SESSION));exit();
+$res=D('User')->where(['phone' => $phone])->find();
 
 include display('my');
 echo ob_get_clean();

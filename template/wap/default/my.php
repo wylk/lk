@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=33">
@@ -60,16 +60,26 @@
   </header>
 <div class="lk-content" style="background-color: #f0f0f0;">
 
-    
+
         <div class="item-headers lk-container-flex" >
-            <div class="item-header-img lk-container-flex lk-justify-content-c lk-align-items-c"> <img src="http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" style="height: 80px;width: 80px;border-radius: 50%;"></div>
-            <div class="item-header-name lk-container-flex lk-align-items-c"> 
-                <div>
-                    <p>老王</p>    
-                    <p style="margin-top: 5px;">手机号:<?php echo $phone; ?></p>    
-                </div>
+            <div class="item-header-img lk-container-flex lk-justify-content-c lk-align-items-c">
+                <?php  if($res['avatar']){?>
+                    <img src="<?php echo $res['avatar'];?>" style="height: 80px;width: 80px;border-radius: 50%;">
+                <?php }else{?>
+                    <img src="http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" style="height: 80px;width: 80px;border-radius: 50%;">
+               <?php } ?></div>
+            <div class="item-header-name lk-container-flex lk-align-items-c">
+                   <div>
+                        <?php if($res['name']){?>
+                             <p><?php echo  $res["name"];?></p>
+                        <?php }else{?>
+                             <p>尊敬的乐卡用户</p>
+                        <?php }?>
+
+                    <p style="margin-top: 5px;">手机号:<?php echo $phone; ?></p>
+                    </div>
             </div>
-           
+
         </div>
         <div class="item-rows">
             <?php foreach ($menu as $k => $v) {?>
