@@ -18,6 +18,7 @@ if(IS_POST){
     $data['tran_id'] = $datas['tranId'];
     $data['create_time'] = time();
     $data['onumber'] = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+    $data['out_trade_no'] = date('YmdHis', $_SERVER['REQUEST_TIME']) . mt_rand(100000, 999999);
 
     
 
@@ -41,6 +42,7 @@ if(IS_POST){
 }
 
 $UserAud = D("Card_transaction")->where(array('id'=>$_GET['id']))->find();
+// dump($userId);
 //添加新卡包
 if(!D('Card_package')->where(['uid'=>$userId,'card_id'=>$UserAud['card_id']])->find()){
     $contract = $_GET['card']?$_GET['card']:'offset';
