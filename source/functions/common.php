@@ -1657,3 +1657,50 @@ function hook($a,$data,$c = 'offset'){
     $hook->add($c);
     return $hook->exec($a,[$data]);
 }
+//微信登录获取openid
+//微信登录 snsapi_userinfo
+function weixin_info(){
+     $appid=D('Config')->where(array('name'=>'platform_weixin_appid'))->find();
+     $secret=D('Config')->where(array('name'=>'platform_wechat_appsecret'))->find();
+    $customeUrl = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    if(empty($_GET['code'])){
+        $_SESSION['weixin']['state']   = md5(uniqid());
+        $oauthUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$appid['value'].'&redirect_uri='.urlencode($customeUrl).'&response_type=code&scope=snsapi_base&state='.$_SESSION['weixin']['state'].'#wechat_redirect';
+        redirect($oauthUrl);
+        exit;
+
+    }else if(isset($_GET['code']) && isset($_GET['state']) && ($_GET['state'] == $_SESSION['weixin']['state'])){
+
+        import('Http');
+        $http = new Http();
+        $tokenUrl = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$appid['value'].'&secret='.$secret['value'].'&code='.$_GET['code'].'&grant_type=authorization_code';
+        $return = $http->curlGet($tokenUrl);
+        $jsonrt = json_decode($return,true);
+        if($_SESSION['weixin']['to_userinfo'] != "2"){
+            if(D('User')->where(array('openid' => $jsonrt['openid']))->find()){
+                return $result  =  array('is_oauth'=>"1",'openid'=>$jsonrt['openid']);
+            }else{
+                $_SESSION['weixin']['state']   = md5(uniqid());
+                $_SESSION['weixin']['to_userinfo']   = "2";
+                $oauthUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$appid['value'].'&redirect_uri='.urlencode($customeUrl).'&response_type=code&scope=snsapi_userinfo&state='.$_SESSION['weixin']['state'].'#wechat_redirect';
+            redirect($oauthUrl);
+            exit;
+            }
+        }
+        if($jsonrt['openid']){ //微信中打开直接登录
+            $url    = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$jsonrt['access_token'].'&openid='.$jsonrt['openid'].'&lang=zh_CN';
+            $wxuser = $http->curlGet($url);
+            $wxuser = json_decode($wxuser, true);
+            unset($_SESSION['weixin']['to_userinfo']);
+            if($wxuser['errcode']){
+                $_SESSION['weixin']['state']   = md5(uniqid());
+                $oauthUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$appid['value'].'&redirect_uri='.urlencode($customeUrl).'&response_type=code&scope=snsapi_userinfo&state='.$_SESSION['weixin']['state'].'#wechat_redirect';
+                redirect($oauthUrl);  exit;
+            }
+             $_SESSION['weixin']['userinfo'] = $wxuser;
+            return $result  =  array('is_oauth'=>0);
+            }
+
+        }
+        unset($_SESSION['weixin']);
+}
