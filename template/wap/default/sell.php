@@ -108,9 +108,9 @@
        <table lay-skin="line" class="layui-table laytable-cell-space table-margin0">
         <colgroup>
           <col width="20%">
-          <col width="20%">
+          <col width="18%">
           <col >
-          <col width="20%">
+          <col width="16%">
         </colgroup>
         <thead >
           <tr style="background-color: #fff">
@@ -146,8 +146,8 @@ layui.use(['form','layer'], function(){
   var beatCount=0;
   //监听提交
   form.on('submit(formDemo)', function(data){
-    console.log(JSON.stringify(data.field));
-      console.log(data);
+    // console.log(JSON.stringify(data.field));
+      // console.log(data);
       layer.load();
       var surplusNum = $("#surplusNum i").html();
       if(data.field.num-surplusNum > 0){
@@ -155,10 +155,14 @@ layui.use(['form','layer'], function(){
         layer.closeAll("loading");
         return false;
       }
+      if(data.field.limit > data.field.num){
+        layer.msg("最低购买数不得大于出售量",{icon:5,skin:'demo-class'});
+        layer.closeAll("loading");
+        return false;
+      }
       $.post("./transaction.php",data.field,function(res){
-        console.log(res);
+        // console.log(res);
         if(!res.res){
-          // var date = new Date(res.dataInfo.createtime);
             $("#surplusNum i").html(res.num);
             var resNum = new Number(res.dataInfo.num);
             var resPrice = new Number(res.dataInfo.price);

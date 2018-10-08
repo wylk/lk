@@ -239,7 +239,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
         },
         busiNumber : function(value){
             value = $.trim(value);
-            if(value.length>18 || value.length<15){
+            if(value.length != 18 && value.length != 15){
                 return "营业执照号长度不符";
             }
             var reg = /^([0-9ABCDEFGHJKLMNPQRTUWXY]{2})([0-9]{6})([0-9ABCDEFGHJKLMNPQRTUWXY]{9})([0-9Y])$/;

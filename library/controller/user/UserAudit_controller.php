@@ -140,5 +140,22 @@ class UserAudit_controller extends base_controller
         $this->assign('userAudit',$userAudit);
         $this->display();
     }
+    // 店铺比例修改
+    public function ratioModify(){
+        if(IS_POST){
+            $ratio = (int)$_POST['ratio'];
+            $auditId = $_POST['auditId'];
+            
+            if(strlen($ratio) <= 3 && $ratio <= 100 && $ratio >0)  $ratio .= '%';
+            else dexit(['res'=>1,'msg'=>'数据不对','data'=>$ratio]); 
+
+            $res = D("User_audit")->data(['ratio'=>$ratio])->where(['id'=>$auditId])->save();
+            if(!$res) dexit(['res'=>1,'msg'=>'修改失败','data'=>$res,'d'=>$ratio]);    
+            dexit(['res'=>0,'msg'=>'修改成功','data'=>$res,'d'=>$ratio]);
+        }
+        $ratioRes = D("User_audit")->field('ratio')->where(['id'=>$_GET['id']])->find();
+        // $this->assign('ratio',$ratioRes['ratio']);
+        include display();
+    }
 }
 

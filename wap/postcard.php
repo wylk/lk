@@ -36,23 +36,7 @@ if(isset($_GET['type']) && $_GET['type'] == "uploadFile"){
 	}
 	dexit(['res'=>1,"msg"=>"传送失败"]);
 }
-// exit();
 
-// // 用户认证信息修改
-// if(isset($_GET['pagetype']) && $_GET['pagetype'] == 'postcardEdit'){
-// 	// 获取用户信息
-// 	$uid = isset($_SESSION['loginsign']['uid']) ? $_SESSION['loginsign']['uid'] : "";
-// 	if(empty($uid)){
-// 		$userInfo = M('lk_user')->findField("id,phone","phone=".$phone);
-// 		$uid = transformArray($userInfo,"id");
-// 	}
-// 	$where['uid'] = $uid;
-// 	$postcardInfo = M("lk_user_audit")->select($where);
-// 	$postcardInfo = transformArray($postcardInfo);
-
-// 	include display("postcard");
-// 	exit();
-// }
 //身份证认证信息处理
 if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 	$type = isset($_POST['type']) ? $_POST['type'] : "";

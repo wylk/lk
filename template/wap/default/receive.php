@@ -129,29 +129,7 @@ layui.use(['form', 'layer'],function() {
      $("input[name='prices']").bind('input',function(){
          $("input[name='number']").val(parseFloat($(this).val())/price);
       });
-
-    // $(".layui-btn-primary").click(function(){
-    //   var number = $("input[name='number']").val();
-    //   if(number < text || number>num){
-    //     layer.msg('输入购买数不合法！',{icon: 5,time:1000},function(){
-    //         $("input[name='prices']").val('');
-    //         $("input[name='number']").val('');
-    //         $("input[name='number']").focus();
-    //     });
-    //     return false;
-    //   }
-    //   // $(".paySelect").show();
-    // });
-
     $(".layui-btn-primary").click(function(){
-    // $("[id$=_pay]").bind('click',function(){
-      
-
-      // var paydata={};
-      // 支付类型
-      // var idStr = $(this).attr('id');
-      // paydata.payType = idStr.substring(0,idStr.indexOf("_"));
-
       var data = {}
         data.number = $("input[name='number']").val();
         data.prices = $("input[name='prices']").val();
@@ -170,7 +148,6 @@ layui.use(['form', 'layer'],function() {
           return false;
         }
         layer.load();
-        // $.ajaxSettings.async = false;
         // 支付数据处理
         $.post('./receive.php',data,function(data){
             // if(data.error==0) paydata.orderId = data.orderId;
@@ -188,22 +165,6 @@ layui.use(['form', 'layer'],function() {
                 }
             }
         },'json');
-        // 调取支付接口
-        // console.log(paydata);
-        // $.post("./pay.php",paydata,function(payinfo){
-        //   console.log(payinfo);
-        // },'json');
-        // $.ajaxSettings.async = true;
-
     });
-    // $("[id$=_pay]").bind('click',function(){
-    //   $(this).find('span').css('color','#fb113c');
-    //   $(this).siblings().find('span').css('color','#cac3c3');
-    //   var idStr = $(this).attr('id');
-    //   var payType = idStr.substring(0,idStr.indexOf("_"));   
-    //   if(payType == 'platform'){
-    //     console.log('platform pay');
-    //   }
-    // })
 });
 </script>

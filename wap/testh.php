@@ -37,3 +37,9 @@ dump($userId = $wap_user['userid']);
 // echo get_cfg_var ("upload_max_filesize")?get_cfg_var ("upload_max_filesize"):"不允许上传附件";
 // dump(get_cfg_var ("upload_max_filesize"));
 // include display('testh');
+
+$data[] = ['id'=>'1','field'=>'num','operator'=>'-','step'=>'1'];
+$data[] = ['id'=>'1','field'=>'frozen','operator'=>'-','step'=>'1'];
+dump($data);
+$res = M('Card_transaction')->frozen($data);
+dump($res);

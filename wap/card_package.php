@@ -7,21 +7,25 @@ $cardWhere['is_publisher'] = 0;
 $cardWhere['uid'] = $userId;
 $cardList = D("Card_package")->where($cardWhere)->select();
 $cardIdArr = array_column($cardList, 'card_id');
-foreach($cardList as $key=>$value){
-	$cardUid[] = $value['uid'];
-}
+$cardRes = D("Card")->where("card_id in ('".implode($cardIdArr, "','")."')")->select();
 
+// 获取卡券的属性
 $nameArr = D('Contract_field')->select();
 $nameArr = array_column($nameArr, 'val','id');
 
-$attrList = "card_id in ('".implode($cardIdArr, "','")."')";
-$cardRes = D("Card")->where($attrList)->select();
-
+// 获取卡券属性值
+$cardUid = [];
 foreach ($cardRes as $key => $value) {
 	$cardAttrArr[$value['card_id']][$nameArr[$value['c_id']]] = $value['val'];
+	if(!in_array($value['uid'],$cardUid)){
+		$cardUid[] = $value['uid'];
+		$cardAttrArr[$value['card_id']]['uid'] = $value['uid'];
+	}
 }
-// var_dump($cardAttrArr);
-$cardType = D("User_audit")->field('name,uid')->where("uid in ('".implode($cardUid, ",")."')")->select();
+// dump($cardAttrArr);
+
+// 获取店铺名称
+$cardType = D("User_audit")->field('name,uid')->where("uid in ('".implode($cardUid, "','")."')")->select();
 $cardType = array_column($cardType, 'name','uid');
 // dump($cardType);
 
