@@ -24,7 +24,7 @@ if(!empty($xml)){
 $order  = D('Orders')->where(['out_trade_no'=>$data['out_trade_no']])->find();
 // dexit(['errcode'=>3,'msg'=>$data]);
 $sendAddress = D('Card_package')->field('address')->where(['uid'=>$order['sell_id'],'card_id'=>$order['card_id']])->find();
-$getAddress = D('Card_package')->field('address')->where(['uid'=>$order['buy_id'],'card_id'=>$order['card_id']])->find();
+$getAddress = D('Card_package')->field('address,is_publisher,bail')->where(['uid'=>$order['buy_id'],'card_id'=>$order['card_id']])->find();
 // 记录账单信息
 import("AccountBook");
 $Account_book = new AccountBook();
@@ -38,12 +38,20 @@ if(!$bookRes){
 }
 
 //1减去交易单
-D('Card_transaction')->where(array('id'=>$order['tran_id']))->setDec('frozen',$order['number']);
-D('Card_transaction')->where(array('id'=>$order['tran_id']))->setDec('num',$order['number']);
+// D('Card_transaction')->where(array('id'=>$order['tran_id']))->setDec('frozen',$order['number']);
+// D('Card_transaction')->where(array('id'=>$order['tran_id']))->setDec('num',$order['number']);
+$data[] = ['id'=>$order['tran_id'],'field'=>'num','operator'=>'-','step'=>$order['number']];
+$data[] = ['id'=>$order['tran_id'],'field'=>'frozen','operator'=>'-','step'=>$order['number']];
+M('Card_transaction')->frozen($data);
+
 //2添加买家卡包金额/减卖家卡包金额
+	// 判断是否店铺交易，是否已补齐保证金
+
+
 D('Card_package')->where(array('uid'=>$order['sell_id'],'card_id'=>$order['card_id']))->setDec('frozen',$order['number']);
 D('Card_package')->where(array('uid'=>$order['sell_id'],'card_id'=>$order['card_id']))->setInc('sell_count',$order['number']);
 D('Card_package')->where(array('uid'=>$order['buy_id'],'card_id'=>$order['card_id']))->setInc('num',$order['number']);
+
 D('Orders')->data(['status'=>1])->where(array('out_trade_no' =>$data['out_trade_no']))->save();
 // 添加交易记录
 D("Record_books")->data(['card_id'=>$order['card_id'],"send_address"=>$sendAddress['address'],'get_address'=>$getAddress['address'],'num'=>$order['number'],'createtime'=>time()])->add();

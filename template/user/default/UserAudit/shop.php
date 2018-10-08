@@ -42,7 +42,6 @@
       <table class="layui-table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>姓名</th>
             <th>企业名称</th>
             <th>营业执照编号</th>
@@ -50,6 +49,7 @@
             <th>营业执照</th>
             <th>提交时间</th>
             <th>审核时间</th>
+            <th>比例</th>
             <th>状态</th>
             <th>操作</th></tr>
         </thead>
@@ -59,14 +59,17 @@
         ?>
         <tbody>
           <tr>
-            <td><?= $v['id'] ?></td>
-            <td><?= $v['name'] ?></td>
-            <td><?= $v['enterprise'] ?></td>
-            <td><?= $v['business_license'] ?></td>
+            <!-- <td><?= $v['id'] ?></td> -->
+            <td title="<?= $v['name'] ?>"><?= $v['name'] ?></td>
+            <td title="<?= $v['enterprise'] ?>"><?= mb_substr($v['enterprise'],0,4,'utf-8') ?></td>
+            <td title="<?= $v['business_license'] ?>"><?= mb_substr($v['business_license'],0,6); ?></td>
             <td><img src="<?= $v['img_oneself'] ?>" onclick="previewImg(this,'<?= $v['img_just'] ?>')"></td>
             <td><img src="<?= $v['business_img'] ?>" onclick="previewImg(this,'<?= $v['img_just'] ?>')"></td>
             <td><?= date('Y-m-d H:i:s',$v['create_time']); ?></td>
             <td><?= date('Y-m-d H:i:s',$v['update_time']); ?></td>
+            <td><?= $v['ratio'] ?><br/>
+              <a title="修改" onclick="x_admin_show('修改','?c=UserAudit&a=ratioModify&id=<?= $v['id'] ?>',400,300)" href="javascript:;">修改</a>
+            </td>
             <td>
               <?php if($v['status']==0){
                       echo '待审核';
@@ -174,6 +177,9 @@
               // }
 
           });
+      }
+      function member_ratio_modify(obj,id){
+
       }
 
       /*用户-删除*/
