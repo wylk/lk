@@ -51,8 +51,10 @@
 
          .home-plugin-info{
             background: #fff;
-            margin-top: 10px;
+            margin-top: 5px;
             min-height: 100px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
         }
         .home-plugin-info-row{
             height: 80px;
@@ -115,15 +117,14 @@
 <div class="lk-content" style="background: #f0f0f0;margin-bottom:10px;" >
     <div class="layui-carousel" id="test1">
         <div carousel-item>
-            <div><img src="https://free.modao.cc/uploads3/images/1907/19079076/raw_1523959218.jpeg"></div>
-            <div><img src="https://free.modao.cc/uploads3/images/1907/19079076/raw_1523959218.jpeg"></div>
-            <div><img src="https://free.modao.cc/uploads3/images/1907/19079076/raw_1523959218.jpeg"></div>
-            <div><img src="https://free.modao.cc/uploads3/images/1907/19079076/raw_1523959218.jpeg"></div>
+            <div><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539002871374&di=b35bcf931ee46cac6811da452f692e15&imgtype=0&src=http%3A%2F%2Fhao.qudao.com%2Fupload%2Farticle%2F20150514%2F82458704441431567671.jpg" style="height: 100%;width: 100%"></div>
+            <div><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2498859936,599523319&fm=26&gp=0.jpg" style="height: 100%;width: 100%"></div>
+            <div><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2297859767,3222081788&fm=26&gp=0.jpg" style="height: 100%;width: 100%"></div>
         </div>
     </div>
     <div class="home-plugin-info" >
-      <hr>
-        <!-- <?php foreach ($data as $key => $value) { ?>
+     <!--  <hr>
+        <?php foreach ($data as $key => $value) { ?>
          <div class="home-plugin-info-row">
              <div class="home-plugin-info-row-card line-heights">
                 <div class="home-plugin-info-row-card-img">
@@ -165,8 +166,8 @@ layui.use('carousel', function(){
     carousel.render({
         elem: '#test1'
         ,width: '100%' //设置容器宽度
-        ,height:180
-        ,arrow: 'always' //始终显示箭头
+        ,height:100
+        //,arrow: 'always' //始终显示箭头
         //,anim: 'updown' //切换动画方式
     });
 });
