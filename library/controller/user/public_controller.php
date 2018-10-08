@@ -13,17 +13,18 @@ class public_controller extends controller
             }
             //判断账号和密码
             $user = D('Admin')->where(array('name' =>$postData['name']))->find();
+
             if(!$user){
-                $this->dexit(['status'=>1,'msg'=>'用户名不存在']);
+                dexit(['status'=>1,'msg'=>'用户名不存在']);
             }
             if(md5($postData['upwd']) != $user['upwd']){
-                $this->dexit(['status'=>1,'msg'=>'密码错误']);
+                dexit(['status'=>1,'msg'=>'密码错误']);
             }
             if($user['status']==1){
-                $this->dexit(['status'=>1,'msg'=>'该用户为禁用状态']);
+                dexit(['status'=>1,'msg'=>'该用户为禁用状态']);
             }else{
                 $_SESSION['admin'] = $user;
-                $this->dexit(['status'=>0,'msg'=>'登录成功']);
+                dexit(['status'=>0,'msg'=>'登录成功']);
             }
         }
         $this->display();

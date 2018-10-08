@@ -32,13 +32,17 @@ class PlatformCurrency{
         $this->interfaceType = option('config.blockchain_switch');
     }
     // 添加账户接口
-    public function addAccountInterface($phone,$balance=0){
+    public function addAccountInterface($userdata,$balance=0){
+
         if($this->interfaceType){
-            $addAccountInfo = $this->interfaceAddCount($phone);
+            dump($userdata);die;
+            $addAccountInfo = $this->interfaceAddCount($userdata['phone']);
             if($addAccountInfo['error'] != "0") return $addAccountInfo;
-            $addAccountRes = D("User")->data(['phone'=>$phone,'address'=>$addAccountInfo['address']])->add();
+            $userdata['address'] = $addAccountInfo['address'];
+            $addAccountRes = D("User")->data($userdata)->add();
         }else{
-            $addAccountRes = D("User")->data(['phone'=>$phone])->add();
+
+            $addAccountRes = D("User")->data($userdata)->add();
             $addAccountInfo = $this->imitateAccount($addAccountRes,$balance);
             if($addAccountInfo['res']) return $addAccountInfo;
             D("User")->data(['address'=>$addAccountInfo['address']])->where(['id'=>$addAccountRes])->save();
@@ -67,7 +71,7 @@ class PlatformCurrency{
                 return ['res'=>1,"msg"=>"售出数量不能超出现有可用数量"];
             }
         }
-        if(!$this->tranNum > 0 )    
+        if(!$this->tranNum > 0 )
             return ['res'=>1,"msg"=>"购买数量不能小于0"];
         if($this->tranNum < $this->limitNum)
             return ['res'=>1,"msg"=>"限制最低数量不得大于委托数量"];
@@ -90,7 +94,7 @@ class PlatformCurrency{
 
             $addOrderRes = $this->addOrder();
             if($addOrderRes['res']) return $addOrderRes;
-            
+
             $this->tradeSheetFrozen($this->frozenList);
 
             return ['res'=>0,"msg"=>"已匹配到".$addOrderRes['data']."条订单","tradeData"=>$tradeDataRes['data'],'orderData'=>$this->matchOrderData];
@@ -298,7 +302,7 @@ class PlatformCurrency{
             $sellRes = $sellInfo['num']-$orderInfo['number']+$sellInfo['frozen'];
         }
         // dexit(['res'=>1,"msg"=>"test","imitateRes"=>$imitateRes]);
-        
+
         // 冻结数据修改
         $frozenList[] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"num"];
         $frozenList[] = ['id'=>$orderInfo['tran_other'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"num"];
@@ -328,7 +332,7 @@ class PlatformCurrency{
         }
         return ['res'=>0,"msg"=>"转账成功"];
     }
-    
+
     // 判断交易单是否完成
     public function judgeTrade($data){
        $tranList = D("Card_transaction")->where(['id'=>["in",[$data['tranId'],$data['tranOther']]]])->select();
@@ -362,7 +366,7 @@ class PlatformCurrency{
     public function blockchainInterface($sellInfo,$buyInfo,$num){
         $interfaceRes = $this->interfaceCurrency($buyInfo['user_address'],$sellInfo['user_address'],(int)$num);
         if($interfaceRes) return $interfaceRes;
-        
+
         // 获取平台币数值
         $sellRes = $this->interfaceBalance($sellInfo['user_address']);
         $buyRes = $this->interfaceBalance($buyInfo['user_address']);

@@ -38,7 +38,7 @@
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+        <span class="x-right" style="line-height:40px">共有数据: <?php echo $num?> 条</span>
       <table class="layui-table">
         <thead>
           <tr>
@@ -54,7 +54,7 @@
             <th>操作</th></tr>
         </thead>
 
-        <?php foreach($arr as $k=>$v){
+        <?php foreach($res as $k=>$v){
           if(!$v['isdelete']==3){
         ?>
         <tbody>
@@ -101,12 +101,7 @@
       </table>
       <div class="page">
         <div>
-          <a class="prev" href="">&lt;&lt;</a>
-          <a class="num" href="">1</a>
-          <span class="current">2</span>
-          <a class="num" href="">3</a>
-          <a class="num" href="">489</a>
-          <a class="next" href="">&gt;&gt;</a>
+        <?php echo $page ?>
         </div>
       </div>
 

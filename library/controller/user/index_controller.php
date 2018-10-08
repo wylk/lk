@@ -19,7 +19,7 @@ class index_controller extends base_controller{
 		$peopleTotal = $packageTotal = $packageNumToday = $peopleNumToday = $transactionNum = $transactionNumToday = 0;
 		$nameArr = D('Contract_field')->select();
 		$nameArr = array_column($nameArr, 'val','id');
-		
+
 		$packagelist = D("Card_package")->where(['is_publisher'=>'1'])->select();
 		// $peopleTotal = count($packagelist);
 		$peopleUidArr = $peopleUidArrToday =[];
@@ -74,5 +74,6 @@ class index_controller extends base_controller{
 		unset($_SESSION["admin"]);
 		header('refresh:1;url=user.php?c=public&a=login');
 		die('正在退出....');
+
 	}
 }

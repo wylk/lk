@@ -20,7 +20,7 @@
 <body class="login-bg">
 
     <div class="login layui-anim layui-anim-up">
-        <div class="message">乐卡 V2.0</div>
+        <div class="message">乐卡</div>
         <div id="darkbannerwrap"></div>
 
         <form method="post" class="layui-form">

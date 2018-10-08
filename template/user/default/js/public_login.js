@@ -27,7 +27,7 @@ $(function  () {
              layer.closeAll('loading');
             if(res.status == 0){
               layer.msg(res.msg,{icon:1,time:2000},function(){
-               
+
                 window.location.href="user.php?c=index&a=index";
               });
             }else{
