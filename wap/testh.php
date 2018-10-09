@@ -1,7 +1,5 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
-dump(md5('111111'));
-dump($userId = $wap_user['userid']);
 // 微信登录
 // $appid = 'wxcf45e0f03cb2fe06';
 // $appSecret = '230bbd5800c6e0fa2524266f03892c3a';
@@ -38,8 +36,6 @@ dump($userId = $wap_user['userid']);
 // dump(get_cfg_var ("upload_max_filesize"));
 // include display('testh');
 
-$data[] = ['id'=>'1','field'=>'num','operator'=>'-','step'=>'1'];
-$data[] = ['id'=>'1','field'=>'frozen','operator'=>'-','step'=>'1'];
-dump($data);
-$res = M('Card_transaction')->frozen($data);
+$platformObj = new PlatformCurrency();
+$res = $platformObj->checkBail();
 dump($res);

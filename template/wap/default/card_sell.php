@@ -64,7 +64,7 @@
         </div>
         <?php if($register){ ?>
         <div class="lk-container-flex">
-            <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
+            <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场委托单</h1>
         </div>
         <div class="lk-container-flex register">
             <div>数量</div><div>单价</div><div>总价</div><div>操作</div>

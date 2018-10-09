@@ -145,7 +145,7 @@ class UserAudit_controller extends base_controller
             $ratio = (int)$_POST['ratio'];
             $auditId = $_POST['auditId'];
             
-            if(strlen($ratio) <= 3 && $ratio <= 100 && $ratio >0)  $ratio .= '%';
+            if(strlen($ratio) <= 3 && $ratio <= 100 && $ratio >=0)  $ratio .= '%';
             else dexit(['res'=>1,'msg'=>'数据不对','data'=>$ratio]); 
 
             $res = D("User_audit")->data(['ratio'=>$ratio])->where(['id'=>$auditId])->save();
