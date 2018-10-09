@@ -40,7 +40,7 @@
           <button class="layui-btn"  lay-submit="" lay-filter="shows" ><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+        <span class="x-right" style="line-height:40px">共有数据：<?php echo $count ?> 条</span>
       <table class="layui-table">
         <thead>
           <tr>
@@ -53,7 +53,7 @@
         <tbody>
 
           <?php
-            foreach($user as $k=>$v){
+            foreach($res as $k=>$v){
             if(!$v['isdelete']==3){
           ?>
 

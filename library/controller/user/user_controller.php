@@ -4,12 +4,13 @@ class user_controller extends base_controller
 {
     public function index(){
         import('user_page');
-        $page = new Page($bank_count, 1);
-        $user = D('User')->where()->order('`id` DESC')->limit($page->firstRow, $page->listRows)->select();
-        $page = new Page(count($user),2);
+        $user =D('User')->where(array('isdelete' =>0))->select();
+        $count=count($user);
+        $page = new Page(count($user),4);
+        $res = D('User')->where()->order('`id` DESC')->limit("$page->firstRow, $page->listRows")->select();
         $this->assign('page', $page->show());
-        // dump($page->show());
-        $this->assign('user',$user);
+        $this->assign('res',$res);
+        $this->assign('count',$count);
         $this->display();
     }
 

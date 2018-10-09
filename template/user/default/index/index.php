@@ -19,7 +19,7 @@
 <body>
     <!-- 顶部开始 -->
     <div class="container">
-        <div class="logo"><a href="./index.html">乐卡 v2.0</a></div>
+        <div class="logo"><a href="./index.html">乐卡</a></div>
         <div class="left_open">
             <i title="展开左侧栏" class="iconfont">&#xe699;</i>
         </div>
@@ -104,7 +104,7 @@
     <!-- 底部结束 -->
     <script>
     //百度统计可去掉
-   
+
 
 layui.use(['layer'], function(){
     $ = layui.jquery;
@@ -115,7 +115,7 @@ layui.use(['layer'], function(){
                 window.location.replace(location.href);
             });
         },'json');
-    }) 
+    })
  });
     </script>
 </body>

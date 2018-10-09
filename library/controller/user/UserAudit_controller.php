@@ -4,14 +4,14 @@ class UserAudit_controller extends base_controller
 {
     //商铺认证列表
     public function shop(){
-        // echo 2343;
-        $User_audit = D('User_audit')->select();
-        foreach ($User_audit as $key => $value) {
-           if($value['type']==2){
-                $arr[] = $value;
-           }
-        }
-        $this->assign('arr',$arr);
+        import('user_page');
+        $User_audit = D('User_audit')->where(array('type'=>2,'isdelete' =>0))->select();
+        $num=count($User_audit);
+        $page = new Page(count($User_audit),2);
+        $res = D('User_audit')->where(array('type'=>2))->order('`id` DESC')->limit("$page->firstRow, $page->listRows")->select();
+        $this->assign('page', $page->show());
+        $this->assign('res',$res);
+        $this->assign('num',$num);
         $this->display();
     }
 
@@ -69,13 +69,14 @@ class UserAudit_controller extends base_controller
     //个人认证
     public function personal()
     {
-        $User_audit = D('User_audit')->select();
-        foreach ($User_audit as $key => $value) {
-           if($value['type']==1){
-                $arr[] = $value;
-           }
-        }
-        $this->assign('arr',$arr);
+        import('user_page');
+        $User_audit = D('User_audit')->where(array('type'=>1,'isdelete' =>0))->select();
+        $num=count($User_audit);
+        $page = new Page(count($User_audit),2);
+        $res = D('User_audit')->where(array('type'=>1))->order('`id` DESC')->limit("$page->firstRow, $page->listRows")->select();
+        $this->assign('page', $page->show());
+        $this->assign('res',$res);
+        $this->assign('num',$num);
         $this->display();
     }
 
