@@ -1,1 +1,1 @@
-<?php	return array ( 'tta' => 'ddsf', 'minimum' => '100', 'expiry_time' => '30', 'coin_open' => '1', 'price' => '1', 'gsdfg' => '234', 'city' => '0', 'matching' => '0', );?>
+<?php	return array ( 'tta' => 'ddsf', 'minimum' => '100', 'expiry_time' => '30', 'coin_open' => '1', 'price' => '1', 'gsdfg' => '234', 'city' => '0', 'matching' => '1', 'limit_num' => '2', 'bail_switch' => '1', );?>

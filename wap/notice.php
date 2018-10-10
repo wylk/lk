@@ -29,9 +29,7 @@ $getAddress = D('Card_package')->field('address,is_publisher,bail')->where(['uid
 import("AccountBook");
 $Account_book = new AccountBook();
 $bookJson = json_encode(['uid'=>$order['sell_id'],"contract_id"=>$order['card_id'],'sendAddress'=>$sendAddress['address'],"num"=>$order['number'],"getAddress"=>$getAddress['address']]);
-
 $bookRes = $Account_book->transferAccounts(encrypt($bookJson,option('version.public_key')));
-
 if(!$bookRes){
 	// $payInfo['err_code'] = 1;
 	dexit(['errcode'=>1,'msg'=>"添加账本错误",'data'=>$bookRes]);
@@ -45,9 +43,6 @@ $data[] = ['id'=>$order['tran_id'],'field'=>'frozen','operator'=>'-','step'=>$or
 M('Card_transaction')->frozen($data);
 
 //2添加买家卡包金额/减卖家卡包金额
-	// 判断是否店铺交易，是否已补齐保证金
-
-
 D('Card_package')->where(array('uid'=>$order['sell_id'],'card_id'=>$order['card_id']))->setDec('frozen',$order['number']);
 D('Card_package')->where(array('uid'=>$order['sell_id'],'card_id'=>$order['card_id']))->setInc('sell_count',$order['number']);
 D('Card_package')->where(array('uid'=>$order['buy_id'],'card_id'=>$order['card_id']))->setInc('num',$order['number']);
