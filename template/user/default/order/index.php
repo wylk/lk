@@ -32,8 +32,8 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
-      <div class="layui-row">
-      <!--   <form class="layui-form layui-col-md12 x-so" action="?c=order&a=index_to" method="post"> -->
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so">
           <div class="layui-input-inline">
             <select name="contrller">
               <option>支付状态</option>
@@ -41,7 +41,7 @@
               <option>未支付</option>
             </select>
           </div>
-<!--           <div class="layui-input-inline">
+     <!--      <div class="layui-input-inline">
             <select name="contrller">
               <option>支付方式</option>
               <option>支付宝</option>
@@ -58,7 +58,7 @@
           </div>
           <input type="text" name="onumber"  placeholder="请输入订单号" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon" id="set">&#xe615;</i></button>
-       <!--  </form> -->
+        </form>
       </div>
       <xblock>
         <button class="layui-btn" onclick="x_admin_show('添加用户','?c=order&a=add')"><i class="layui-icon"></i>添加</button>
