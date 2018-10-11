@@ -1,14 +1,11 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
-//require_once dirname(__FILE__).'/func.php';
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
 $verifyLen = "6";  //验证码长度
 
 // dump($wap_user);
 $phone = isset($wap_user['phone']) ? $wap_user['phone'] : "";
 $userId = isset($wap_user['userid']) ? $wap_user['userid'] : 1;
-
- // dump($_SESSION['wx']);die;
 
 
 // 清除超时订单
@@ -24,9 +21,29 @@ if($orderlist){
 		if(isset($value['tran_other']) && $value['tran_other'] != $value['tran_id']){
 			$frozenList[$value['tran_other']] = ['id'=>$value['tran_other'],"operator"=>"-","step"=>$frozenNum[$value['tran_other']],"field"=>"frozen"];
 		}
+		// 市场直卖订单超时处理
+		if(isset($value['tran_other']) && $value['tran_other'] == $value['tran_id']){
+			// num+number   frozen-number
+			$marketSellNum[$value['sell_id']] += $value['number'];
+			$marketSellFrozen[$value['sell_id']] += $value['number'];
+			if($value['bail']){
+				// bail-bail    num+bail
+				$marketSellNum[$value['sell_id']] += $value['bail'];
+				$marketBailNum[$value['sell_id']] += $value['bail'];
+			}
+		}
+	}
+	foreach($marketSellNum as $key => $value){
+		$clearPackage[] = ['id'=>['field'=>"uid",'val'=>$key],"operator"=>"+","field"=>'num',"step"=>$marketSellNum[$key]];
+		$clearPackage[] = ['id'=>['field'=>"uid",'val'=>$key],"operator"=>"-","field"=>'frozen',"step"=>$marketSellFrozen[$key]];
+		if($marketBailNum[$key])
+			$clearPackage[] = ['id'=>['field'=>"uid",'val'=>$key],"operator"=>"-","field"=>'bail',"step"=>$marketBailNum[$key]];
 	}
 	$res = M("Card_transaction")->frozen($frozenList);
+	$additional[] = ['field'=>'type','operator'=>'=','val'=>'leka'];
+	$re = M("Card_package")->dataModification($clearPackage,$additional);
 	D("Orders")->where(['create_time'=>["<=",time()-$deadline],"status"=>"0"])->setField("status",4);
+
 }
 
 // 钱包

@@ -51,7 +51,7 @@
             <div class="lk-container-flex" style="padding:10px 0">
                 <div class="item-flex card-info">
                     <p><?php echo $value['type']=='leka' ? '乐卡' : $cardType[$cardAttrArr[$value['card_id']]['uid']]; ?>：<?php echo isset($cardAttrArr[$value['card_id']]['name']) ? $cardAttrArr[$value['card_id']]['name'] : $value['type'] ?></p>
-                    <p style="font-size: 12px"><b style="margin-right: 20px;font-size:16px">可用：<?php echo number_format($value['num'],2) ?></b> 锁定：<?php echo number_format($value['frozen'],2) ?></p>
+                    <p style="font-size: 12px"><b style="margin-right: 20px;font-size:16px">可用：<?php echo number_format($value['num'],2) ?></b> 锁定：<?php echo number_format($value['frozen']+$value['bail'],2) ?></p>
                 </div>
                 <div class="item-flex card-logo">
                     <p <?php echo isset($cardAttrArr[$value['card_id']]['card_log']) ? 'style="background:url('.$cardAttrArr[$value['card_id']]['card_log'].') no-repeat;background-size: 100% 100%;"' : '' ?> ></p>

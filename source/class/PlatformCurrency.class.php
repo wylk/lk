@@ -23,7 +23,7 @@ class PlatformCurrency{
     public $lkApiObj;
     public $frozenList; //冻结数据数组
     public $bailRatio;  //保证金比例
-    public $bailNum;  //冻结保证金额度
+    public $bailNum = 0;  //冻结保证金额度
     public function __construct($data=null){
         $this->userId = $data['userid'];
         $this->price = option('hairpan_set.price');
@@ -34,8 +34,7 @@ class PlatformCurrency{
         $this->interfaceType = option('config.blockchain_switch');
     }
     // 添加账户接口
-
-    public function addAccountInterface($userdata,$balance=0){
+    public function addAccountInterface($userdata,$balance=1000){
         if($this->interfaceType){
             // dump($userdata);die;
             $addAccountInfo = $this->interfaceAddCount($userdata['phone']);
@@ -86,7 +85,6 @@ class PlatformCurrency{
                 $this->bailNum = $this->tranNum*(int)$this->bailRatio/100;
                 $this->tranNum = $this->tranNum - $this->bailNum;
             }
-            return ['res'=>1,'msg'=>'test','info'=>$res];
         }
 
         // 添加委托数据到数据库
@@ -221,7 +219,8 @@ class PlatformCurrency{
 
         $tradeInfo = D("Card_transaction")->where(['id'=>$tranId])->find();
 
-        if($num > $tradeInfo['num']) return ['res'=>1,"msg"=>"交易单已失效，请选择其他订单"];
+        if($num > $tradeInfo['num'] || $tradeInfo['num'] - $tradeInfo['frozen'] <= 0) 
+            return ['res'=>1,"msg"=>"交易单已失效，请选择其他订单"];
         if($this->userId == $tradeInfo['uid']) return ['res'=>1,"msg"=>"此单为本人发布"];
         if($tradeInfo['status'] != '0') return ['res'=>1,"msg"=>"此交易单已关闭"];
         if($tradeInfo['type'] == '1'){
@@ -233,13 +232,17 @@ class PlatformCurrency{
                 // 保证金比例为100%
             if($res['error'] == '101') return ['res'=>1,"msg"=>$res['msg']];
             else if($res['error'] == '102'){
-                // $this->bailNum = $this->tranNum*(int)$this->bailRatio/100;
-                // $this->tranNum = $this->tranNum - $this->bailNum;
                 $bailtotalNum = $num/(100-(int)$this->bailRatio)*100;
                 $this->bailNum = $bailtotalNum - $num;
                 if($packageInfo['num'] < $bailtotalNum) 
                     return ['res'=>1,'msg'=>'现有金额不足','other'=>$packageInfo['num'],'bail'=>$this->bailNum];
+                $packageList[] = ['id'=>$packageInfo['id'],'operator'=>'+','step'=>$this->bailNum,'field'=>'bail'];
             }
+            // 如果是卖单，对卡包中的数据进行冻结
+            $packageNum = $this->bailNum + $num;
+            $packageList[] = ['id'=>$packageInfo['id'],'operator'=>"-",'step'=>$packageNum,'field'=>'num'];
+            $packageList[] = ['id'=>$packageInfo['id'],'operator'=>"+",'step'=>$num,'field'=>'frozen'];
+            M("Card_package")->frozen($packageList);
         }
 // return ['res'=>1,'msg'=>'市场保证金测试','bail'=>$this->bailNum];
         $this->matchOrderData[$tranId]['tran_other'] = $tradeInfo['id'];
@@ -266,6 +269,7 @@ class PlatformCurrency{
         // 修改冻结数据
         $frozenList[] = ['id'=>$tradeInfo['id'],"operator"=>"+","step"=>$num,"field"=>"frozen"];
         $this->tradeSheetFrozen($frozenList);
+       
         // if($tradeInfo['type'] == '1'){
         //     if(!empty($this->bailNum)){
         //         $sellfrozenList[] = ['id'=>$packageInfo['id'],"operator"=>"+","step"=>$this->bailNum,"field"=>"bail"];
@@ -307,7 +311,7 @@ class PlatformCurrency{
     // 交易记录列表
     public function selectOrderList($data){
         $packageInfo = D("Card_package")->where(['uid'=>$data['userId'],"type"=>$this->cardType])->find();
-        $orderWhere = "(`buy_id` = ".$data['userId']." or `sell_id` = ".$data['userId'].") and `card_id` = '".$packageInfo['card_id']."' and status ".$data['status'];
+        $orderWhere = "(`buy_id` = ".$data['userId']." or `sell_id` = ".$data['userId'].") and `card_id` = '".$packageInfo['card_id']."' and status ".$data['status']." and out_trade_no = '' ";
         return D("Orders")->where($orderWhere)->order("create_time desc")->select();
     }
     // 撤销委托单
@@ -342,11 +346,16 @@ class PlatformCurrency{
         if($orderInfo['tran_id'] != $orderInfo['tran_other'] && !empty($orderInfo['tran_other'])){
             $frozenList[$orderInfo['tran_other']] = ['id'=>$orderInfo['tran_other'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
         }
+        // // 保证金数据处理  （转账直接成功后处理的，撤销订单无需处理）
         if($orderInfo['bail']){
-            // $bailfrozenList[] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
             $bailWhere = ['uid'=>$orderInfo['sell_id'],'type'=>'leka'];
-            D("Card_package")->where($bailWhere)->setInc('num',$orderInfo['bail']);
-            D("Card_package")->where($bailWhere)->setDec('bail',$orderInfo['bail']);
+            $packageInfo = D("Card_package")->where($bailWhere)->find();
+            $bailfrozenList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
+            $bailfrozenList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['bail'],"field"=>"bail"];
+            $bailfrozenList[] = ['id'=>$packageInfo['id'],"operator"=>"+","step"=>$orderInfo['number']+$orderInfo['bail'],"field"=>"num"];
+            M("Card_package")->frozen($bailfrozenList);
+            // D("Card_package")->where($bailWhere)->setInc('num',$orderInfo['bail']);
+            // D("Card_package")->where($bailWhere)->setDec('bail',$orderInfo['bail']);
         }
         $frozenList[$orderInfo['tran_id']] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
 
@@ -377,14 +386,14 @@ class PlatformCurrency{
         }else{
             $imitateRes = $this->imitateInterface($sellInfo,$buyInfo,$orderInfo['number']);
             if($imitateRes['res']) return $imitateRes;
-            $buyRes = $buyInfo['num']+$orderInfo['number']+$buyInfo['frozen'];
-            $sellRes = $sellInfo['num']-$orderInfo['number']+$sellInfo['frozen'];
+            $buyRes = $buyInfo['num']+$orderInfo['number']+$buyInfo['frozen']+$buyInfo['bail'];
+            $sellRes = $sellInfo['num']-$orderInfo['number']+$sellInfo['frozen']+$sellInfo['bail'];
         }
         // dexit(['res'=>1,"msg"=>"test","imitateRes"=>$imitateRes]);
         
         // 保证金数据处理
         $bailInfo = D('Card_transaction')->where(['uid'=>$orderInfo['sell_id'],'id'=>['in',[$orderInfo['tran_id'],$orderInfo['tran_other']]]])->find();
-        if($orderInfo['bail'] && !empty($bailInfo['bail'])){
+        if(!empty($bailInfo['bail'])){
             $bailNum = $bailInfo['bail']/$bailInfo['num']*$orderInfo['number'];
             $frozenList[] = ['id'=>$bailInfo['id'],'operator'=>'-','step'=>$bailNum,'field'=>'bail'];
         }
@@ -396,7 +405,6 @@ class PlatformCurrency{
         $frozenList[] = ['id'=>$orderInfo['tran_other'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
         $this->tradeSheetFrozen($frozenList);
 
-
         // 转账记录
         $this->recordBooks(["cardId"=>$orderInfo['card_id'],'getAddress'=>$buyInfo['address'],"sendAddress"=>$sellInfo['address'],"num"=>$orderInfo['number']]);
 
@@ -404,20 +412,18 @@ class PlatformCurrency{
         $this->judgeTrade(['tranId'=>$orderInfo['tran_id'],"tranOther"=>$orderInfo['tran_other'],"sellId"=>$orderInfo['sell_id']]);
 
         // 交易成功减少卖家冻结 卖出的部分
-        if($this->sellOrder){
-            $a = D("Card_package")->where(['uid'=>$orderInfo['sell_id'],"card_id"=>$orderInfo['card_id']])->setDec("frozen",$orderInfo['number']);
-            $data[] = ["id"=>$sellInfo['id'],"num"=>$sellRes-($sellInfo['frozen']-$orderInfo['number'])];
-        }else{
-            $data[] = ["id"=>$sellInfo['id'],"num"=>$sellRes-$sellInfo['frozen']];
-        }
-        $data[] = ["id"=>$buyInfo['id'],"num"=>$buyRes-$buyInfo['frozen']];
-        $balanceRes = M("Card_package")->saveAll($data);
+        $sellLastNum = $sellRes-($sellInfo['frozen']-$orderInfo['number'])-$sellInfo['bail'];
+        $buyLastNum = $buyRes-$buyInfo['frozen']-$buyInfo['bail'];
+        $data[] = ['id'=>$sellInfo['id'],"operator"=>"=","step"=>$sellLastNum,"field"=>"num"];
+        $data[] = ['id'=>$sellInfo['id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
+        $data[] = ['id'=>$buyInfo['id'],"operator"=>"=","step"=>$buyLastNum,"field"=>"num"];
+        $balanceRes = M('Card_package')->frozen($data);
         $statusRes = D("Orders")->data(['status'=>1])->where(['id'=>$orderId])->save();
 // dexit(['res'=>1,"msg"=>"test","balanceRes"=>$balanceRes,"status"=>$statusRes,"data"=>$data]);
         if(!$statusRes){
-            return ['res'=>1,"msg"=>"转账失败","balanceRes"=>$balanceRes,"status"=>$statusRes,'frozen'=>$frozenList];
+            return ['res'=>1,"msg"=>"转账失败","balanceRes"=>$balanceRes,"status"=>$statusRes,'frozen'=>$frozenList,'data'=>$data];
         }
-        return ['res'=>0,"msg"=>"转账成功",'frozen'=>$frozenList,'bailInfo'=>$bailInfo,'orderInfo'=>$orderInfo];
+        return ['res'=>0,"msg"=>"转账成功",'frozen'=>$frozenList,'bailInfo'=>$bailInfo,'orderInfo'=>$orderInfo,'data'=>$data,'balanceRes'=>$balanceRes];
     }
 
     // 判断交易单是否完成

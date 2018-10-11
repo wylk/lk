@@ -57,9 +57,9 @@
                             </div>
                             <div class="order-right">
                                 <p><a class="layui-bg-cyan" style="padding: 5px 7px" href="./orderDetail.php?id=<?php echo $value['id']; ?>">查看详情</a></p>
-                                <p>价格：<?php echo number_format($value['prices'],2); ?></p>
+                                <p>价格：<?php echo number_format($value['price'],2); ?></p>
                                 <p style="color: #2F4056"><?php echo $value['status']==1 ? "已付款" : ($value['status']==2 ? "订单超时" : "<a href='./success.php?id={$value['id']}'>未付款</a>") ?></p>
-                                <p>总金额：<span class="total"><?php echo number_format($value['prices'],2); ?></span></p>
+                                <p>总金额：<span class="total"><?php echo number_format($value['price']*$value['number'],2); ?></span></p>
                             </div>
                         </div>
                         <hr>

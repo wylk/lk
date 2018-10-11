@@ -5,13 +5,14 @@ if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST
 $userId = $wap_user['userid'];
 
 // 未付账订单
-$unpaidOrderList = D("Orders")->where(['buy_id'=>$userId,"status"=>0])->order("create_time desc")->select();
+$where = " and out_trade_no != ''";
+$unpaidOrderList = D("Orders")->where("buy_id=".$userId." and status=0 and ".$where)->order("create_time desc")->select();
 // 付款订单
-$paidOrderList = D("Orders")->where(['buy_id'=>$userId,"status"=>1])->order("create_time desc")->select();
-// var_dump($paidOrderList);
+$paidOrderList = D("Orders")->where("buy_id = ".$userId." and status = 1".$where)->order("create_time desc")->select();
 // 全部订单
-$orderList = D("Orders")->where(['buy_id'=>$userId])->order("create_time desc")->select();
+$orderList = D("Orders")->where("buy_id = ".$userId.$where)->order("create_time desc")->select();
 // 用户发布的所有评论
-$evaluate = D("Evaluate")->where(['uid'=>$userId])->order("createtime desc")->select();
+// $evaluate = D("Evaluate")->where(['uid'=>$userId])->order("createtime desc")->select();
+$evaluate = D("Evaluate")->where("uid = ".$userId.$where)->order("createtime desc")->select();
 
 include display("orderList");
