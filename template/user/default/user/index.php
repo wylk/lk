@@ -33,12 +33,12 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so layui-form-pane" action="?c=user&a=index" method="post">
+     <!--    <form class="layui-form layui-col-md12 x-so layui-form-pane" action="?c=user&a=index" method="post"> -->
           <div class="layui-input-inline">
              <input class="layui-input" placeholder="手机号" name="phone" lay-verify="name">
           </div>
-          <button class="layui-btn"  lay-submit="" lay-filter="shows" ><i class="layui-icon">&#xe615;</i></button>
-        </form>
+          <button class="layui-btn"  lay-submit="" lay-filter="shows" ><i class="layui-icon" id="set" >&#xe615;</i></button>
+      <!--   </form> -->
       </div>
         <span class="x-right" style="line-height:40px">共有数据：<?php echo $count ?> 条</span>
       <table class="layui-table">
@@ -50,7 +50,7 @@
             <th>认证类型</th>
             <th>操作</th></tr>
         </thead>
-        <tbody>
+        <tbody id="body">
 
           <?php
             foreach($res as $k=>$v){
@@ -109,10 +109,10 @@
       });
 
       //监听提交
-      form.on('submit(shows)', function(data) {
-          console.log(data.field);
-          $.post(authUrl, data.field, function(res) {
-              console.log(res);
+      // form.on('submit(shows)', function(data) {
+      //     console.log(data.field);
+      //     $.post(authUrl, data.field, function(res) {
+      //         console.log(res);
               // if(res.error == 0){
               //     swal("友情提示！", res.msg,"success",false);
               //     setTimeout(function(){
@@ -121,9 +121,38 @@
               // }else{
               //     swal("友情提示！", res.msg,"error");
               // }
+      //     },'json');
+      //     return false;
+      // });
+      $('#set').click(function(){
+        var phone=$('.layui-input').val();
+
+         $.post('?c=user&a=index_to',{phone:phone}, function(res) {
+          console.log(res);
+             if(res.error == 0){
+              $('#body').empty();
+              var str = "<tr><td>"+res['data']['id']+"</td><td>"+res['data']['name']+"</td><td>"+res['data']['phone']+"</td><td>";
+              if(res['data']['status'] == 1) str += '个人认证';
+              if(res['data']['status'] == 2) str += '企业认证';
+              str += "</td><td class='td-manage'>";
+              // str += "<a href='?c=user&a=edit&id="+res['data']['id']+"'>";
+              str += "<a title='编辑' onclick=\"x_admin_show('编辑','?c=user&a=edit&id="+res['data']['id']+"',550,200)\" href='javascript:;'>";
+              str += "<i class='layui-icon'>&#xe642;</i>";
+              str += "</a>";
+              str += "<a title='删除' onclick=\"member_del(this,"+res['data']['id']+")\" href='javascript:;'>";
+              str += "<i class='layui-icon'>&#xe640;</i>";
+              str += "</a></td></tr>";
+
+              $('#body').append(str);
+            }else{
+                alert(res.msg);
+             }
+
+
           },'json');
-          return false;
-      });
+
+
+      })
 
       //禁用 启用
         $('.member_stop').click(function(){

@@ -32,7 +32,7 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="x-body">
-      <div class="layui-row">
+    <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
           <div class="layui-input-inline">
             <select name="contrller">
@@ -41,23 +41,23 @@
               <option>未支付</option>
             </select>
           </div>
-          <div class="layui-input-inline">
+     <!--      <div class="layui-input-inline">
             <select name="contrller">
               <option>支付方式</option>
               <option>支付宝</option>
               <option>微信</option>
             </select>
-          </div>
+          </div> -->
           <div class="layui-input-inline">
-            <select name="contrller">
+            <select name="status">
               <option value="">订单状态</option>
               <option value="0">待付款</option>
               <option value="3">已付款</option>
               <option value="5">已作废</option>
             </select>
           </div>
-          <input type="text" name="username"  placeholder="请输入订单号" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+          <input type="text" name="onumber"  placeholder="请输入订单号" autocomplete="off" class="layui-input">
+          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon" id="set">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
@@ -69,12 +69,12 @@
           <tr>
             <th>订单编号</th>
             <th>购买数量</th>
-            <th>成交价格</th>
+            <th>成交金额</th>
             <th>订单状态</th>
             <th>下单时间</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="box">
           <?php foreach($order as $k=>$v){ ?>
           <tr>
             <td><?= $v['onumber'] ?></td>
@@ -89,6 +89,8 @@
                 echo '已作废';
               }
             ?></td>
+
+
             <td><?= date('Y-m-d H:i:s',$v['create_time']) ?></td>
           </tr>
 
@@ -151,6 +153,48 @@
       }
 
 
+      //搜索
+         $('#set').click(function(){
+         var onumber=$('.layui-input').val();
+         $.post('?c=order&a=index_to',{onumber:onumber}, function(res) {
+         console.log(res);
+         if(res.error == 0){
+            $('#box').empty();
+            var str = "<tr><td>"+res['data']['onumber']+"</td><td>"+res['data']['number']+"</td><td>"+res['data']['prices']+"</td><td>";
+              if(res['data']['status'] == 0) str += '代付款';
+              if(res['data']['status'] == 1) str += '已完成';
+              if(res['data']['status'] == 2) str += '已作废';
+              str += "</td><td>";
+              str += res['data']['create_time'];
+              str +="</td></tr>";
+              $('#box').append(str);
+         }else{
+          alert('订单号不存在');
+         }
+
+         },'json')
+       })
+
+function getTime(){
+  // console.log(time);
+  var date = new Date();
+  // console.log(date);
+  // var date = time;
+  // date.setTime(time * 1000);
+  var y = date.getFullYear();
+  var m = date.getMonth() + 1;
+  m = m < 10 ? ("0"+m) : m;
+  var d = date.getDate();
+  d = d < 10 ? ("0" + d) : d;
+  var h = date.getHours();
+  h = h < 10 ? ("0" + h) : h;
+  var i = date.getMinutes();
+  i = i < 10 ? ("0" + i) : i;
+  var s = date.getSeconds();
+  s = s < 10 ? ("0" + s) : s;
+  // console.log(time,time,y,m,d,h,s);
+  return y+"-"+m+"-"+d+" "+h+":"+i+":"+s;
+}
 
       function delAll (argument) {
 

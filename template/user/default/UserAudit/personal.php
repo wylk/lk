@@ -34,11 +34,11 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-          <input type="text" name="username"  placeholder="请输入姓名" autocomplete="off" class="layui-input">
-          <input type="text" name="username"  placeholder="请输入身份证号" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-        </form>
+    <!--     <form class="layui-form layui-col-md12 x-so"> -->
+          <input type="text" name="name"  placeholder="请输入姓名" autocomplete="off" class="layui-input">
+         <!--  <input type="text" name="username"  placeholder="请输入身份证号" autocomplete="off" class="layui-input"> -->
+          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon" id="set">&#xe615;</i></button>
+      <!--   </form> -->
       </div>
         <span class="x-right" style="line-height:40px">共有数据：<?php echo $num ?> 条</span>
       <table class="layui-table">
@@ -53,11 +53,11 @@
             <th>状态</th>
             <th>操作</th></tr>
         </thead>
-
+        <tbody id="box">
         <?php foreach($res as $k=>$v){
           if(!$v['isdelete']==3){
         ?>
-        <tbody>
+
           <tr>
             <td><?= $v['id'] ?></td>
             <td><?= $v['name'] ?></td>
@@ -96,9 +96,10 @@
               </a>
             </td>
           </tr>
-        </tbody>
+
 
         <?php }} ?>
+         </tbody>
 
       </table>
       <div class="page">
@@ -156,6 +157,51 @@
            },'json')
           });
       }
+    $('#set').click(function(){
+               var name=$('.layui-input').val();
+               $.post('?c=UserAudit&a=index_too',{name:name}, function(res) {
+               console.log(res);
+               if(res.error == 0){
+                  $('#box').empty();
+                    var str = "<tr><td>"+res['data']['id']+"</td><td>"+res['data']['name']+"</td><td>"+res['data']['postcards']+"</td><td>";
+                    str +="<img src="+res['data']['img_just']+" onclick=\"previewImg(this,"+res['data']['img_just']+")\">";
+                    str +="<img src="+res['data']['img_back']+" onclick=\"previewImg(this,"+res['data']['img_just']+")\">";
+                    str +="<img src="+res['data']['img_oneself']+" onclick=\"previewImg(this,"+res['data']['img_just']+")\">";
+                    str +="</td><td>";
+                    str += res['data']['create_time'];
+                    str +="</td><td>";
+                    str += res['data']['update_time'];
+                    str +="</td><td>";
+                    if(res['data']['status'] == 0) str += '待审核';
+                    if(res['data']['status'] == 1) str += '审核通过';
+                    if(res['data']['status'] == 2) str += '审核不通过';
+                    str +="</td><td class='td-manage'><a title='详情''  onclick=\"x_admin_show('详情','?c=UserAudit&a=lists&id="+res['data']['id']+"',1000)\" href='javascript:;'><i class='layui-icon'>&#xe705;</i></a>";
+
+               if(res['data']['status']==0 || res['data']['status']==2) str+= "<a onclick=\"member_stop(this,'"+res['data']['id']+"')\" href='javascript:;'  title='审核通过'><i class='layui-icon'>&#x1005;</i></a><a onclick=\"x_admin_show('驳回申请','?c=userAudit&a=feedback&id="+res['data']['id']+" ?>&status="+res['data']['status']+",600,400)\" title='驳回申请' href='javascript:;'><i class='layui-icon'>&#x1007;</i></a><a title='删除' onclick=\"member_del(this,"+res['data']['id']+")\" href='javascript:;'><i class='layui-icon'>&#xe640;</i></a>"
+                str +="</td></tr>";
+
+                $('#box').append(str);
+               }else{
+                alert(res.msg);
+               }
+
+               },'json')
+             })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       /*用户-删除*/
       function member_del(obj,id){

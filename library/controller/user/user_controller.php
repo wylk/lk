@@ -13,6 +13,17 @@ class user_controller extends base_controller
         $this->assign('count',$count);
         $this->display();
     }
+    //搜索
+    public function index_to(){
+        $phone=$_POST['phone'];
+        $aa =D('User')->where(array('phone' => $phone,'isdelete'=>0))->find();
+        if($aa){
+          $this->dexit(['error'=>0,'data'=>$aa]);
+        }else{
+          $this->dexit(['error'=>1,'msg'=>'手机号不存在']);
+        }
+
+    }
 
     //添加页面
     public function add()

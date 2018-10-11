@@ -54,6 +54,8 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 		if(empty($data['name']) || empty($data['postcards']) || empty($data['img_just']) || empty($data['img_back']) || empty($data['img_oneself'])){
 			dexit(['res'=>1,"msg"=>"请您填写完信息后再提交"]);
 		}
+		// $where=1;
+		// D('User')->data($where)->where(array('name' =>$data['name']))->save();
 	}
 	// 店铺认证
 	if($type == 2){
@@ -77,7 +79,8 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 			$data['create_time'] = time();
 			$data['update_time'] = time();
 			$res = D("User_audit")->data($data)->add();
-			D('User')->data(['status'=>$data['type']])->where(array('uid' =>$userId))->save();
+			D('User')->data(['status'=>$data['type']])->where(array('id' =>$data['uid']))->save();
+
 		}
 		if(!$res){
 			dexit(['res'=>1,"msg"=>"信息错误，请您重新填写","other"=>$res]);
