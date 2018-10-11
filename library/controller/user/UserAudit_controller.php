@@ -17,26 +17,31 @@ class UserAudit_controller extends base_controller
    //商铺搜索
     public function index_to(){
       $enterprise=$_POST['enterprise'];
-      $aa=D('User_audit')->where(array('enterprise' =>$enterprise,'isdelete'=>0))->find();
-      $aa['create_time'] = date('Y-m-d H:i:s', $aa['create_time']);
-      $aa['update_time'] = date('Y-m-d H:i:s', $aa['update_time']);
-      if(empty($aa['enterprise'])){
-        $this->dexit(['error'=>1,'msg'=>'企业不存在']);
+      $res=D('User_audit')->where("enterprise LIKE '%$enterprise%'")->select();
+      foreach($res as $key=>$value){
+            $res[$key]['create_time'] = date('Y-m-d H:i:s', $value['create_time']);
+            $res[$key]['update_time'] = date('Y-m-d H:i:s', $value['update_time']);
+         }
+      if($res[$key]['isdelete']==0){
+         $this->dexit(['error'=>0,'data'=>$res]);
+
         }else{
-           $this->dexit(['error'=>0,'data'=>$aa]);
+         $this->dexit(['error'=>1,'msg'=>'企业不存在']);
         }
 
     }
      //个人搜索
-    public function index_too(){
+    public function index_name(){
       $name=$_POST['name'];
-      $aa=D('User_audit')->where(array('name' =>$name,'isdelete'=>0))->find();
-      $aa['create_time'] = date('Y-m-d H:i:s', $aa['create_time']);
-      $aa['update_time'] = date('Y-m-d H:i:s', $aa['update_time']);
-      if(empty($aa['name'])){
-        $this->dexit(['error'=>1,'msg'=>'用户不存在']);
+      $res=D('User_audit')->where("name LIKE '%$name%'")->select();
+      foreach($res as $key=>$value){
+            $res[$key]['create_time'] = date('Y-m-d H:i:s', $value['create_time']);
+            $res[$key]['update_time'] = date('Y-m-d H:i:s', $value['update_time']);
+         }
+      if($res[$key]['isdelete']==0){
+         $this->dexit(['error'=>0,'data'=>$res]);
         }else{
-           $this->dexit(['error'=>0,'data'=>$aa]);
+         $this->dexit(['error'=>1,'msg'=>'用户不存在']);
         }
 
     }
