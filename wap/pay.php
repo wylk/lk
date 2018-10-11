@@ -63,7 +63,7 @@ switch ($payType) {
 			dexit(['res'=>1,'msg'=>'支付密码错误','data'=>md5($payPwd),'id'=>$userId]);
 		}
 		// 判断余额
-		$userPackinfo = D("Card_package")->field('num')->where(['uid'=>$userId,'type'=>'leka'])->find();
+		$userPackinfo = D("Card_package")->field('num')->where(['uid'=>$userId,'type'=>option("hairpan_set.platform_type_name")])->find();
 		// if($orderinfo['number'] - $userPackinfo['num'] > 0) dexit(['res'=>1,'msg'=>'平台币余额不足']);
 		// 调用回调
 		import('source.class.Http');

@@ -40,7 +40,7 @@ if($orderlist){
 			$clearPackage[] = ['id'=>['field'=>"uid",'val'=>$key],"operator"=>"-","field"=>'bail',"step"=>$marketBailNum[$key]];
 	}
 	$res = M("Card_transaction")->frozen($frozenList);
-	$additional[] = ['field'=>'type','operator'=>'=','val'=>'leka'];
+	$additional[] = ['field'=>'type','operator'=>'=','val'=>option("hairpan_set.platform_type_name")];
 	$re = M("Card_package")->dataModification($clearPackage,$additional);
 	D("Orders")->where(['create_time'=>["<=",time()-$deadline],"status"=>"0"])->setField("status",4);
 

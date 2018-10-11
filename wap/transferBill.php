@@ -3,8 +3,7 @@ require_once dirname(__FILE__).'/global.php';
 // 判断是否登录状态中
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
 $userId = $wap_user['userid'];
-// 转账是否需要身份认证 true:需要身份认证 false:不需要身份认证
-$identityJudge = false;
+ 
 
 // 判断地址是否存在
 if(IS_POST && $_POST['type'] == "transferBill"){
@@ -75,13 +74,12 @@ if(IS_POST && $_POST['type'] == "addEval"){
 	dexit(['res'=>1,"msg"=>"评价失败",'other'=>$addEvalRes]);
 }
 
-if($identityJudge){
+// 转账是否需要身份认证 true:需要身份认证 false:不需要身份认证
+if(option("hairpan_set.identity_judge")){
 	$identityJudgeRes = D("User_audit")->where(['uid'=>$userId])->find();
 	if(!$identityJudgeRes){
 		header("location:postcard.php");
 	}
 }
-$id = clear_html($_GET['id']);
-$cardInfo = D("Card_package")->where(['id'=>$id])->find();
-// dump($cardInfo);
+$cardInfo = D("Card_package")->where(['uid'=>$userId,'type'=>option("hairpan_set.platform_type_name")])->find();
 include display("transferBill");

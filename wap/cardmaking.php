@@ -7,7 +7,7 @@ if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST
 if(IS_POST){
   $postData = clear_html($_POST);
   if(option('config.card_currency_set')){
-  	$userInfo = D("Card_package")->where(['uid'=>$wap_user['userid'],"type"=>"leka"])->find();
+  	$userInfo = D("Card_package")->where(['uid'=>$wap_user['userid'],"type"=>option("hairpan_set.platform_type_name")])->find();
   	$limit = option('config.card_currency_limit');
   	$limit = str_replace("：",":",$limit);
   	$limitArr = explode(":", $limit);

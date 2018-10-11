@@ -35,7 +35,7 @@ if(IS_POST && $_POST['type'] == "revoke"){
 }
 
 
-$platformInfo = D("Card_package")->where(['uid'=>$userId,"type"=>"leka"])->find();
+$platformInfo = D("Card_package")->where(['uid'=>$userId,"type"=>option("hairpan_set.platform_type_name")])->find();
 // 卖单交易单
 // $buyList = D("Card_transaction")->where(['card_id'=>$platformInfo['card_id'],"type"=>1])->select();
 

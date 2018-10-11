@@ -50,7 +50,7 @@
         <div class="lk-container-flex lk-card-package lk-flex-direction-c">
             <div class="lk-container-flex" style="padding:10px 0">
                 <div class="item-flex card-info">
-                    <p><?php echo $value['type']=='leka' ? '乐卡' : $cardType[$cardAttrArr[$value['card_id']]['uid']]; ?>：<?php echo isset($cardAttrArr[$value['card_id']]['name']) ? $cardAttrArr[$value['card_id']]['name'] : $value['type'] ?></p>
+                    <p><?php echo $value['type']==option("hairpan_set.platform_type_name") ? '乐卡' : $cardType[$cardAttrArr[$value['card_id']]['uid']]; ?>：<?php echo isset($cardAttrArr[$value['card_id']]['name']) ? $cardAttrArr[$value['card_id']]['name'] : $value['type'] ?></p>
                     <p style="font-size: 12px"><b style="margin-right: 20px;font-size:16px">可用：<?php echo number_format($value['num'],2) ?></b> 锁定：<?php echo number_format($value['frozen']+$value['bail'],2) ?></p>
                 </div>
                 <div class="item-flex card-logo">
@@ -63,8 +63,8 @@
                     <a class="card-handle" href="./transferBill.php?id=<?php echo $value['id'] ?>">核销</a>
                     <a class="card-handle" href="./changeInto.php?id=<?php echo $value['id'] ?>">充值</a>
                     
-                    <a class="card-handle" href="./recordBooks.php?id=<?php echo $value['id'] ?>">账单</a>
-                    <?php if($value['type'] == 'leka'){ ?>
+                    <a class="card-handle" href="./recordBooks.php">账单</a>
+                    <?php if($value['type'] == option("hairpan_set.platform_type_name")){ ?>
                     <a class="card-handle" href="card_buy.php?uid=<?php echo $value['uid'] ?>">交易</a>
                     <?php }else{ ?>
                     <a class="card-handle" href="./transaction.php?cardId=<?php echo $value['card_id'] ?>">出售</a>

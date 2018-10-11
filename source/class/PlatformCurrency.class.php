@@ -18,7 +18,8 @@ class PlatformCurrency{
     public $packageId;
     public $platform;
     public $type;  //1买家，2卖家
-    public $cardType = "leka";
+    public $cardType;
+    // public $cardType = "leka";
     public $interfaceType; //是否连接区块链 true:连接区块链
     public $lkApiObj;
     public $frozenList; //冻结数据数组
@@ -32,6 +33,7 @@ class PlatformCurrency{
         $this->packageId = $data['packageId'];
         $this->type = $data['type'];
         $this->interfaceType = option('config.blockchain_switch');
+        $this->cardType = option("hairpan_set.platform_type_name");
     }
     // 添加账户接口
     public function addAccountInterface($userdata,$balance=1000){
@@ -292,7 +294,7 @@ class PlatformCurrency{
             if((int)$userinfo['ratio'] == '100') return ['error'=>101,'msg'=>'没有提现权限，请联系管理员'];
             elseif($userinfo['ratio']){
                 // 检测保证金是否还请
-                $packages = D('Card_package')->where(['uid'=>$this->userId,'type'=>'leka'])->select();
+                $packages = D('Card_package')->where(['uid'=>$this->userId,'type'=>$this->cardType])->select();
                 $sums = D('Card')->where(['uid'=>$this->userId,'c_id'=>6])->sum('val');
                 $bail = $sums*(int)$userinfo['ratio']/100;
                 if($bail-(int)$packages['bail']>0) return ['error'=>102,'msg'=>'保证金不足'];
@@ -348,7 +350,7 @@ class PlatformCurrency{
         }
         // // 保证金数据处理  （转账直接成功后处理的，撤销订单无需处理）
         if($orderInfo['bail']){
-            $bailWhere = ['uid'=>$orderInfo['sell_id'],'type'=>'leka'];
+            $bailWhere = ['uid'=>$orderInfo['sell_id'],'type'=>$this->cardType];
             $packageInfo = D("Card_package")->where($bailWhere)->find();
             $bailfrozenList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
             $bailfrozenList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['bail'],"field"=>"bail"];

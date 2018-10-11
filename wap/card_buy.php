@@ -38,7 +38,7 @@ if(IS_POST && $_POST['type'] == "revoke"){
 	dexit($revoke);
 }
 // 查找当前用户卡包信息
-$platformInfo = D("Card_package")->where(['uid'=>$userId,"type"=>"leka"])->find();
+$platformInfo = D("Card_package")->where(['uid'=>$userId,"type"=>option("hairpan_set.platform_type_name")])->find();
 // 查询当前卖单信息
 // $sellList = D("Card_transaction")->where(['card_id'=>$platformInfo['card_id'],"type"=>"2","status"=>'0'])->select();
 // 获取卖方委托单
