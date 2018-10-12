@@ -68,6 +68,13 @@
                 <i class="iconfont" style="font-size: 20px;">&#xe697;</i>
                 <h1 class="lk-title">首页</h1>
             </header> -->
+            <div class="mui-input-row mui-search">
+
+                <input type="search" class="mui-input-clear" placeholder="">
+
+            </div>
+
+
             <div class="lk-content" style="padding-top:0px ">
                 <div class="lk-titles">
                     <div class="lk-ti <?php echo $_GET['plugin']==1 || empty($_GET['plugin'])?'action':'';?>" data-id="1">抵现卡</div>
