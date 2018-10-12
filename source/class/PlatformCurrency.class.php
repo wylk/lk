@@ -69,11 +69,11 @@ class PlatformCurrency{
         // 判断售卖规则是否符合
         $platform =$this->platform[$this->packageId] = D("Card_package")->where(['id'=>$this->packageId])->find();
 
-        if(!$this->tranNum > 0 )    
+        if(!$this->tranNum > 0 )
             return ['res'=>1,"msg"=>"交易数量不能小于0"];
         if($this->tranNum < $this->limitNum)
             return ['res'=>1,"msg"=>"限制最低数量不得大于委托数量"];
-        
+
         if($this->type == '2'){
             if($this->platform[$this->packageId]['num'] < $this->tranNum){
                 return ['res'=>1,"msg"=>"售出数量不能超出现有可用数量"];
@@ -142,7 +142,7 @@ class PlatformCurrency{
             if($this->type == '1'){
                 $this->matchOrderData[$key]['sell_id'] = $value['uid'];
                 $this->matchOrderData[$key]['buy_id'] = $this->userId;
-                // $this->matchOrderData[$key]['bail'] = 
+                // $this->matchOrderData[$key]['bail'] =
             }elseif($this->type == '2'){
                 $this->matchOrderData[$key]['buy_id'] = $value['uid'];
                 $this->matchOrderData[$key]['sell_id'] = $this->userId;
@@ -221,7 +221,7 @@ class PlatformCurrency{
 
         $tradeInfo = D("Card_transaction")->where(['id'=>$tranId])->find();
 
-        if($num > $tradeInfo['num'] || $tradeInfo['num'] - $tradeInfo['frozen'] <= 0) 
+        if($num > $tradeInfo['num'] || $tradeInfo['num'] - $tradeInfo['frozen'] <= 0)
             return ['res'=>1,"msg"=>"交易单已失效，请选择其他订单"];
         if($this->userId == $tradeInfo['uid']) return ['res'=>1,"msg"=>"此单为本人发布"];
         if($tradeInfo['status'] != '0') return ['res'=>1,"msg"=>"此交易单已关闭"];
@@ -236,7 +236,7 @@ class PlatformCurrency{
             else if($res['error'] == '102'){
                 $bailtotalNum = $num/(100-(int)$this->bailRatio)*100;
                 $this->bailNum = $bailtotalNum - $num;
-                if($packageInfo['num'] < $bailtotalNum) 
+                if($packageInfo['num'] < $bailtotalNum)
                     return ['res'=>1,'msg'=>'现有金额不足','other'=>$packageInfo['num'],'bail'=>$this->bailNum];
                 $packageList[] = ['id'=>$packageInfo['id'],'operator'=>'+','step'=>$this->bailNum,'field'=>'bail'];
             }
@@ -271,7 +271,7 @@ class PlatformCurrency{
         // 修改冻结数据
         $frozenList[] = ['id'=>$tradeInfo['id'],"operator"=>"+","step"=>$num,"field"=>"frozen"];
         $this->tradeSheetFrozen($frozenList);
-       
+
         // if($tradeInfo['type'] == '1'){
         //     if(!empty($this->bailNum)){
         //         $sellfrozenList[] = ['id'=>$packageInfo['id'],"operator"=>"+","step"=>$this->bailNum,"field"=>"bail"];
@@ -319,7 +319,7 @@ class PlatformCurrency{
     // 撤销委托单
     public function revokeRegister($data){
         $revokeInfo = D("Card_transaction")->where(['id'=>$data['tranId']])->find();
-        if((int)$revokeInfo['frozen']) 
+        if((int)$revokeInfo['frozen'])
             return ['res'=>1,"msg"=>"您还有".number_format($revokeInfo['frozen'],2)."订单未处理，请处理后在撤销"];
         if(!D("Card_transaction")->where(['id'=>$data['tranId']])->setField("status",2))
             return ['res'=>1,"msg"=>"撤销失败"];
@@ -392,7 +392,7 @@ class PlatformCurrency{
             $sellRes = $sellInfo['num']-$orderInfo['number']+$sellInfo['frozen']+$sellInfo['bail'];
         }
         // dexit(['res'=>1,"msg"=>"test","imitateRes"=>$imitateRes]);
-        
+
         // 保证金数据处理
         $bailInfo = D('Card_transaction')->where(['uid'=>$orderInfo['sell_id'],'id'=>['in',[$orderInfo['tran_id'],$orderInfo['tran_other']]]])->find();
         if(!empty($bailInfo['bail'])){

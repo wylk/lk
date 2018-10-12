@@ -20,7 +20,7 @@ class hairpin_controller extends base_controller
         $datas=[];
         // $phone = D("Admin")->field("phone")->where(['name'=>"admin"])->find();
         // $userInfo = D("User")->where(['phone'=>$this->phone])->find();
-        
+
         $this->assign('datas',$datas);
         $this->assign('userInfo',$this->userInfo);
         $this->assign('phone',$this->phone);
@@ -28,12 +28,15 @@ class hairpin_controller extends base_controller
     }
 
     public function addAdminAccount(){
-        $phone = $_POST['phone'];
+        // $phone = $_POST['phone'];
+        $userdata['phone'] = $_POST['phone'];
         import("PlatformCurrency");
         $platformObj = new PlatformCurrency();
-        $addAccountRes = $platformObj->addAccountInterface($phone,$this->balance);
 
+        $addAccountRes = $platformObj->addAccountInterface($userdata);
+        // var_dump($addAccountRes);die;
         $userInfo = D("User")->where(['phone'=>$this->phone])->find();
+
         D("Card_package")->data(['num'=>$this->balance])->where(['uid'=>$userInfo['id'],"type"=>$this->cardType])->save();
         dexit($addAccountRes);
     }
@@ -43,7 +46,7 @@ class hairpin_controller extends base_controller
         import("PlatformCurrency");
         $platformObj = new PlatformCurrency();
         $packageInfo = D("Card_package")->where(['uid'=>$this->userId,"type"=>"leka"])->find();
-        
+
         // 市场委托买单
         $buyList = $platformObj->selectTradeList(['userId'=>$this->userId,'type'=>'1','cardId'=>$packageInfo['card_id'],'status'=>'0']);
         // 市场委托卖单
@@ -149,7 +152,7 @@ class hairpin_controller extends base_controller
 
                 dexit(['error'=>0,'msg'=>'添加成功']);
             }else{
-                
+
                 dexit(['error'=>1,'msg'=>'添加失败']);
             }
         }

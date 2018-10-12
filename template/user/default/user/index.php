@@ -149,6 +149,7 @@
                    str+="<img src="+res['data']['avatar']+" class='round_icon'></img>";
                 }
                str += "</td><td>"+res['data']['name']+"</td><td>"+res['data']['phone']+"</td><td>";
+              if(res['data']['status'] == 0) str += '未认证';
               if(res['data']['status'] == 1) str += '个人认证';
               if(res['data']['status'] == 2) str += '企业认证';
               str += "</td><td class='td-manage'>";
