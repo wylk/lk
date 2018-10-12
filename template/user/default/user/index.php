@@ -20,6 +20,8 @@
     <![endif]-->
     <style type="text/css">
       .layui-input{width: 100%;}
+      .round_icon{width: 53px;height: 40px;display: flex;border-radius: 23%;align-items: center;justify-content: center;overflow: hidden;}
+
     </style>
   </head>
 
@@ -47,7 +49,7 @@
       <table class="layui-table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>头像</th>
             <th>用户名</th>
             <th>手机</th>
             <th>认证类型</th>
@@ -61,7 +63,12 @@
           ?>
 
           <tr>
-            <td><?= $v["id"] ?></td>
+            <?php if($v['avatar']==''){?>
+               <td><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539322293481&di=f7f653184c8427398a5003a8efa26e0f&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01851558c5ffdfa801219c77c70ff7.jpg" class="round_icon"></td>
+            <?php }else{?>
+               <td><img src="<?= $v['avatar'] ?>" class="round_icon"></td>
+            <?php } ?>
+
             <td><?= $v["name"] ?></td>
             <td><?= $v["phone"] ?></td>
             <td>
@@ -76,6 +83,9 @@
               ?>
             </td>
             <td class="td-manage">
+               <a title="更多"  onclick="x_admin_show('详情','?c=user&a=lists&id=<?= $v['id'] ?>',1000)" href="javascript:;">
+                <i class="layui-icon">&#xe705;</i>
+              </a>
               <a title="编辑"  onclick="x_admin_show('编辑','?c=user&a=edit&id=<?= $v['id'] ?>',550,200)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
@@ -134,11 +144,17 @@
           console.log(res);
              if(res.error == 0){
               $('#body').empty();
-              var str = "<tr><td>"+res['data']['id']+"</td><td>"+res['data']['name']+"</td><td>"+res['data']['phone']+"</td><td>";
+             var str="<tr><td>";
+                if(res['data']['avatar']==''){str+="<img src=\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539322293481&di=f7f653184c8427398a5003a8efa26e0f&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01851558c5ffdfa801219c77c70ff7.jpg\" class='round_icon'></img>";}else{
+                   str+="<img src="+res['data']['avatar']+" class='round_icon'></img>";
+                }
+               str += "</td><td>"+res['data']['name']+"</td><td>"+res['data']['phone']+"</td><td>";
               if(res['data']['status'] == 1) str += '个人认证';
               if(res['data']['status'] == 2) str += '企业认证';
               str += "</td><td class='td-manage'>";
-              // str += "<a href='?c=user&a=edit&id="+res['data']['id']+"'>";
+              str += "<a title='更多' onclick=\"x_admin_show('编辑','?c=user&a=lists&id="+res['data']['id']+"',1000)\" href='javascript:;'>";
+              str += "<i class='layui-icon'>&#xe705;</i>";
+              str += "</a>";
               str += "<a title='编辑' onclick=\"x_admin_show('编辑','?c=user&a=edit&id="+res['data']['id']+"',550,200)\" href='javascript:;'>";
               str += "<i class='layui-icon'>&#xe642;</i>";
               str += "</a>";

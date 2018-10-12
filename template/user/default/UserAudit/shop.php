@@ -18,6 +18,9 @@
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+      .layui-input{width: 15%;float: left;}
+    </style>
   </head>
 
   <body class="layui-anim layui-anim-up">
@@ -62,8 +65,10 @@
           <tr>
             <!-- <td><?= $v['id'] ?></td> -->
             <td title="<?= $v['name'] ?>"><?= $v['name'] ?></td>
-            <td title="<?= $v['enterprise'] ?>"><?= mb_substr($v['enterprise'],0,4,'utf-8') ?></td>
-            <td title="<?= $v['business_license'] ?>"><?= mb_substr($v['business_license'],0,6); ?></td>
+            <td title="<?= $v['enterprise'] ?>"><?= $v['enterprise'] ?></td>
+            <td title="<?= $v['business_license'] ?>"><?= $v['business_license'] ?></td>
+          <!--   <td title="<?= $v['enterprise'] ?>"><?= mb_substr($v['enterprise'],0,4,'utf-8') ?></td>
+            <td title="<?= $v['business_license'] ?>"><?= mb_substr($v['business_license'],0,6); ?></td> -->
             <td><img src="<?= $v['img_oneself'] ?>" onclick="previewImg(this,'<?= $v['img_just'] ?>')"></td>
             <td><img src="<?= $v['business_img'] ?>" onclick="previewImg(this,'<?= $v['img_just'] ?>')"></td>
             <td><?= date('Y-m-d H:i:s',$v['create_time']); ?></td>
