@@ -37,20 +37,20 @@
     <div class="x-body">
     <div class="layui-row">
       <!--   <form class="layui-form layui-col-md12 x-so"> -->
-        <!--   <div class="layui-input-inline">
-            <select name="contrller">
-              <option>支付状态</option>
-              <option>已支付</option>
-              <option>未支付</option>
+       <div class="layui-input-inline">
+            <select name="num" class="num">
+              <option value="">购买数量</option>
+              <option value="1">小于50</option>
+              <option value="2">大于50</option>
             </select>
-          </div> -->
-     <!--      <div class="layui-input-inline">
-            <select name="contrller">
-              <option>支付方式</option>
-              <option>支付宝</option>
-              <option>微信</option>
+          </div>
+          <div class="layui-input-inline">
+            <select name="pice" class="pice">
+              <option value="">成交金额</option>
+              <option value="3">小于50</option>
+              <option value="4">大于50</option>
             </select>
-          </div> -->
+          </div>
           <div class="layui-input-inline">
             <select name="status" class="select">
               <option value="">订单状态</option>
@@ -160,7 +160,9 @@
          $('#set').click(function(){
          var onumber=$('.layui-input').val();
          var status=$('.select').val();
-         $.post('?c=order&a=index_to',{onumber:onumber,status:status}, function(res) {
+         var pice =$('.pice').val();
+         var num =$('.num').val();
+         $.post('?c=order&a=index_to',{onumber:onumber,status:status,pice:pice,num:num}, function(res) {
          if(res.error == 0){
             $('#box').empty();
             var str = "<tr><td>"+res['data']['onumber']+"</td><td>"+res['data']['number']+"</td><td>"+res['data']['prices']+"</td><td>";
@@ -183,7 +185,34 @@
                 str += "</td><td>"+res['data'][item]['create_time']+"</td></tr>";
                 $('#box').html(str);
               }
+        }else if(res.error ==3){
+               console.log(res);
+              $('#box').empty();
+              var str = '';
+              for(var item in res['data']){
+                str += "<tr><td>"+res['data'][item]['onumber']+"</td><td>"+res['data'][item]['number']+"</td><td>"+res['data'][item]['prices']+"</td><td>";
+                if(res['data'][item]['status'] == 0) str += '代付款';
+                if(res['data'][item]['status'] == 1) str += '已完成';
+                if(res['data'][item]['status'] == 2) str += '已作废';
+                str += "</td><td>"+res['data'][item]['create_time']+"</td></tr>";
+                $('#box').html(str);
+              }
+
+        }else if(res.error ==4){
+               console.log(res);
+              $('#box').empty();
+              var str = '';
+              for(var item in res['data']){
+                str += "<tr><td>"+res['data'][item]['onumber']+"</td><td>"+res['data'][item]['number']+"</td><td>"+res['data'][item]['prices']+"</td><td>";
+                if(res['data'][item]['status'] == 0) str += '代付款';
+                if(res['data'][item]['status'] == 1) str += '已完成';
+                if(res['data'][item]['status'] == 2) str += '已作废';
+                str += "</td><td>"+res['data'][item]['create_time']+"</td></tr>";
+                $('#box').html(str);
+              }
+
         }else{
+
           alert(res.msg);
         }
 
