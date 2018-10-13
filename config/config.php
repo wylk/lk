@@ -4,8 +4,8 @@
  */
 
 return array(
-	'DB_HOST'=>'127.0.0.1',
-	// 'DB_HOST'=>'172.16.21.103',
+	// 'DB_HOST'=>'127.0.0.1',
+	'DB_HOST'=>'172.16.21.103',
 	'DB_NAME'=>'lk',
 	'DB_USER'=>'root',
 	'DB_PWD'=>'root',

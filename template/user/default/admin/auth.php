@@ -87,9 +87,12 @@
               <a title="编辑"  onclick="x_admin_show('编辑','?c=admin&a=authEdit&id=<?php echo $v['id'];?>',600,500)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'<?php echo $v['id'];?>')" href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<?= $v['id'] ?>')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
+             <!--  <a title="删除" onclick="member_del(this,'<?php echo $v['id'];?>')" href="javascript:;">
+                <i class="layui-icon">&#xe640;</i>
+              </a> -->
             </td>
           </tr>
           <?php }?>
@@ -98,3 +101,44 @@
     </div>
   </body>
 </html>
+<script type="text/javascript">
+  //菜单删除
+       function member_del(obj,id){
+          layer.confirm('确定删除吗？',function(index){
+              //发异步删除数据
+                $.post("?c=admin&a=delAuth",{id:id},function(data){
+                  if(data.error==0){
+                     $(obj).parents("tr").remove();
+                     layer.msg('已删除!',{icon:1,time:1000});
+                  }else{
+                     alert(layer.msg);
+                  }
+
+               },'json')
+
+          });
+      }
+
+
+
+      //      function member_del(obj,id){
+      //     layer.confirm('确认要删除吗？',function(index){
+      //       $.post("?c=user&a=delete",{id:id},function(data){
+      //         console.log(data);
+      //         if(data.status==0){
+      //           //发异步删除数据
+      //           $(obj).parents("tr").remove();
+      //           layer.msg('已删除!',{icon:1,time:1000});
+      //         }else{
+      //           layer.msg('删除失败!',{icon:1,time:1000});
+      //         }
+      //       },'json')
+
+      //     });
+      // }
+
+
+
+
+
+</script>

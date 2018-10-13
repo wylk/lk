@@ -20,7 +20,7 @@
     layui.use(['layer'],function(){
     // layui.use(['element','layer'],function(){
         // var layer = layyui.layer;
-    
+
         $("#addAccount").bind('click',function(){
             console.log('ddd');
             var phone = "<?php echo $phone ?>";
@@ -46,7 +46,7 @@
                 <span class="layui-btn layui-btn-normal" id="addAccount">注册平台币账户</span>
             </div>
         </div>
-        
+
     <div class="x-body layui-anim layui-anim-up" style="display:none;">
     <?php }else{ ?>
     <div class="x-body layui-anim layui-anim-up">
@@ -127,7 +127,7 @@
                       <th>数量</th>
                       <th>交易额</th>
                       <th>成交时间</th>
-                    </tr> 
+                    </tr>
                   </thead>
                   <tbody>
                     <?php for($i = 0; $i < 10 ; $i++){?>
@@ -143,9 +143,9 @@
                 </table>
             </div>
         </fieldset>
-       
+
     </div>
-       
+
     </body>
 
 </html>

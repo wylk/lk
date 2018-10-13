@@ -63,15 +63,15 @@ body{
 .login input[type=file],
 .login input[type=password],
 .login input[type=email], select {
-    border: 1px solid #DCDEE0;
+   border: 1px solid #DCDEE0;
     vertical-align: middle;
-    border-radius: 3px;
-    height: 50px;
+    border-radius: 6px;
+    height: 39px;
     padding: 0px 16px;
     font-size: 14px;
-    color: #555555;
-    outline:none;
-    width:100%;
+    color: #009688;
+    outline: none;
+    width: 100%;
     box-sizing: border-box;
 }
 .login input[type=text]:focus,

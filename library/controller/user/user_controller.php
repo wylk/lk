@@ -25,6 +25,15 @@ class user_controller extends base_controller
 
     }
 
+    //会员详情页
+       public function lists()
+    {
+
+        $userAudit = D('User_audit')->where(array('uid'=>$_GET['id']))->find();
+        $this->assign('userAudit',$userAudit);
+        $this->display();
+    }
+
     //添加页面
     public function add()
     {

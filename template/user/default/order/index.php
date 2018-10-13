@@ -18,6 +18,9 @@
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+      .layui-input{width: 25%;float: left;}
+    </style>
   </head>
 
   <body>
@@ -33,32 +36,32 @@
     </div>
     <div class="x-body">
     <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-          <div class="layui-input-inline">
-            <select name="contrller">
-              <option>支付状态</option>
-              <option>已支付</option>
-              <option>未支付</option>
+      <!--   <form class="layui-form layui-col-md12 x-so"> -->
+       <div class="layui-input-inline">
+            <select name="num" class="num">
+              <option value="">购买数量</option>
+              <option value="1">小于50</option>
+              <option value="2">大于50</option>
             </select>
           </div>
-     <!--      <div class="layui-input-inline">
-            <select name="contrller">
-              <option>支付方式</option>
-              <option>支付宝</option>
-              <option>微信</option>
-            </select>
-          </div> -->
           <div class="layui-input-inline">
-            <select name="status">
+            <select name="pice" class="pice">
+              <option value="">成交金额</option>
+              <option value="3">小于50</option>
+              <option value="4">大于50</option>
+            </select>
+          </div>
+          <div class="layui-input-inline">
+            <select name="status" class="select">
               <option value="">订单状态</option>
               <option value="0">待付款</option>
-              <option value="3">已付款</option>
-              <option value="5">已作废</option>
+              <option value="1">已付款</option>
+              <option value="2">已作废</option>
             </select>
           </div>
           <input type="text" name="onumber"  placeholder="请输入订单号" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon" id="set">&#xe615;</i></button>
-        </form>
+       <!--  </form> -->
       </div>
       <xblock>
         <button class="layui-btn" onclick="x_admin_show('添加用户','?c=order&a=add')"><i class="layui-icon"></i>添加</button>
@@ -156,8 +159,10 @@
       //搜索
          $('#set').click(function(){
          var onumber=$('.layui-input').val();
-         $.post('?c=order&a=index_to',{onumber:onumber}, function(res) {
-         console.log(res);
+         var status=$('.select').val();
+         var pice =$('.pice').val();
+         var num =$('.num').val();
+         $.post('?c=order&a=index_to',{onumber:onumber,status:status,pice:pice,num:num}, function(res) {
          if(res.error == 0){
             $('#box').empty();
             var str = "<tr><td>"+res['data']['onumber']+"</td><td>"+res['data']['number']+"</td><td>"+res['data']['prices']+"</td><td>";
@@ -168,12 +173,51 @@
               str += res['data']['create_time'];
               str +="</td></tr>";
               $('#box').append(str);
-         }else{
-          alert('订单号不存在');
-         }
+         }else if(res.error ==2){
+              console.log(res);
+              $('#box').empty();
+              var str = '';
+              for(var item in res['data']){
+                str += "<tr><td>"+res['data'][item]['onumber']+"</td><td>"+res['data'][item]['number']+"</td><td>"+res['data'][item]['prices']+"</td><td>";
+                if(res['data'][item]['status'] == 0) str += '代付款';
+                if(res['data'][item]['status'] == 1) str += '已完成';
+                if(res['data'][item]['status'] == 2) str += '已作废';
+                str += "</td><td>"+res['data'][item]['create_time']+"</td></tr>";
+                $('#box').html(str);
+              }
+        }else if(res.error ==3){
+               console.log(res);
+              $('#box').empty();
+              var str = '';
+              for(var item in res['data']){
+                str += "<tr><td>"+res['data'][item]['onumber']+"</td><td>"+res['data'][item]['number']+"</td><td>"+res['data'][item]['prices']+"</td><td>";
+                if(res['data'][item]['status'] == 0) str += '代付款';
+                if(res['data'][item]['status'] == 1) str += '已完成';
+                if(res['data'][item]['status'] == 2) str += '已作废';
+                str += "</td><td>"+res['data'][item]['create_time']+"</td></tr>";
+                $('#box').html(str);
+              }
 
-         },'json')
-       })
+        }else if(res.error ==4){
+               console.log(res);
+              $('#box').empty();
+              var str = '';
+              for(var item in res['data']){
+                str += "<tr><td>"+res['data'][item]['onumber']+"</td><td>"+res['data'][item]['number']+"</td><td>"+res['data'][item]['prices']+"</td><td>";
+                if(res['data'][item]['status'] == 0) str += '代付款';
+                if(res['data'][item]['status'] == 1) str += '已完成';
+                if(res['data'][item]['status'] == 2) str += '已作废';
+                str += "</td><td>"+res['data'][item]['create_time']+"</td></tr>";
+                $('#box').html(str);
+              }
+
+        }else{
+
+          alert(res.msg);
+        }
+
+      },'json')
+  })
 
 function getTime(){
   // console.log(time);

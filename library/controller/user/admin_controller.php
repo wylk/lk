@@ -39,8 +39,7 @@ class admin_controller extends base_controller
     //删除菜单
     public function delAuth()
     {
-    	$id = $this->clear_html($_GET['id']);
-        dump($id);
+    	$id = $this->clear_html($_POST['id']);
     	$count = D('Auth')->where(['pid'=>$id])->count('id');
     	if($count){
     		$this->dexit(['error'=>1,'msg'=>'该项还有子类不能删除']);
@@ -75,8 +74,8 @@ class admin_controller extends base_controller
     //管理员列表
     public function index()
     {
-        
-        $role = M('Admin')->findAll();
+
+        $role = D('Admin')->select();
         $this->assign('role',$role);
         $this->display();
     }

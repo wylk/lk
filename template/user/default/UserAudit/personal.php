@@ -18,7 +18,9 @@
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <style>
+      .layui-input{width: 15%;float: left;}
+    </style>
   </head>
 
   <body class="layui-anim layui-anim-up">
@@ -50,6 +52,7 @@
             <th>图片</th>
             <th>提交时间</th>
             <th>审核时间</th>
+            <th>比例</th>
             <th>状态</th>
             <th>操作</th></tr>
         </thead>
@@ -69,6 +72,9 @@
             </td>
             <td><?= date('Y-m-d H:i:s',$v['create_time']); ?></td>
             <td><?= date('Y-m-d H:i:s',$v['update_time']); ?></td>
+            <td><?= $v['ratio'] ?><br/>
+              <a title="修改" onclick="x_admin_show('修改','?c=UserAudit&a=ratioModify&id=<?= $v['id'] ?>',400,300)" href="javascript:;">修改</a>
+            </td>
             <td>
               <?php if($v['status']==0){
                       echo '待审核';
@@ -159,28 +165,34 @@
       }
     $('#set').click(function(){
                var name=$('.layui-input').val();
-               $.post('?c=UserAudit&a=index_too',{name:name}, function(res) {
+               $.post('?c=UserAudit&a=index_name',{name:name}, function(res) {
                console.log(res);
                if(res.error == 0){
                   $('#box').empty();
-                    var str = "<tr><td>"+res['data']['id']+"</td><td>"+res['data']['name']+"</td><td>"+res['data']['postcards']+"</td><td>";
-                    str +="<img src="+res['data']['img_just']+" onclick=\"previewImg(this,"+res['data']['img_just']+")\">";
-                    str +="<img src="+res['data']['img_back']+" onclick=\"previewImg(this,"+res['data']['img_just']+")\">";
-                    str +="<img src="+res['data']['img_oneself']+" onclick=\"previewImg(this,"+res['data']['img_just']+")\">";
+                  var str = '';
+               for(var item in res['data']){
+                     str = "<tr><td>"+res['data'][item]['id']+"</td><td>"+res['data'][item]['name']+"</td><td>"+res['data'][item]['postcards']+"</td><td>";
+                    str +="<img src="+res['data'][item]['img_just']+" onclick=\"previewImg(this,"+res['data'][item]['img_just']+")\">";
+                    str +="<img src="+res['data'][item]['img_back']+" onclick=\"previewImg(this,"+res['data'][item]['img_just']+")\">";
+                    str +="<img src="+res['data'][item]['img_oneself']+" onclick=\"previewImg(this,"+res['data'][item]['img_just']+")\">";
                     str +="</td><td>";
-                    str += res['data']['create_time'];
+                    str += res['data'][item]['create_time'];
                     str +="</td><td>";
-                    str += res['data']['update_time'];
+                    str += res['data'][item]['update_time'];
                     str +="</td><td>";
-                    if(res['data']['status'] == 0) str += '待审核';
-                    if(res['data']['status'] == 1) str += '审核通过';
-                    if(res['data']['status'] == 2) str += '审核不通过';
-                    str +="</td><td class='td-manage'><a title='详情''  onclick=\"x_admin_show('详情','?c=UserAudit&a=lists&id="+res['data']['id']+"',1000)\" href='javascript:;'><i class='layui-icon'>&#xe705;</i></a>";
+                    str += res['data'][item]['ratio'];
+                    str +="<br/><a title='修改'' onclick=\"x_admin_show('修改','?c=UserAudit&a=ratioModify&id="+res['data'][item]['id']+"',400,300)\" href='javascript:;'>修改</a>";
+                    str +="</td><td>";
+                    if(res['data'][item]['status'] == 0) str += '待审核';
+                    if(res['data'][item]['status'] == 1) str += '审核通过';
+                    if(res['data'][item]['status'] == 2) str += '审核不通过';
+                    str +="</td><td class='td-manage'><a title='详情''  onclick=\"x_admin_show('详情','?c=UserAudit&a=lists&id="+res['data'][item]['id']+"',1000)\" href='javascript:;'><i class='layui-icon'>&#xe705;</i></a>";
 
-               if(res['data']['status']==0 || res['data']['status']==2) str+= "<a onclick=\"member_stop(this,'"+res['data']['id']+"')\" href='javascript:;'  title='审核通过'><i class='layui-icon'>&#x1005;</i></a><a onclick=\"x_admin_show('驳回申请','?c=userAudit&a=feedback&id="+res['data']['id']+" ?>&status="+res['data']['status']+",600,400)\" title='驳回申请' href='javascript:;'><i class='layui-icon'>&#x1007;</i></a><a title='删除' onclick=\"member_del(this,"+res['data']['id']+")\" href='javascript:;'><i class='layui-icon'>&#xe640;</i></a>"
+               if(res['data'][item]['status']==0 || res['data'][item]['status']==2) str+= "<a onclick=\"member_stop(this,'"+res['data'][item]['id']+"')\" href='javascript:;'  title='审核通过'><i class='layui-icon'>&#x1005;</i></a><a onclick=\"x_admin_show('驳回申请','?c=userAudit&a=feedback&id="+res['data'][item]['id']+" ?>&status="+res['data'][item]['status']+",600,400)\" title='驳回申请' href='javascript:;'><i class='layui-icon'>&#x1007;</i></a><a title='删除' onclick=\"member_del(this,"+res['data'][item]['id']+")\" href='javascript:;'><i class='layui-icon'>&#xe640;</i></a>"
                 str +="</td></tr>";
 
                 $('#box').append(str);
+              }
                }else{
                 alert(res.msg);
                }
