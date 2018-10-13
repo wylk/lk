@@ -34,7 +34,10 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+       <xblock>
+        <button class="layui-btn" onclick="x_admin_show('添加用户','?c=admin&a=adminAdd',500,400)"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px">共有数据：<?php echo $num ?> 条</span>
+      </xblock>
       <table class="layui-table">
         <thead>
           <tr>
@@ -48,7 +51,7 @@
         </thead>
         <tbody>
           <?php foreach($role as $kk=>$vv){
-                   
+
           ?>
 
           <tr>

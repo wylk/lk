@@ -64,7 +64,7 @@
         </form>
 
       </div>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+        <span class="x-right" style="line-height:40px">共有数据：<?php echo count($auth) ?> 条</span>
       <table class="layui-table">
         <thead>
           <tr>

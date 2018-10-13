@@ -74,9 +74,10 @@ class admin_controller extends base_controller
     //管理员列表
     public function index()
     {
-
-        $role = D('Admin')->select();
+        $role =M('Admin')->findAll();
+        $num=count($role);
         $this->assign('role',$role);
+        $this->assign('num',$num);
         $this->display();
     }
 
@@ -169,6 +170,36 @@ class admin_controller extends base_controller
         }
         $this->dexit($arr);
     }
+   //添加管理员
+    public function adminAdd()
+    {
+        $role =D('Role')->select();
+        if(IS_POST){
+        $res=$_POST;
+        $data['name']=$res['name'];
+        $data['upwd']=md5($res['upwd']);
+        $data['phone']=$res['phone'];
+        $data['email']=$res['email'];
+        $addadmin=D('Admin')->data($data)->add();
+        $admin=D('Admin')->where(array('name'=>$data['name']))->find();
+        $addrole['role_id']=$res['role_name'];
+        $addrole['admin_id']=$admin['id'];
+        $addadmin=D('RoleAdmin')->data($addrole)->add();
+        if($addadmin){
+             $arr=['status'=>0,'msg'=>'添加成功'];
+         }else{
+             $arr=['status'=>0,'msg'=>'添加失败'];
+         }
+           $this->dexit($arr);
+       }
+
+        $this->assign('role',$role);
+        $this->display();
+
+    }
+
+
+
 
     //添加角色权限
     public function roleAdd()
