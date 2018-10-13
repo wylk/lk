@@ -188,6 +188,12 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
 
             },'json');
         })
+        $("[name=password]").keyup(function(){
+          var verify = $(this).val();
+          if(verify.length > 6){
+            $(this).val(verify.substring(0,6));
+          }
+        });
     })
     var countDown;
 

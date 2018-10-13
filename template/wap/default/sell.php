@@ -155,7 +155,7 @@ layui.use(['form','layer'], function(){
         layer.closeAll("loading");
         return false;
       }
-      if(data.field.limit > data.field.num){
+      if(data.field.num - data.field.limit < 0){
         layer.msg("最低购买数不得大于出售量",{icon:5,skin:'demo-class'});
         layer.closeAll("loading");
         return false;

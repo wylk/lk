@@ -64,7 +64,7 @@ switch ($payType) {
 		}
 		// 判断余额
 		$userPackinfo = D("Card_package")->field('num')->where(['uid'=>$userId,'type'=>option("hairpan_set.platform_type_name")])->find();
-		// if($orderinfo['number'] - $userPackinfo['num'] > 0) dexit(['res'=>1,'msg'=>'平台币余额不足']);
+		if($orderinfo['number'] - $userPackinfo['num'] > 0) dexit(['res'=>1,'msg'=>'平台币余额不足']);
 		// 调用回调
 		import('source.class.Http');
 		$payment_url = option('config.wap_site_url') . '/notice.php';

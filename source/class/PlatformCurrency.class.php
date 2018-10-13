@@ -36,7 +36,7 @@ class PlatformCurrency{
         $this->cardType = option("hairpan_set.platform_type_name");
     }
     // 添加账户接口
-    public function addAccountInterface($userdata,$balance=1000){
+    public function addAccountInterface($userdata,$balance=0){
         if($this->interfaceType){
             // dump($userdata);die;
             $addAccountInfo = $this->interfaceAddCount($userdata['phone']);
@@ -345,25 +345,25 @@ class PlatformCurrency{
         if(!$res) return ['res'=>1,"msg"=>"撤销失败"];
         // 解冻package transaction
         $orderInfo = D("Orders")->where(['id'=>$orderId])->find();
+        $bailWhere = ['uid'=>$orderInfo['sell_id'],'type'=>$this->cardType];
+        $packageInfo = D("Card_package")->where($bailWhere)->find();
         if($orderInfo['tran_id'] != $orderInfo['tran_other'] && !empty($orderInfo['tran_other'])){
             $frozenList[$orderInfo['tran_other']] = ['id'=>$orderInfo['tran_other'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
         }
         // // 保证金数据处理  （转账直接成功后处理的，撤销订单无需处理）
-        if($orderInfo['bail']){
-            $bailWhere = ['uid'=>$orderInfo['sell_id'],'type'=>$this->cardType];
-            $packageInfo = D("Card_package")->where($bailWhere)->find();
-            $bailfrozenList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
-            $bailfrozenList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['bail'],"field"=>"bail"];
-            $bailfrozenList[] = ['id'=>$packageInfo['id'],"operator"=>"+","step"=>$orderInfo['number']+$orderInfo['bail'],"field"=>"num"];
-            M("Card_package")->frozen($bailfrozenList);
+        if(!empty($orderInfo['bail']) && $orderInfo['bail'] > 0){
+            // $bailWhere = ['uid'=>$orderInfo['sell_id'],'type'=>$this->cardType];
+            // $packageInfo = D("Card_package")->where($bailWhere)->find();
+            $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
+            $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['bail'],"field"=>"bail"];
+            $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"+","step"=>$orderInfo['number']+$orderInfo['bail'],"field"=>"num"];
             // D("Card_package")->where($bailWhere)->setInc('num',$orderInfo['bail']);
             // D("Card_package")->where($bailWhere)->setDec('bail',$orderInfo['bail']);
+            M("Card_package")->dataModification($packageList);
         }
         $frozenList[$orderInfo['tran_id']] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
-
         $this->tradeSheetFrozen($frozenList);
         // $this->
-
         return ['res'=>0,"msg"=>"撤销成功"];
     }
     // 转账记录
@@ -371,6 +371,30 @@ class PlatformCurrency{
         $recordRes = D("Record_books")->data(['card_id'=>$data['cardId'],"send_address"=>$data["sendAddress"],"get_address"=>$data['getAddress'],"num"=>$data['num'],"createtime"=>time()])->add();
     }
     public $sellOrder = false;  //是否是委托卖单
+    // 平台币付款转账
+    public function payTran($sellUid,$buyUid,$num){
+        $sellInfo = D("Card_package")->where(['uid'=>$orderInfo['sell_id'],"type"=>$this->cardType])->find();
+        $buyInfo = D("Card_package")->where(['uid'=>$orderInfo['buy_id'],"type"=>$this->cardType])->find();
+        // 转账接口调用
+        if($this->interfaceType){
+            // 转账接口
+            $blockchainRes = $this->blockchainInterface($buyInfo,$sellInfo,$num);
+            if($blockchainRes['res']) return $blockchainRes;
+            $buyRes = $blockchainRes['buyRes'];
+            $sellRes = $blockchainRes['sellRes'];
+        }else{
+            $imitateRes = $this->imitateInterface($sellInfo,$buyInfo,$num);
+            if($imitateRes['res']) return $imitateRes;
+            $buyRes = $buyInfo['num']-$num;
+            $sellRes = $sellInfo['num']+$num;
+        }
+        $dataEdit[] = ['id'=>['val'=>$buyUid,"field"=>"uid"],'field'=>"num","operator"=>"=","step"=>$buyRes];
+        $dataEdit[] = ['id'=>['val'=>$sellUid,"field"=>"uid"],'field'=>"num","operator"=>"=","step"=>$sellRes];
+        $additional[] = ["field"=>'type',"operator"=>'=',"val"=>$this->cardType];
+        M("Card_package")->dataModification($dataEdit,$additional);
+        $this->recordBooks(['cardId'=>$sellInfo['card_id'],"sendAddress"=>$buyInfo['address'],"getAddress"=>$sellInfo['address'],"num"=>$num]);
+        return ['res'=>0,"msg"=>"转账成功"];
+    }
     // 平台币转账
     public function transferCurrency($orderId){
         $orderInfo = D("Orders")->where(['id'=>$orderId])->find();

@@ -26,6 +26,7 @@ if(IS_POST){
     $tranInfo = D("Card_transaction")->where(['id'=>$data['tran_id']])->find();
     $tranInfo['uid'] != $userId ? true : dexit(['error'=>1,'msg'=>'此交易为本人发布']);
 
+
     if($data['number'] <= $datas['quantity']){
         $order_id = D('Orders')->data($data)->add();
 

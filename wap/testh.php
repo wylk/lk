@@ -40,15 +40,23 @@ require_once dirname(__FILE__).'/global.php';
 // $res = $platformObj->checkBail();
 // dump($res);
 // $data[] = ['id'=>161,'operator'=>'-',"field"=>'num',"step"=>2.0202];
-$data[] = ['id'=>161,"operator"=>'+',"field"=>'frozen',"step"=>2];
-$data[] = ['id'=>['field'=>'uid','val'=>'6'],'operator'=>'-',"field"=>'num',"step"=>2.0202];
-// $data[] = ['id'=>['field'=>'uid','val'=>'6'],"operator"=>'+',"field"=>'frozen',"step"=>2];
-$data[] = ['id'=>['field'=>'uid','val'=>'7'],"operator"=>'-',"field"=>'num',"step"=>2.0202];
-$data[] = ['id'=>163,"operator"=>'+',"field"=>'frozen',"step"=>2];
-// $data[] = ['id'=>['field'=>'uid',"val"=>'7'],"operator"=>'+',"field"=>'frozen',"step"=>2];
-$additional[] = ["field"=>'type',"operator"=>'=',"val"=>'leka'];
-// $additional[] = ["field"=>'type1',"operator"=>'=',"val"=>'leka1'];
-// $additional = ["field"=>'type',"operator"=>'=',"val"=>'leka'];
-$data1[7] = ['id'=>['field'=>'uid',"val"=>'7'],"operator"=>'-',"field"=>'frozen',"step"=>'2'];
-$res = M("Card_package")->dataModification($data1,$additional);
-dump($res);
+
+$order  = D('Orders')->where(['out_trade_no'=>'20181013113513439257'])->find();
+dump($order);
+// 转账处理
+// if($payType == 'platform'){
+	// 平台币转账
+	// $dataEdit[] = ['id'=>['val'=>$order['buy_id'],"field"=>"uid"],'field'=>"num","operator"=>"-","step"=>$order['number']];
+	// $dataEdit[] = ['id'=>['val'=>$order['sell_id'],"field"=>"uid"],'field'=>"num","operator"=>"+","step"=>$order['number']];
+	// $additional[] = ["field"=>'type',"operator"=>'=',"val"=>'leka'];
+	// dump($dataEdit);
+	// M("Card_package")->dataModification($dataEdit,$additional);
+
+$sellInfo = D("Card_package")->where(['uid'=>$order['sell_id'],"type"=>'leka'])->find();
+$buyInfo = D("Card_package")->where(['uid'=>$order['buy_id'],"type"=>'leka'])->find();
+dump($sellInfo);
+dump($buyInfo);
+	import("PlatformCurrency");
+    $platformObj = new PlatformCurrency();
+	$platformObj->recordBooks(['cardId'=>$sellInfo['card_id'],"sendAddress"=>$buyInfo['address'],"getAddress"=>$sellInfo['address'],"num"=>$order['number']]);
+// }
