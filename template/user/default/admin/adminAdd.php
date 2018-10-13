@@ -129,18 +129,13 @@
    $.post("?c=admin&a=adminAdd",{name:name,upwd:upwd,phone:phone,email:email,role_name:role_name},function(data){
    if(data.status==0){
    alert(data.msg);
-
    }else{
     alert(data.msg);
    }
 
    },'json')
 
-
-
-
-
-
    })
+
 </script>
 
