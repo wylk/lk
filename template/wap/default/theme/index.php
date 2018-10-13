@@ -77,7 +77,7 @@
             top:200px;
             left:0px;
             position:absolute;
-            z-index:9999;
+            z-index:1;
             background-color:rgba(12, 12, 12, 0.8);
         }
         </style>
@@ -107,6 +107,7 @@
                 </div>
             </div>
         </div>
+        <?php include display('public_menu');?>
     </body>
 </html>
 <script src="http://code.jquery.com/jquery-1.8.0.min.js" type="text/javascript"></script>

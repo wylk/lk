@@ -29,7 +29,7 @@ box-flex: 1;
 .wx_nav a {
 position: relative;
 width: 200px;
-height: 45px;
+height: 50px;
 padding-top: 4px;
 color: #999;
 font-size: 12px;
