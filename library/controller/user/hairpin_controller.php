@@ -5,7 +5,7 @@ class hairpin_controller extends base_controller
     public $userId;
     public $phone;
     public $userInfo;
-    public $balance = 10000;
+    public $balance = 1000000;
     public $cardType = "leka";
     public function __construct(){
         // $this->userId = 108;
@@ -33,11 +33,11 @@ class hairpin_controller extends base_controller
         import("PlatformCurrency");
         $platformObj = new PlatformCurrency();
 
-        $addAccountRes = $platformObj->addAccountInterface($userdata);
+        $addAccountRes = $platformObj->addAccountInterface($userdata,$this->balance);
         // var_dump($addAccountRes);die;
         $userInfo = D("User")->where(['phone'=>$this->phone])->find();
 
-        D("Card_package")->data(['num'=>$this->balance])->where(['uid'=>$userInfo['id'],"type"=>$this->cardType])->save();
+        // D("Card_package")->data(['num'=>$this->balance])->where(['uid'=>$userInfo['id'],"type"=>$this->cardType])->save();
         dexit($addAccountRes);
     }
 

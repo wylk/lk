@@ -371,6 +371,7 @@ class PlatformCurrency{
         $recordRes = D("Record_books")->data(['card_id'=>$data['cardId'],"send_address"=>$data["sendAddress"],"get_address"=>$data['getAddress'],"num"=>$data['num'],"createtime"=>time()])->add();
     }
     public $sellOrder = false;  //是否是委托卖单
+    // 平台币付款转账
     // 平台币转账
     public function transferCurrency($orderId){
         $orderInfo = D("Orders")->where(['id'=>$orderId])->find();

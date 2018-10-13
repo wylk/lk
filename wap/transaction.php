@@ -30,7 +30,7 @@ if(isset($_POST['type']) && $_POST['type'] == "transaction"){
 	
 	$surplusNum = $cardBagInfo['num'] - $num;
 	// 判断发布的数值超出
-	$surplusNum >= 0 ? true : dexit(["res"=>1,'msg'=>"发布额度超出现有额度"]);
+	$surplusNum >= 0 ? true : dexit(["res"=>1,'msg'=>"发布额度超出现有额度ff"]);
 	$data['address'] = $cardBagInfo['address'];
 	// 判断是否添加交易成功
 	$tranId = D("Card_transaction")->data($data)->add();

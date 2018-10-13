@@ -11,6 +11,7 @@ if(!empty($xml)){
 	$data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
 }else if($payType == 'platform'){
 	$data['out_trade_no'] = $_REQUEST['out_trade_no'];
+	
 }else{
 	dexit(['errcode'=>2,'msg'=>"当前不支持".$payType."支付方式",'data'=>$payType]);
 
@@ -22,6 +23,16 @@ if(!empty($xml)){
 
 
 $order  = D('Orders')->where(['out_trade_no'=>$data['out_trade_no']])->find();
+
+// 转账处理
+if($payType == 'platform'){
+	// 平台币转账
+	$dataEdit[] = ['id'=>['val'=>$order['buy_id'],"field"=>"uid"],'field'=>"num","operator"=>"-","step"=>$order['number']];
+	$dataEdit[] = ['id'=>['val'=>$order['sell_id'],"field"=>"uid"],'field'=>"num","operator"=>"+","step"=>$order['number']];
+	$additional[] = ["field"=>'type',"operator"=>'=',"val"=>'leka'];
+	M("Card_package")->dataModification($dataEdit,$additional);
+}
+
 // dexit(['errcode'=>3,'msg'=>$data]);
 $sendAddress = D('Card_package')->field('address')->where(['uid'=>$order['sell_id'],'card_id'=>$order['card_id']])->find();
 $getAddress = D('Card_package')->field('address,is_publisher,bail')->where(['uid'=>$order['buy_id'],'card_id'=>$order['card_id']])->find();
