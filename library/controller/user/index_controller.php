@@ -3,8 +3,10 @@ class index_controller extends base_controller{
 
 	public function index()
 	{
+
+		// var_dump($_SESSION['admin']);die;
 		$id = $_SESSION["admin"]["id"];
-		if($_SESSION["admin"]["name"] == "admin"){
+		if($_SESSION["admin"]["name"]){
 			$auth = D('Auth')->select();
 		}else{
 			$auth = D('')->table(array('RoleAdmin'=>'p','Access'=>'t','Auth'=>'y'))->field('y.id,y.name,y.pid,y.auth_c,y.auth_a,y.icon,y.is_show')->where("`p`.`admin_id`='$id' AND `p`.`role_id`=`t`.`role_id` AND `t`.`auth_id`=`y`.`id`")->order('`y`.`id` ASC')->select();

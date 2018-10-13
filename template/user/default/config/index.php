@@ -28,7 +28,7 @@
     <body>
     <div class="x-body layui-anim layui-anim-up">
         <blockquote class="layui-elem-quote">欢迎管理员：
-            <span class="x-red">test</span>！当前时间:2018-04-25 20:50:53
+            <span class="x-red"><?php echo $_SESSION['admin']['name']?></span>！当前时间:2018-04-25 20:50:53
             <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:-9px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
         </blockquote>

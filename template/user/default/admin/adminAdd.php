@@ -13,6 +13,13 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/js/xadmin.js"></script>
+
+
+
+
+
+
+
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -99,7 +106,7 @@
     </div>
   </body>
 </html>
-<script type="text/javascript" src="<?php echo TPL_URL;?>/js/admin_edit.js?r=<?php echo time();?>"></script>
+
 <script type="text/javascript">
    $('#admin').click(function(){
     var name=$('#name').val();
@@ -128,14 +135,25 @@
     }
    $.post("?c=admin&a=adminAdd",{name:name,upwd:upwd,phone:phone,email:email,role_name:role_name},function(data){
    if(data.status==0){
-   alert(data.msg);
+   layer.alert(data.msg, {icon: 1,},function () {
+    var index = parent.layer.getFrameIndex(window.name);
+    //关闭当前frame
+    parent.layer.close(index);
+  });
    }else{
-    alert(data.msg);
+    layer.alert(data.msg, {icon: 2,},function () {
+    var index = parent.layer.getFrameIndex(window.name);
+    //关闭当前frame
+    parent.layer.close(index);
+  });
+
+
    }
 
    },'json')
 
    })
+
 
 </script>
 
