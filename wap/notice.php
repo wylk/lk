@@ -27,10 +27,14 @@ $order  = D('Orders')->where(['out_trade_no'=>$data['out_trade_no']])->find();
 // 转账处理
 if($payType == 'platform'){
 	// 平台币转账
-	$dataEdit[] = ['id'=>['val'=>$order['buy_id'],"field"=>"uid"],'field'=>"num","operator"=>"-","step"=>$order['number']];
-	$dataEdit[] = ['id'=>['val'=>$order['sell_id'],"field"=>"uid"],'field'=>"num","operator"=>"+","step"=>$order['number']];
-	$additional[] = ["field"=>'type',"operator"=>'=',"val"=>'leka'];
-	M("Card_package")->dataModification($dataEdit,$additional);
+	import("PlatformCurrency");
+    $platformObj = new PlatformCurrency();
+	$platformObj->payTran($order['sell_id'],$order['buy_id'],$order['number']);
+	// dexit()
+	// $dataEdit[] = ['id'=>['val'=>$order['buy_id'],"field"=>"uid"],'field'=>"num","operator"=>"-","step"=>$order['number']];
+	// $dataEdit[] = ['id'=>['val'=>$order['sell_id'],"field"=>"uid"],'field'=>"num","operator"=>"+","step"=>$order['number']];
+	// $additional[] = ["field"=>'type',"operator"=>'=',"val"=>'leka'];
+	// M("Card_package")->dataModification($dataEdit,$additional);
 }
 
 // dexit(['errcode'=>3,'msg'=>$data]);

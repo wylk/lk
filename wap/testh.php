@@ -46,9 +46,17 @@ dump($order);
 // 转账处理
 // if($payType == 'platform'){
 	// 平台币转账
-	$dataEdit[] = ['id'=>['val'=>$order['buy_id'],"field"=>"uid"],'field'=>"num","operator"=>"+","step"=>$order['number']];
-	$dataEdit[] = ['id'=>['val'=>$order['sell_id'],"field"=>"uid"],'field'=>"num","operator"=>"-","step"=>$order['number']];
-	$additional[] = ["field"=>'type',"operator"=>'=',"val"=>'leka'];
-	dump($dataEdit);
-	M("Card_package")->dataModification($dataEdit,$additional);
+	// $dataEdit[] = ['id'=>['val'=>$order['buy_id'],"field"=>"uid"],'field'=>"num","operator"=>"-","step"=>$order['number']];
+	// $dataEdit[] = ['id'=>['val'=>$order['sell_id'],"field"=>"uid"],'field'=>"num","operator"=>"+","step"=>$order['number']];
+	// $additional[] = ["field"=>'type',"operator"=>'=',"val"=>'leka'];
+	// dump($dataEdit);
+	// M("Card_package")->dataModification($dataEdit,$additional);
+
+$sellInfo = D("Card_package")->where(['uid'=>$order['sell_id'],"type"=>'leka'])->find();
+$buyInfo = D("Card_package")->where(['uid'=>$order['buy_id'],"type"=>'leka'])->find();
+dump($sellInfo);
+dump($buyInfo);
+	import("PlatformCurrency");
+    $platformObj = new PlatformCurrency();
+	$platformObj->recordBooks(['cardId'=>$sellInfo['card_id'],"sendAddress"=>$buyInfo['address'],"getAddress"=>$sellInfo['address'],"num"=>$order['number']]);
 // }

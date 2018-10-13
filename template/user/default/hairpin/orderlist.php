@@ -37,16 +37,18 @@
             <p style="color:gray;">
               <?php if($orderInfo['status'] == '0') echo "待收款" ?> 
               <?php if($orderInfo['status'] == '1') echo "交易成功" ?> 
-              <?php if($orderInfo['status'] == '2') echo "订单超时" ?> 
+              <?php if($orderInfo['status'] == '2') echo "交易取消" ?> 
               <?php if($orderInfo['status'] == '3') echo "对方已打款" ?> 
+              <?php if($orderInfo['status'] == '4') echo "交易超时" ?> 
             </p>
            <?php } ?>
            <?php if($orderInfo['buy_id'] == $userId){ ?>
            <p style="color:gray;">
               <?php if($orderInfo['status'] == '0') echo "待付款" ?> 
               <?php if($orderInfo['status'] == '1') echo "交易成功" ?> 
-              <?php if($orderInfo['status'] == '2') echo "订单超时" ?> 
+              <?php if($orderInfo['status'] == '2') echo "交易取消" ?> 
               <?php if($orderInfo['status'] == '3') echo "已付款" ?>
+              <?php if($orderInfo['status'] == '4') echo "交易超时" ?>
            </p>
            <?php } ?>
           </span></div>
@@ -58,16 +60,16 @@
            <div class='menuStyle'><span class="spanLeft">创建时间：</span><span class="spanRight"><?php echo date("Y-m-d H:i:s",$orderInfo['create_time']) ?></span></div>
             <hr>
            
-          <?php if($orderInfo['sell_id'] == $userId){ ?>
+        <?php if($orderInfo['sell_id'] == $userId){ ?>
           <div class='menuStyle'><span class="spanLeft">交易状态：</span>
             <?php echo $orderInfo['status'] == '1' ? "<span class='spanRight' >已转账</span>" : 
-            "<button class='spanRight' id='confirmTran'>确认收款</button>" ?>
+            (!in_array($orderInfo['status'], ['2','4']) ? "<button class='spanRight' id='confirmTran'>确认收款</button>" : "<span class='spanRight' >交易取消</span>")  ?>
           </div>
-            <?php if(!in_array($orderInfo['status'],['1','2','3'])){ ?>
+            <?php if(in_array($orderInfo['status'], ['0','3'])){ ?>
               <div class='menuStyle'><span class="spanLeft"></span><button id="revokeOrder_<?php echo $orderInfo['id']; ?>" class='spanRight' >取消订单</button></div>
             <?php } ?>
-          <?php } ?>
-          <?php if($orderInfo['buy_id'] == $userId){ ?>
+        <?php } ?>
+        <?php if($orderInfo['buy_id'] == $userId){ ?>
           <div class='menuStyle'><span class="spanLeft">收款人：老王</span><span class="spanRight">支付宝</span></div>
           <?php if($orderInfo['status'] != '1'){ ?>
               <div class='menuStyle'><span class="spanLeft"></span>
@@ -79,10 +81,10 @@
               <div class='menuStyle'><span class="spanLeft"></span><button id="revokeOrder_<?php echo $orderInfo['id']; ?>" class='spanRight' >取消订单</button></div>
           <?php } ?>
           <hr>
-            <div class='codeStyle'><span class="spanLeft">二维码：</span>
+          <div class='codeStyle'><span class="spanLeft">二维码：</span>
             <div class="codeAddress"><img src="<?php echo STATIC_URL;?>/images/default_qr.png" /></div>
           </div>
-          <?php } ?>
+        <?php } ?>
 
         </div>
     </div>

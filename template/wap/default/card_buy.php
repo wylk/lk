@@ -150,7 +150,7 @@
             var data = {"type":"transaction","tranId":tranId,"packageId":packageId,"num":num}
             console.log(data);
             $.post("./card_buy.php",data,function(result){
-                console.log(result);
+                // console.log(result);
                 if(!result.res){
                     layer.msg(result.msg,{icon:1,skin:"demo-class"});
                 }else{

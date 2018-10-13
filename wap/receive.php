@@ -27,7 +27,6 @@ if(IS_POST){
     $tranInfo['uid'] != $userId ? true : dexit(['error'=>1,'msg'=>'此交易为本人发布']);
 
 
-
     if($data['number'] <= $datas['quantity']){
         $order_id = D('Orders')->data($data)->add();
 

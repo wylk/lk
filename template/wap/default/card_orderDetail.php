@@ -72,7 +72,7 @@
              <div class='menuStyle'><span class="spanLeft">收款人：老王</span><span class="spanRight">支付宝</span></div>
              <?php if($orderInfo['status'] != '1'){ ?>
               <div class='menuStyle'><span class="spanLeft"></span>
-              <?php if($orderInfo['status'] == '0') echo "<button class='spanRight' id='payMoeny'>未付款</button>" ?> 
+              <?php if($orderInfo['status'] == '0') echo "<button class='spanRight' id='payMoeny'>已付款</button>" ?> 
               <?php if($orderInfo['status'] == '3') echo "<span class='spanRight'>已付款</span>" ?> 
               </div>
             <?php } ?>
@@ -104,7 +104,7 @@
           layer.closeAll("loading");
           if(!result.res){
             layer.msg(result.msg,{icon:1,skin:"demo-class"});
-            // window.location.reload(true);
+            window.location.reload(true);
           }else{
             layer.msg(result.msg,{icon:5,skin:"demo-class"});
           }
@@ -130,7 +130,7 @@
       
     })
     $("[id^=revokeOrder_]").bind("click",function(){
-      // layer.load();
+      layer.load();
       var idStr = $(this).attr("id");
       var orderId = idStr.substring(idStr.indexOf("_")+1);
       var data = {"orderId":orderId,"type":"revokeOrder"};
