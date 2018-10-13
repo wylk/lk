@@ -114,7 +114,7 @@ class hairpin_controller extends base_controller
     public function revokeOrder(){
         $orderId = $_POST['orderId'];
         import("PlatformCurrency");
-        $platformObj = new PlatformCurrency();
+        $platformObj = new PlatformCurrency(['userid'=>$this->userId]);
         $orderRes = $platformObj->revokeOrder($orderId);
         dexit($orderRes);
     }
