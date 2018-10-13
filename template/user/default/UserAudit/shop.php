@@ -52,7 +52,7 @@
             <th>身份证</th>
             <th>营业执照</th>
             <th>提交时间</th>
-            <th>审核时间</th>
+          <!--   <th>审核时间</th> -->
             <th>比例</th>
             <th>状态</th>
             <th>操作</th></tr>
@@ -72,7 +72,7 @@
             <td><img src="<?= $v['img_oneself'] ?>" onclick="previewImg(this,'<?= $v['img_just'] ?>')"></td>
             <td><img src="<?= $v['business_img'] ?>" onclick="previewImg(this,'<?= $v['img_just'] ?>')"></td>
             <td><?= date('Y-m-d H:i:s',$v['create_time']); ?></td>
-            <td><?= date('Y-m-d H:i:s',$v['update_time']); ?></td>
+           <!--  <td><?= date('Y-m-d H:i:s',$v['update_time']); ?></td> -->
             <td><?= $v['ratio'] ?><br/>
               <a title="修改" onclick="x_admin_show('修改','?c=UserAudit&a=ratioModify&id=<?= $v['id'] ?>',400,300)" href="javascript:;">修改</a>
             </td>
@@ -194,8 +194,8 @@
                     str +="</td><td>";
                     str += res['data'][item]['create_time'];
                     str +="</td><td>";
-                    str += res['data'][item]['update_time'];
-                    str +="</td><td>";
+                    // str += res['data'][item]['update_time'];
+                    // str +="</td><td>";
                     str += res['data'][item]['ratio'];
                     str +="<br/><a title='修改'' onclick=\"x_admin_show('修改','?c=UserAudit&a=ratioModify&id="+res['data'][item]['id']+"',400,300)\" href='javascript:;'>修改</a>";
                     str +="</td><td>";

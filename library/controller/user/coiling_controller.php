@@ -36,11 +36,30 @@ class coiling_controller extends base_controller
         $this->display();
     }
 
+        // import('user_page');
+        // $user =D('User')->where(array('isdelete' =>0))->select();
+        // $count=count($user);
+        // $page = new Page(count($user),4);
+        // $res = D('User')->where()->order('`id` DESC')->limit("$page->firstRow, $page->listRows")->select();
+        // $this->assign('page', $page->show());
+        // $this->assign('res',$res);
+        // $this->assign('count',$count);
+        // $this->display();
+
+
+
+
 
 
     public function cards()
     {
-        $card = D('Card')->where()->select();
+        import('user_page');
+        $res = D('Card')->where()->select();
+        $count=count($res);
+        $page = new Page(count($res),2);
+        $card = D('Card')->where()->order('`id` DESC')->limit("$page->firstRow, $page->listRows")->select();
+
+
         $Contract_field = D('Contract_field')->where()->select();
         $Contract_fields = [];
         foreach ($Contract_field as $kk => $vv) {
@@ -54,7 +73,8 @@ class coiling_controller extends base_controller
         }
         // dump($cards);
         $this->assign('cards',$cards);
-
+        $this->assign('page', $page->show());
+        $this->assign('count',$count);
         $this->display();
     }
 

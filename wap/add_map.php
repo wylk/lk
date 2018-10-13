@@ -7,13 +7,14 @@ $phone = isset($wap_user['phone']) ? $wap_user['phone'] : "";
 $res=$_POST;
 $data['lng']=$res['lnglat'][0];
 $data['lat']=$res['lnglat'][1];
-$data['id']=$userId;
+$data['uid']=$userId;
 $data['phone']=$phone;
-$id=D('lk_map')->where(array('id' =>$data['id']))->find();
+
+$id=D('lk_map')->where(array('uid' =>$data['uid']))->find();
 if($id==null){
     $add_lnglat=D('lk_map')->data($data)->add();
 }else{
-    $add_lnglat=D('lk_map')->data($data)->where(array('id' =>$data['id']))->save();
+    $add_lnglat=D('lk_map')->data($data)->where(array('uid' =>$data['uid']))->save();
 }
  dexit(["res"=>0,'msg'=>"设置位置成功"]);
 

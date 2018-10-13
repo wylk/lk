@@ -50,7 +50,7 @@
                 <li>交易量：<?= $v['tran'] ?></li>
                 <li>用户数量：<?= $v['user'] ?></li>
               </ul>
-              <a class="layui-btn layui-btn-primary layui-btn-lg" href="?c=coiling&a=cards">详情</a>
+              <a class="layui-btn layui-btn-primary layui-btn-lg" href="?c=coiling&a=cards">详情22</a>
           </li>
 
           <?php }else{ ?>
@@ -66,7 +66,7 @@
                 <li>交易量：0</li>
                 <li>用户数量：0</li>
               </ul>
-              <a class="layui-btn layui-btn-primary layui-btn-lg" href="">详情</a>
+              <a class="layui-btn layui-btn-primary layui-btn-lg" href="">详情123</a>
           </li>
           <?php }} ?>
           </ul>
