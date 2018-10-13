@@ -42,7 +42,10 @@ if(IS_POST){
 }
 
 $UserAud = D("Card_transaction")->where(array('id'=>$_GET['id']))->find();
-// dump($userId);
+// dump($UserAud);
+$shopInfo = D("User_audit")->where(['uid'=>$UserAud['uid']])->find();
+$addressInfo = D("Map")->where(['uid'=>$UserAud['uid']])->find();
+// dump($shopInfo);
 //添加新卡包
 if(!D('Card_package')->where(['uid'=>$userId,'card_id'=>$UserAud['card_id']])->find()){
     $contract = $_GET['card']?$_GET['card']:'offset';

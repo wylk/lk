@@ -88,8 +88,8 @@
        </div>
    </div>
    <div class="card card-info" style="height: 55px;">
-       <div class="card-info-row">北京川菜馆</div>
-       <div class="card-info-row" style="width: 37%;"><i class="iconfont">&#xe715;</i>北京海淀区苏州街</div>
+       <div class="card-info-row"><?php echo $shopInfo['enterprise']; ?></div>
+       <div class="card-info-row" style="width: 37%;"><i class="iconfont">&#xe715;</i><?php echo $addressInfo['name']; ?></div>
    </div>
    <form>
    <div class="card card-num">
