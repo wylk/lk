@@ -36,7 +36,7 @@ class PlatformCurrency{
         $this->cardType = option("hairpan_set.platform_type_name");
     }
     // 添加账户接口
-    public function addAccountInterface($userdata,$balance=1000){
+    public function addAccountInterface($userdata,$balance=0){
         if($this->interfaceType){
             // dump($userdata);die;
             $addAccountInfo = $this->interfaceAddCount($userdata['phone']);
