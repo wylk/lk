@@ -71,7 +71,19 @@ class order_controller extends base_controller
       }
 
   }
-
+    //订单详情
+  public function oderlists()
+  {
+    $id=$_GET['id'];
+    $res=D('Orders')->where(array('id'=>$id))->find();
+    $sell_id=$res['sell_id'];
+    $buy_id=$res['buy_id'];
+    $sell_name=D('User')->where(array('id'=>$sell_id))->find();
+    $buy_name=D('User')->where(array('id'=>$buy_id))->find();
+    $this->assign('sell_name',$sell_name);
+    $this->assign('buy_name',$buy_name);
+    $this->display();
+  }
     //添加页面
     public function add()
     {

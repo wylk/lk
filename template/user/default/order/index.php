@@ -75,11 +75,12 @@
             <th>成交金额</th>
             <th>订单状态</th>
             <th>下单时间</th>
+            <th>交易详情</th>
             </tr>
         </thead>
         <tbody id="box">
           <?php foreach($order as $k=>$v){ ?>
-          <tr>
+        <tr>
             <td><?= $v['onumber'] ?></td>
             <td><?= $v['number'] ?></td>
             <td><?= $v['prices'] ?></td>
@@ -93,8 +94,10 @@
               }
             ?></td>
 
-
             <td><?= date('Y-m-d H:i:s',$v['create_time']) ?></td>
+            <td>  <a title="更多"  onclick="x_admin_show('详情','?c=order&a=oderlists&id=<?= $v['id'] ?>',350,350)" href="javascript:;">
+                <i class="layui-icon">&#xe705;</i>
+              </a></td>
           </tr>
 
           <?php } ?>
