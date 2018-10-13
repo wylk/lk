@@ -1,22 +1,13 @@
-<?php if(!defined('LEKA_PATH')) exit('deny access!');?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>首页</title>
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.css">
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <!-- <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>  -->
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>/js/common.js" charset="utf-8"></script>
-    <script type="text/javascript">   
-        var plugin = '<?php echo isset($_GET['plugin'])?$_GET['plugin']:1;?>';
-    </script>
-    <style type="text/css">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <title>乐卡</title>
+        <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
+        <style type="text/css">
+        body, html,#allmap {
+        width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";
+        }
         .lk-titles{
           border-bottom: 1px solid #f0f0f0;
           height: 40px;
@@ -32,76 +23,135 @@
           border-bottom: 1px solid red; 
         }
         .stores{
-          margin: 0 auto;
-          text-align: center;
-          width: 95%;
+            margin: 0 auto;
+            text-align: center;
+            width: 95%;
         }
         .store{
-          margin-top:10px;
-          display: flex;
-          line-height: 50px;
+            margin-top:10px;
+            display: flex;
+            align-items:center;
+            height: 80px;
+            background-color: #fff;
+            border-radius: 5px;
+            color:#000;
         }
         .img{
-          width: 20%;
+            width: 20%;
+            line-height: 75px;
+            margin-left: 8px;
         }
         .price{
            width: 50%;
+           height: 80px;
+           font-size: 12px;
+           border-right: 1px dashed #00000040;
+        }
+        .price div{
+            line-height: 40px;
+            margin-left: 10px;
+            text-align: left;
+
         }
         .num{
-           width: 35%;
+            height:80px; 
+            width: 25%;
+        }
+        .num div{
+            line-height: 40px;
         }
         .imgs{
-          height: 37px;
-          width: 37px;
-          margin: 5px auto;
-          border-radius:50%;
+            height: 65px;
+            width: 65px;
+            margin: auto 0;
+            border-radius:5px;
         }
         .num a{
           border-radius: 5px;
         }
-    </style>
-</head>
-<body>
-    <div id="pullrefreshs" style="touch-action: none;">
-        <div>
-            <!-- <header class="lk-bar lk-bar-nav">
-                <i class="iconfont" style="font-size: 20px;">&#xe697;</i>
-                <h1 class="lk-title">首页</h1>
-            </header> -->
-            <div class="mui-input-row mui-search">
-
-                <input type="search" class="mui-input-clear" placeholder="">
-
-            </div>
 
 
-            <div class="lk-content" style="padding-top:0px ">
-                <div class="lk-titles">
-                    <div class="lk-ti <?php echo $_GET['plugin']==1 || empty($_GET['plugin'])?'action':'';?>" data-id="1">抵现卡</div>
-                    <div class="lk-ti <?php echo $_GET['plugin']==2 ?'action':'';?>" data-id="2">积分卡</div>
-                    <div class="lk-ti <?php echo $_GET['plugin']==3 ?'action':'';?>" data-id="3">投票卡</div>
-                    <div class="lk-ti <?php echo $_GET['plugin']==4 ?'action':'';?>" data-id="4">自选</div>
-                </div>
-                <div class="stores" >
-                   <!--  <?php foreach ($storeInfo as $k => $v) { ?>
-                         <div class="store">
-                           <div class="img">
-                               <img src="<?php echo $arrs[$v['uid']]['card_log'] ?>" class="imgs"/>
-                           </div >
-                           <div class="price"><?php echo $v['enterprise'] ?></div>
-                           <div class="num">
-                               <a  href="./home.php?shoreUid=<?php echo $v['uid'] ?>" class="layui-btn home">交易</a>
-                           </div>
-                         </div>
-                     <hr>
-                   <?php } ?> -->
+        #up-map-div{
+            width:100%;
+            height:1500px;
+            top:200px;
+            left:0px;
+            position:absolute;
+            z-index:9999;
+            background-color:rgba(12, 12, 12, 0.8);
+        }
+        </style>
+        <script type="text/javascript">   
+            var plugin = '<?php echo isset($_GET['plugin'])?$_GET['plugin']:1;?>';
+        </script>
+    </head>
+    <body>
+        <div class="lk-titles">
+            <div class="lk-ti <?php echo $_GET['plugin']==1 || empty($_GET['plugin'])?'action':'';?>" data-id="1">餐饮</div>
+            <div class="lk-ti <?php echo $_GET['plugin']==2 ?'action':'';?>" data-id="2">果蔬</div>
+            <div class="lk-ti <?php echo $_GET['plugin']==3 ?'action':'';?>" data-id="3">服装</div>
+            <div class="lk-ti <?php echo $_GET['plugin']==4 ?'action':'';?>" data-id="4">更多</div>
+        </div>
+        <div id="allmap"></div>
+
+        <div id="up-map-div">
+            <div id="touch" style="height: 20px;width: 100%;"></div>
+            <div id="pullrefreshs" style="touch-action: none;">
+                <div>
+                    <div class="lk-content" style="padding-top:0px ">
+                        
+                        <div class="stores" >
+                           
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-  	<?php include display('public_menu');?>
-</body>
+    </body>
 </html>
+<script src="http://code.jquery.com/jquery-1.8.0.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo TPL_URL;?>js/index.js?r=<?=time();?>"></script>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");    // 创建Map实例
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别  
+    map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+</script>   
+<script>
+var startX,//触摸时的坐标
+    startY,
+     x, //滑动的距离
+     y,
+     aboveY=200; //设一个全局变量记录上一次内部块滑动的位置 
 
-  
+var inner=document.getElementById("up-map-div");
+
+function touchSatrt(e){//触摸
+    e.preventDefault();
+    var touch=e.touches[0];
+    startY = touch.pageY;   //刚触摸时的坐标              
+}
+function touchMove(e){//滑动          
+     e.preventDefault();        
+     var  touch = e.touches[0];               
+     y = touch.pageY - startY;//滑动的距离
+    //inner.style.webkitTransform = 'translate(' + 0+ 'px, ' + y + 'px)';  //也可以用css3的方式 
+    console.log(inner.style.top); 
+    console.log(aboveY+y); 
+    if((aboveY+y) < 40){
+        inner.style.top="40px"; //这一句中的aboveY是inner上次滑动后的位置                   
+    } else{
+        inner.style.top=aboveY+y+"px"; //这一句中的aboveY是inner上次滑动后的位置                   
+    }  
+}  
+function touchEnd(e){//手指离开屏幕
+  e.preventDefault(); 
+  aboveY=parseInt(inner.style.top);//touch结束后记录内部滑块滑动的位置 在全局变量中体现 一定要用parseInt()将其转化为整数字;            
+}//
+ document.getElementById("touch").addEventListener('touchstart', touchSatrt,false);  
+ document.getElementById("touch").addEventListener('touchmove', touchMove,false);  
+ document.getElementById("touch").addEventListener('touchend', touchEnd,false);  
+</script>
