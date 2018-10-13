@@ -39,16 +39,18 @@
             <p style="color:gray;">
               <?php if($orderInfo['status'] == '0') echo "未收款" ?> 
               <?php if($orderInfo['status'] == '1') echo "交易成功" ?> 
-              <?php if($orderInfo['status'] == '2') echo "订单超时" ?> 
+              <?php if($orderInfo['status'] == '2') echo "交易取消" ?> 
               <?php if($orderInfo['status'] == '3') echo "已收款" ?> 
+              <?php if($orderInfo['status'] == '4') echo "订单超时" ?> 
             </p>
            <?php } ?>
            <?php if($orderInfo['buy_id'] == $userId){ ?>
            <p style="color:gray;">
               <?php if($orderInfo['status'] == '0') echo "未付款" ?> 
               <?php if($orderInfo['status'] == '1') echo "交易成功" ?> 
-              <?php if($orderInfo['status'] == '2') echo "订单超时" ?> 
+              <?php if($orderInfo['status'] == '2') echo "交易取消" ?> 
               <?php if($orderInfo['status'] == '3') echo "已付款" ?> 
+              <?php if($orderInfo['status'] == '4') echo "订单超时" ?> 
            </p>
            <?php } ?>
           </span></div>
@@ -61,10 +63,10 @@
           <hr>
           <?php if($orderInfo['sell_id'] == $userId){ ?>
             <div class='menuStyle'><span class="spanLeft">交易状态：</span>
-            <?php echo $orderInfo['status'] == '1' ? "<span class='spanRight' >已转账</span>" : 
-            "<button class='spanRight' id='confirmTran'>确认收款</button>" ?>
+            <?php echo $orderInfo['status'] == '1' ? "<span class='spanRight' >已转账</span>" :
+            (!in_array($orderInfo['status'], ['2','4']) ? "<button class='spanRight' id='confirmTran'>确认收款</button>" : "<span class='spanRight' >交易取消</span>")  ?>
           </div>
-            <?php if(!in_array($orderInfo['status'],['1','2','3'])){ ?>
+            <?php if(in_array($orderInfo['status'],['0','3'])){ ?>
               <div class='menuStyle'><span class="spanLeft"></span><button id="revokeOrder_<?php echo $orderInfo['id']; ?>" class='spanRight' >取消订单</button></div>
             <?php } ?>
           <?php } ?>

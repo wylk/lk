@@ -20,7 +20,7 @@ if(IS_POST && $_POST['type'] == "payMoeny"){
 if(IS_POST && $_POST['type'] == "revokeOrder"){
 	$orderId = $_POST['orderId'];
 	import("PlatformCurrency");
-	$platformObj = new PlatformCurrency();
+	$platformObj = new PlatformCurrency(['userid'=>$userId]);
 	$orderRes = $platformObj->revokeOrder($orderId);
 	dexit($orderRes);
 }

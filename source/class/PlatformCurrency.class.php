@@ -350,17 +350,26 @@ class PlatformCurrency{
         if($orderInfo['tran_id'] != $orderInfo['tran_other'] && !empty($orderInfo['tran_other'])){
             $frozenList[$orderInfo['tran_other']] = ['id'=>$orderInfo['tran_other'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
         }
-        // // 保证金数据处理  （转账直接成功后处理的，撤销订单无需处理）
-        if(!empty($orderInfo['bail']) && $orderInfo['bail'] > 0){
-            // $bailWhere = ['uid'=>$orderInfo['sell_id'],'type'=>$this->cardType];
-            // $packageInfo = D("Card_package")->where($bailWhere)->find();
+        // 市场直卖单
+        if($this->userId == $orderInfo['sell_id'] && $orderInfo['tran_id'] == $orderInfo['tran_other']){
+            // 保证金数据处理  （转账直接成功后处理的，撤销订单无需处理）
+            if(!empty($orderInfo['bail']) && $orderInfo['bail'] > 0){
+                $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['bail'],"field"=>"bail"];
+            }
             $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
-            $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['bail'],"field"=>"bail"];
             $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"+","step"=>$orderInfo['number']+$orderInfo['bail'],"field"=>"num"];
-            // D("Card_package")->where($bailWhere)->setInc('num',$orderInfo['bail']);
-            // D("Card_package")->where($bailWhere)->setDec('bail',$orderInfo['bail']);
             M("Card_package")->dataModification($packageList);
         }
+        // // // 保证金数据处理  （转账直接成功后处理的，撤销订单无需处理）
+        // if(!empty($orderInfo['bail']) && $orderInfo['bail'] > 0){
+        //     // $bailWhere = ['uid'=>$orderInfo['sell_id'],'type'=>$this->cardType];
+        //     // $packageInfo = D("Card_package")->where($bailWhere)->find();
+        //     $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
+        //     $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['bail'],"field"=>"bail"];
+        //     // $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"+","step"=>$orderInfo['number']+$orderInfo['bail'],"field"=>"num"];
+        //     // D("Card_package")->where($bailWhere)->setInc('num',$orderInfo['bail']);
+        //     // D("Card_package")->where($bailWhere)->setDec('bail',$orderInfo['bail']);
+        // }
         $frozenList[$orderInfo['tran_id']] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
         $this->tradeSheetFrozen($frozenList);
         // $this->
