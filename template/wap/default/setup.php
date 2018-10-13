@@ -197,7 +197,7 @@
                        $.ajax({
                                 type:"post",
                                 url:"http://lk.com/wap/map_name.php",
-                                data:{map_name:input},
+                                data:{name:input},
                                 dataType:'json',
                                 success:function(r){
                                     if(r.res=1){

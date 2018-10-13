@@ -63,10 +63,10 @@
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon" id="set">&#xe615;</i></button>
        <!--  </form> -->
       </div>
-      <xblock>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','?c=order&a=add')"><i class="layui-icon"></i>添加</button>
+     <!--  <xblock>
+        <button class="layui-btn" onclick="x_admin_show('添加用户','?c=order&a=add')"><i class="layui-icon"></i>添加</button> -->
         <span class="x-right" style="line-height:40px">共有数据：<?php  echo $num ?>条</span>
-      </xblock>
+
       <table class="layui-table">
         <thead>
           <tr>

@@ -83,7 +83,7 @@
               ?>
             </td>
             <td class="td-manage">
-               <a title="更多"  onclick="x_admin_show('详情','?c=user&a=lists&id=<?= $v['id'] ?>',1000)" href="javascript:;">
+               <a title="更多"  onclick="x_admin_show('详情','?c=user&a=lists&id=<?= $v['id'] ?>',350,350)" href="javascript:;">
                 <i class="layui-icon">&#xe705;</i>
               </a>
               <a title="编辑"  onclick="x_admin_show('编辑','?c=user&a=edit&id=<?= $v['id'] ?>',550,200)" href="javascript:;">
