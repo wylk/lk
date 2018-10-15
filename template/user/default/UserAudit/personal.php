@@ -93,7 +93,7 @@
                   <a onclick="member_stop(this,'<?= $v['id'] ?>')" href="javascript:;"  title="审核通过">
                   <i class="layui-icon">&#x1005;</i>
                   </a>
-                  <a onclick="x_admin_show('驳回申请','?c=userAudit&a=feedback&id=<?= $v['id'] ?>&status=<?= $v['status'] ?>',600,400)" title="驳回申请" href="javascript:;">
+                  <a onclick="x_admin_show('驳回申请','?c=userAudit&a=pback&id=<?= $v['id'] ?>&status=<?= $v['status'] ?>',600,400)" title="驳回申请" href="javascript:;">
                     <i class="layui-icon">&#x1007;</i>
                   </a>
               <?php } ?>
@@ -188,7 +188,7 @@
                     if(res['data'][item]['status'] == 2) str += '审核不通过';
                     str +="</td><td class='td-manage'><a title='详情''  onclick=\"x_admin_show('详情','?c=UserAudit&a=lists&id="+res['data'][item]['id']+"',1000)\" href='javascript:;'><i class='layui-icon'>&#xe705;</i></a>";
 
-               if(res['data'][item]['status']==0 || res['data'][item]['status']==2) str+= "<a onclick=\"member_stop(this,'"+res['data'][item]['id']+"')\" href='javascript:;'  title='审核通过'><i class='layui-icon'>&#x1005;</i></a><a onclick=\"x_admin_show('驳回申请','?c=userAudit&a=feedback&id="+res['data'][item]['id']+" ?>&status="+res['data'][item]['status']+",600,400)\" title='驳回申请' href='javascript:;'><i class='layui-icon'>&#x1007;</i></a><a title='删除' onclick=\"member_del(this,"+res['data'][item]['id']+")\" href='javascript:;'><i class='layui-icon'>&#xe640;</i></a>"
+               if(res['data'][item]['status']==0 || res['data'][item]['status']==2) str+= "<a onclick=\"member_stop(this,'"+res['data'][item]['id']+"')\" href='javascript:;'  title='审核通过'><i class='layui-icon'>&#x1005;</i></a><a onclick=\"x_admin_show('驳回申请','?c=userAudit&a=pback&id="+res['data'][item]['id']+" ?>&status="+res['data'][item]['status']+",600,400)\" title='驳回申请' href='javascript:;'><i class='layui-icon'>&#x1007;</i></a><a title='删除' onclick=\"member_del(this,"+res['data'][item]['id']+")\" href='javascript:;'><i class='layui-icon'>&#xe640;</i></a>"
                 str +="</td></tr>";
 
                 $('#box').append(str);

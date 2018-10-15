@@ -62,7 +62,7 @@ class UserAudit_controller extends base_controller
     }
 
     //商户审核没通过，反馈信息
-    public function feedback()
+    public function back()
     {
 
         $gets = $this->clear_html($_GET);
@@ -127,7 +127,7 @@ class UserAudit_controller extends base_controller
     }
 
     //个人审核没通过，反馈信息
-    public function pfeedback()
+    public function pback()
     {
         $gets = $this->clear_html($_GET);
         $res = D('User_audit')->where(array('id'=>$gets['id']))->find();
