@@ -27,6 +27,7 @@ class hairpin_controller extends base_controller
 
         // 交易记录
         $books = D("Record_books")->where("type = '".$this->cardType."'")->select();
+        // dump($books);
 
         $this->assign('datas',$datas);
         $this->assign('userInfo',$this->userInfo);
@@ -42,7 +43,7 @@ class hairpin_controller extends base_controller
         $platformObj = new PlatformCurrency();
 
         $addAccountRes = $platformObj->addAccountInterface($userdata,$this->balance);
-        $userInfo = D("User")->where(['phone'=>$this->phone])->find();
+        // $userInfo = D("User")->where(['phone'=>$this->phone])->find();
 
         // D("Card_package")->data(['num'=>$this->balance])->where(['uid'=>$userInfo['id'],"type"=>$this->cardType])->save();
         dexit($addAccountRes);

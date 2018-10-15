@@ -441,7 +441,7 @@ class PlatformCurrency{
         $this->tradeSheetFrozen($frozenList);
 
         // 转账记录
-        $this->recordBooks(["cardId"=>$orderInfo['card_id'],'getAddress'=>$buyInfo['address'],"sendAddress"=>$sellInfo['address'],"num"=>$orderInfo['number'],"order"=>$orderInfo['price']]);
+        $this->recordBooks(["cardId"=>$orderInfo['card_id'],'getAddress'=>$buyInfo['address'],"sendAddress"=>$sellInfo['address'],"num"=>$orderInfo['number'],"price"=>$orderInfo['price']]);
 
         // 检测交易单是否完成 并修改状态
         $this->judgeTrade(['tranId'=>$orderInfo['tran_id'],"tranOther"=>$orderInfo['tran_other'],"sellId"=>$orderInfo['sell_id']]);

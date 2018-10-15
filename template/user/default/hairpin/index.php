@@ -127,8 +127,8 @@
                   <tbody>
                     <?php foreach($books as $key=>$value){ ?>
                         <tr>
-                            <td><?php echo $value['send_address']; ?></td>
-                            <td><?php echo $value['get_address']; ?></td>
+                            <td title="<?php echo $value['send_address'] ?>"><?php echo substr($value['send_address'],0,10); ?>...</td>
+                            <td title="<?php echo $value['get_address']; ?>"><?php echo substr($value['get_address'],0,10); ?>...</td>
                             <td><?php echo number_format($value['num'],2); ?></td>
                             <td><?php echo number_format($value['num']*$value['price'],2); ?></td>
                             <td><?php echo date("Y-m-d H:i:s",$value['createtime']); ?></td>
