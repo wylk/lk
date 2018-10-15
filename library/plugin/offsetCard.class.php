@@ -82,43 +82,6 @@ class offsetCard extends Card
     	echo "in verification";
     }
 
-    //首页展示
-
-    public function indexHtml($data)
-    {
-        $type = "offset";
-        $store_package = D('')->table("Card_package as a")
-                              ->join('User_audit as b ON a.uid=b.uid','LEFT')
-                              ->join('Card as c ON a.uid=c.uid','LEFT')
-                              ->where("a.type='".$type."' and a.is_publisher=1 and c.c_id=2 and c.type='offset' and b.status=1 and b.isdelete=0")
-                              ->field("a.card_id as card_id,b.*,c.val as logo")
-                              ->limit((($data['i']-1)*10).",10")
-                              ->select();
-        if($store_package){
-
-        $str = '';
-        foreach ($store_package as $k => $v) {
-            $str .=  <<<EOM
-            <div class="store">
-                            <div class="img">
-                                <img src="{$v['logo']}" class="imgs"/>
-                            </div >
-                            <div class="price">{$v['enterprise']}</div>
-                            <div class="num">
-                                <a  href="./home.php?card_id={$v['card_id']}&plugin=offset&shoreUid={$v['uid']}" class="layui-btn home">交易</a>
-                            </div>
-                          </div>
-                      <hr>
-EOM;
-        }
-            dexit(['error'=>0,'msg'=>$str]);
-        }else{
-            dexit(['error'=>1,'msg'=>'加载完成']);
-        }
-       
-
-    }
-
     public function homeHtml($data)
     {
         $datas = D('')->table("Card_transaction as a")
