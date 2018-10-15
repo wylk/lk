@@ -464,7 +464,46 @@ class PlatformCurrency{
         }
         return ['res'=>0,"msg"=>"转账成功",'frozen'=>$frozenList,'bailInfo'=>$bailInfo,'orderInfo'=>$orderInfo,'data'=>$data,'balanceRes'=>$balanceRes];
     }
-    public function tranEachOther(){}
+    public function tranEachOther($sendAddress,$getAddress,$num){
+        $sellInfo = D("Card_package")->where(['address'=>$sendAddress])->find();
+        $buyInfo = D("Card_package")->where(['address'=>$getAddress])->find();
+
+        // 检测保证金
+        $res = $this->checkBail();
+            // 保证金比例为100%
+        if($res['error'] == '101') return ['res'=>1,"msg"=>$res['msg']];
+        else if($res['error'] == '102'){
+            $bailNum = $num*(int)$this->bailRatio/100;
+            $tranNum = $num - $bailNum;
+            $packageList[] = ['id'=>$sellInfo['id'],'operator'=>'+','step'=>$bailNum,'field'=>'bail'];
+        }else{
+            $tranNum = $num;
+            $bailNum = 0;
+        }
+        // 转账接口调用
+        if($this->interfaceType){
+            // 转账接口
+            $blockchainRes = $this->blockchainInterface($sellInfo,$buyInfo,$tranNum);
+            if($blockchainRes['res']) return $blockchainRes;
+            $buyRes = $blockchainRes['buyRes'];
+            $sellRes = $blockchainRes['sellRes'];
+        }else{
+            $imitateRes = $this->imitateInterface($sellInfo,$buyInfo,$tranNum);
+            if($imitateRes['res']) return $imitateRes;
+            $buyRes = $buyInfo['num']+$tranNum+$buyInfo['frozen']+$buyInfo['bail'];
+            $sellRes = $sellInfo['num']-$tranNum+$sellInfo['frozen']+$sellInfo['bail'];
+        }
+        $buyLastNum = $buyRes - $buyInfo['frozen'] - $buyInfo['bail'];
+        $sellLastNum = $sellRes - $sellInfo['frozen'] - $sellInfo['bail'] - $bailNum;
+        $packageList[] = ['id'=>$sellInfo['id'],'operator'=>'=','step'=>$sellLastNum,'field'=>'num'];
+        $packageList[] = ['id'=>$buyInfo['id'],'operator'=>'=','step'=>$buyLastNum,'field'=>'num'];
+        M("Card_package")->dataModification($packageList);
+
+        // 转账记录
+        $this->recordBooks(["cardId"=>$sellInfo['card_id'],'getAddress'=>$buyInfo['address'],"sendAddress"=>$sellInfo['address'],"num"=>$tranNum,"price"=>'0']);
+        return ['res'=>0,"msg"=>"转账成功"];
+
+    }
 
     // 判断交易单是否完成
     public function judgeTrade($data){

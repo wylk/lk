@@ -33,10 +33,13 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	
 	// 添加账本信息
 	// 判断转账卡券类型
-	$platformType = option("hairpan_set.platform_type_name")
+	$platformType = option("hairpan_set.platform_type_name");
 	switch ($cardType) {
 		case $platformType:
-			# code...
+			import("PlatformCurrency");
+            $platformObj = new PlatformCurrency(['userid'=>$userId]);
+            $res = $platformObj->tranEachOther($sendAddress,$getAddress,$num);
+            if($res['res']) dexit($res);
 			break;
 		default:
 			import("AccountBook");
@@ -56,10 +59,8 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 			$getRes = D("Card_package")->where(['address'=>$getAddress])->setInc("num",$num);
 			
 			D("Card_package")->where(['address'=>$getAddress])->setInc("recovery_count",$num);
+			if(!($getRes || $sendRes)) dexit(['res'=>1,"msg"=>"转账失败！"]);
 			break;
-	}
-	if(!($getRes || $sendRes)){
-		dexit(['res'=>1,"msg"=>"转账失败！"]);
 	}
 
 	dexit(['res'=>0,"msg"=>"转账成功！","isPublisher"=>$isPublisher]);
