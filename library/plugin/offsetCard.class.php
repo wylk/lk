@@ -82,7 +82,6 @@ class offsetCard extends Card
     	echo "in verification";
     }
 
-    //首页展示
     public function homeHtml($data)
     {
         $datas = D('')->table("Card_transaction as a")
