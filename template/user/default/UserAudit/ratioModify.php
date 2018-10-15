@@ -42,7 +42,7 @@
             <!-- <center><button class="layui-btn" layui-submit lay-filter="ratio" >确定</button></center> -->
             <center><a class="layui-btn" onclick="modify()" href="javascript:;">确定</a></center>
           </div>
-          
+
       </form>
     </div>
 <script type="text/javascript">
@@ -55,7 +55,7 @@ function modify(){
   var auditId = $("#auditId").val();
   var data = {ratio:ratio,auditId:auditId};
   console.log(data);
-  $.post('?c=UserAudit&a=ratioModify',data,function(res){
+  $.post('?c=userAudit&a=ratioModify',data,function(res){
     console.log(res);
     if(!res.res){
       layer.msg(res.msg,{icon:1,time:2000});

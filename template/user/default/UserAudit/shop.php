@@ -74,7 +74,7 @@
             <td><?= date('Y-m-d H:i:s',$v['create_time']); ?></td>
            <!--  <td><?= date('Y-m-d H:i:s',$v['update_time']); ?></td> -->
             <td><?= $v['ratio'] ?><br/>
-              <a title="修改" onclick="x_admin_show('修改','?c=UserAudit&a=ratioModify&id=<?= $v['id'] ?>',400,300)" href="javascript:;">修改</a>
+              <a title="修改" onclick="x_admin_show('修改','?c=userAudit&a=ratioModify&id=<?= $v['id'] ?>',400,300)" href="javascript:;">修改</a>
             </td>
             <td>
               <?php if($v['status']==0){
@@ -87,7 +87,7 @@
               ?>
             </td>
             <td class="td-manage">
-              <a title="详情"  onclick="x_admin_show('详情','?c=UserAudit&a=lists&id=<?= $v['id'] ?>',1000)" href="javascript:;">
+              <a title="详情"  onclick="x_admin_show('详情','?c=userAudit&a=lists&id=<?= $v['id'] ?>',1000)" href="javascript:;">
                 <i class="layui-icon">&#xe705;</i>
               </a>
               <?php if($v['status']==0 || $v['status']==2){ ?>
@@ -181,7 +181,7 @@
       }
        $('#set').click(function(){
                var enterprise=$('.layui-input').val();
-               $.post('?c=UserAudit&a=index_to',{enterprise:enterprise}, function(res) {
+               $.post('?c=userAudit&a=index_to',{enterprise:enterprise}, function(res) {
                console.log(res);
                if(res.error == 0){
                   $('#box').empty();
@@ -202,7 +202,7 @@
                     if(res['data'][item]['status'] == 0) str += '待审核';
                     if(res['data'][item]['status'] == 1) str += '审核通过';
                     if(res['data'][item]['status'] == 2) str += '审核不通过';
-                    str +="</td><td class='td-manage'><a title='详情''  onclick=\"x_admin_show('详情','?c=UserAudit&a=lists&id="+res['data'][item]['id']+"',1000)\" href='javascript:;'><i class='layui-icon'>&#xe705;</i></a>";
+                    str +="</td><td class='td-manage'><a title='详情''  onclick=\"x_admin_show('详情','?c=userAudit&a=lists&id="+res['data'][item]['id']+"',1000)\" href='javascript:;'><i class='layui-icon'>&#xe705;</i></a>";
 
                if(res['data'][item]['status']==0 || res['data'][item]['status']==2) str+= "<a onclick=\"member_stop(this,'"+res['data'][item]['id']+"')\" href='javascript:;'  title='审核通过'><i class='layui-icon'>&#x1005;</i></a><a onclick=\"x_admin_show('驳回申请','?c=userAudit&a=back&id="+res['data'][item]['id']+" ?>&status="+res['data'][item]['status']+",600,400)\" title='驳回申请' href='javascript:;'><i class='layui-icon'>&#x1007;</i></a><a title='删除' onclick=\"member_del(this,"+res['data'][item]['id']+")\" href='javascript:;'><i class='layui-icon'>&#xe640;</i></a>"
                 str +="</td></tr>";
