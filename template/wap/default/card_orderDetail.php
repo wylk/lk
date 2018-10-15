@@ -66,7 +66,7 @@
             <?php echo $orderInfo['status'] == '1' ? "<span class='spanRight' >已转账</span>" :
             (!in_array($orderInfo['status'], ['2','4']) ? "<button class='spanRight' id='confirmTran'>确认收款</button>" : "<span class='spanRight' >交易取消</span>")  ?>
           </div>
-            <?php if(in_array($orderInfo['status'],['0','3'])){ ?>
+            <?php if(in_array($orderInfo['status'],['0'])){ ?>
               <div class='menuStyle'><span class="spanLeft"></span><button id="revokeOrder_<?php echo $orderInfo['id']; ?>" class='spanRight' >取消订单</button></div>
             <?php } ?>
           <?php } ?>
