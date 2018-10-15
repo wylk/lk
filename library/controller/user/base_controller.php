@@ -24,6 +24,7 @@ class base_controller extends controller{
         $id = $_SESSION["admin"]["id"];
         $authorityData = D('')->table(array('RoleAdmin'=>'p','Access'=>'t','Auth'=>'y'))->field('*')->where("`p`.`admin_id`= $id AND `p`.`role_id`=`t`.`role_id` AND `t`.`auth_id`=`y`.`id`")->order('`y`.`id` ASC')->select();
         // dump($authorityData);
+        // dump($controlName);dump($methodName);
         $returnData = $this->judgeAuthority($controlName, $methodName, $authorityData);
         if($_SESSION['admin']['name']=='admin'){
             $returnData['responseCode'] == '101';
@@ -37,18 +38,18 @@ class base_controller extends controller{
 	}
 
     private function judgeAuthority($controlName, $methodName, $authorityData){
-        $index = array('auth_c' => 'index','auth_a' => 'index');
-        $welcome = array('auth_c' => 'index','auth_a' => 'welcome');
-        $logout = array('auth_c' => 'index','auth_a' => 'logout');
-        $logout[] = array('auth_c' => 'config','auth_a' => 'uploadFile');
-        array_push($authorityData,$index,$welcome,$logout);
+        $auth_c = ['index','config'];
+        $auth_a = ['index'=>['index','welcome','logout'],'config'=>['uploadFile']];
         foreach ($authorityData as $k => $v) {
-
-            if($v['auth_c'] == $controlName && $v['auth_a'] == $methodName){
-                $responseData = array('responseCode'=>'101', 'responseMessage'=>'可以访问');
-                return $responseData;
-                break;
-            }
+            if(!in_array($v['auth_c'],$auth_c))
+                $auth_c[] = $v['auth_c'];
+            if(!in_array($v['auth_a'],$auth_a[$v['auth_c']]))
+                $auth_a[$v['auth_c']][] = $v['auth_a'];
+        }
+        if(in_array($controlName,$auth_c) && in_array($methodName,$auth_a[$controlName])){
+            $responseData = array('responseCode'=>'101', 'responseMessage'=>'可以访问');
+            return $responseData;
+            break;
         }
         $responseData = array('responseCode'=>'100', 'responseMessage'=>'没有权限');
         return $responseData;

@@ -33,7 +33,12 @@
                   <span class="x-red">*</span>卖家名称
               </label>
               <div class="layui-input-inline" style="margin-top: 30px;">
-                <?= $sell_name['name'] ?>
+
+                <?php if($sell_name['name']==''){?>
+                   <?= $sell_name['phone'] ?>
+                <?php }else{?>
+                   <?= $sell_name['name'] ?>
+                <?php } ?>
               </div>
           </div>
            <div class="layui-form-item">
@@ -41,7 +46,12 @@
                   <span class="x-red">*</span>买家名称
               </label>
              <div class="layui-input-inline" style="margin-top: 30px;">
-                <?= $buy_name['name'] ?>
+
+                <?php if($buy_name['name']==''){?>
+                   <?= $buy_name['phone'] ?>
+                <?php }else{?>
+                      <?= $buy_name['name'] ?>
+                <?php } ?>
               </div>
           </div>
 
