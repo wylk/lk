@@ -90,7 +90,7 @@
         <hr>
         <?php foreach ($sellList as $key => $value) { ?>
         <?php if($value['num'] <= $value['frozen']) continue; ?>
-        <div class="lk-container-flex">
+        <div class="lk-container-flex" id="tran_<?php echo $value['id'] ?>">
             <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
                 <p class="item-flex">王**</p>
                 <p class="item-flex"><span id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></span>WLK</p>
@@ -153,6 +153,8 @@
                 // console.log(result);
                 if(!result.res){
                     layer.msg(result.msg,{icon:1,skin:"demo-class"});
+                    $("#tran_"+tranId).remove();
+                    // window.location.reload(true);
                 }else{
                     layer.msg(result.msg,{icon:5,skin:"demo-class"});
                 }
@@ -167,6 +169,7 @@
                 console.log(result);
                 if(!result.res){
                     layer.msg(result.msg,{icon:1,skin:"demo-class"});
+                    // window.location.reload(true);
                     $("#register_"+tranId).remove();
                     // window.location.reload(true);
                 }else{
