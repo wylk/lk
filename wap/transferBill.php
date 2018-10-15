@@ -39,7 +39,7 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 		dexit(['res'=>1,"msg"=>"添加账本错误"]);
 	}
 	// 添加交易记录
-	$recodRes = D("Record_books")->data(['card_id'=>$cardId,'send_address'=>$sendAddress,'get_address'=>$getAddress,'num'=>$num,"createtime"=>time()])->add();
+	$recodRes = D("Record_books")->data(['card_id'=>$cardId,'send_address'=>$sendAddress,'get_address'=>$getAddress,'num'=>$num,"type"=>$sendAdressInfo['type'],"createtime"=>time()])->add();
 	if(!$recodRes){
 		dexit(['res'=>1,"msg"=>"记录添加失败","other"=>$recodRes]);
 	}

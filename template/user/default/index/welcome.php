@@ -26,37 +26,37 @@
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>发布人数</h3>
-                                                <p><cite><?php echo $peopleTotal; ?></cite></p>
+                                                <p><cite><?php echo number_format($peopleTotal,2); ?></cite></p>
                                             </a>
                                         </li>
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>发布卡数量</h3>
-                                                <p><cite><?php echo $packageTotal ?></cite></p>
+                                                <p><cite><?php echo number_format($packageTotal,2) ?></cite></p>
                                             </a>
                                         </li>
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>交易量</h3>
-                                                <p><cite><?php echo $transactionNum; ?></cite></p>
+                                                <p><cite><?php echo number_format($transactionNum,2); ?></cite></p>
                                             </a>
                                         </li>
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>今日交易量</h3>
-                                                <p><cite><?php echo $transactionNumToday; ?></cite></p>
+                                                <p><cite><?php echo number_format($transactionNumToday,2); ?></cite></p>
                                             </a>
                                         </li>
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>今日发布人数</h3>
-                                                <p><cite><?php echo $peopleNumToday; ?></cite></p>
+                                                <p><cite><?php echo number_format($peopleNumToday,2); ?></cite></p>
                                             </a>
                                         </li>
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>今日发布卡数量</h3>
-                                                <p><cite><?php echo $packageNumToday ?></cite></p>
+                                                <p><cite><?php echo number_format($packageNumToday,2) ?></cite></p>
                                             </a>
                                         </li>
                                     </ul>

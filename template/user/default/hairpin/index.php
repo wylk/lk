@@ -63,42 +63,37 @@
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>全部卖单</h3>
-                                                <p>
-                                                    <cite>66</cite></p>
+                                                <p><cite><?php echo number_format($datas['sellNumTotal'],2); ?></cite></p>
                                             </a>
                                         </li>
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>全部买单</h3>
-                                                <p> <cite>12</cite></p>
+                                                <p><cite><?php echo number_format($datas['buyNumTotal'],2); ?></cite></p>
                                             </a>
                                         </li>
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>申诉单</h3>
-                                                <p>
-                                                    <cite>99</cite></p>
+                                                <p><cite>99</cite></p>
                                             </a>
                                         </li>
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>今日交易量</h3>
-                                                <p>
-                                                    <cite>67</cite></p>
+                                                <p><cite><?php echo number_format($datas['tranNumToday'],2); ?></cite></p>
                                             </a>
                                         </li>
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>全部交易量</h3>
-                                                <p>
-                                                    <cite>67</cite></p>
+                                                <p><cite><?php echo number_format($datas['tranNumTotal'],2); ?></cite></p>
                                             </a>
                                         </li>
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>账户余额</h3>
-                                                <p>
-                                                    <cite>6766</cite></p>
+                                                <p><cite><?php echo number_format($datas['totalNumNow'],2); ?></cite></p>
                                             </a>
                                         </li>
                                     </ul>
@@ -130,6 +125,15 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <?php foreach($books as $key=>$value){ ?>
+                        <tr>
+                            <td><?php echo $value['send_address']; ?></td>
+                            <td><?php echo $value['get_address']; ?></td>
+                            <td><?php echo number_format($value['num'],2); ?></td>
+                            <td><?php echo number_format($value['num']*$value['price'],2); ?></td>
+                            <td><?php echo date("Y-m-d H:i:s",$value['createtime']); ?></td>
+                        </tr>
+                    <?php } ?>
                     <?php for($i = 0; $i < 10 ; $i++){?>
                     <tr>
                       <td>老王</td>

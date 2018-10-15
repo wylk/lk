@@ -13,17 +13,25 @@ class hairpin_controller extends base_controller
         $this->userInfo = D("User")->where(['phone'=>$phone['phone']])->find();
         $this->phone = $phone['phone'];
         $this->userId = $this->userInfo['id'];
+        $this->cardType = option("hairpan_set.platform_type_name");
     }
     //平台币管理
     public function index()
     {
-        $datas=[];
-        // $phone = D("Admin")->field("phone")->where(['name'=>"admin"])->find();
-        // $userInfo = D("User")->where(['phone'=>$this->phone])->find();
+        $packageInfo = D("Card_package")->where(['uid'=>$this->userId,"type"=>$this->cardType])->find();
+        $datas['totalNumNow'] = $packageInfo['num']+$packageInfo['frozen'];
+        $datas['sellNumTotal'] = $packageInfo['sell_count'];
+        $datas['buyNumTotal'] = $packageInfo['recovery_count'];
+        $datas['tranNumTotal'] = D("Record_books")->where("type = '".$this->cardType."' and createtime < ".strtotime(date("Y-m-d")))->sum("num");
+        $datas['tranNumToday'] = D("Record_books")->where("type = '".$this->cardType."' and createtime >= ".strtotime(date("Y-m-d")))->sum("num");
+
+        // 交易记录
+        $books = D("Record_books")->where("type = '".$this->cardType."'")->select();
 
         $this->assign('datas',$datas);
         $this->assign('userInfo',$this->userInfo);
         $this->assign('phone',$this->phone);
+        $this->assign('books',$books);
         $this->display();
     }
 
@@ -34,7 +42,6 @@ class hairpin_controller extends base_controller
         $platformObj = new PlatformCurrency();
 
         $addAccountRes = $platformObj->addAccountInterface($userdata,$this->balance);
-        // var_dump($addAccountRes);die;
         $userInfo = D("User")->where(['phone'=>$this->phone])->find();
 
         // D("Card_package")->data(['num'=>$this->balance])->where(['uid'=>$userInfo['id'],"type"=>$this->cardType])->save();

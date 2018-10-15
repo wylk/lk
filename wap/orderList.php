@@ -6,7 +6,7 @@ $userId = $wap_user['userid'];
 
 // 未付账订单
 $where = " and out_trade_no != ''";
-$unpaidOrderList = D("Orders")->where("buy_id=".$userId." and status=0 and ".$where)->order("create_time desc")->select();
+$unpaidOrderList = D("Orders")->where("buy_id=".$userId." and status=0 ".$where)->order("create_time desc")->select();
 // 付款订单
 $paidOrderList = D("Orders")->where("buy_id = ".$userId." and status = 1".$where)->order("create_time desc")->select();
 // 全部订单

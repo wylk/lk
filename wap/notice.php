@@ -29,7 +29,7 @@ if($payType == 'platform'){
 	// 平台币转账
 	import("PlatformCurrency");
     $platformObj = new PlatformCurrency();
-	$platformObj->payTran($order['sell_id'],$order['buy_id'],$order['number']);
+	$platformObj->payTran($order['sell_id'],$order['buy_id'],$order['number'],$order['price']);
 	// dexit()
 	// $dataEdit[] = ['id'=>['val'=>$order['buy_id'],"field"=>"uid"],'field'=>"num","operator"=>"-","step"=>$order['number']];
 	// $dataEdit[] = ['id'=>['val'=>$order['sell_id'],"field"=>"uid"],'field'=>"num","operator"=>"+","step"=>$order['number']];
@@ -64,7 +64,7 @@ D('Card_package')->where(array('uid'=>$order['buy_id'],'card_id'=>$order['card_i
 
 D('Orders')->data(['status'=>1])->where(array('out_trade_no' =>$data['out_trade_no']))->save();
 // 添加交易记录
-D("Record_books")->data(['card_id'=>$order['card_id'],"send_address"=>$sendAddress['address'],'get_address'=>$getAddress['address'],'num'=>$order['number'],'createtime'=>time()])->add();
+D("Record_books")->data(['card_id'=>$order['card_id'],"send_address"=>$sendAddress['address'],'get_address'=>$getAddress['address'],'num'=>$order['number'],"price"=>$order['price'],"type"=>$sendAddress['type'],'createtime'=>time()])->add();
 // 判断商家交易单是否销售完
 $judgeOver = D("Card_transaction")->where(['id'=>$order['tran_id']])->find();
 if($judgeOver['num'] == '0'){

@@ -50,9 +50,8 @@ class index_controller extends base_controller{
 		}
 
 		// 交易量
-		$transactionNum = D("Card_package")->where("type != 'leka'")->sum('sell_count');
-		// $time = strtotime(date('Y-m-d');
-		$transactionNumToday = D("Card_package")->where("type != 'leka' and createtime >= ".strtotime(date('Y-m-d')))->sum('sell_count');
+		$transactionNum = D("Record_books")->where("type != '".$this->cardType."' and createtime < ".strtotime(date("Y-m-d")))->sum("num");
+        $transactionNumToday = D("Record_books")->where("type != '".$this->cardType."' and createtime >= ".strtotime(date("Y-m-d")))->sum("num");
 		$transactionNum = empty($transactionNum) ? 0 : $transactionNum;
 		$transactionNumToday = empty($transactionNumToday) ? 0 : $transactionNumToday;
 

@@ -377,11 +377,11 @@ class PlatformCurrency{
     }
     // 转账记录
     public function recordBooks($data){
-        $recordRes = D("Record_books")->data(['card_id'=>$data['cardId'],"send_address"=>$data["sendAddress"],"get_address"=>$data['getAddress'],"num"=>$data['num'],"createtime"=>time()])->add();
+        $recordRes = D("Record_books")->data(['card_id'=>$data['cardId'],"send_address"=>$data["sendAddress"],"get_address"=>$data['getAddress'],"num"=>$data['num'],"price"=>$data['price'],"type"=>$this->cardType,"createtime"=>time()])->add();
     }
     public $sellOrder = false;  //是否是委托卖单
     // 平台币付款转账
-    public function payTran($sellUid,$buyUid,$num){
+    public function payTran($sellUid,$buyUid,$num,$price=0){
         $sellInfo = D("Card_package")->where(['uid'=>$orderInfo['sell_id'],"type"=>$this->cardType])->find();
         $buyInfo = D("Card_package")->where(['uid'=>$orderInfo['buy_id'],"type"=>$this->cardType])->find();
         // 转账接口调用
@@ -401,7 +401,7 @@ class PlatformCurrency{
         $dataEdit[] = ['id'=>['val'=>$sellUid,"field"=>"uid"],'field'=>"num","operator"=>"=","step"=>$sellRes];
         $additional[] = ["field"=>'type',"operator"=>'=',"val"=>$this->cardType];
         M("Card_package")->dataModification($dataEdit,$additional);
-        $this->recordBooks(['cardId'=>$sellInfo['card_id'],"sendAddress"=>$buyInfo['address'],"getAddress"=>$sellInfo['address'],"num"=>$num]);
+        $this->recordBooks(['cardId'=>$sellInfo['card_id'],"sendAddress"=>$buyInfo['address'],"getAddress"=>$sellInfo['address'],"num"=>$num,"price"=>$price]);
         return ['res'=>0,"msg"=>"转账成功"];
     }
     // 平台币转账
@@ -441,7 +441,7 @@ class PlatformCurrency{
         $this->tradeSheetFrozen($frozenList);
 
         // 转账记录
-        $this->recordBooks(["cardId"=>$orderInfo['card_id'],'getAddress'=>$buyInfo['address'],"sendAddress"=>$sellInfo['address'],"num"=>$orderInfo['number']]);
+        $this->recordBooks(["cardId"=>$orderInfo['card_id'],'getAddress'=>$buyInfo['address'],"sendAddress"=>$sellInfo['address'],"num"=>$orderInfo['number'],"order"=>$orderInfo['price']]);
 
         // 检测交易单是否完成 并修改状态
         $this->judgeTrade(['tranId'=>$orderInfo['tran_id'],"tranOther"=>$orderInfo['tran_other'],"sellId"=>$orderInfo['sell_id']]);
