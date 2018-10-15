@@ -75,7 +75,7 @@
         .home-plugin-info-row-card-img{
             width: 50px;
             height: 50px;
-            border-radius: 50%;
+            border-radius: 20%;
             margin: 2px auto;
         }
         .layui-btn-primary{
@@ -95,6 +95,26 @@
           width: 97%;
           margin: 0px auto;
         }
+        .plugins{   
+            height: 60px;
+            display: flex;
+            justify-content:space-around;
+        }
+
+        .plugin{
+            width: 40%;
+             border:1px solid #1d6ce2; 
+            line-height: 50px;
+            margin: auto auto;
+            border-radius: 5%;
+            text-align: center;
+            font-size: 18px;
+            font-weight:bold;
+        }
+        /* .offset_card{
+            background: url("../static/images/039.png")no-repeat;
+            background-size:100%100%;
+        } */
     </style>
     <script type="text/javascript">
         var type = "<?php echo $type;?>";
@@ -109,48 +129,29 @@
 </head>
 <body >
 <div id="pullrefreshs" style="touch-action: none;">
-    <div>
+<div>
 <header class="lk-bar lk-bar-nav">
     <i onclick="javascript:history.back(-1);" class="iconfont"  style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">交易</h1>
 </header>
 <div class="lk-content" style="background: #f0f0f0;margin-bottom:10px;" >
-    <div class="layui-carousel" id="test1">
-        <div carousel-item>
-            <div><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539002871374&di=b35bcf931ee46cac6811da452f692e15&imgtype=0&src=http%3A%2F%2Fhao.qudao.com%2Fupload%2Farticle%2F20150514%2F82458704441431567671.jpg" style="height: 100%;width: 100%"></div>
-            <div><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2498859936,599523319&fm=26&gp=0.jpg" style="height: 100%;width: 100%"></div>
-            <div><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2297859767,3222081788&fm=26&gp=0.jpg" style="height: 100%;width: 100%"></div>
+    <div style="background: #fff;">
+        <div style="width: 100%;margin: 0px auto;border-radius: 5%;">
+            <div class="layui-carousel" id="test1" style="width: 80%">
+                <div carousel-item>
+                    <div><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539002871374&di=b35bcf931ee46cac6811da452f692e15&imgtype=0&src=http%3A%2F%2Fhao.qudao.com%2Fupload%2Farticle%2F20150514%2F82458704441431567671.jpg" style="height: 100%;width: 100%"></div>
+                    <div><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2498859936,599523319&fm=26&gp=0.jpg" style="height: 100%;width: 100%"></div>
+                    <div><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2297859767,3222081788&fm=26&gp=0.jpg" style="height: 100%;width: 100%"></div>
+                </div>
+            </div>
+        </div>
+        <div class="plugins">
+            <div class="plugin offset_card">抵现卡</div>
+            <div class="plugin">积分卡</div>
         </div>
     </div>
     <div class="home-plugin-info" >
-     <!--  <hr>
-        <?php foreach ($data as $key => $value) { ?>
-         <div class="home-plugin-info-row">
-             <div class="home-plugin-info-row-card line-heights">
-                <div class="home-plugin-info-row-card-img">
-                    <img src="http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" style="height:100%;width:100%;border-radius: 50%;">
-                </div>
-             </div>
-             <div class="home-plugin-info-row-card row-card2">
-                <div style="height: 50px;line-height: 28px">
-               <p><span style="font-weight: bold"><?= $type[$value['uid']]['name'] ?></span><span class="layui-badge layui-bg-orange">
-                <?php if($value['b_type']==1){
-                      echo '个人认证';
-                    }elseif($value['b_type']==2){
-                      echo '店铺认证';
-                    }
-                 ?>
-               </span></p>
-               <p>单价:<?=  number_format($value['price'],2) ?>CNY 限制<?= number_format($value['limit'],0) ?>-<?= number_format($value['num'],0) ?></p>
-               </div>
-             </div>
-             <div class="home-plugin-info-row-card card-3 line-heights" >
-                <a href="./receive.php?id=<?= $value['id'] ?>&uid=<?= $value['uid'] ?>" class="layui-btn layui-btn-primary">购买</a>
-             </div>
-         </div>
-         <hr>
-        <?php } ?> -->
-  
+    
     </div>
    
 </div>
@@ -218,8 +219,8 @@ layui.use('carousel', function(){
     }
 
 
-document.getElementById('pullrefreshs').addEventListener("swiperight",function() {
+    document.getElementById('pullrefreshs').addEventListener("swiperight",function() {
            document.location.href='./index.php';
   });
-mui('body').on('tap','a',function(){document.location.href=this.href;});
+    mui('body').on('tap','a',function(){document.location.href=this.href;});
 </script>

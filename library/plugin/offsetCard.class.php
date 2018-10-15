@@ -138,7 +138,7 @@ EOM;
            <div class="home-plugin-info-row">
              <div class="home-plugin-info-row-card line-heights">
                 <div class="home-plugin-info-row-card-img">
-                    <img src="http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" style="height:100%;width:100%;border-radius: 50%;">
+                    <img src="http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" style="height:100%;width:100%;border-radius: 20%;">
                 </div>
              </div>
              <div class="home-plugin-info-row-card row-card2">
@@ -146,7 +146,7 @@ EOM;
                <p><span style="font-weight: bold">{$value['b_name']}</span><span class="layui-badge layui-bg-orange">
                 {$b_type}
                </span></p>
-               <p>单价:{$price}CNY 限制{$limit}</p>
+               <p>单价:¥&nbsp <span style="color:red;">{$price}</span> &nbsp;&nbsp; 限制:&nbsp;{$limit}</p>
                </div>
              </div>
              <div class="home-plugin-info-row-card card-3 line-heights" >
