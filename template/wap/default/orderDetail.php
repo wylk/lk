@@ -55,7 +55,11 @@
             <div class='menuStyle'>
                 <span class="spanLeft">订单状态：</span>
                 <span class="spanRight">
-                    <?php echo $orderInfo['status'] == '1' ? "交易成功" : ($orderInfo['status'] == '2' ? "订单超时" : "<a class='btnPay' href='./pay.php?id=\"".$orderInfo['id']."\" '>去付款</a>"); ?>
+                    <?php if($orderInfo['status']==0) echo "<a class='btnPay' href='./pay.php?id=\"".$orderInfo['id']."\" '>去付款</a>"; ?>
+                    <?php if($orderInfo['status']==1) echo "交易成功"; ?>
+                    <?php if($orderInfo['status']==2) echo "订单取消"; ?>
+                    <?php if($orderInfo['status']==3) echo "已付款"; ?>
+                    <?php if($orderInfo['status']==4) echo "订单超时"; ?>
                 </span>
             </div>
             <hr>
