@@ -79,8 +79,8 @@
             margin: 2px auto;
         }
         .layui-btn-primary{
-            border: 1px solid #5fb878;
-            color: #5fb878;
+            border: 1px solid #f1cd1f;
+            color: #f1cd1f;
             height: 30px;
             line-height: 30px;
         }
@@ -103,10 +103,11 @@
 
         .plugin{
             width: 40%;
-             border:1px solid #1d6ce2; 
-            line-height: 50px;
+            background: #f1cd1f;
+            border:1px solid #f1cd1f; 
+            line-height: 30px;
             margin: auto auto;
-            border-radius: 5%;
+            border-radius: 30px;
             text-align: center;
             font-size: 18px;
             font-weight:bold;
