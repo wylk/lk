@@ -1,6 +1,6 @@
 <?php
 //用户
-class UserAudit_controller extends base_controller
+class userAudit_controller extends base_controller
 {
     //商铺认证列表
     public function shop(){
@@ -31,7 +31,7 @@ class UserAudit_controller extends base_controller
 
     }
      //个人搜索
-    public function index_name(){
+    public function index_too(){
       $name=$_POST['name'];
       $res=D('User_audit')->where("name LIKE '%$name%'")->select();
       foreach($res as $key=>$value){

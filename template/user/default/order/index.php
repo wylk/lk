@@ -174,6 +174,10 @@
               if(res['data']['status'] == 2) str += '已作废';
               str += "</td><td>";
               str += res['data']['create_time'];
+              str +="</td><td>";
+              str += "<a title='更多' onclick=\"x_admin_show('详情','?c=order&a=oderlists&id="+res['data']['id']+"',350,350)\" href='javascript:;'>";
+              str += "<i class='layui-icon'>&#xe705;</i>";
+              str += "</a>";
               str +="</td></tr>";
               $('#box').append(str);
          }else if(res.error ==2){
@@ -185,7 +189,11 @@
                 if(res['data'][item]['status'] == 0) str += '代付款';
                 if(res['data'][item]['status'] == 1) str += '已完成';
                 if(res['data'][item]['status'] == 2) str += '已作废';
-                str += "</td><td>"+res['data'][item]['create_time']+"</td></tr>";
+                str += "</td><td>"+res['data'][item]['create_time']+"</td><td>";
+                str += "<a title='更多' onclick=\"x_admin_show('详情','?c=order&a=oderlists&id="+res['data']['id']+"',350,350)\" href='javascript:;'>";
+                str += "<i class='layui-icon'>&#xe705;</i>";
+                str += "</a>";
+                str +="</td></tr>";
                 $('#box').html(str);
               }
         }else if(res.error ==3){
@@ -197,7 +205,11 @@
                 if(res['data'][item]['status'] == 0) str += '代付款';
                 if(res['data'][item]['status'] == 1) str += '已完成';
                 if(res['data'][item]['status'] == 2) str += '已作废';
-                str += "</td><td>"+res['data'][item]['create_time']+"</td></tr>";
+                str += "</td><td>"+res['data'][item]['create_time']+"</td><td>";
+                str += "<a title='更多' onclick=\"x_admin_show('详情','?c=order&a=oderlists&id="+res['data']['id']+"',350,350)\" href='javascript:;'>";
+                str += "<i class='layui-icon'>&#xe705;</i>";
+                str += "</a>";
+                str +="</td></tr>";
                 $('#box').html(str);
               }
 
@@ -210,7 +222,11 @@
                 if(res['data'][item]['status'] == 0) str += '代付款';
                 if(res['data'][item]['status'] == 1) str += '已完成';
                 if(res['data'][item]['status'] == 2) str += '已作废';
-                str += "</td><td>"+res['data'][item]['create_time']+"</td></tr>";
+                str += "</td><td>"+res['data'][item]['create_time']+"</td><td>";
+                str += "<a title='更多' onclick=\"x_admin_show('详情','?c=order&a=oderlists&id="+res['data']['id']+"',350,350)\" href='javascript:;'>";
+                str += "<i class='layui-icon'>&#xe705;</i>";
+                str += "</a>";
+                str +="</td></tr>";
                 $('#box').html(str);
               }
 
