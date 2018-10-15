@@ -355,10 +355,10 @@ class PlatformCurrency{
             // 保证金数据处理  （转账直接成功后处理的，撤销订单无需处理）
             if(!empty($orderInfo['bail']) && $orderInfo['bail'] > 0){
                 $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['bail'],"field"=>"bail"];
-            }
             $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
             $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"+","step"=>$orderInfo['number']+$orderInfo['bail'],"field"=>"num"];
             M("Card_package")->dataModification($packageList);
+            }
         }
         // // // 保证金数据处理  （转账直接成功后处理的，撤销订单无需处理）
         // if(!empty($orderInfo['bail']) && $orderInfo['bail'] > 0){
@@ -399,6 +399,8 @@ class PlatformCurrency{
         }
         $dataEdit[] = ['id'=>['val'=>$buyUid,"field"=>"uid"],'field'=>"num","operator"=>"=","step"=>$buyRes];
         $dataEdit[] = ['id'=>['val'=>$sellUid,"field"=>"uid"],'field'=>"num","operator"=>"=","step"=>$sellRes];
+        $dataEdit[] = ['id'=>['val'=>$buyUid,"field"=>"uid"],'field'=>"sell_count","operator"=>"+","step"=>$num];
+        $dataEdit[] = ['id'=>['val'=>$sellUid,"field"=>"uid"],'field'=>"recovery_count","operator"=>"+","step"=>$num];
         $additional[] = ["field"=>'type',"operator"=>'=',"val"=>$this->cardType];
         M("Card_package")->dataModification($dataEdit,$additional);
         $this->recordBooks(['cardId'=>$sellInfo['card_id'],"sendAddress"=>$buyInfo['address'],"getAddress"=>$sellInfo['address'],"num"=>$num,"price"=>$price]);
@@ -452,6 +454,8 @@ class PlatformCurrency{
         $data[] = ['id'=>$sellInfo['id'],"operator"=>"=","step"=>$sellLastNum,"field"=>"num"];
         $data[] = ['id'=>$sellInfo['id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
         $data[] = ['id'=>$buyInfo['id'],"operator"=>"=","step"=>$buyLastNum,"field"=>"num"];
+        $data[] = ['id'=>$sellInfo['id'],"operator"=>"+","step"=>$orderInfo['number'],"field"=>"sell_count"];
+        $data[] = ['id'=>$buyInfo['id'],"operator"=>"+","step"=>$orderInfo['number'],"field"=>"recovery_count"];
         $balanceRes = M('Card_package')->frozen($data);
         $statusRes = D("Orders")->data(['status'=>1])->where(['id'=>$orderId])->save();
 // dexit(['res'=>1,"msg"=>"test","balanceRes"=>$balanceRes,"status"=>$statusRes,"data"=>$data]);
@@ -460,6 +464,7 @@ class PlatformCurrency{
         }
         return ['res'=>0,"msg"=>"转账成功",'frozen'=>$frozenList,'bailInfo'=>$bailInfo,'orderInfo'=>$orderInfo,'data'=>$data,'balanceRes'=>$balanceRes];
     }
+    public function tranEachOther(){}
 
     // 判断交易单是否完成
     public function judgeTrade($data){

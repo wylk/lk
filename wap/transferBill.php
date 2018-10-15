@@ -15,6 +15,7 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	$addressName = $post['addressName'];
 	// 转账信息判断
 	$getAddressInfo = D("Card_package")->where(['address'=>$getAddress])->find();
+	$cardType = $getAddressInfo['type'];
 	$getAddressInfo['uid'] != $userId ? true : dexit(['res'=>1,"msg"=>"转账账户不能为本人账户"]);
 	$getAddressInfo['card_id'] == $cardId ? true : dexit(['res'=>1,"msg"=>"不同种类型卡券不可转账"]);
 	$isPublisher = $getAddressInfo['is_publisher'] == 1 ? true : false;
@@ -31,23 +32,32 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	}
 	
 	// 添加账本信息
-	import("AccountBook");
-	$Account_book = new AccountBook();
-	$bookJson = json_encode(['uid'=>$userId,"contract_id"=>$cardId,'sendAddress'=>$sendAddress,"num"=>$num,"getAddress"=>$getAddress]);
-	$bookRes = $Account_book->transferAccounts(encrypt($bookJson,option('version.public_key')));
-	if(!$bookRes){
-		dexit(['res'=>1,"msg"=>"添加账本错误"]);
+	// 判断转账卡券类型
+	$platformType = option("hairpan_set.platform_type_name")
+	switch ($cardType) {
+		case $platformType:
+			# code...
+			break;
+		default:
+			import("AccountBook");
+			$Account_book = new AccountBook();
+			$bookJson = json_encode(['uid'=>$userId,"contract_id"=>$cardId,'sendAddress'=>$sendAddress,"num"=>$num,"getAddress"=>$getAddress]);
+			$bookRes = $Account_book->transferAccounts(encrypt($bookJson,option('version.public_key')));
+			if(!$bookRes){
+				dexit(['res'=>1,"msg"=>"添加账本错误"]);
+			}
+			// 添加交易记录
+			$recodRes = D("Record_books")->data(['card_id'=>$cardId,'send_address'=>$sendAddress,'get_address'=>$getAddress,'num'=>$num,"type"=>$sendAdressInfo['type'],"createtime"=>time()])->add();
+			if(!$recodRes){
+				dexit(['res'=>1,"msg"=>"记录添加失败","other"=>$recodRes]);
+			}
+			// 卡包数据处理
+			$sendRes = D("Card_package")->where(['uid'=>$userId,'address'=>$sendAddress])->setDec("num",$num);
+			$getRes = D("Card_package")->where(['address'=>$getAddress])->setInc("num",$num);
+			
+			D("Card_package")->where(['address'=>$getAddress])->setInc("recovery_count",$num);
+			break;
 	}
-	// 添加交易记录
-	$recodRes = D("Record_books")->data(['card_id'=>$cardId,'send_address'=>$sendAddress,'get_address'=>$getAddress,'num'=>$num,"type"=>$sendAdressInfo['type'],"createtime"=>time()])->add();
-	if(!$recodRes){
-		dexit(['res'=>1,"msg"=>"记录添加失败","other"=>$recodRes]);
-	}
-	// 卡包数据处理
-	$sendRes = D("Card_package")->where(['uid'=>$userId,'address'=>$sendAddress])->setDec("num",$num);
-	$getRes = D("Card_package")->where(['address'=>$getAddress])->setInc("num",$num);
-	
-	D("Card_package")->where(['address'=>$getAddress])->setInc("recovery_count",$num);
 	if(!($getRes || $sendRes)){
 		dexit(['res'=>1,"msg"=>"转账失败！"]);
 	}

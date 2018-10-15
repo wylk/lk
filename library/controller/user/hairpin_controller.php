@@ -22,7 +22,7 @@ class hairpin_controller extends base_controller
         $datas['totalNumNow'] = $packageInfo['num']+$packageInfo['frozen'];
         $datas['sellNumTotal'] = $packageInfo['sell_count'];
         $datas['buyNumTotal'] = $packageInfo['recovery_count'];
-        $datas['tranNumTotal'] = D("Record_books")->where("type = '".$this->cardType."' and createtime < ".strtotime(date("Y-m-d")))->sum("num");
+        $datas['tranNumTotal'] = D("Record_books")->where("type = '".$this->cardType."'")->sum("num");
         $datas['tranNumToday'] = D("Record_books")->where("type = '".$this->cardType."' and createtime >= ".strtotime(date("Y-m-d")))->sum("num");
 
         // 交易记录
