@@ -140,7 +140,7 @@
             </div>
         </div>
     </div>
-    <?php //include display('public_menu');?>
+    <?php include display('public_menu');?>
 </body>
 <script type="text/javascript">
   layui.use(['element'],function(){
