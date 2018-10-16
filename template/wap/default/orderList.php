@@ -61,7 +61,7 @@
                                 <p><a class="layui-btn layui-btn-warm" style="padding:5px 7px;height: 30px; line-height:19px;border-radius: 5px;" href="./orderDetail.php?id=<?php echo $value['id']; ?>">查看详情</a></p>
                                 <p>价格：<?php echo number_format($value['price'],2); ?></p>
                                 <p style="color: #2F4056">
-                                    <?php if($value['status']==0) echo "<a style='color:red;' href='./pay.php?id={$value['id']}付款</a>"; ?>
+                                    <?php if($value['status']==0) echo "<a style='color:red' href='./pay.php?id={$value['id']}'>付款</a>"; ?>
                                     <?php if($value['status']==1) echo "交易成功"; ?>
                                     <?php if($value['status']==2) echo "订单取消"; ?>
                                     <?php if($value['status']==3) echo "已付款"; ?>
@@ -74,7 +74,7 @@
                         <?php } ?>
                     </div>
                     <div class="layui-tab-item ">
-                        <?php foreach($unpaidOrderList as $key=>$value){ ?>
+                        <?php foreach($unpaidOrderList as $key=>$value){ ?>fdgsdfg
                         <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell margin-t10">
                             <div class="order-left">
                                 <p><span class="b">买入</span> 单号：<?php echo $value['onumber'] ?></p>
@@ -84,7 +84,6 @@
                             <div class="order-right">
                                 <p><a class="layui-btn layui-btn-warm" style="padding:5px 7px;height: 30px; line-height:19px;border-radius: 5px;" href="./orderDetail.php?id=<?php echo $value['id']; ?>">查看详情</a></p>
                                 <p>价格：<?php echo number_format($value['price'],2); ?></p>
-                                <p style="color: red;"><a href="./success.php?id=<?php echo $value['id']; ?>" style="color:
                                 <p>总金额：<span class="total"><?php echo number_format($value['price']*$value['number'],2); ?></span></p>
                             </div>
                         </div>
@@ -141,7 +140,7 @@
             </div>
         </div>
     </div>
-    <?php include display('public_menu');?>
+    <?php //include display('public_menu');?>
 </body>
 <script type="text/javascript">
   layui.use(['element'],function(){
