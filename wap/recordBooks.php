@@ -4,8 +4,9 @@ require_once dirname(__FILE__).'/global.php';
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
 $userId = $wap_user['userid'];
 
-$userInfo = D("Card_package")->where(['uid'=>$userId,'type'=>option("hairpan_set.platform_type_name")])->find();
-$cardId = $userInfo['card_id'];
+$cardId = $_GET['cardId'];
+$userInfo = D("Card_package")->where(['uid'=>$userId,'card_id'=>$cardId])->find();
+// $cardId = $userInfo['card_id'];
 $address = $userInfo['address'];
 
 $where = "`card_id` ='".$cardId."' and ( `get_address`='".$address."' or `send_address`='".$address."' )";

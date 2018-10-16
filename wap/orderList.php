@@ -10,9 +10,9 @@ $unpaidOrderList = D("Orders")->where("buy_id=".$userId." and status=0 ".$where)
 // 付款订单
 $paidOrderList = D("Orders")->where("buy_id = ".$userId." and status = 1".$where)->order("create_time desc")->select();
 // 全部订单
-$orderList = D("Orders")->where("buy_id = ".$userId.$where)->order("create_time desc")->select();
+$orderList = D("Orders")->where("buy_id = ".$userId." and status in (0,1,3) ".$where)->order("create_time desc")->select();
 // 用户发布的所有评论
-// $evaluate = D("Evaluate")->where(['uid'=>$userId])->order("createtime desc")->select();
-$evaluate = D("Evaluate")->where("uid = ".$userId.$where)->order("createtime desc")->select();
+$evaluate = D("Evaluate")->where(['uid'=>$userId])->order("createtime desc")->select();
+// $evaluate = D("Evaluate")->where("uid = ".$userId.$where)->order("createtime desc")->select();
 
 include display("orderList");
