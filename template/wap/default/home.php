@@ -83,6 +83,7 @@
             color: #f1cd1f;
             height: 30px;
             line-height: 30px;
+            border-radius: 5px;
         }
         .card-3{
             text-align: center;
@@ -112,10 +113,12 @@
             font-size: 18px;
             font-weight:bold;
         }
-        /* .offset_card{
-            background: url("../static/images/039.png")no-repeat;
-            background-size:100%100%;
-        } */
+        .offset_action{
+           color: red;
+        }
+        .layui-badge{
+            background-color: #cc6600;
+        } 
     </style>
     <script type="text/javascript">
         var type = "<?php echo $type;?>";
@@ -136,18 +139,18 @@
     <h1 class="lk-title">交易</h1>
 </header>
 <div class="lk-content" style="background: #f0f0f0;margin-bottom:10px;" >
-    <div style="background: #fff;">
+    <div style="background: #fff;border-radius: 0px 0px 10px 10px;">
         <div style="width: 100%;margin: 0px auto;border-radius: 5%;">
             <div class="layui-carousel" id="test1" style="width: 80%">
                 <div carousel-item>
                     <div><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539002871374&di=b35bcf931ee46cac6811da452f692e15&imgtype=0&src=http%3A%2F%2Fhao.qudao.com%2Fupload%2Farticle%2F20150514%2F82458704441431567671.jpg" style="height: 100%;width: 100%"></div>
                     <div><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2498859936,599523319&fm=26&gp=0.jpg" style="height: 100%;width: 100%"></div>
-                    <div><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2297859767,3222081788&fm=26&gp=0.jpg" style="height: 100%;width: 100%"></div>
+                    
                 </div>
             </div>
         </div>
         <div class="plugins">
-            <div class="plugin offset_card">抵现卡</div>
+            <div class="plugin offset_action">抵现卡</div>
             <div class="plugin">积分卡</div>
         </div>
     </div>

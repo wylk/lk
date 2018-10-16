@@ -58,7 +58,7 @@
                                 <p>数量：<?php echo number_format($value['number'],2)?></p>
                             </div>
                             <div class="order-right">
-                                <p><a class="layui-btn layui-btn-warm" style="padding:5px 7px;height: 30px; line-height:19px;" href="./orderDetail.php?id=<?php echo $value['id']; ?>">查看详情</a></p>
+                                <p><a class="layui-btn layui-btn-warm" style="padding:5px 7px;height: 30px; line-height:19px;border-radius: 5px;" href="./orderDetail.php?id=<?php echo $value['id']; ?>">查看详情</a></p>
                                 <p>价格：<?php echo number_format($value['price'],2); ?></p>
                                 <p style="color: #2F4056">
                                     <?php if($value['status']==0) echo "<a style='color:red;' href='./pay.php?id={$value['id']}付款</a>"; ?>
@@ -82,7 +82,7 @@
                                 <p>数量：<?php echo number_format($value['number'],2)?></p>
                             </div>
                             <div class="order-right">
-                                <p><a class="layui-btn layui-btn-warm" style="padding:5px 7px;height: 30px; line-height:19px;" href="./orderDetail.php?id=<?php echo $value['id']; ?>">查看详情</a></p>
+                                <p><a class="layui-btn layui-btn-warm" style="padding:5px 7px;height: 30px; line-height:19px;border-radius: 5px;" href="./orderDetail.php?id=<?php echo $value['id']; ?>">查看详情</a></p>
                                 <p>价格：<?php echo number_format($value['price'],2); ?></p>
                                 <p style="color: red;"><a href="./success.php?id=<?php echo $value['id']; ?>" style="color:
                                 <p>总金额：<span class="total"><?php echo number_format($value['price']*$value['number'],2); ?></span></p>
@@ -100,7 +100,7 @@
                                 <p>数量：<?php echo number_format($value['number'],2)?></p>
                             </div>
                             <div class="order-right">
-                                <p><a class="layui-btn layui-btn-warm" style="padding: 5px 7px" href="./orderDetail.php?id=<?php echo $value['id']; ?>">订单详情</a></p>
+                                <p><a class="layui-btn layui-btn-warm" style="padding:5px 7px;height: 30px; line-height:19px;border-radius: 5px;" href="./orderDetail.php?id=<?php echo $value['id']; ?>">订单详情</a></p>
                                 <p>价格：<?php echo number_format($value['price'],2); ?></p>
                                 <p style="color: #2F4056">已付款</p>
                                 <p>总金额：<span class="total"><?php echo number_format($value['price']*$value['number'],2); ?></span></p>
