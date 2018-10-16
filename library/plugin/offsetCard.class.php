@@ -12,7 +12,7 @@ class offsetCard extends Card
                     //->radio(['is_free','是否收费'],$radio,'price')
                     //->input(['price','单价'],['price',['reg','floa']])
                     ->input(['sum','总量'],['sum',['reg','floa']])
-                    ->input(['group','发布几份'],['group',['reg','int']])
+                    //->input(['group','发布几份'],['group',['reg','int']])
                     ->upload('会员卡log','img_id','card_log')
                     ->textarea(['describe','卡券描述'])
                     ->resSuccess('./cardType.php')
@@ -106,9 +106,11 @@ class offsetCard extends Card
              </div>
              <div class="home-plugin-info-row-card row-card2">
                 <div style="height: 50px;line-height: 28px">
-               <p><span style="font-weight: bold">{$value['b_name']}</span><span class="layui-badge layui-bg-orange">
-                {$b_type}
-               </span></p>
+               <p><span style="font-weight: bold">{$value['b_name']}</span>
+               <span class="layui-badge"> {$b_type} </span>
+               
+              
+               </p>
                <p>单价:¥&nbsp <span style="color:red;">{$price}</span> &nbsp;&nbsp; 限制:&nbsp;{$limit}</p>
                </div>
              </div>
