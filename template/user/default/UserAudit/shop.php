@@ -20,6 +20,7 @@
     <![endif]-->
     <style>
       .layui-input{width: 15%;float: left;}
+      .row{width: 15%;float:left;}
     </style>
   </head>
 
@@ -38,7 +39,15 @@
       <div class="layui-row">
        <!--  <form class="layui-form layui-col-md12 x-so"> -->
           <input type="text" name="username"  placeholder="请输入企业名称" autocomplete="off" class="layui-input">
-        <!--   <input type="text" name="name"  placeholder="请输入姓名" autocomplete="off" class="layui-input"> -->
+          <div class="row">
+          <select class="s_id">
+            <option>请选择</option>
+            <?php foreach ($s_id as $key => $value) {?>
+                  <option value="<?php echo $value['id'] ?>"><?php echo $value['name'] ?></option>
+            <?php } ?>
+
+          </select>
+          </div>
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon" id="set">&#xe615;</i></button>
        <!--  </form> -->
       </div>
@@ -181,7 +190,8 @@
       }
        $('#set').click(function(){
                var enterprise=$('.layui-input').val();
-               $.post('?c=userAudit&a=index_to',{enterprise:enterprise}, function(res) {
+               var s_id=$('.s_id').val();
+               $.post('?c=userAudit&a=index_to',{enterprise:enterprise,s_id:s_id}, function(res) {
                console.log(res);
                if(res.error == 0){
                   $('#box').empty();
@@ -209,7 +219,9 @@
 
                 $('#box').html(str);
               }
-               }else{
+               }else if(res.error == 1){
+                alert(res.msg);
+              }else{
                 alert(res.msg);
               }
 

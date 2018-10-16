@@ -12,15 +12,21 @@ class base_controller extends controller{
 	public function __construct()
     {
         parent::__construct();
+        // dump($_SESSION);
         if (!$_SESSION["admin"]) {
             // $this->dexit(['status'=>1,'msg'=>'请先登录']);
             redirect('?c=public&a=login');
         }
-        $res = $_SERVER["QUERY_STRING"];
-        $res = str_replace(array("c=","a="),"",$res);
-        $arr = explode('&',$res);
-        $controlName = $arr[0];
-        $methodName = $arr[1];
+        if(empty($_SERVER["QUERY_STRING"])){
+            $controlName = 'index';
+            $methodName = 'index';
+        }else{
+            $res = $_SERVER["QUERY_STRING"];
+            $res = str_replace(array("c=","a="),"",$res);
+            $arr = explode('&',$res);
+            $controlName = $arr[0];
+            $methodName = $arr[1];
+        }
         $id = $_SESSION["admin"]["id"];
         $authorityData = D('')->table(array('RoleAdmin'=>'p','Access'=>'t','Auth'=>'y'))->field('*')->where("`p`.`admin_id`= $id AND `p`.`role_id`=`t`.`role_id` AND `t`.`auth_id`=`y`.`id`")->order('`y`.`id` ASC')->select();
         $returnData = $this->judgeAuthority($controlName, $methodName, $authorityData);
@@ -45,7 +51,8 @@ class base_controller extends controller{
             if(!in_array($v['auth_a'],$auth_a[$v['auth_c']]))
                 $auth_a[$v['auth_c']][] = $v['auth_a'];
         }
-        if((in_array($controlName,$auth_c) && in_array($methodName,$auth_a[$controlName]))|| $controlName == 'public'){
+        // dump($controlName);dump($methodName);
+        if((in_array($controlName,$auth_c) && in_array($methodName,$auth_a[$controlName]))){
             $responseData = array('responseCode'=>'101', 'responseMessage'=>'可以访问');
             return $responseData;
             break;

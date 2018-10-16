@@ -19,6 +19,7 @@ require_once dirname(__FILE__).'/global.php';
 // foreach ($cardInfos as $k => $v) {
 // 	$arrs[$v['uid']][$arr[$v['c_id']]] = $v['val'];
 // }
+$res=D('Shopclass')->select();
 
 include display('index');
 echo ob_get_clean();

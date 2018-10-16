@@ -9,26 +9,44 @@ class userAudit_controller extends base_controller
         $num=count($User_audit);
         $page = new Page(count($User_audit),2);
         $res = D('User_audit')->where(array('type'=>2))->order('`id` DESC')->limit("$page->firstRow, $page->listRows")->select();
+        $s_id=D('Shopclass')->select();
         $this->assign('page', $page->show());
         $this->assign('res',$res);
         $this->assign('num',$num);
+        $this->assign('s_id',$s_id);
         $this->display();
     }
    //商铺搜索
     public function index_to(){
       $enterprise=$_POST['enterprise'];
+      $s_id=$_POST['s_id'];
+      if($enterprise){
       $res=D('User_audit')->where("enterprise LIKE '%$enterprise%'")->select();
+
       foreach($res as $key=>$value){
             $res[$key]['create_time'] = date('Y-m-d H:i:s', $value['create_time']);
             $res[$key]['update_time'] = date('Y-m-d H:i:s', $value['update_time']);
          }
       if($res[$key]['isdelete']==0){
          $this->dexit(['error'=>0,'data'=>$res]);
-
         }else{
          $this->dexit(['error'=>1,'msg'=>'企业不存在']);
         }
+      }
+      if($s_id){
+        $rea=D('User_audit')->where(array('s_id'=>$s_id,'isdelete' =>0))->select();
+        foreach($rea as $key=>$value){
+            $rea[$key]['create_time'] = date('Y-m-d H:i:s', $value['create_time']);
+            $rea[$key]['update_time'] = date('Y-m-d H:i:s', $value['update_time']);
+         }
+      if($rea){
+         $this->dexit(['error'=>0,'data'=>$rea]);
 
+        }else{
+         $this->dexit(['error'=>2,'msg'=>'还没有此类店铺']);
+        }
+
+      }
     }
      //个人搜索
     public function index_too(){
@@ -92,7 +110,10 @@ class userAudit_controller extends base_controller
     //店铺详情页
     public function lists()
     {
+        // $userAudit = D('User_audit')->where(array('id'=>$_GET['id']))->find();
         $userAudit = D('User_audit')->where(array('id'=>$_GET['id']))->find();
+        $res=D('Shopclass')->where(array('id'=>$userAudit['s_id']))->find();
+        $this->assign('res',$res);
         $this->assign('userAudit',$userAudit);
         $this->display();
     }
