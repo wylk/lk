@@ -60,10 +60,10 @@
             <hr>
             <div class="lk-container-flex lk-flex-direction-r">
                 <ul class="lk-container-flex lk-justify-content-sa">
-                    <a class="card-handle" href="./transferBill.php?id=<?php echo $value['id'] ?>">核销</a>
+                    <a class="card-handle" href="./transferBill.php?cardId=<?php echo $value['card_id'] ?>">核销</a>
                     <a class="card-handle" href="./changeInto.php?id=<?php echo $value['id'] ?>">充值</a>
                     
-                    <a class="card-handle" href="./recordBooks.php">账单</a>
+                    <a class="card-handle" href="./recordBooks.php?cardId=<?php echo $value['card_id']; ?>">账单</a>
                     <?php if($value['type'] == option("hairpan_set.platform_type_name")){ ?>
                     <a class="card-handle" href="card_buy.php?uid=<?php echo $value['uid'] ?>">交易</a>
                     <?php }else{ ?>

@@ -163,12 +163,13 @@ layui.use(['form','layer'], function(){
       $.post("./transaction.php",data.field,function(res){
         // console.log(res);
         if(!res.res){
-            $("#surplusNum i").html(res.num);
-            var resNum = new Number(res.dataInfo.num);
-            var resPrice = new Number(res.dataInfo.price);
-            // window.location.href = "./cardList.php";
-            str = "<tr id='"+res.dataInfo.id+"'><td >"+resNum.toFixed(2)+"</td><td>"+resPrice.toFixed(2)+"</td><td>"+getTime()+"</td><td id='revoke_"+res.dataInfo.id+"' num='"+res.dataInfo.num+"' cardId='"+res.dataInfo.card_id+"' onclick='revoke("+res.dataInfo.id+")'>撤销</td></tr>";
-            $("tbody").prepend(str);
+          window.location.reload(true);
+            // $("#surplusNum i").html(res.num);
+            // var resNum = new Number(res.dataInfo.num);
+            // var resPrice = new Number(res.dataInfo.price);
+            // // window.location.href = "./cardList.php";
+            // str = "<tr id='"+res.dataInfo.id+"'><td >"+resNum.toFixed(2)+"</td><td>"+resPrice.toFixed(2)+"</td><td>"+getTime()+"</td><td id='revoke_"+res.dataInfo.id+"' num='"+res.dataInfo.num+"' cardId='"+res.dataInfo.card_id+"' onclick='revoke("+res.dataInfo.id+")'>撤销</td></tr>";
+            // $("tbody").prepend(str);
             layer.msg(res.msg,{icon:1,skin:"demo-class"},function(){
           })
         }else{

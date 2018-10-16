@@ -92,5 +92,6 @@ if(option("hairpan_set.identity_judge")){
 		header("location:postcard.php");
 	}
 }
-$cardInfo = D("Card_package")->where(['uid'=>$userId,'type'=>option("hairpan_set.platform_type_name")])->find();
+// $cardInfo = D("Card_package")->where(['uid'=>$userId,'type'=>option("hairpan_set.platform_type_name")])->find();
+$cardInfo = D("Card_package")->where(['uid'=>$userId,'card_id'=>$_GET['cardId']])->find();
 include display("transferBill");

@@ -159,9 +159,11 @@ layui.use(['form', 'layer'],function() {
       paydata.payPwd = payPwd;
       paydata.orderId = $('[name=orderId]').val();
       console.log(paydata);
+      layer.load();
       // 平台币支付请求
       $.post("./pay.php",paydata,function(payinfo){
           console.log(payinfo);
+          layer.closeAll("loading");
           if(!payinfo.res){
             layer.msg(payinfo.msg,{icon:1,skin:"demo-class"});
             window.location.href = "./orderDetail.php?id="+paydata.orderId;
