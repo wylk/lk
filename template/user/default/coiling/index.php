@@ -19,10 +19,7 @@
 
     <div class="x-nav">
       <span class="layui-breadcrumb">
-        <a href="">首页</a>
-        <a href="">演示</a>
-        <a>
-          <cite>导航元素</cite></a>
+        <a href="?c=coiling&a=index">卡券首页</a>
       </span>
       <a class="layui-btn layui-btn-small" href="javascript:location.replace(location.href);" title="刷新" style="margin-left: 870px;">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
@@ -34,27 +31,24 @@
         <div class="layui-row">
         <ul class="layui-row layui-col-space10 layui-this" style="padding-top: 35px;padding-left:58px;">
 
-          <?php foreach ($contract as $k => $v) {
-              if($v['contract_title']=='offsetCard'){
-           ?>
-
+          <?php foreach ($contract as $key => $value) { ?>
           <li class="layui-col-xs2" style="height: 220px;">
             <img src="http://lk.com/upload/images/000/000/001/201806/5b32f7ecc1ab4.jpg">
-              <span><?= $v['contract_name'] ?></span>
-                <h2 style="color:red"><?= $v['out'] ?></h2>
+              <span><?= $value['contract_name'] ?></span>
+                <h2 style="color:red"><?= number_format($contractInfo[$value['contract_title']]['sum'],2) ?></h2>
               <ul>
-                <li>发布卡数量：<?= $v['out'] ?></li>
-                <li>发布店铺：<?= $v['audit'] ?></li>
+                <li title="<?= number_format($contractInfo[$value['contract_title']]['sum'],2) ?>">发布卡数量：<?= number_format($contractInfo[$value['contract_title']]['sum'],2) ?></li>
+                <li title="<?= number_format($contractInfo[$value['contract_title']]['num'],0) ?>">发布店铺：<?= number_format($contractInfo[$value['contract_title']]['num'],0) ?></li>
               </ul>
               <ul style="margin-left: 145px;margin-top: -69px;">
-                <li>交易量：<?= $v['tran'] ?></li>
-                <li>用户数量：<?= $v['user'] ?></li>
+                <li title="<?= number_format($contractInfo[$value['contract_title']]['tranNum'],2) ?>">交易量：<?= number_format($contractInfo[$value['contract_title']]['tranNum'],2) ?></li>
+                <li title="<?= number_format($contractInfo[$value['contract_title']]['userNum'],0) ?>">用户数量：<?= number_format($contractInfo[$value['contract_title']]['userNum'],0) ?></li>
               </ul>
-              <a class="layui-btn layui-btn-primary layui-btn-lg" href="?c=coiling&a=cards">详情22</a>
+              <a class="layui-btn layui-btn-primary layui-btn-lg" href="?c=coiling&a=cards&type=<?= $value['contract_title'] ?>">详情</a>
           </li>
+          <?php } ?>
 
-          <?php }else{ ?>
-            <li class="layui-col-xs2" style="height: 220px;">
+           <!--  <li class="layui-col-xs2" style="height: 220px;">
             <img src="http://lk.com/upload/images/000/000/001/201806/5b32f7ecc1ab4.jpg">
               <span>积分会员卡</span>
                 <h2 style="color:red">0</h2>
@@ -67,8 +61,7 @@
                 <li>用户数量：0</li>
               </ul>
               <a class="layui-btn layui-btn-primary layui-btn-lg" href="">详情123</a>
-          </li>
-          <?php }} ?>
+          </li> -->
           </ul>
         </div>
     </div>

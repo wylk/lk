@@ -23,10 +23,9 @@
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
-        <a href="">首页</a>
-        <a href="">演示</a>
+        <a href="?c=coiling&a=index">卡券首页</a>
         <a>
-          <cite>导航元素</cite></a>
+          <cite><?php echo $cardName ?></cite></a>
       </span>
       <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
@@ -44,11 +43,10 @@
       <table class="layui-table">
         <thead>
           <tr>
-            <th>用户ID</th>
+            <th>用户名</th>
+            <th>店铺名称</th>
             <th>合约名</th>
-            <th>价格</th>
             <th>量</th>
-            <th>组</th>
             <th>logo</th>
             <th>描述</th>
             <th>操作</th>
@@ -57,11 +55,10 @@
 
           <?php foreach($cards as $k=>$v){ ?>
           <tr>
-            <td><?= $v['uid'] ?></td>
+            <td><?= $user[$v['uid']]['name']; ?></td>
+            <td><?= $user[$v['uid']]['enterprise'] ?></td>
             <td><?= $v['name'] ?></td>
-            <td><?= $v['price'] ?></td>
             <td><?= $v['sum'] ?></td>
-            <td><?= $v['group'] ?></td>
             <td><img src="<?= $v['card_log'] ?>"></td>
             <td><?= $v['describe'] ?></td>
             <td>

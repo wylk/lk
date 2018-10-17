@@ -36,39 +36,21 @@ require_once dirname(__FILE__).'/global.php';
 // dump(get_cfg_var ("upload_max_filesize"));
 // include display('testh');
 
-// $platformObj = new PlatformCurrency();
-// $res = $platformObj->checkBail();
-// dump($res);
-// $data[] = ['id'=>161,'operator'=>'-',"field"=>'num',"step"=>2.0202];
+$card = D("Card")->where(['type'=>'offset'])->select();
 
-// $order  = D('Orders')->where(['out_trade_no'=>'20181013113513439257'])->find();
-// dump($order);
-// 转账处理
-// if($payType == 'platform'){
-	// 平台币转账
-	// $dataEdit[] = ['id'=>['val'=>$order['buy_id'],"field"=>"uid"],'field'=>"num","operator"=>"-","step"=>$order['number']];
-	// $dataEdit[] = ['id'=>['val'=>$order['sell_id'],"field"=>"uid"],'field'=>"num","operator"=>"+","step"=>$order['number']];
-	// $additional[] = ["field"=>'type',"operator"=>'=',"val"=>'leka'];
-	// dump($dataEdit);
-	// M("Card_package")->dataModification($dataEdit,$additional);
+$Contract_field = D('Contract_field')->select();
+$Contract_fields = [];
+foreach ($Contract_field as $kk => $vv) {
+    $Contract_fields[$vv['id']] = $vv['val'];
+}
+dump($Contract_fields);
+foreach ($card as $k => $v) {
+    $cards[$v['card_id']][$Contract_fields[$v['c_id']]] = $v['val'];
+    $cards[$v['card_id']]['uid'] = $v['uid'];
+    $cards[$v['card_id']]['card_id'] = $v['card_id'];
+    if(!in_array($v['uid'], $uid)) $uid[] = $v['uid'];
+}
+dump($cards);
+$userInfo = D("User_audit")->field("name,enterprise,uid")->where("uid in (".implode($uid,",").")")->select();
 
-// $sellInfo = D("Card_package")->where(['uid'=>$order['sell_id'],"type"=>'leka'])->find();
-// $buyInfo = D("Card_package")->where(['uid'=>$order['buy_id'],"type"=>'leka'])->find();
-// dump($sellInfo);
-// dump($buyInfo);
-// 	import("PlatformCurrency");
-//     $platformObj = new PlatformCurrency();
-// 	$platformObj->recordBooks(['cardId'=>$sellInfo['card_id'],"sendAddress"=>$buyInfo['address'],"getAddress"=>$sellInfo['address'],"num"=>$order['number']]);
-// // }
-// dump($_SESSION);
-// $data['out_trade_no'] = '20181017102453100211';
-// $order  = D('Orders')->where(['out_trade_no'=>$data['out_trade_no']])->find();
-$userId = $wap_user['userid'];
-// dump($userId);die();
-
-import("PlatformCurrency");
-$platformObj = new PlatformCurrency(['userid'=>$userId]);
-// file_put_contents(".000", $userId);
-// $platformObj->payTran($order['sell_id'],$order['buy_id'],$order['number']*$order['price'],$order['price']);
-$res = $platformObj->bailInter('4.5',207);
-dump($res);
+dump($userInfo);
