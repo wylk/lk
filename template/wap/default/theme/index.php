@@ -10,8 +10,9 @@
         }
         .lk-titles{
           border-bottom: 1px solid #f0f0f0;
-          height: 40px;
+          height: 42px;
           display: flex;
+          z-index:2;
         }
         .lk-ti{
           width: 25%;
@@ -20,7 +21,7 @@
         }
         .action{
           color: red;
-          border-bottom: 1px solid red; 
+          border-bottom: 1px solid red;
         }
         .stores{
             margin: 0 auto;
@@ -54,7 +55,7 @@
 
         }
         .num{
-            height:80px; 
+            height:80px;
             width: 25%;
         }
         .num div{
@@ -81,16 +82,26 @@
             background-color:rgba(12, 12, 12, 0.8);
         }
         </style>
-        <script type="text/javascript">   
+        <script type="text/javascript">
             var plugin = '<?php echo isset($_GET['plugin'])?$_GET['plugin']:1;?>';
         </script>
     </head>
     <body>
         <div class="lk-titles">
-            <div class="lk-ti <?php echo $_GET['plugin']==1 || empty($_GET['plugin'])?'action':'';?>" data-id="1">餐饮</div>
-            <div class="lk-ti <?php echo $_GET['plugin']==2 ?'action':'';?>" data-id="2">果蔬</div>
-            <div class="lk-ti <?php echo $_GET['plugin']==3 ?'action':'';?>" data-id="3">服装</div>
-            <div class="lk-ti <?php echo $_GET['plugin']==4 ?'action':'';?>" data-id="4">更多</div>
+
+
+                 <?php foreach ($res as $key => $value) {?>
+                     <div class="lk-ti"><?php echo $value['name'] ?></div>
+                <?php  } ?>
+
+               <div class="lk-titles">
+                 <select style="font-size: 16px;border: 0!important;height: 39px;">
+                    <option>更多</option>
+                    <option>生活</option>
+                    <option>医疗</option>
+                    <option>交通</option>
+                 </select>
+               </div>
         </div>
         <div id="allmap"></div>
 
@@ -99,10 +110,11 @@
             <div id="pullrefreshs" style="touch-action: none;">
                 <div>
                     <div class="lk-content" style="padding-top:0px ">
-                        
+
                         <div class="stores" >
-                           
+
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -120,39 +132,39 @@
     map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别  
     map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
     map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-</script>   
+</script>
 <script>
 var startX,//触摸时的坐标
     startY,
      x, //滑动的距离
      y,
-     aboveY=200; //设一个全局变量记录上一次内部块滑动的位置 
+     aboveY=200; //设一个全局变量记录上一次内部块滑动的位置
 
 var inner=document.getElementById("up-map-div");
 
 function touchSatrt(e){//触摸
     e.preventDefault();
     var touch=e.touches[0];
-    startY = touch.pageY;   //刚触摸时的坐标              
+    startY = touch.pageY;   //刚触摸时的坐标
 }
-function touchMove(e){//滑动          
-     e.preventDefault();        
-     var  touch = e.touches[0];               
+function touchMove(e){//滑动
+     e.preventDefault();
+     var  touch = e.touches[0];
      y = touch.pageY - startY;//滑动的距离
-    //inner.style.webkitTransform = 'translate(' + 0+ 'px, ' + y + 'px)';  //也可以用css3的方式 
-    console.log(inner.style.top); 
-    console.log(aboveY+y); 
+    //inner.style.webkitTransform = 'translate(' + 0+ 'px, ' + y + 'px)';  //也可以用css3的方式
+    console.log(inner.style.top);
+    console.log(aboveY+y);
     if((aboveY+y) < 40){
-        inner.style.top="40px"; //这一句中的aboveY是inner上次滑动后的位置                   
+        inner.style.top="40px"; //这一句中的aboveY是inner上次滑动后的位置
     } else{
-        inner.style.top=aboveY+y+"px"; //这一句中的aboveY是inner上次滑动后的位置                   
-    }  
-}  
+        inner.style.top=aboveY+y+"px"; //这一句中的aboveY是inner上次滑动后的位置
+    }
+}
 function touchEnd(e){//手指离开屏幕
-  e.preventDefault(); 
-  aboveY=parseInt(inner.style.top);//touch结束后记录内部滑块滑动的位置 在全局变量中体现 一定要用parseInt()将其转化为整数字;            
+  e.preventDefault();
+  aboveY=parseInt(inner.style.top);//touch结束后记录内部滑块滑动的位置 在全局变量中体现 一定要用parseInt()将其转化为整数字;
 }//
- document.getElementById("touch").addEventListener('touchstart', touchSatrt,false);  
- document.getElementById("touch").addEventListener('touchmove', touchMove,false);  
- document.getElementById("touch").addEventListener('touchend', touchEnd,false);  
+ document.getElementById("touch").addEventListener('touchstart', touchSatrt,false);
+ document.getElementById("touch").addEventListener('touchmove', touchMove,false);
+ document.getElementById("touch").addEventListener('touchend', touchEnd,false);
 </script>

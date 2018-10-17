@@ -31,7 +31,7 @@
             lk.is_weixin() && function(){
                 $('.lk-bar-nav').css('display','none');
                 $('.lk-content').css({"padding":"0px"});
-            }()
+            }
         })
     </script>
 </head>
@@ -81,6 +81,7 @@
                                 <input type="text" class='layui-input' name="postcard" required lay-verify='postcard' value="<?php echo isset($audit['postcards']) ? $audit['postcards'] : " "?>" placeholder="身份证号" />
                             </div>
                         </div>
+
                         <div class='layui-form-item'>
                             <label class="layui-form-label">身份证正面：</label>
                             <div class="layui-input-block img-block">
@@ -142,6 +143,18 @@
                         <div class="layui-input-block">
                             <input type="text" class='layui-input' name="enterprise" required lay-verify='enterprise' value="<?php echo isset($audit['enterprise']) ? $audit['enterprise'] : " "?>" placeholder="企业名称" />
                         </div>
+                    </div>
+                    <div class='layui-form-item'>
+                            <label class="layui-form-label">店铺类型：</label>
+                            <div class="layui-input-block">
+                                 <select name="shopclass">
+                                     <option>请选择</option>
+                                     <?php foreach ($res as $key => $value) {?>
+                                            <option value="<?php echo $value['id'] ?>"><?php echo  $value['name'] ?></option>
+                                    <?php  } ?>
+
+                                 </select>
+                            </div>
                     </div>
                     <div class='layui-form-item'>
                         <label class="layui-form-label">法人姓名：</label>
@@ -375,6 +388,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
     });
     form.on("submit(formBusiness)", function(data) {
         console.log(data);
+
         if (beatCount >= 1) {
             layer.msg(beatCount + "只能提交一次", { icon: 5, skin: "demo-class" });
             return false;
@@ -408,3 +422,9 @@ layui.use(["element", "upload", "layer", 'form'], function() {
 </script>
 
 </html>
+<!-- <script type="text/javascript">
+    $('.qiao').click(function(){
+        var name=$('.name').val();
+        alert(name)
+    })
+</script> -->

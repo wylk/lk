@@ -53,7 +53,7 @@
             });
           //监听提交
           form.on('submit(add)', function(data){
-            $.post('?c=userAudit&a=feedback',data.field,function(res){
+            $.post('?c=userAudit&a=back',data.field,function(res){
               if(res.error==0){
                 layer.alert(res.msg, {icon: 1,},function(){
                       // 获得frame索引

@@ -44,6 +44,14 @@
               </div>
           </div>
           <div class="layui-form-item">
+              <label for="phone" class="layui-form-label">
+                  <span class="x-red">*</span>企业类型
+              </label>
+              <div class="layui-input-inline" style="margin-top: 10px;">
+                <?= $res['name'] ?>
+              </div>
+          </div>
+          <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
                   <span class="x-red">*</span>执照编号
               </label>
