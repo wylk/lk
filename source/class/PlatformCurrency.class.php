@@ -208,18 +208,7 @@ class PlatformCurrency{
         if($tradeInfo['type'] == '1'){
             $packageInfo = D("Card_package")->where(['id'=>$data['packageId']])->find();
             if($packageInfo['num'] < $num)  return ['res'=>1,"msg"=>"现有金额不足","other"=>$packageInfo['num']];
-
-            // 检测保证金
-            // $res = $this->checkBail();
-            //    // 保证金比例为100%
-            // if($res['error'] == '101') return ['res'=>1,"msg"=>$res['msg']];
-            // else if($res['error'] == '102'){
-            //     $bailtotalNum = $num/(100-(int)$this->bailRatio)*100;
-            //     $this->bailNum = $bailtotalNum - $num;
-            //     if($packageInfo['num'] < $bailtotalNum)
-            //         return ['res'=>1,'msg'=>'现有金额不足','other'=>$packageInfo['num'],'bail'=>$this->bailNum];
-            //     $packageList[] = ['id'=>$packageInfo['id'],'operator'=>'+','step'=>$this->bailNum,'field'=>'bail'];
-            // }
+            // 提现保证金冻结
             $bailRes = $this->bailInter($num,$packageInfo['id']);
             if($bailRes['res']) return ['res',"msg"=>$bailRes['msg']];
             $this->bailNum = $bailRes['data']['bailNum'];
@@ -517,10 +506,13 @@ class PlatformCurrency{
     public function checkBail(){
         if(option("hairpan_set.bail_switch")){
             // 获取平台比例
-            $userinfo = D('User_audit')->field('ratio')->where(['uid'=>$this->userId])->find();
+            $userinfo = D('User_audit')->where(['uid'=>$this->userId])->find();
             $this->bailRatio = $userinfo['ratio'];
-            if((int)$userinfo['ratio'] == '100') return ['error'=>101,'msg'=>'没有提现权限，请联系管理员'];
-            elseif($userinfo['ratio']){
+            if(!($userinfo['type'] == '2' && $userinfo['status'] == '1'))
+                return ['error'=>000,'msg'=>'提现无需保证金','userinfo'=>$userinfo];
+            if((int)$userinfo['ratio'] == '100')
+                return ['error'=>101,'msg'=>'没有提现权限，请联系管理员'];
+            if($userinfo['ratio']){
                 // 检测保证金是否还请
                 // $packages = D('Card_package')->where(['uid'=>$this->userId,'type'=>$this->cardType])->select();
                 $packages = D('Card_package')->where(['uid'=>$this->userId,'type'=>$this->cardType])->find();
