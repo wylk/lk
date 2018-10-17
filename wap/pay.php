@@ -70,6 +70,7 @@ switch ($payType) {
 		$payment_url = option('config.wap_site_url') . '/notice.php';
 		$data['out_trade_no'] = $orderInfo['out_trade_no'];
 		$data['payType'] = 'platform';
+		$data['userid'] = $userId;
 		$result = Http::curlPost($payment_url, $data);
 
 		if($result['errcode']){
