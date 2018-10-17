@@ -22,9 +22,10 @@ require_once dirname(__FILE__).'/global.php';
 $res=D('Shopclass')->select();
 $num=count($res);
 $arr=array_slice($res,0,3);
+
 $a=array_column($arr,name,id);
 
-$count=$num-3;
+$count=$num-4;
 $aa=array_slice($res,$count,$num);
 $ar=array_column($aa,name,id);
 
