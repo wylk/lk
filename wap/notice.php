@@ -3,6 +3,7 @@
  *  支付异步通知
  */
 require_once dirname(__FILE__) . '/global.php';
+// $file = LEKA_PATH.'/upload/log/order.txt';
 $payType = isset($_REQUEST['payType']) ? $_REQUEST['payType'] : 'weixin';
 
 // 支付方式判断
@@ -10,6 +11,7 @@ $xml = file_get_contents('php://input');
 if(!empty($xml)){
 	$data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
 }else if($payType == 'platform'){
+	$userId = $_REQUEST['userid'];
 	$data['out_trade_no'] = $_REQUEST['out_trade_no'];
 	
 }else{
@@ -25,16 +27,12 @@ if(!empty($xml)){
 $order  = D('Orders')->where(['out_trade_no'=>$data['out_trade_no']])->find();
 
 // 转账处理
+
 if($payType == 'platform'){
 	// 平台币转账
 	import("PlatformCurrency");
-    $platformObj = new PlatformCurrency();
-	$platformObj->payTran($order['sell_id'],$order['buy_id'],$order['number'],$order['price']);
-	// dexit()
-	// $dataEdit[] = ['id'=>['val'=>$order['buy_id'],"field"=>"uid"],'field'=>"num","operator"=>"-","step"=>$order['number']];
-	// $dataEdit[] = ['id'=>['val'=>$order['sell_id'],"field"=>"uid"],'field'=>"num","operator"=>"+","step"=>$order['number']];
-	// $additional[] = ["field"=>'type',"operator"=>'=',"val"=>'leka'];
-	// M("Card_package")->dataModification($dataEdit,$additional);
+    $platformObj = new PlatformCurrency(['userid'=>$userId]);
+	$platformObj->payTran($order['sell_id'],$order['buy_id'],$order['number']*$order['price'],$order['price']);
 }
 
 // dexit(['errcode'=>3,'msg'=>$data]);

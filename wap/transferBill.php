@@ -69,10 +69,9 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 if(IS_POST && $_POST['type'] == "getRemark"){
 	$cardId = $_POST['cardId'];
 	$addresList = D("User_address")->where(['uid'=>$userId,"card_id"=>$cardId])->select();
-	if($addresList){
+	if($addresList)
 		dexit(['res'=>0,"msg"=>"请选择转账地址","list"=>$addresList]);
-	}
-	dexit(['res'=>1,"msg"=>"还未保存转账地址"]);
+	dexit(['res'=>1,"msg"=>"还未保存转账地址",'data'=>['cardId'=>$cardId]]);
 }
 //添加评价
 if(IS_POST && $_POST['type'] == "addEval"){

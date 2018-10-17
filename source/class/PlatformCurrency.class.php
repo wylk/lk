@@ -79,14 +79,9 @@ class PlatformCurrency{
                 return ['res'=>1,"msg"=>"售出数量不能超出现有可用数量"];
             }
             // 检测保证金
-            $res = $this->checkBail();
-            if($res['error'] == '101'){
-                // 保证金比例为100%
-                return ['res'=>1,"msg"=>$res['msg']];
-            }else if($res['error'] == '102'){
-                $this->bailNum = $this->tranNum*(int)$this->bailRatio/100;
-                $this->tranNum = $this->tranNum - $this->bailNum;
-            }
+            $bailRes = $this->bailInter($this->tranNum,$this->packageId);
+            if($bailRes['res']) return ['res',"msg"=>$bailRes['msg']];
+            $this->bailNum = $bailRes['data']['bailNum'];
         }
 
         // 添加委托数据到数据库
@@ -95,13 +90,8 @@ class PlatformCurrency{
         if($tradeDataRes['res'] != 0) return $tradeDataRes;
         // 冻结卡包卖家数据
         if($this->type == '2'){
-            if(!empty($this->bailNum)){
-                $num = $this->tranNum + $this->bailNum;
-                $frozenList[] = ['id'=>$platform['id'],"operator"=>"+","step"=>$this->bailNum,"field"=>"bail"];
-            }else $num = $this->tranNum;
             $frozenList[] = ['id'=>$platform['id'],"operator"=>"+","step"=>$this->tranNum,"field"=>"frozen"];
-            $frozenList[] = ['id'=>$platform['id'],"operator"=>"-","step"=>$num,"field"=>"num"];
-            // return ['res'=>1,"msg"=>'测试','data'=>$frozenList];
+            $frozenList[] = ['id'=>$platform['id'],"operator"=>"-","step"=>$this->tranNum,"field"=>"num"];
             $this->packageFrozen($frozenList);
         }
 
@@ -142,7 +132,6 @@ class PlatformCurrency{
             if($this->type == '1'){
                 $this->matchOrderData[$key]['sell_id'] = $value['uid'];
                 $this->matchOrderData[$key]['buy_id'] = $this->userId;
-                // $this->matchOrderData[$key]['bail'] =
             }elseif($this->type == '2'){
                 $this->matchOrderData[$key]['buy_id'] = $value['uid'];
                 $this->matchOrderData[$key]['sell_id'] = $this->userId;
@@ -151,12 +140,7 @@ class PlatformCurrency{
             $this->matchOrderData[$key]['number'] = $orderNum;
             $this->matchOrderData[$key]['price'] = $this->price;
             $this->matchOrderData[$key]['create_time'] = time();
-            // // 保证金检测
-            // if($this->type == '1' && $value['bail']){
-            //     $this->matchOrderData[$key]['bail'] = $value['bail']/$value['num']*$orderNum
-            // }
-            // 订单生成后，挂单信息修改
-            // $frozenList[] = ['id'=>$tradeInfo['id'],"operator"=>"+","step"=>$num,"field"=>"frozen"];
+
             $this->frozenList[] = ['id'=>$value['id'],"operator"=>"+","step"=>$orderNum,"field"=>"frozen"];
             $this->frozenList[] = ['id'=>$this->lastTradeId,"operator"=>"+","step"=>$orderNum,"field"=>"frozen"];
             if($this->tranNum == 0) break;
@@ -169,12 +153,8 @@ class PlatformCurrency{
         $tranData['card_id'] = $data['cardId'];
         $tranData['address'] = $data['cardAddress'];
         $tranData['type'] = $type;
-        if($type='2' && !empty($this->bailNum)){
-            $tranData['num'] = $this->initialNum - $this->bailNum;
-            $tranData['bail'] = $this->bailNum;
-        }else{
-            $tranData['num'] = $this->initialNum;
-        }
+        $tranData['num'] = $this->initialNum;
+        $tranData['bail'] = $this->bailNum;
         if($this->limitNum != 0){
             $tranData['limit'] = $this->limitNum;
         }
@@ -228,25 +208,18 @@ class PlatformCurrency{
         if($tradeInfo['type'] == '1'){
             $packageInfo = D("Card_package")->where(['id'=>$data['packageId']])->find();
             if($packageInfo['num'] < $num)  return ['res'=>1,"msg"=>"现有金额不足","other"=>$packageInfo['num']];
+            // 提现保证金冻结
+            $bailRes = $this->bailInter($num,$packageInfo['id']);
+            if($bailRes['res']) return ['res',"msg"=>$bailRes['msg']];
+            $this->bailNum = $bailRes['data']['bailNum'];
 
-            // 检测保证金
-            $res = $this->checkBail();
-                // 保证金比例为100%
-            if($res['error'] == '101') return ['res'=>1,"msg"=>$res['msg']];
-            else if($res['error'] == '102'){
-                $bailtotalNum = $num/(100-(int)$this->bailRatio)*100;
-                $this->bailNum = $bailtotalNum - $num;
-                if($packageInfo['num'] < $bailtotalNum)
-                    return ['res'=>1,'msg'=>'现有金额不足','other'=>$packageInfo['num'],'bail'=>$this->bailNum];
-                $packageList[] = ['id'=>$packageInfo['id'],'operator'=>'+','step'=>$this->bailNum,'field'=>'bail'];
-            }
             // 如果是卖单，对卡包中的数据进行冻结
-            $packageNum = $this->bailNum + $num;
-            $packageList[] = ['id'=>$packageInfo['id'],'operator'=>"-",'step'=>$packageNum,'field'=>'num'];
+            // $packageNum = $this->bailNum + $num;
+            $packageList[] = ['id'=>$packageInfo['id'],'operator'=>"-",'step'=>$num,'field'=>'num'];
             $packageList[] = ['id'=>$packageInfo['id'],'operator'=>"+",'step'=>$num,'field'=>'frozen'];
             M("Card_package")->frozen($packageList);
         }
-// return ['res'=>1,'msg'=>'市场保证金测试','bail'=>$this->bailNum];
+
         $this->matchOrderData[$tranId]['tran_other'] = $tradeInfo['id'];
         $this->matchOrderData[$tranId]['tran_id'] = $tradeInfo['id'];
         $this->matchOrderData[$tranId]['card_id'] = $tradeInfo['card_id'];
@@ -272,36 +245,9 @@ class PlatformCurrency{
         $frozenList[] = ['id'=>$tradeInfo['id'],"operator"=>"+","step"=>$num,"field"=>"frozen"];
         $this->tradeSheetFrozen($frozenList);
 
-        // if($tradeInfo['type'] == '1'){
-        //     if(!empty($this->bailNum)){
-        //         $sellfrozenList[] = ['id'=>$packageInfo['id'],"operator"=>"+","step"=>$this->bailNum,"field"=>"bail"];
-        //         $selltranNum = $this->bailNum + $num;
-        //     }else{
-        //         $selltranNum = $num;
-        //     }
-        //     $sellfrozenList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$selltranNum,"field"=>"num"];
-        //     $sellfrozenList[] = ['id'=>$packageInfo['id'],"operator"=>"+","step"=>$num,"field"=>"frozen"];
-        //     $this->packageFrozen($sellfrozenList);
-        // }
         return ['res'=>0,"msg"=>"订单已生成",'data'=>$this->matchOrderData[$tranId]];
     }
-    // 提现保证金检测
-    public function checkBail(){
-        if(option("hairpan_set.bail_switch")){
-            // 获取平台比例
-            $userinfo = D('User_audit')->field('ratio')->where(['uid'=>$this->userId])->find();
-            $this->bailRatio = $userinfo['ratio'];
-            if((int)$userinfo['ratio'] == '100') return ['error'=>101,'msg'=>'没有提现权限，请联系管理员'];
-            elseif($userinfo['ratio']){
-                // 检测保证金是否还请
-                $packages = D('Card_package')->where(['uid'=>$this->userId,'type'=>$this->cardType])->select();
-                $sums = D('Card')->where(['uid'=>$this->userId,'c_id'=>6])->sum('val');
-                $bail = $sums*(int)$userinfo['ratio']/100;
-                if($bail-(int)$packages['bail']>0) return ['error'=>102,'msg'=>'保证金不足'];
-            }
-        }
-        return ['error'=>000,'msg'=>'提现无需保证金','userinfo'=>$userinfo];
-    }
+    
     // 卡包数据冻结
     public function packageFrozen($frozenList){
         M("Card_package")->frozen($frozenList);
@@ -360,16 +306,6 @@ class PlatformCurrency{
             M("Card_package")->dataModification($packageList);
             }
         }
-        // // // 保证金数据处理  （转账直接成功后处理的，撤销订单无需处理）
-        // if(!empty($orderInfo['bail']) && $orderInfo['bail'] > 0){
-        //     // $bailWhere = ['uid'=>$orderInfo['sell_id'],'type'=>$this->cardType];
-        //     // $packageInfo = D("Card_package")->where($bailWhere)->find();
-        //     $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
-        //     $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['bail'],"field"=>"bail"];
-        //     // $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"+","step"=>$orderInfo['number']+$orderInfo['bail'],"field"=>"num"];
-        //     // D("Card_package")->where($bailWhere)->setInc('num',$orderInfo['bail']);
-        //     // D("Card_package")->where($bailWhere)->setDec('bail',$orderInfo['bail']);
-        // }
         $frozenList[$orderInfo['tran_id']] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
         $this->tradeSheetFrozen($frozenList);
         // $this->
@@ -382,8 +318,12 @@ class PlatformCurrency{
     public $sellOrder = false;  //是否是委托卖单
     // 平台币付款转账
     public function payTran($sellUid,$buyUid,$num,$price=0){
-        $sellInfo = D("Card_package")->where(['uid'=>$orderInfo['sell_id'],"type"=>$this->cardType])->find();
-        $buyInfo = D("Card_package")->where(['uid'=>$orderInfo['buy_id'],"type"=>$this->cardType])->find();
+        $sellInfo = D("Card_package")->where(['uid'=>$sellUid,"type"=>$this->cardType])->find();
+        $buyInfo = D("Card_package")->where(['uid'=>$buyUid,"type"=>$this->cardType])->find();
+
+        // 保证金冻结
+        $bailRes = $this->bailInter($num,$buyInfo['id']);
+        if(!$bailRes['res']) $bailNum = $bailRes['data']['bailNum'];
         // 转账接口调用
         if($this->interfaceType){
             // 转账接口
@@ -394,7 +334,7 @@ class PlatformCurrency{
         }else{
             $imitateRes = $this->imitateInterface($sellInfo,$buyInfo,$num);
             if($imitateRes['res']) return $imitateRes;
-            $buyRes = $buyInfo['num']-$num;
+            $buyRes = $buyInfo['num']-$bailNum-$num;
             $sellRes = $sellInfo['num']+$num;
         }
         $dataEdit[] = ['id'=>['val'=>$buyUid,"field"=>"uid"],'field'=>"num","operator"=>"=","step"=>$buyRes];
@@ -426,7 +366,6 @@ class PlatformCurrency{
             $buyRes = $buyInfo['num']+$orderInfo['number']+$buyInfo['frozen']+$buyInfo['bail'];
             $sellRes = $sellInfo['num']-$orderInfo['number']+$sellInfo['frozen']+$sellInfo['bail'];
         }
-        // dexit(['res'=>1,"msg"=>"test","imitateRes"=>$imitateRes]);
 
         // 保证金数据处理
         $bailInfo = D('Card_transaction')->where(['uid'=>$orderInfo['sell_id'],'id'=>['in',[$orderInfo['tran_id'],$orderInfo['tran_other']]]])->find();
@@ -458,40 +397,33 @@ class PlatformCurrency{
         $data[] = ['id'=>$buyInfo['id'],"operator"=>"+","step"=>$orderInfo['number'],"field"=>"recovery_count"];
         $balanceRes = M('Card_package')->frozen($data);
         $statusRes = D("Orders")->data(['status'=>1])->where(['id'=>$orderId])->save();
-// dexit(['res'=>1,"msg"=>"test","balanceRes"=>$balanceRes,"status"=>$statusRes,"data"=>$data]);
-        if(!$statusRes){
+
+        if(!$statusRes)
             return ['res'=>1,"msg"=>"转账失败","balanceRes"=>$balanceRes,"status"=>$statusRes,'frozen'=>$frozenList,'data'=>$data];
-        }
         return ['res'=>0,"msg"=>"转账成功",'frozen'=>$frozenList,'bailInfo'=>$bailInfo,'orderInfo'=>$orderInfo,'data'=>$data,'balanceRes'=>$balanceRes];
     }
+    // 平台币根据地址转账
     public function tranEachOther($sendAddress,$getAddress,$num){
         $sellInfo = D("Card_package")->where(['address'=>$sendAddress])->find();
         $buyInfo = D("Card_package")->where(['address'=>$getAddress])->find();
 
-        // 检测保证金
-        $res = $this->checkBail();
-            // 保证金比例为100%
-        if($res['error'] == '101') return ['res'=>1,"msg"=>$res['msg']];
-        else if($res['error'] == '102'){
-            $bailNum = $num*(int)$this->bailRatio/100;
-            $tranNum = $num - $bailNum;
-            $packageList[] = ['id'=>$sellInfo['id'],'operator'=>'+','step'=>$bailNum,'field'=>'bail'];
-        }else{
-            $tranNum = $num;
-            $bailNum = 0;
-        }
+        // 保证金冻结
+        $bailRes = $this->bailInter($num,$sellInfo['id']);
+        if($bailRes['res']) return ['res'=>1,"msg"=>$bailRes['msg']];
+        $bailNum = $bailRes['data']['bailNum'];
+
         // 转账接口调用
         if($this->interfaceType){
             // 转账接口
-            $blockchainRes = $this->blockchainInterface($sellInfo,$buyInfo,$tranNum);
+            $blockchainRes = $this->blockchainInterface($sellInfo,$buyInfo,$num);
             if($blockchainRes['res']) return $blockchainRes;
             $buyRes = $blockchainRes['buyRes'];
             $sellRes = $blockchainRes['sellRes'];
         }else{
-            $imitateRes = $this->imitateInterface($sellInfo,$buyInfo,$tranNum);
+            $imitateRes = $this->imitateInterface($sellInfo,$buyInfo,$num);
             if($imitateRes['res']) return $imitateRes;
-            $buyRes = $buyInfo['num']+$tranNum+$buyInfo['frozen']+$buyInfo['bail'];
-            $sellRes = $sellInfo['num']-$tranNum+$sellInfo['frozen']+$sellInfo['bail'];
+            $buyRes = $buyInfo['num']+$num+$buyInfo['frozen']+$buyInfo['bail'];
+            $sellRes = $sellInfo['num']-$num+$sellInfo['frozen']+$sellInfo['bail'];
         }
         $buyLastNum = $buyRes - $buyInfo['frozen'] - $buyInfo['bail'];
         $sellLastNum = $sellRes - $sellInfo['frozen'] - $sellInfo['bail'] - $bailNum;
@@ -500,7 +432,7 @@ class PlatformCurrency{
         M("Card_package")->dataModification($packageList);
 
         // 转账记录
-        $this->recordBooks(["cardId"=>$sellInfo['card_id'],'getAddress'=>$buyInfo['address'],"sendAddress"=>$sellInfo['address'],"num"=>$tranNum,"price"=>'0']);
+        $this->recordBooks(["cardId"=>$sellInfo['card_id'],'getAddress'=>$buyInfo['address'],"sendAddress"=>$sellInfo['address'],"num"=>$num,"price"=>'0']);
         return ['res'=>0,"msg"=>"转账成功"];
 
     }
@@ -570,5 +502,42 @@ class PlatformCurrency{
         $addAccountInfo = $obj->geth_api(['phone'=>$phone,'c'=>'Geth','a'=>'add_account']);
         return $addAccountInfo;
     }
+    // 提现保证金检测
+    public function checkBail(){
+        if(option("hairpan_set.bail_switch")){
+            // 获取平台比例
+            $userinfo = D('User_audit')->where(['uid'=>$this->userId])->find();
+            $this->bailRatio = $userinfo['ratio'];
+            if(!($userinfo['type'] == '2' && $userinfo['status'] == '1'))
+                return ['error'=>000,'msg'=>'提现无需保证金','userinfo'=>$userinfo];
+            if((int)$userinfo['ratio'] == '100')
+                return ['error'=>101,'msg'=>'没有提现权限，请联系管理员'];
+            if($userinfo['ratio']){
+                // 检测保证金是否还请
+                // $packages = D('Card_package')->where(['uid'=>$this->userId,'type'=>$this->cardType])->select();
+                $packages = D('Card_package')->where(['uid'=>$this->userId,'type'=>$this->cardType])->find();
+                $sums = D('Card')->where(['uid'=>$this->userId,'c_id'=>6])->sum('val');
+                $bail = $sums*(int)$userinfo['ratio']/100;
+                if($bail-(int)$packages['bail']>0) return ['error'=>102,'msg'=>'保证金不足'];
+            }
+        }
+        return ['error'=>000,'msg'=>'提现无需保证金','userinfo'=>$userinfo];
+    }
+    // 保证金锁定
+    public function bailInter($num,$packageId){
+        $res = $this->checkBail();
+        // 保证金比例为100%
+        if($res['error'] == '101') return ['res'=>1,"msg"=>$res['msg']];
+        else if($res['error'] == '102'){
+            $bailNum = $num*(int)$this->bailRatio/100;
+            $bail[] = ['id'=>$packageId,'operator'=>'+','step'=>$bailNum,'field'=>'bail'];
+            $bail[] = ['id'=>$packageId,'operator'=>'-','step'=>$bailNum,'field'=>'num'];
+            M("Card_package")->dataModification($bail);
+        }else{
+            $bailNum = 0;
+        }
+        return ['res'=>0,'data'=>['bailNum'=>$bailNum]];
+    }
+    // 保证金解冻
 
 }
