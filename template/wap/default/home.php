@@ -119,6 +119,32 @@
         .layui-badge{
             background-color: #cc6600;
         } 
+
+        #up-div{
+            position:absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+            z-index:1101;
+            background-color:rgba(12, 12, 12, 0.58);
+            display: none;
+        }
+        #up-index{
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            transition: none 0.2s ease 0s;
+            opacity: 1;
+        }
+        .receivea{
+            height: 210px; 
+            background-color: #fff;
+            position:absolute;left;0;bottom:0;
+        }
     </style>
     <script type="text/javascript">
         var type = "<?php echo $type;?>";
@@ -161,7 +187,65 @@
 </div>
 </div>
 </div>
+<style type="text/css">
+    .card{
+            height: 120px;
+        }
+        .card-info{
+            display: flex;
+            justify-content:space-around;
+        }
+        .card-info-row{
+            width: 30%;
+            height: 50px;
+            line-height: 50px;
+        }
+        .card-data{
+            height: 37px;
+            width: 85%;
+            margin: 0 auto;
+            line-height: 37px;
+        }
+        .card-data-style{
+            color: rgb(37, 155, 36);
+            font-size: 12px;
+        }
+        .layui-input{
+            display:inline;
+            width: 26%;
+        }
+</style>
   	<?php include display('public_menu');?>
+    <div id="up-div">
+        <div id="up-index"> 
+            <div class="receivea">
+                <form>
+                   <div class="card card-num">
+                       <div class="card-data" style="width:95%;display: flex;justify-content: space-between;">你想买多少<a href="img-xx"><div><img src="../static/images/xx_03.jpg"/></div></a></div>
+
+                       <div class="card-data card-data-style">交易限制:<i id="limit"><?= floatval($UserAud['limit']) ?></i>-<i id="num"><?= floatval($UserAud['num']) ?></i> 单价:<i id="price"><?= floatval($UserAud['price']) ?></i></div>
+                       <div class="card-data">购买量:
+
+                        <input type="text" name="number" required  lay-verify="required" autocomplete="off" class="layui-input number">
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="prices" required  lay-verify="required" autocomplete="off" class="layui-input prices" >
+                        CNY
+                    </div>
+                    <input type="hidden" id="card_id" value="">
+                    <input type="hidden" id="c_id" value="">
+                    <input type="hidden" id="c_num" value="">
+                    <input type="hidden" id="c_uid" value="">
+                    <input type="hidden" id="c_price" value="">
+                    <input type="hidden" id="c_limit" value="">
+                   </div>
+                   <div class="card" style="text-align: center;line-height: 120px;">
+                        <p class="layui-btn" id="buy" style="width: 60%;background-color: #efc914;color: #000;">购买</p>
+                   </div>
+                  
+                 </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 <script>
@@ -226,5 +310,93 @@ layui.use('carousel', function(){
     document.getElementById('pullrefreshs').addEventListener("swiperight",function() {
            document.location.href='./index.php';
   });
-    mui('body').on('tap','a',function(){document.location.href=this.href;});
+    mui('body').on('tap','a',function(){
+        var url = this.href;
+        if(url.indexOf("img-xx") != -1 ){
+            $('#up-div').css('display','none');
+        }else if(url.indexOf("click-buy") != -1 ){
+            var id = this.getAttribute("data-id");
+            var uid = this.getAttribute("data-uid");
+            $('#up-div').css('display','block');
+            $.get('receive.php',{id:id,uid:uid},function(re){
+                if(re.error == 0){
+                    $('#limit').html(re.msg.limit);
+                    $('#num').html(re.msg.num);
+                    $('#price').html(re.msg.price);
+
+                    $('#card_id').val(re.msg.card_id);
+                    $('#c_id').val(re.msg.id);
+                    $('#c_num').val(re.msg.num);
+                    $('#c_uid').val(uid);
+                    $('#c_price').val(re.msg.price);
+                    $('#c_limit').val(re.msg.limit);
+
+                }else{
+                    
+                }
+
+            },'json');
+        }else{
+            document.location.href=this.href;
+        }
+    });
+
+</script>
+<script type="text/javascript">
+layui.use(['form', 'layer'],function() {
+    layer = layui.layer;
+
+    
+
+     $("input[name='number']").bind('input',function(){
+        var price = $("#c_price").val();
+         $("input[name='prices']").val(price*parseFloat($(this).val()));
+
+      });
+     $("input[name='prices']").bind('input',function(){
+        var price = $("#c_price").val();
+        $("input[name='number']").val(parseFloat($(this).val())/price);
+      });
+    $("#buy").click(function(){
+        var text = parseFloat($("#c_limit").val());
+        var num = parseFloat($("#c_num").val());
+        var price = parseFloat($("#c_price").val());
+        var data = {}
+        data.number = $("input[name='number']").val();
+        data.prices = $("input[name='prices']").val();
+        data.card_id = $('#card_id').val();
+        data.tranId = $('#c_id').val();
+        data.quantity = $('#c_num').val();
+        data.sell_id  = $('#c_uid').val();
+        data.price = price;
+        if(data.number < text || data.number>num){
+          layer.msg('输入购买数不合法！',{icon: 5,time:1000},function(){
+              $("input[name='prices']").val('');
+              $("input[name='number']").val('');
+              $("input[name='number']").focus();
+          });
+          return false;
+        }
+        layer.load();
+        //console.log(data);
+        //return;
+        // 支付数据处理
+        $.post('./receive.php',data,function(data){
+            // if(data.error==0) paydata.orderId = data.orderId;
+            if(data.error==0){
+            //     //此处演示关闭
+                layer.closeAll('loading');
+                layer.msg(data.msg,{icon: 1,time:1000});
+                window.location.href = './pay.php?id='+data.orderId;
+            }else{
+                //此处演示关闭
+                layer.closeAll('loading');
+                layer.msg(data.msg,{icon: 5,time:1000});
+                if(data.referer){
+                  window.location.href = data.referer;
+                }
+            }
+        },'json');
+    });
+});
 </script>
