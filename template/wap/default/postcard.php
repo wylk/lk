@@ -147,10 +147,10 @@
                     <div class='layui-form-item'>
                             <label class="layui-form-label">店铺类型：</label>
                             <div class="layui-input-block">
-                                 <select name="shopclass">
+                                 <select name="shopclass" >
                                      <option>请选择</option>
                                      <?php foreach ($res as $key => $value) {?>
-                                            <option value="<?php echo $value['id'] ?>"><?php echo  $value['name'] ?></option>
+                                            <option  value="<?php echo $value['id'] ?>"><?php echo  $value['name'] ?></option>
                                     <?php  } ?>
 
                                  </select>
@@ -422,9 +422,3 @@ layui.use(["element", "upload", "layer", 'form'], function() {
 </script>
 
 </html>
-<!-- <script type="text/javascript">
-    $('.qiao').click(function(){
-        var name=$('.name').val();
-        alert(name)
-    })
-</script> -->
