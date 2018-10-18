@@ -12,19 +12,25 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
-        .lines{
-            width: 90%;
-            margin: 50px auto;
-        }
+        .lines{width: 90%;margin: 50px auto;}
         .content{margin-top:45px; }
-        .yl img{width: 100px;}
+        .yl img{width: 100px;margin-top: -7px;}
         .yl span{font-size: 21px;border-bottom: 2px solid #e0dede;}
-        .zfb img{width: 75px;margin-left: 17px;margin-top: 15px;}
+        .zfb img{width: 72px;margin-left: 17px;margin-top: 5px;}
         .zfb span{font-size: 21px;border-bottom: 2px solid #e0dede;margin-left: 10px;}
-        .wx img{width: 55px;margin-left: 27px;margin-top: 15px }
+        .wx img{width: 50px;margin-left: 27px;margin-top: 6px;}
         .wx span{font-size: 21px;border-bottom: 2px solid #e0dede;margin-left: 22px;}
         h1{font-size: 40px;margin-top: 39px;margin-left: 35px;}
         h6{color: red;margin-top: 27px;font-size: 16px;margin-left: 19px;}
+        .checkbox{float: right;margin-right: 50px;margin-top: 13px;}
+       [id^="checkbox-9-"] + label {background-color: #FFF;padding: 9px;border-radius: 5px;display: inline-block;position: relative;margin-left: -20px;z-index: -1;z-index: -1px;width: 45px;box-shadow: 0 0 1px rgba(0,0,0,0.6);height: 10px;}
+
+       [id^="checkbox-9-"]:checked + label:after {content: 'YES';left: 25px;color: #21BE92;}
+       [id^="checkbox-9-"] + label:after {content: 'NO';position: absolute;top: 7px;left: 37px;font-size: 1.2em;color: #868686;}
+       [id^="checkbox-9-"]{width: 21px;height: 24px;top: 2px;left: 2px;}
+       .qj i{color: red;float: right;margin-top: -27px;margin-right: 15px;}
+       .j i{color: red;float: right;margin-top: -56px;margin-right: 15px;}
+       .qja i{color: red;float: right;margin-top: -35px;margin-right: 15px;}
 
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
@@ -47,9 +53,31 @@
         <h1>支付管理</h1>
         <h6>设置收款方式必须是本人账号</h6>
         <div class="content">
-        <div class="yl"><img src="http://lk.com/template/wap/default/images/yl.jpg"><span>绑定银行卡</span></div>
-        <div class="zfb"><img src="http://lk.com/template/wap/default/images/zfb.jpg"><span>绑定支付宝</span></div>
-        <div class="wx"><img src="http://lk.com/template/wap/default/images/wx.jpg"><span>绑定微信</span></div>
+        <div class="yl">
+            <img src="http://lk.com/template/wap/default/images/yl.jpg">
+            <span value="1">绑定银行卡</span>
+            <div class="checkbox">
+                <input type="checkbox" id="checkbox-9-4" /><label for="checkbox-9-4"></label>
+            </div>
+            <div class="qj"><i id="yl">>>></i></div>
+
+        </div>
+        <div class="zfb">
+            <img src="http://lk.com/template/wap/default/images/zfb.jpg">
+            <span value="2">绑定支付宝</span>
+            <div class="checkbox">
+                <input type="checkbox" id="checkbox-9-3" /><label for="checkbox-9-3"></label>
+            </div>
+             <div class="j"><i id="zfb">>>></i></div>
+        </div>
+        <div class="wx">
+            <img src="http://lk.com/template/wap/default/images/wx.jpg">
+            <span value="3">绑定微信</span>
+            <div class="checkbox">
+                <input type="checkbox" id="checkbox-9-2" /><label for="checkbox-9-2"></label>
+            </div>
+             <div class="qja"><i id="wx">>>></i></div>
+        </div>
         </div>
 
 
@@ -57,6 +85,35 @@
     <?php include display('public_menu');?>
 </body>
 <script type="text/javascript">
+$('#yl').click(function(){
+     var tex=$("#checkbox-9-4").parent().prev().attr('value');
+     var a=$("#checkbox-9-4").is(':checked');
+     if(a==false){
+         return false;
+     }else{
+          window.location.href = "http://lk.com/wap/pay_xq.php?type="+tex+"";
+     }
+})
+$('#zfb').click(function(){
+     var tex=$("#checkbox-9-3").parent().prev().attr('value');
+     var a=$("#checkbox-9-3").is(':checked');
+     if(a==false){
+         return false;
+     }else{
+          window.location.href = "http://lk.com/wap/pay_xq.php?type="+tex+"";
+     }
+})
+$('#wx').click(function(){
+     var tex=$("#checkbox-9-2").parent().prev().attr('value');
+     var a=$("#checkbox-9-2").is(':checked');
+     if(a==false){
+         return false;
+     }else{
+          window.location.href = "http://lk.com/wap/pay_xq.php?type="+tex+"";
+     }
+})
+
+
 
 </script>
 
