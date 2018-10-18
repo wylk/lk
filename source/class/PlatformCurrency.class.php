@@ -103,6 +103,10 @@ class PlatformCurrency{
             $addOrderRes = $this->addOrder();
             if($addOrderRes['res']) return $addOrderRes;
 
+            // foreach($this->frozenList as $key=>$value){
+            //     file_put_contents("./222", $value."\r\n",FILE_APPEND);
+            // }
+
             $this->tradeSheetFrozen($this->frozenList);
 
             return ['res'=>0,"msg"=>"已匹配到".$addOrderRes['data']."条订单","tradeData"=>$tradeDataRes['data'],'orderData'=>$this->matchOrderData];
@@ -114,6 +118,7 @@ class PlatformCurrency{
         if($this->type == "2") $type = 1;
         if($this->type == '1') $type = 2;
         $matchingList = D("Card_transaction")->where(['uid'=>["not in",[$this->userId]],'price'=>$this->price,"limit"=>["<=",$this->tranNum],"type"=>$type,"status"=>0])->order("createtime desc")->select();
+        $frozenOrderNum = 0;
         foreach($matchingList as $key=>$value){
             $orderNum = 0;
             if($value['num']-$value['frozen'] >= $this->tranNum && $this->tranNum >= $value['limit']){
@@ -136,13 +141,15 @@ class PlatformCurrency{
                 $this->matchOrderData[$key]['buy_id'] = $value['uid'];
                 $this->matchOrderData[$key]['sell_id'] = $this->userId;
             }
-            $this->matchOrderData[$key]['onumber'] = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+            // $this->matchOrderData[$key]['onumber'] = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+            $this->matchOrderData[$key]['onumber'] = $time = date('Ymd').rand(10000,99999).rand(100,999);
             $this->matchOrderData[$key]['number'] = $orderNum;
             $this->matchOrderData[$key]['price'] = $this->price;
             $this->matchOrderData[$key]['create_time'] = time();
 
-            $this->frozenList[] = ['id'=>$value['id'],"operator"=>"+","step"=>$orderNum,"field"=>"frozen"];
-            $this->frozenList[] = ['id'=>$this->lastTradeId,"operator"=>"+","step"=>$orderNum,"field"=>"frozen"];
+            $frozenOrderNum += $orderNum;
+            $this->frozenList[$value['id']] = ['id'=>$value['id'],"operator"=>"+","step"=>$orderNum,"field"=>"frozen"];
+            $this->frozenList[$this->lastTradeId] = ['id'=>$this->lastTradeId,"operator"=>"+","step"=>$frozenOrderNum,"field"=>"frozen"];
             if($this->tranNum == 0) break;
         }
 
@@ -230,7 +237,7 @@ class PlatformCurrency{
             $this->matchOrderData[$tranId]['buy_id'] = $tradeInfo['uid'];
             $this->matchOrderData[$tranId]['sell_id'] = $this->userId;
         }
-        $this->matchOrderData[$tranId]['onumber'] = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+        $this->matchOrderData[$tranId]['onumber'] = $time = date('Ymd').rand(10000,99999).rand(100,999);
         $this->matchOrderData[$tranId]['number'] = $num;
         $this->matchOrderData[$tranId]['price'] = $tradeInfo['price'];
         $this->matchOrderData[$tranId]['create_time'] = time();
