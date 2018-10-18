@@ -15,7 +15,8 @@
           z-index:2;
         }
         .lk-ti{
-          width: 25%;
+          /*width: 25%;*/
+          width: 102%;
           line-height: 40px;
           text-align: center;
         }
@@ -89,19 +90,18 @@
     <body>
         <div class="lk-titles">
 
+                      <div class="lk-ti" id="one"><?php echo $a[1] ?></div>
+                      <div class="lk-ti" id="too"><?php echo $a[2] ?></div>
+                      <div class="lk-ti" id="stree"><?php echo $a[3] ?></div>
+                      <div class="lk-ti" id="duo">
+                         <select style="font-size: 19px;border: 0!important;height: 39px;"  name="select">
+                            <option value="">更多</option>
+                              <?php foreach ($ar as $k => $v) {?>
+                                 <option  value="<?php echo $v ?>"><?php echo $v ?></option>
+                              <?php } ?>
+                         </select>
+                      </div>
 
-                 <?php foreach ($res as $key => $value) {?>
-                     <div class="lk-ti"><?php echo $value['name'] ?></div>
-                <?php  } ?>
-
-               <div class="lk-titles">
-                 <select style="font-size: 16px;border: 0!important;height: 39px;">
-                    <option>更多</option>
-                    <option>生活</option>
-                    <option>医疗</option>
-                    <option>交通</option>
-                 </select>
-               </div>
         </div>
         <div id="allmap"></div>
 
@@ -167,4 +167,57 @@ function touchEnd(e){//手指离开屏幕
  document.getElementById("touch").addEventListener('touchstart', touchSatrt,false);
  document.getElementById("touch").addEventListener('touchmove', touchMove,false);
  document.getElementById("touch").addEventListener('touchend', touchEnd,false);
+</script>
+<script type="text/javascript">
+        $('#one').click(function(){
+            var one=$(this).text();
+            $.post('index_ajax.php',{one:one},function(data){
+              if(data.error == 0){
+                  $('.stores').empty();
+                  $('.stores').append(data.msg);
+              }else{
+                alert(data.msg);
+              }
+
+            },'json')
+        })
+        $('#too').click(function(){
+            var too=$(this).text();
+            $.post('index_ajax.php',{too:too},function(data){
+              if(data.error == 0){
+                  $('.stores').empty();
+                  $('.stores').append(data.msg);
+              }else{
+                alert(data.msg);
+              }
+
+            },'json')
+        })
+        $('#stree').click(function(){
+            var stree=$(this).text();
+            $.post('index_ajax.php',{stree:stree},function(data){
+             if(data.error == 0){
+                  $('.stores').empty();
+                  $('.stores').append(data.msg);
+              }else{
+                alert(data.msg);
+              }
+
+            },'json')
+        })
+         $("[name=select]").bind('change',function(){
+            var val = $("[name=select]").val();
+            $.post('index_ajax.php',{val:val},function(data){
+              if(data.error == 0){
+                  $('.stores').empty();
+                  $('.stores').append(data.msg);
+              }else{
+                alert(data.msg);
+              }
+
+            },'json')
+
+         })
+
+
 </script>

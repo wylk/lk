@@ -52,7 +52,8 @@ if(!D('Card_package')->where(['uid'=>$userId,'card_id'=>$UserAud['card_id']])->f
     $contract = $_GET['card']?$_GET['card']:'offset';
     $res = hook('addCardPackage',['card_id'=>$UserAud['card_id'],'uid'=>$userId],$contract);
 }
-include display('receive');
+dexit(['error'=>0,'msg'=>$UserAud]);
+//include display('receive');
 echo ob_get_clean();
 
 

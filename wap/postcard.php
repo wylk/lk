@@ -98,8 +98,11 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 	// $userId = 918;
 	$where = ['uid'=>$userId];
 	$audit = D("User_audit")->where($where)->select();
+
 	$audit = $audit[0];
 	$type = $audit['type'];
+	$res=D('Shopclass')->where(array('id'=>$audit['s_id']))->find();
+    $name=$res['name'];
 	// include display("postcard");
 	// exit();
 // }
