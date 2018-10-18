@@ -36,21 +36,41 @@ require_once dirname(__FILE__).'/global.php';
 // dump(get_cfg_var ("upload_max_filesize"));
 // include display('testh');
 
-$card = D("Card")->where(['type'=>'offset'])->select();
 
-$Contract_field = D('Contract_field')->select();
-$Contract_fields = [];
-foreach ($Contract_field as $kk => $vv) {
-    $Contract_fields[$vv['id']] = $vv['val'];
-}
-dump($Contract_fields);
-foreach ($card as $k => $v) {
-    $cards[$v['card_id']][$Contract_fields[$v['c_id']]] = $v['val'];
-    $cards[$v['card_id']]['uid'] = $v['uid'];
-    $cards[$v['card_id']]['card_id'] = $v['card_id'];
-    if(!in_array($v['uid'], $uid)) $uid[] = $v['uid'];
-}
-dump($cards);
-$userInfo = D("User_audit")->field("name,enterprise,uid")->where("uid in (".implode($uid,",").")")->select();
+$userid = $wap_user['userid'];
 
-dump($userInfo);
+$package = D("Card_package")->where(['uid'=>$userid,"is_publisher"=>1])->select();
+foreach ($package as $key => $value) {
+	$ratio[$value['type']] = $value['ratio'];
+}
+$card = D('Card')->where(['uid'=>$userid,'c_id'=>6])->select();
+foreach($card as $key=>$value){
+	$cardBail[$value['type']]['num'] = $value['val'] * $ratio[$value['type']]/100;
+	$cardBail[$value['type']]['ratio'] = $ratio[$value['type']];
+	$cardBail['sum'] += $value['val'] * $ratio[$value['type']]/100;
+}
+dump($cardBail['sum']);
+dump(empty($cardBail['sum']));
+// dump($data);
+// dump($ratio);
+// dump($card);
+// dump($cardBail);
+// $checkRes;
+// $data = D("Card_package")->where(['uid'=>$userid,"type"=>'leka'])->find();
+// $data['bail'] = 7000;
+// $cardBail['hh']['num'] = '6000';
+// $cardBail['hh']['ratio'] = '60';
+// if($data['bail'] >= $cardBail['sum'])
+// echo "保证金已还完";
+// foreach($cardBail as $key=>$value){
+// 	echo $key;
+// 	if($data['bail'] < $value['num']){
+
+// 		$checkRes['type'] = $key;
+// 		$checkRes['ratio'] = $value['ratio'];
+// 		break;
+// 	}
+// 	$data['bail'] -= $value['num'];
+// 	echo "<br/>---<br/>";
+// }
+// dump($checkRes);

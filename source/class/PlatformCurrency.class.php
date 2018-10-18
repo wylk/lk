@@ -503,25 +503,75 @@ class PlatformCurrency{
         return $addAccountInfo;
     }
     // 提现保证金检测
+    // public function checkBail1(){
+    //     if(option("hairpan_set.bail_switch")){
+    //         // 获取平台比例
+    //         $userinfo = D('User_audit')->where(['uid'=>$this->userId])->find();
+    //         $this->bailRatio = $userinfo['ratio'];
+    //         if(!($userinfo['type'] == '2' && $userinfo['status'] == '1'))
+    //             return ['error'=>000,'msg'=>'提现无需保证金','userinfo'=>$userinfo];
+    //         if((int)$userinfo['ratio'] == '100')
+    //             return ['error'=>101,'msg'=>'没有提现权限，请联系管理员'];
+    //         if($userinfo['ratio']){
+    //             // 检测保证金是否还请
+    //             // 获取该用户各类卡券的保证金额度
+    //             $package = D("Card_package")->where(['uid'=>$userid,"is_publisher"=>1])->select();
+    //             foreach ($package as $key => $value) {
+    //                 $ratio[$value['type']] = $value['ratio'];
+    //             }
+    //             $card = D('Card')->where(['uid'=>$userid,'c_id'=>6])->select();
+    //             foreach($card as $key=>$value){
+    //                 $cardBail[$value['type']] = $value['val'] * $ratio[$value['type']]/100;
+    //                 $cardBail['sum'] += $value['val'] * $ratio[$value['type']]/100;
+    //             }
+    //             // $packages = D('Card_package')->where(['uid'=>$this->userId,'type'=>$this->cardType])->select();
+    //             // $packages = D('Card_package')->where(['uid'=>$this->userId,'type'=>$this->cardType])->find();
+    //             // $sums = D('Card')->where(['uid'=>$this->userId,'c_id'=>6])->sum('val');
+    //             // $bail = $sums*(int)$userinfo['ratio']/100;
+    //             if($bail-(int)$packages['bail']>0) return ['error'=>102,'msg'=>'保证金不足'];
+    //         }
+    //     }
+    //     return ['error'=>000,'msg'=>'提现无需保证金','userinfo'=>$userinfo];
+    // }
+     // 提现保证金检测
     public function checkBail(){
+
+        if(false)   //判断该用户是否有提现权限
+            return ['error'=>101,"msg"=>"没有提现权限，请联系管理员"];
+        
         if(option("hairpan_set.bail_switch")){
-            // 获取平台比例
-            $userinfo = D('User_audit')->where(['uid'=>$this->userId])->find();
-            $this->bailRatio = $userinfo['ratio'];
-            if(!($userinfo['type'] == '2' && $userinfo['status'] == '1'))
-                return ['error'=>000,'msg'=>'提现无需保证金','userinfo'=>$userinfo];
-            if((int)$userinfo['ratio'] == '100')
-                return ['error'=>101,'msg'=>'没有提现权限，请联系管理员'];
-            if($userinfo['ratio']){
-                // 检测保证金是否还请
-                // $packages = D('Card_package')->where(['uid'=>$this->userId,'type'=>$this->cardType])->select();
-                $packages = D('Card_package')->where(['uid'=>$this->userId,'type'=>$this->cardType])->find();
-                $sums = D('Card')->where(['uid'=>$this->userId,'c_id'=>6])->sum('val');
-                $bail = $sums*(int)$userinfo['ratio']/100;
-                if($bail-(int)$packages['bail']>0) return ['error'=>102,'msg'=>'保证金不足'];
+            // 获取该用户各类卡券的保证金额度
+            $package = D("Card_package")->where(['uid'=>$this->userId,"is_publisher"=>1])->select();
+            foreach ($package as $key => $value) {
+                $ratio[$value['type']] = $value['ratio'];
             }
+            $card = D('Card')->where(['uid'=>$this->userId,'c_id'=>6])->select();
+            foreach($card as $key=>$value){
+                $cardBail[$value['type']]['num'] = $value['val'] * $ratio[$value['type']]/100;
+                $cardBail[$value['type']]['ratio'] = $ratio[$value['type']];
+                $cardBail['sum'] += $value['val'] * $ratio[$value['type']]/100;
+            }
+ 
+            if(empty($cardBail['sum']))
+                return ['error'=>000,"msg"=>"提现无需保证金","data"=>$cardBail['sum']];
+            // 平台币数据
+            $data = D("Card_package")->where(['uid'=>$this->userId,"type"=>$this->cardType])->find();
+            if($data['bail'] >= $cardBail['sum'])
+                return ['error'=>000,"msg"=>"保证金已冻结完毕"];
+            // 保证金总数不够，判断卡券的类别以及获取冻结保证金的比例
+            foreach($cardBail as $key=>$value){
+                if($data['bail'] < $value['num']){
+                    // $checkRes['type'] = $key;
+                    // $checkRes['ratio'] = $value['ratio'];
+                    $this->bailRatio = $value['ratio'];
+                    break;
+                }
+                $data['bail'] -= $value['num'];
+            }
+            if(!empty($this->bailRatio))
+                return ['error'=>102,"msg"=>"保证金不足"];
         }
-        return ['error'=>000,'msg'=>'提现无需保证金','userinfo'=>$userinfo];
+        return ['error'=>000,'msg'=>'提现无需保证金'];
     }
     // 保证金锁定
     public function bailInter($num,$packageId){
