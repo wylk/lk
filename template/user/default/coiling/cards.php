@@ -25,7 +25,7 @@
       <span class="layui-breadcrumb">
         <a href="?c=coiling&a=index">卡券首页</a>
         <a>
-          <cite><?php echo $cardName ?></cite></a>
+          <cite><?php echo $cardName['contract_name'] ?><span id="type" style="display: none;"><?php echo $cardName['type'] ?></span></cite></a>
       </span>
       <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
@@ -49,18 +49,20 @@
             <th>量</th>
             <th>logo</th>
             <th>描述</th>
+            <th>保证金比例</th>
             <th>操作</th>
         </thead>
         <tbody>
 
           <?php foreach($cards as $k=>$v){ ?>
           <tr>
-            <td><?= $user[$v['uid']]['name']; ?></td>
+            <td id="name_<?php echo $v['uid'] ?>"><?= $user[$v['uid']]['name']; ?></td>
             <td><?= $user[$v['uid']]['enterprise'] ?></td>
             <td><?= $v['name'] ?></td>
             <td><?= $v['sum'] ?></td>
             <td><img src="<?= $v['card_log'] ?>"></td>
             <td><?= $v['describe'] ?></td>
+            <td align="center" ><input id="ratio_<?php echo $v['uid'] ?>" class="layui-input" type="text" name="ratio" value="<?php echo $ratio[$v['uid']] ?>" style="width: 50px;" /></td>
             <td>
               <button class="layui-btn layui-bg-red" onclick="x_admin_show('交易信息','?c=coiling&a=lists&uid=<?= $v['uid'] ?>&card_id=<?= $v['card_id'] ?>',600,400)" style="height:44px"><i class="layui-icon"></i>交易信息</button>
             </td>
@@ -79,3 +81,31 @@
   </body>
 
 </html>
+<script type="text/javascript">
+  layui.use(['layer'],function(){
+    $("[id^=ratio_]").bind("change",function(){
+      var ratio = $(this).val();
+      var type = $("#type").html();
+      var idStr = $(this).attr('id');
+      var uid = idStr.substring(idStr.indexOf('_')+1);
+      var name = $("#name_"+uid).html();
+      layer.confirm("确定要修改“"+name+"”的保证金数据吗？",function(){
+        var data = {uid:uid,ratio:ratio,type:type};
+        console.log(data);
+        layer.load();
+        $.post("?c=coiling&a=editRatio",data,function(result){
+          layer.closeAll();
+          // console.log(result);
+          if(!result['res']){
+            layer.msg(result.msg,{icon:1,skin:"demo-class"});
+            window.location.reload(true);
+          }else{
+            layer.msg(result.msg,{icon:5,skin:"demo-class"});
+          }
+        },"json");
+      },function(){
+        window.location.reload(true);
+      });
+    });
+  });
+</script>
