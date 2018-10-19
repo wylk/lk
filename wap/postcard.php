@@ -95,11 +95,9 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 
 // 用户认证
 // if(isset($_GET['pagetype']) && $_GET['pagetype'] == 'postcard'){
-	// $userId = 918;
 	$where = ['uid'=>$userId];
-	$audit = D("User_audit")->where($where)->select();
-
-	$audit = $audit[0];
+	$audit = D("User_audit")->where($where)->find();
+	if($audit['isdelete'] == '1') header("location:./my.php");
 	$type = $audit['type'];
 	$res=D('Shopclass')->where(array('id'=>$audit['s_id']))->find();
     $name=$res['name'];

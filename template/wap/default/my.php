@@ -83,7 +83,11 @@
         </div>
         <div class="item-rows">
             <?php foreach ($menu as $k => $v) {?>
-            <a href="<?php echo $v['url'];?>">
+            <?php if(isset($v['msg'])){ ?>
+                <a href="javascript:;" onclick="showMsg('<?php echo $v['msg']; ?>')">
+            <?php }else{ ?>
+                <a href="<?php echo $v['url'];?>">
+            <?php } ?>
                 <div class="item-row lk-container-flex" style="margin: 0px auto;">
                     <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;"><?php echo $v['icon'];?></i></div>
                     <div class="item-row-title row" ><?php echo $v['title'];?></div>
@@ -97,3 +101,12 @@
 <?php include display('public_menu');?>
 </body>
 </html>
+<script type="text/javascript">
+    var layer;
+    layui.use(['layer'],function(){
+        layer = layui.layer;
+    })
+    function showMsg(msg){
+        layer.msg(msg, { icon: 5, skin: "demo-class" });
+    }
+</script>
