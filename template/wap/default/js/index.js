@@ -7,7 +7,8 @@
     lng = null,
     lat = null,
     geocoder = null,
-
+    del = 0,
+    ref = 1,
     result = document.getElementById('resultMapInfo');
     var map = new AMap.Map('map', {
         resizeEnable: true,
@@ -32,13 +33,17 @@
     function get_near_shops(){
         $.post('index_ajax.php',{i:i,plugin:plugin,lng:lng,lat:lat},function(re){
             ++i;
+            console.log(del);
+            if(del){
+                $('.stores').html('');
+            }
             if(re.error == 0){
                 $.each(re.mapinfo,function(i,val){
-                    var content = '<div class="marker-route" >'+val.enterprise+'</div>';
+                    var content = '<div class="marker-route" ><p>'+val.enterprise+'</p></div>';
                     var marker = new AMap.Marker({
                         content: content,  // 自定义点标记覆盖物内容
                         position:  [val.lng, val.lat], // 基点位置
-                        offset: new AMap.Pixel(-6.8, 9), // 相对于基点的偏移位置
+                        offset: new AMap.Pixel(15, -15), // 相对于基点的偏移位置
                         clickable:true,
                         title:"测试"+i,
                         map:map
@@ -51,7 +56,9 @@
 
                 $('.stores').append(re.msg);
                 mui("#pullrefreshs").pullRefresh().endPullupToRefresh(false);
+                ref = 1;
             }else{
+                ref = 0;
                 mui("#pullrefreshs").pullRefresh().endPullupToRefresh(true);
             }
         },'json');
@@ -65,7 +72,7 @@
     }
 
     function pulldownRefresh() {
-        i = 1;//当前页码数
+        ref && (del = 0);  
         setTimeout(function() {
             mui('#pullrefreshs').pullRefresh().endPulldownToRefresh(); //refresh completed
             mui('#pullrefreshs').pullRefresh().refresh(true); //激活上拉加载
@@ -123,8 +130,8 @@
             //console.log(map.getCenter().getLng())
             lng = map.getCenter().getLng();
             lat = map.getCenter().getLat();
+            del = 1;
             i = 1;
-            $('.stores').html('');
             get_near_shops();
         } else {
           //获取地址失败

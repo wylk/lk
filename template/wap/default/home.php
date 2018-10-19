@@ -111,8 +111,8 @@
             margin: auto auto;
             border-radius: 30px;
             text-align: center;
-            font-size: 18px;
-            font-weight:bold;
+            font-size: 16px;
+            /* font-weight:bold; */
         }
         .offset_action{
            color: #f1cd1f;
