@@ -76,6 +76,7 @@ class PlatformCurrency{
         if(!option('hairpan_set.coin_open'))    return ['res'=>1,"msg"=>"暂时停止交易"];
         $checkRes = $this->checkAccount();
         // if($checkRes['res']) return ['res'=>1,"msg"=>"交易还未开通"];
+
         // 判断售卖规则是否符合
         $platform =$this->platform[$this->packageId] = D("Card_package")->where(['id'=>$this->packageId])->find();
 
@@ -264,7 +265,7 @@ class PlatformCurrency{
 
         return ['res'=>0,"msg"=>"订单已生成",'data'=>$this->matchOrderData[$tranId]];
     }
-    
+
     // 卡包数据冻结
     public function packageFrozen($frozenList){
         M("Card_package")->frozen($frozenList);
@@ -555,7 +556,7 @@ class PlatformCurrency{
 
         if(false)   //判断该用户是否有提现权限
             return ['error'=>101,"msg"=>"没有提现权限，请联系管理员"];
-        
+
         if(option("hairpan_set.bail_switch")){
             // 获取该用户各类卡券的保证金额度
             $package = D("Card_package")->where(['uid'=>$this->userId,"is_publisher"=>1])->select();
@@ -568,7 +569,7 @@ class PlatformCurrency{
                 $cardBail[$value['type']]['ratio'] = $ratio[$value['type']];
                 $cardBail['sum'] += $value['val'] * $ratio[$value['type']]/100;
             }
- 
+
             if(empty($cardBail['sum']))
                 return ['error'=>000,"msg"=>"提现无需保证金","data"=>$cardBail['sum']];
             // 平台币数据

@@ -82,9 +82,11 @@
               <div class='menuStyle'><span class="spanLeft"></span><button id="revokeOrder_<?php echo $orderInfo['id']; ?>" class='spanRight' >取消订单</button></div>
             <?php } ?>
             <hr>
-            <div class='codeStyle'><span class="spanLeft">二维码：</span>
+            <?php if($res['pay_img']){?>
+                <div class='codeStyle'><span class="spanLeft">二维码：</span>
             <div class="codeAddress"><img src="<?php echo $res['pay_img'];?>" /></div>
           </div>
+           <?php  } ?>
           </div>
           <?php } ?>
 

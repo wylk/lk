@@ -69,11 +69,11 @@
                       <h3>微信账号:<input type="text" value=""></h3>
                 <?php } ?>
             </div>
-        <div class="pwd">手机号:<input type="text" value="" class="phone"></div>
+       <!--  <div class="pwd">手机号:<input type="text" value="" class="phone"></div>
         <div class="pwd">
             <button class="button" id="getVerify">获取验证码</button>
             <input type="" name="" class="psd">
-        </div>
+        </div> -->
         <div class="pwd">乐卡支付密码:<input type="password" class="password"></div>
         <h4>点击下方上传收款二维码</h4>
         <div class="wrapper">
@@ -108,10 +108,8 @@
 <script type="text/javascript">
     $('.sub').click(function(){
         var pay_num=$('.zf').val();
-        var phone=$('.phone').val();
-        var pwd=$('.psd').val();
         var password=$('.password').val();
-         $.post("./pay_xq.php",{pay_num:pay_num,phone:phone,pwd:pwd,password:password}, function(res) {
+         $.post("./pay_xq.php",{pay_num:pay_num,password:password}, function(res) {
          console.log(res)
          if(res.res == 0){
             alert(res.msg)

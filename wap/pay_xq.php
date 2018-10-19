@@ -5,16 +5,16 @@ $user = D('User')->where(['id'=>$wap_user['userid']])->find();
 $verifyLen = "6";  //验证码长度
 $tex=$_GET['type'];
 
-//验证码
-  if(isset($_POST['type']) && $_POST['type'] == "code"){
-            import("transfer");
-            $a = new Transfer();
-            $getPhone = $_POST['phone'];
-            $code = rangdNumber($verifyLen);
-            $result = $a->message($getPhone,array("code"=>$code));
-            $_SESSION['code'] = $code;
-            dexit(['result'=>$result,'code'=>$code]);
-        }
+// //验证码
+//   if(isset($_POST['type']) && $_POST['type'] == "code"){
+//             import("transfer");
+//             $a = new Transfer();
+//             $getPhone = $_POST['phone'];
+//             $code = rangdNumber($verifyLen);
+//             $result = $a->message($getPhone,array("code"=>$code));
+//             $_SESSION['code'] = $code;
+//             dexit(['result'=>$result,'code'=>$code]);
+//         }
 // 文件上传
 if(isset($_GET['type']) && $_GET['type'] == "uploadFile"){
     if(!empty($_FILES) && $_FILES['file']['error'] == 0){
@@ -47,9 +47,6 @@ if(isset($_GET['type']) && $_GET['type'] == "uploadFile"){
 if(IS_POST){
    $res=$_POST;
    $pwd=md5($res['password']);
-   if($res['pwd'] != $_SESSION['code']){
-         dexit(["res"=>1,'msg'=>"验证码错误"]);
-        }
    if($pwd != $user['pay_password']){
         dexit(["res"=>2,'msg'=>"支付密码输入错误"]);
     }
