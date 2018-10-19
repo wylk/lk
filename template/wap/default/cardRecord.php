@@ -71,7 +71,7 @@
     <?php }else{?>
       <div class="layui-container">
         <div class="layui-tab" lay-filter="aduitTab">
-          <div style="margin: 50px auto;text-align: center;"><h3>暂无账单记录</h3></div>
+          <div style="margin: 50px auto;text-align: center;"><h3>暂无持卡记录</h3></div>
         </div>
       </div>
     <?php }?>

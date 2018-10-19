@@ -16,7 +16,7 @@
       margin: 10px auto;
       background-color: #fff;
     }
-    #laytable-cell-space{
+    .laytable-cell-space{
       text-align: center;
     }
   </style>
@@ -35,27 +35,28 @@
     <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">我的交易</h1>
   </header>
-<div class="lk-content" style="background-color: #f0f0f0;">
+<div class="lk-content">
+  <?php if(!empty($orderList)){ ?> 
     <div class="lk-rows">     
        <table lay-skin="line" class="layui-table laytable-cell-space">
         <colgroup>
+          <!-- <col width="20%"> -->
           <col width="20%">
-          <col width="17%">
-          <col width="38%">
+          <col width="40%">
           <col >
         </colgroup>
         <thead >
           <tr >
-            <th id="laytable-cell-space">用户</th>
-            <th id="laytable-cell-space">交易量</th>
-            <th id="laytable-cell-space">对方地址</th>
-            <th id="laytable-cell-space">时间</th>
+            <!-- <th class="laytable-cell-space">用户</th> -->
+            <th class="laytable-cell-space">交易量</th>
+            <th class="laytable-cell-space">对方地址</th>
+            <th class="laytable-cell-space">时间</th>
           </tr> 
         </thead>
         <tbody>
           <?php foreach($orderList as $key=>$value) { ?>
           <tr>
-            <td>卖</td>
+            <!-- <td>卖</td> -->
             <?php if($value['send_address'] == $address){ ?>
               <td style="color:red;">-<?php echo number_format($value['num'],2); ?></td>
               <td><?php echo substr($value['get_address'],0,15); ?></td>
@@ -69,6 +70,13 @@
         </tbody>
       </table>
     </div>
+    <?php }else{?>
+      <div class="layui-container">
+        <div class="layui-tab" lay-filter="aduitTab">
+          <div style="margin: 50px auto;text-align: center;"><h3>暂无交易记录</h3></div>
+        </div>
+      </div>
+    <?php }?>
 </div>
 <?php include display('public_menu');?>
 </body>

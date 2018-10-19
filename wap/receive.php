@@ -44,6 +44,10 @@ if(IS_POST){
 
 $UserAud = D("Card_transaction")->where(array('id'=>$_GET['id']))->find();
 // dump($UserAud);
+$UserAud['limit'] = number_format($UserAud['limit']);
+$UserAud['num'] = number_format($UserAud['num']);
+$UserAud['price'] = number_format($UserAud['price']);
+
 $shopInfo = D("User_audit")->where(['uid'=>$UserAud['uid']])->find();
 $addressInfo = D("Map")->where(['uid'=>$UserAud['uid']])->find();
 // dump($shopInfo);
