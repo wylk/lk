@@ -73,7 +73,10 @@
         .num a{
           border-radius: 5px;
         }
-
+        .map{
+            height: 100%;
+            width: 100%;
+        }
 
         #up-map-div{
             width:100%;
@@ -88,6 +91,42 @@
           overflow:scroll;
           height: 560px;
         }
+
+        .marker-route{
+            width: 70px;
+            height: 27px;
+            color: red;
+            border:1px solid #f6bc00;
+            background-color: #f6bc00;
+            border-radius: 5px;
+            overflow:hidden;
+            font-size: 14px;
+            text-align: center;
+            -webkit-box-sizing: border-box;
+        }
+        .marker-route:after{
+            width:0;
+            height:0;
+            left:50%;
+            content:'';
+            top:-16px;
+
+            /* bottom:-8px; */
+            margin-left:-34px;
+            position:absolute;
+            border:8px solid transparent;
+            border-bottom:8px solid #f6bc00;
+        }
+
+        #resultMapInfo {
+          position: absolute;
+          left: 0;
+          top: 30px;
+          z-index: 1;
+        }
+        p{
+            color: #000;
+        }
         </style>
         <script type="text/javascript">
             var plugin = '<?php echo isset($_GET['id'])?$_GET['id']:'';?>';
@@ -100,8 +139,9 @@
                 <a href="index.php?id=<?php echo $v['id'];?>"><div class="lk-ti <?php echo ($_GET['id'] == $v['id'])?'action':'';?>" id="stree"><?php echo $v['name'] ?></div></a>
             <?php } ?>            
         </div>
-        <div id="allmap"></div>
-
+        <div id="resultMapInfo">请使用4G网络获取定位精确度高</div>
+        <div class="map" id="map"></div>
+    
         <div id="up-map-div">
             <div id="touch" style="height: 20px;width: 100%;"></div>
             <div class="wind_f" id="work">
@@ -122,16 +162,60 @@
     </body>
 </html>
 <script src="http://code.jquery.com/jquery-1.8.0.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp"></script> -->
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.5&key=0bda08c2afb77bff30115186de665721&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
 <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo TPL_URL;?>js/index.js?r=<?=time();?>"></script>
-<script type="text/javascript">
-    // 百度地图API功能
-    var map = new BMap.Map("allmap");    // 创建Map实例
-    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别  
-    map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
-    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-</script>
+
+<!-- <script type="text/javascript">
+    $(function(){
+        var lng = 116.397428;
+        var lat = 39.90923;
+        var map = new AMap.Map("map", {
+            resizeEnable: true,
+            center: [lng, lat],
+            zoom: 15
+        });
+        var marker = new Array();
+        marker1 = new AMap.Marker({
+            position: [lng, lat],
+            draggable:1,
+            raiseOnDrag:1,
+            clickable:1
+        });
+        marker1.setMap(map);
+
+        var endIcon = new AMap.Icon({
+            size: new AMap.Size(25, 34),
+            image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png',
+            imageSize: new AMap.Size(135, 40),
+            imageOffset: new AMap.Pixel(-95, -3)
+        });
+
+        // 将 icon 传入 marker
+        var endMarker = new AMap.Marker({
+            position: new AMap.LngLat(116.45,39.93),
+            icon: endIcon,
+            offset: new AMap.Pixel(-10, -10)
+        });
+
+        var content = '<div class="marker-route" >老王咖啡</div>';
+
+        var marker2 = new AMap.Marker({
+            content: content,  // 自定义点标记覆盖物内容
+            position:  [lng, lat], // 基点位置
+            offset: new AMap.Pixel(-10, -10) // 相对于基点的偏移位置
+        });
+
+
+        map.add([marker2,endMarker]);
+
+        marker1.on('click', function(r){
+            console.log(r);
+        });
+    });
+</script> -->
 <script>
 var startX,//触摸时的坐标
     startY,
