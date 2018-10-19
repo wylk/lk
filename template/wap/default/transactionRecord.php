@@ -48,8 +48,8 @@
             <?php  foreach($orderList as $key=>$value){ ?>
             <div class="lk-container-flex">
                 <div class="order-left">
-                    <p>账户:<?php echo substr($value['get_address'],0,24) ?>...</p>
-                    <p>转到:<?php echo substr($value['send_address'],0,24) ?>...</p>
+                    <p>账户:<?php echo substr($value['send_address'],0,20) ?>...</p>
+                    <p>转到:<?php echo substr($value['get_address'],0,20) ?>...</p>
                 </div>
                 <div class="order-right">
                     <p style="color: red"><span class="total"><?php echo number_format($value['num'],2)?>hsr</span></p>

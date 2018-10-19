@@ -10,6 +10,6 @@ $userInfo = D("Card_package")->where(['id'=>$packageId])->find();
 $address = $userInfo['address'];
 $cardId = $userInfo['card_id'];
 $where = "`card_id` ='".$cardId."' and ( `get_address`='".$address."' or `send_address`='".$address."' )";
-$orderList = D("Record_books")->where($where)->select();
+$orderList = D("Record_books")->where($where)->order("createtime desc")->select();
 
 include display("myDeal");
