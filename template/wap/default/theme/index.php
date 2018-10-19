@@ -98,25 +98,29 @@
             color: red;
             border:1px solid #f6bc00;
             background-color: #f6bc00;
-            border-radius: 5px;
+            border-radius: 7px;
             overflow:hidden;
             font-size: 14px;
             text-align: center;
-            -webkit-box-sizing: border-box;
         }
-        .marker-route:after{
-            width:0;
-            height:0;
-            left:50%;
-            content:'';
-            top:-16px;
 
-            /* bottom:-8px; */
-            margin-left:-34px;
-            position:absolute;
-            border:8px solid transparent;
-            border-bottom:8px solid #f6bc00;
+        .left > p,.right > p{    /*使内容居中*/
+            display: table-cell;
+            vertical-align: middle;
+            padding: 0 10px;
         }
+        .marker-route:before{   /*用伪类写出小三角形*/
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+            position: absolute;
+            top: 6px;
+            border-right: 8px solid #f6bc00;
+            left: -16px;
+        }
+
 
         #resultMapInfo {
           position: absolute;
@@ -126,6 +130,9 @@
         }
         p{
             color: #000;
+        }
+        .amap-geo{
+            display: none;
         }
         </style>
         <script type="text/javascript">
@@ -158,6 +165,12 @@
               </div>
             </div>
         </div>
+        <div class="mui-loading" v-if="loading">
+            <div class="mui-spinner">
+            </div>
+            玩命加载中...
+        </div>
+
         <?php include display('public_menu');?>
     </body>
 </html>
