@@ -37,20 +37,20 @@
             <div class='menuStyle'><span class="spanLeft">订单号：<?php echo $orderInfo['onumber'] ?></span><span class="spanRight">
              <?php if($orderInfo['sell_id'] == $userId){ ?>
             <p style="color:gray;">
-              <?php if($orderInfo['status'] == '0') echo "未收款" ?> 
-              <?php if($orderInfo['status'] == '1') echo "交易成功" ?> 
-              <?php if($orderInfo['status'] == '2') echo "交易取消" ?> 
-              <?php if($orderInfo['status'] == '3') echo "已收款" ?> 
-              <?php if($orderInfo['status'] == '4') echo "订单超时" ?> 
+              <?php if($orderInfo['status'] == '0') echo "未收款" ?>
+              <?php if($orderInfo['status'] == '1') echo "交易成功" ?>
+              <?php if($orderInfo['status'] == '2') echo "交易取消" ?>
+              <?php if($orderInfo['status'] == '3') echo "已收款" ?>
+              <?php if($orderInfo['status'] == '4') echo "订单超时" ?>
             </p>
            <?php } ?>
            <?php if($orderInfo['buy_id'] == $userId){ ?>
            <p style="color:gray;">
-              <?php if($orderInfo['status'] == '0') echo "未付款" ?> 
-              <?php if($orderInfo['status'] == '1') echo "交易成功" ?> 
-              <?php if($orderInfo['status'] == '2') echo "交易取消" ?> 
-              <?php if($orderInfo['status'] == '3') echo "已付款" ?> 
-              <?php if($orderInfo['status'] == '4') echo "订单超时" ?> 
+              <?php if($orderInfo['status'] == '0') echo "未付款" ?>
+              <?php if($orderInfo['status'] == '1') echo "交易成功" ?>
+              <?php if($orderInfo['status'] == '2') echo "交易取消" ?>
+              <?php if($orderInfo['status'] == '3') echo "已付款" ?>
+              <?php if($orderInfo['status'] == '4') echo "订单超时" ?>
            </p>
            <?php } ?>
           </span></div>
@@ -74,8 +74,8 @@
              <div class='menuStyle'><span class="spanLeft">收款人：老王</span><span class="spanRight">支付宝</span></div>
              <?php if($orderInfo['status'] != '1'){ ?>
               <div class='menuStyle'><span class="spanLeft"></span>
-              <?php if($orderInfo['status'] == '0') echo "<button class='spanRight' id='payMoeny'>已付款</button>" ?> 
-              <?php if($orderInfo['status'] == '3') echo "<span class='spanRight'>已付款</span>" ?> 
+              <?php if($orderInfo['status'] == '0') echo "<button class='spanRight' id='payMoeny'>已付款</button>" ?>
+              <?php if($orderInfo['status'] == '3') echo "<span class='spanRight'>已付款</span>" ?>
               </div>
             <?php } ?>
             <?php if(!in_array($orderInfo['status'],['1','2','3'])){ ?>
@@ -83,7 +83,7 @@
             <?php } ?>
             <hr>
             <div class='codeStyle'><span class="spanLeft">二维码：</span>
-            <div class="codeAddress"><img src="<?php echo STATIC_URL;?>/images/default_qr.png" /></div>
+            <div class="codeAddress"><img src="<?php echo $res['pay_img'];?>" /></div>
           </div>
           </div>
           <?php } ?>
@@ -129,7 +129,7 @@
           }
         },"json");
       });
-      
+
     })
     $("[id^=revokeOrder_]").bind("click",function(){
       layer.load();

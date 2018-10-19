@@ -24,7 +24,6 @@
         h6{color: red;margin-top: 27px;font-size: 16px;margin-left: 19px;}
         .checkbox{float: right;margin-right: 50px;margin-top: 13px;}
        [id^="checkbox-9-"] + label {background-color: #FFF;padding: 9px;border-radius: 5px;display: inline-block;position: relative;margin-left: -20px;z-index: -1;z-index: -1px;width: 45px;box-shadow: 0 0 1px rgba(0,0,0,0.6);height: 10px;}
-
        [id^="checkbox-9-"]:checked + label:after {content: 'YES';left: 25px;color: #21BE92;}
        [id^="checkbox-9-"] + label:after {content: 'NO';position: absolute;top: 7px;left: 37px;font-size: 1.2em;color: #868686;}
        [id^="checkbox-9-"]{width: 21px;height: 24px;top: 2px;left: 2px;}
@@ -59,8 +58,7 @@
             <div class="checkbox">
                 <input type="checkbox" id="checkbox-9-4" /><label for="checkbox-9-4"></label>
             </div>
-            <div class="qj"><i id="yl">>>></i></div>
-
+            <!-- <div class="qj"><i id="yl">>>></i></div> -->
         </div>
         <div class="zfb">
             <img src="http://lk.com/template/wap/default/images/zfb.jpg">
@@ -76,7 +74,7 @@
             <div class="checkbox">
                 <input type="checkbox" id="checkbox-9-2" /><label for="checkbox-9-2"></label>
             </div>
-             <div class="qja"><i id="wx">>>></i></div>
+            <!--  <div class="qja"><i id="wx">>>></i></div> -->
         </div>
         </div>
 
@@ -112,9 +110,6 @@ $('#wx').click(function(){
           window.location.href = "http://lk.com/wap/pay_xq.php?type="+tex+"";
      }
 })
-
-
-
 </script>
 
 </html>
