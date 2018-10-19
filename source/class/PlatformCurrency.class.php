@@ -5,6 +5,7 @@
 */
 class PlatformCurrency{
     public $tradingSwitch =  true;
+    public $phone = "18888888888"; //平台币后台注册手机号
     public $tradingMsg = "暂时停止交易";
     public $matchOrderData = [];
     public $tranList = [];
@@ -35,10 +36,17 @@ class PlatformCurrency{
         $this->interfaceType = option('config.blockchain_switch');
         $this->cardType = option("hairpan_set.platform_type_name");
     }
+    public function getPhone(){
+        return $this->phone;
+    }
+    public function checkAccount(){
+        $res = D("User")->where(['phone'=>$this->phone])->find();
+        if($res) return ['res'=>0,"msg"=>"账号已注册"];
+        return ['res'=>1,"msg"=>"账号未注册"];
+    }
     // 添加账户接口
     public function addAccountInterface($userdata,$balance=0){
         if($this->interfaceType){
-            // dump($userdata);die;
             $addAccountInfo = $this->interfaceAddCount($userdata['phone']);
             if($addAccountInfo['error'] != "0") return $addAccountInfo;
             $userdata['address'] = $addAccountInfo['address'];
@@ -58,7 +66,7 @@ class PlatformCurrency{
         $data['user_address'] = $addAccountInfo['address'];
         D("Card_package")->data($data)->add();
         if(!$addAccountRes){
-            return ["res"=>1,'msg'=>"注册失败"];
+            return ["res"=>1,'msg'=>"注册失败44"];
         }
         return ["res"=>0,'msg'=>"注册成功","data"=>$addAccountRes];
     }
@@ -66,6 +74,8 @@ class PlatformCurrency{
     public function addEntrust(){
         // 判断是否可以交易
         if(!option('hairpan_set.coin_open'))    return ['res'=>1,"msg"=>"暂时停止交易"];
+        $checkRes = $this->checkAccount();
+        if($checkRes['res']) return ['res'=>1,"msg"=>"交易还未开通"];
         // 判断售卖规则是否符合
         $platform =$this->platform[$this->packageId] = D("Card_package")->where(['id'=>$this->packageId])->find();
 
