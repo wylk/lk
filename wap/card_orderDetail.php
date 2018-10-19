@@ -28,5 +28,8 @@ if(IS_POST && $_POST['type'] == "revokeOrder"){
 
 $orderId = $_GET['id'];
 $orderInfo = D("Orders")->where(['id'=>$orderId])->find();
+$res=D("Pay")->where(array('uid'=>$orderInfo['sell_id']))->find();
+
+
 
 include display("card_orderDetail");
