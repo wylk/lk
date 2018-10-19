@@ -5,8 +5,14 @@ $userId = $wap_user['userid'];
 
 $cardId = clear_html($_GET['cardId']);
 $recordList = D("Card_package")->where(['card_id'=>$cardId,"is_publisher"=>0])->select();
+// dump($recordList);
 $uid = array_column($recordList, "uid");
-$userInfo = D("User")->where(['id'=>['in',$uid]])->select();
-$userInfo = array_column($userInfo, null,"id");
+$userInfoRes = D("User")->where(['id'=>['in',$uid]])->select();
+// dump($userInfoRes);
+foreach($userInfoRes as $key=>$value){
+	$userInfo[$value['uid']]['name'] = $value['name'];
+	$userInfo[$value['uid']]['avatar'] = $value['avatar'];
+}
+// $userInfo = array_column($userInfo, null,"id");
 // var_dump($userInfo);
 include display("cardRecord");

@@ -20,7 +20,9 @@
             border:none;
         }
         .lk-justify-content-c{padding:25px;}
-        .lk-bazaar-sell p{width:38%; padding-left:3%; line-height: 25px}
+        .lk-bazaar-sell{width: 70%;padding: 5px;}
+        .lk-bazaar-sell p{height: 27px;line-height: 27px;}
+        /*.lk-bazaar-sell p{width:38%; padding-left:3%; line-height: 25px}*/
         .item-buy{align-self:center;  border:1px solid #FF5722; width:45px; border-radius: 50px; line-height: 45px; text-align: center;}
         .register div{width:20%;height:38px;line-height:38px;margin-left:20px;}
     </style>
@@ -91,14 +93,25 @@
         <?php foreach ($sellList as $key => $value) { ?>
         <?php if($value['num'] <= $value['frozen']) continue; ?>
         <div class="lk-container-flex" id="tran_<?php echo $value['id'] ?>">
-            <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
+            <div class="lk-container-flex lk-bazaar-sell">
+                <div style="width: 45%;padding-left: 5px;">
+                    <p><?php echo $userInfo[$value['uid']]['name']?></p>
+                    <img src="<?php echo $userInfo[$value['uid']]['avatar'] ?>" style="height:60px;border-radius: 20%;"/>
+                </div>
+                <div style="width: 50%;">
+                    <p><span id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></span> WLK</p>
+                    <p>价格：<?php echo number_format($value['price'],2) ?></p>
+                    <p>限额：<?php echo number_format($value['limit'],2) ?> - <?php echo number_format($value['num']-$value['frozen'],2) ?></p>
+                </div>
+            </div>
+            <!-- <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
                 <p class="item-flex">王**</p>
                 <p class="item-flex"><span id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></span>WLK</p>
                 <p class="item-flex">在线</p>
                 <p class="item-flex">价格：<?php echo number_format($value['price'],2) ?></p>
                 <p class="item-flex">logo</p>
                 <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?>-<?php echo number_format($value['num'],2) ?></p>
-            </div>
+            </div> -->
             <div class="lk-container-flex">
                 <p class="item-buy"><a href="javascript:;" id="transaction_<?php echo $value['id'] ?>">买入</a></p>
             </div>

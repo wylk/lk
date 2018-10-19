@@ -59,6 +59,7 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 			$getRes = D("Card_package")->where(['address'=>$getAddress])->setInc("num",$num);
 			
 			D("Card_package")->where(['address'=>$getAddress])->setInc("recovery_count",$num);
+			D("Card_package")->where(['address'=>$sendAddress])->setInc("sell_count",$num);
 			if(!($getRes || $sendRes)) dexit(['res'=>1,"msg"=>"转账失败！"]);
 			break;
 	}

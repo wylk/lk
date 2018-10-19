@@ -104,8 +104,9 @@
 
         .plugin{
             width: 40%;
-            background: #f1cd1f;
-            border:1px solid #f1cd1f; 
+           /*  background: #f1cd1f; */
+            border:1px solid #9a9393;
+            color: #9a9393; 
             line-height: 30px;
             margin: auto auto;
             border-radius: 30px;
@@ -114,7 +115,8 @@
             font-weight:bold;
         }
         .offset_action{
-           color: red;
+           color: #f1cd1f;
+           border:1px solid #f1cd1f; 
         }
         .layui-badge{
             background-color: #cc6600;

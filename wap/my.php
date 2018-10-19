@@ -114,17 +114,23 @@ if(isset($_POST['phone']) && isset($_POST['type'])){
 }
 
 // 判断是否认证
-$ruleJudge = D("User_audit")->field("type,status,uid")->where(['uid'=>$userId])->select();
-foreach($ruleJudge as $key=>$val){
-	$type = $val['type'];
-	$status = $val['status'];
-}
-if($type == 2 && $status == 1 ){
+$ruleJudge = D("User_audit")->field("type,status,uid,isdelete")->where(['uid'=>$userId])->find();
+
+$type = $ruleJudge['type'];
+$status = $ruleJudge['status'];
+$isDelete = $ruleJudge['isdelete'];
+
+if($type == 2 && $status == 1 && empty($isDelete)){
 	$menu = [
             ['icon'=>'&#xe6f5;','url'=>'./postcard.php','title'=>'身份认证'],
-            ['icon'=>'&#xe758;','url'=>'./cardType.php','title'=>'发卡'],
+            ['icon'=>'&#xe758;','url'=>'./cardType.php','title'=>'卡/券'],
             ['icon'=>'&#xe803;','url'=>'','title'=>'API接口'],
             ['icon'=>'&#xe83a;','url'=>'','title'=>'店员管理'],
+            ['icon'=>'&#xe6ae;','url'=>'./setup.php','title'=>'设置'],
+        ];
+}elseif($isDelete != 0){
+	$menu = [
+            ['icon'=>'&#xe6f5;','url'=>'./postcard.php','title'=>'身份认证','msg'=>'无认证权限，请联系管理员'],
             ['icon'=>'&#xe6ae;','url'=>'./setup.php','title'=>'设置'],
         ];
 }else{

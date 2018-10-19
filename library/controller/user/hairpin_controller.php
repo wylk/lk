@@ -6,14 +6,23 @@ class hairpin_controller extends base_controller
     public $phone;
     public $userInfo;
     public $balance = 1000000;
-    public $cardType = "leka";
+    public $cardType;
     public function __construct(){
         // $this->userId = 108;
+        
+        // $this->getPhone();
         $phone = D("Admin")->field("phone")->where(['name'=>"admin"])->find();
-        $this->userInfo = D("User")->where(['phone'=>$phone['phone']])->find();
         $this->phone = $phone['phone'];
+
+        $this->userInfo = D("User")->where(['phone'=>$this->phone])->find();
         $this->userId = $this->userInfo['id'];
         $this->cardType = option("hairpan_set.platform_type_name");
+    }
+    // 获取手机号
+    public function getPhone(){
+        import("PlatformCurrency");
+        $platformObj = new PlatformCurrency();
+        $this->phone = $platformObj->getPhone();
     }
     //平台币管理
     public function index()
@@ -38,9 +47,13 @@ class hairpin_controller extends base_controller
 
     public function addAdminAccount(){
         // $phone = $_POST['phone'];
-        $userdata['phone'] = $_POST['phone'];
+        // $userdata['phone'] = $_POST['phone'];
+        // $userdata['phone'] = $_POST['phone'];
         import("PlatformCurrency");
         $platformObj = new PlatformCurrency();
+        $userdata['phone'] = $this->phone;
+        $res = $platformObj->checkAccount();
+        if(!$res) dexit(['res'=>1,"msg"=>"账户已注册"]);
 
         $addAccountRes = $platformObj->addAccountInterface($userdata,$this->balance);
         // $userInfo = D("User")->where(['phone'=>$this->phone])->find();

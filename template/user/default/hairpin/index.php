@@ -22,11 +22,11 @@
         // var layer = layyui.layer;
 
         $("#addAccount").bind('click',function(){
-            console.log('ddd');
-            var phone = "<?php echo $phone ?>";
-            var data={phone:phone}
+            // var phone = "<?php echo $phone ?>";
+            // var data={phone:phone}
+            var data = {type:'add'};
             $.post("?c=hairpin&a=addAdminAccount",data,function(result){
-                console.log(result);
+                // console.log(result);
                 if(!result.res){
                     layer.msg(result.msg,{icon:1,skin:"demo-class"});
                     window.location.reload(true);

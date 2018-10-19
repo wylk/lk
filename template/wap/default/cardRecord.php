@@ -35,8 +35,9 @@
     <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">持卡记录</h1>
   </header>
-<div class="lk-content" style="background-color: #f0f0f0;">
-    <div class="lk-rows">     
+<div class="lk-content">
+    <?php if(!empty($recordList)){ ?>  
+    <div class="lk-rows">   
        <table lay-skin="line" class="layui-table laytable-cell-space">
         <colgroup>
           <col width="20%">
@@ -49,14 +50,14 @@
             <th id="laytable-cell-space">头像</th>
             <th id="laytable-cell-space">用户</th>
             <th id="laytable-cell-space">现有数量</th>
-            <th id="laytable-cell-space">卖出数量</th>
-            <th id="laytable-cell-space">核销数量</th>
+            <th id="laytable-cell-space">转出数量</th>
+            <th id="laytable-cell-space">转入数量</th>
           </tr> 
         </thead>
         <tbody>
           <?php foreach($recordList as $key=>$value) { ?>
           <tr>
-            <td>买</td>
+            <td><?php echo $userInfo[$value['uid']]['avatar'] ?></td>
             <td><?php echo $userInfo[$value['uid']]['name'] ?></td>
             <td><?php echo number_format($value['num']+$value['frozen'],2) ?></td>
             <td><?php echo number_format($value['sell_count']) ?></td>
@@ -67,6 +68,13 @@
         </tbody>
       </table>
     </div>
+    <?php }else{?>
+      <div class="layui-container">
+        <div class="layui-tab" lay-filter="aduitTab">
+          <div style="margin: 50px auto;text-align: center;"><h3>暂无账单记录</h3></div>
+        </div>
+      </div>
+    <?php }?>
 </div>
 <?php include display('public_menu');?>
 </body>

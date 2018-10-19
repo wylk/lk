@@ -44,8 +44,18 @@ $platformInfo = D("Card_package")->where(['uid'=>$userId,"type"=>option("hairpan
 // 获取卖方委托单
 $platformObj = new PlatformCurrency();
 $sellList = $platformObj->selectTradeList(['userId'=>$userId,'type'=>'2','cardId'=>$platformInfo['card_id'],"status"=>'0']);
-
+// dump($sellList);
+foreach ($sellList as $key => $value) {
+	if(!in_array($value['uid'], $ids))  $ids[] = $value['uid'];
+}
+$userRes = D("User")->where("id in (".implode($ids, ",").")")->select();
+foreach($userRes as $key=>$value){
+	$userInfo[$value['id']]['avatar'] = $value['avatar'];
+	$userInfo[$value['id']]['name'] = $value['name'];
+}
+// dump($userInfo);
 $register = $platformObj->selectPersonRegister(['card_id'=>$platformInfo['card_id'],"userId"=>$userId,'type'=>'1']);
-// dump($sellList);die();
+// dump($sellList);
+// die();
 include display('card_buy');
 echo ob_get_clean();

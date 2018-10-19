@@ -74,7 +74,7 @@
                         <?php } ?>
                     </div>
                     <div class="layui-tab-item ">
-                        <?php foreach($unpaidOrderList as $key=>$value){ ?>fdgsdfg
+                        <?php foreach($unpaidOrderList as $key=>$value){ ?>
                         <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell margin-t10">
                             <div class="order-left">
                                 <p><span class="b">买入</span> 单号：<?php echo $value['onumber'] ?></p>
@@ -101,7 +101,7 @@
                             <div class="order-right">
                                 <p><a class="layui-btn layui-btn-warm" style="padding:5px 7px;height: 30px; line-height:19px;border-radius: 5px;" href="./orderDetail.php?id=<?php echo $value['id']; ?>">订单详情</a></p>
                                 <p>价格：<?php echo number_format($value['price'],2); ?></p>
-                                <p style="color: #2F4056">已付款</p>
+                                <p style="color: #2F4056">交易成功</p>
                                 <p>总金额：<span class="total"><?php echo number_format($value['price']*$value['number'],2); ?></span></p>
                             </div>
                         </div>

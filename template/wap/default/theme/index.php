@@ -13,16 +13,18 @@
           height: 42px;
           display: flex;
           z-index:2;
+          overflow:auto;
         }
         .lk-ti{
           /*width: 25%;*/
-          width: 102%;
+          width: 62px;
           line-height: 40px;
           text-align: center;
+          color: #000;
         }
         .action{
-          color: red;
-          border-bottom: 1px solid red;
+          color: #f6bc00;
+          border-bottom: 1px solid #f6bc00;
         }
         .stores{
             margin: 0 auto;
@@ -75,48 +77,45 @@
 
         #up-map-div{
             width:100%;
-            height:1500px;
+            height:700px;
             top:200px;
             left:0px;
             position:absolute;
             z-index:1;
             background-color:rgba(12, 12, 12, 0.8);
         }
+        .wind_f{
+          overflow:scroll;
+          height: 560px;
+        }
         </style>
         <script type="text/javascript">
-            var plugin = '<?php echo isset($_GET['plugin'])?$_GET['plugin']:1;?>';
+            var plugin = '<?php echo isset($_GET['id'])?$_GET['id']:'';?>';
         </script>
     </head>
     <body>
         <div class="lk-titles">
-
-                      <div class="lk-ti" id="one"><?php echo $a[1] ?></div>
-                      <div class="lk-ti" id="too"><?php echo $a[2] ?></div>
-                      <div class="lk-ti" id="stree"><?php echo $a[3] ?></div>
-                      <div class="lk-ti" id="duo">
-                         <select style="font-size: 19px;border: 0!important;height: 39px;"  name="select">
-                            <option value="">更多</option>
-                              <?php foreach ($ar as $k => $v) {?>
-                                 <option  value="<?php echo $v ?>"><?php echo $v ?></option>
-                              <?php } ?>
-                         </select>
-                      </div>
-
+            <a href="index.php"><div class="lk-ti <?php echo  empty($_GET['id'])?'action':''; ?>" id="stree">全部</div></a>                       
+            <?php foreach ($res as $k => $v) {?>
+                <a href="index.php?id=<?php echo $v['id'];?>"><div class="lk-ti <?php echo ($_GET['id'] == $v['id'])?'action':'';?>" id="stree"><?php echo $v['name'] ?></div></a>
+            <?php } ?>            
         </div>
         <div id="allmap"></div>
 
         <div id="up-map-div">
             <div id="touch" style="height: 20px;width: 100%;"></div>
-            <div id="pullrefreshs" style="touch-action: none;">
-                <div>
-                    <div class="lk-content" style="padding-top:0px ">
+            <div class="wind_f" id="work">
+              <div id="pullrefreshs" style="touch-action: none;">
+               
+                      <div class="lk-content" style="padding-top:0px ">
 
-                        <div class="stores" >
+                          <div class="stores" >
 
-                        </div>
+                          </div>
 
-                    </div>
-                </div>
+                      </div>
+                 
+              </div>
             </div>
         </div>
         <?php include display('public_menu');?>
@@ -152,8 +151,10 @@ function touchMove(e){//滑动
      var  touch = e.touches[0];
      y = touch.pageY - startY;//滑动的距离
     //inner.style.webkitTransform = 'translate(' + 0+ 'px, ' + y + 'px)';  //也可以用css3的方式
-    console.log(inner.style.top);
-    console.log(aboveY+y);
+    //console.log(inner.style.top);
+    //console.log(aboveY+y);
+    var hei = document.documentElement.clientHeight;
+    document.getElementById("work").style.height = (hei-(aboveY+y+80))+'px';
     if((aboveY+y) < 40){
         inner.style.top="40px"; //这一句中的aboveY是inner上次滑动后的位置
     } else{
@@ -167,57 +168,4 @@ function touchEnd(e){//手指离开屏幕
  document.getElementById("touch").addEventListener('touchstart', touchSatrt,false);
  document.getElementById("touch").addEventListener('touchmove', touchMove,false);
  document.getElementById("touch").addEventListener('touchend', touchEnd,false);
-</script>
-<script type="text/javascript">
-        $('#one').click(function(){
-            var one=$(this).text();
-            $.post('index_ajax.php',{one:one},function(data){
-              if(data.error == 0){
-                  $('.stores').empty();
-                  $('.stores').append(data.msg);
-              }else{
-                alert(data.msg);
-              }
-
-            },'json')
-        })
-        $('#too').click(function(){
-            var too=$(this).text();
-            $.post('index_ajax.php',{too:too},function(data){
-              if(data.error == 0){
-                  $('.stores').empty();
-                  $('.stores').append(data.msg);
-              }else{
-                alert(data.msg);
-              }
-
-            },'json')
-        })
-        $('#stree').click(function(){
-            var stree=$(this).text();
-            $.post('index_ajax.php',{stree:stree},function(data){
-             if(data.error == 0){
-                  $('.stores').empty();
-                  $('.stores').append(data.msg);
-              }else{
-                alert(data.msg);
-              }
-
-            },'json')
-        })
-         $("[name=select]").bind('change',function(){
-            var val = $("[name=select]").val();
-            $.post('index_ajax.php',{val:val},function(data){
-              if(data.error == 0){
-                  $('.stores').empty();
-                  $('.stores').append(data.msg);
-              }else{
-                alert(data.msg);
-              }
-
-            },'json')
-
-         })
-
-
 </script>

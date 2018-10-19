@@ -36,41 +36,13 @@ require_once dirname(__FILE__).'/global.php';
 // dump(get_cfg_var ("upload_max_filesize"));
 // include display('testh');
 
-
-$userid = $wap_user['userid'];
-
-$package = D("Card_package")->where(['uid'=>$userid,"is_publisher"=>1])->select();
-foreach ($package as $key => $value) {
-	$ratio[$value['type']] = $value['ratio'];
+dump(strlen("2018101857575348"));
+	dump(strlen(date("Ymd")));
+for($i=0;$i<6;$i++){
+// $time = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+$time = date('Ymd').rand(10000,99999).rand(100,999);
+	dump($time);
+	// dump(uniqid());
+	// dump(substr(uniqid(), 7, 13));
+	dump(rand(10000,99999));
 }
-$card = D('Card')->where(['uid'=>$userid,'c_id'=>6])->select();
-foreach($card as $key=>$value){
-	$cardBail[$value['type']]['num'] = $value['val'] * $ratio[$value['type']]/100;
-	$cardBail[$value['type']]['ratio'] = $ratio[$value['type']];
-	$cardBail['sum'] += $value['val'] * $ratio[$value['type']]/100;
-}
-dump($cardBail['sum']);
-dump(empty($cardBail['sum']));
-// dump($data);
-// dump($ratio);
-// dump($card);
-// dump($cardBail);
-// $checkRes;
-// $data = D("Card_package")->where(['uid'=>$userid,"type"=>'leka'])->find();
-// $data['bail'] = 7000;
-// $cardBail['hh']['num'] = '6000';
-// $cardBail['hh']['ratio'] = '60';
-// if($data['bail'] >= $cardBail['sum'])
-// echo "保证金已还完";
-// foreach($cardBail as $key=>$value){
-// 	echo $key;
-// 	if($data['bail'] < $value['num']){
-
-// 		$checkRes['type'] = $key;
-// 		$checkRes['ratio'] = $value['ratio'];
-// 		break;
-// 	}
-// 	$data['bail'] -= $value['num'];
-// 	echo "<br/>---<br/>";
-// }
-// dump($checkRes);
