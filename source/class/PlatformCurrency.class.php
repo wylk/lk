@@ -79,6 +79,7 @@ class PlatformCurrency{
 
         // 判断售卖规则是否符合
         $platform =$this->platform[$this->packageId] = D("Card_package")->where(['id'=>$this->packageId])->find();
+        // var_dump($platform);die;
 
         if(!$this->tranNum > 0 )
             return ['res'=>1,"msg"=>"交易数量不能小于0"];

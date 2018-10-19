@@ -51,7 +51,7 @@
     <hr class="layui-bg-gray">
     <a href="./pay_zf.php">
          <div class="item-row lk-container-flex" style="margin: 0px auto">
-            <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;"></i></div>
+            <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe71c;</i></div>
             <div class="item-row-title row" >支付管理</div>
             <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
         </div>
