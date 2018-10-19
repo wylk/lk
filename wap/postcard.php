@@ -64,7 +64,7 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 		$data['business_license'] = isset($_POST['businessLicense']) ? $_POST['businessLicense'] : "";
 		$data['business_img'] = isset($_POST['uploadBusiness']) ? $_POST['uploadBusiness'] : "";
 		$data['img_oneself'] = isset($_POST['uploadImg_3']) ? $_POST['uploadImg_3'] : "";
-		$data['s_id']= isset($_POST['shopclass']) ? $_POST['shopclass'] : "";
+		// $data['s_id']= isset($_POST['shopclass']) ? $_POST['shopclass'] : "";
 		$data['type'] = 2;
 		$data['status'] = 0;
 		$data['ratio']=100;
@@ -86,7 +86,7 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 
 		}
 		if(!$res){
-			dexit(['res'=>1,"msg"=>"信息错误，请您重新填写","other"=>$res]);
+			dexit(['res'=>1,"msg"=>"信息错误，请您重新填写","other"=>$res,"data"=>$data]);
 		}
 		dexit(['res'=>0,"msg"=>"提交成功，请您耐心等待审核","other"=>$res]);
 	}

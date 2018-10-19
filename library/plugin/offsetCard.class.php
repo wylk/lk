@@ -41,6 +41,7 @@ class offsetCard extends Card
         }
         if(!D('Card')->where(['card_id'=>$contract_id])->find()){
             D('Card')->data($dataArr)->addAll();
+            $contractRes = D("Contract")->where(['contract_title'=>$data['contract']."Card"])->find();
             //卡包
             $dataPackage = [];
             $dataPackage['uid'] = $uid;
@@ -49,6 +50,7 @@ class offsetCard extends Card
             $dataPackage['num'] = $data['sum'];
             $dataPackage['is_publisher'] = 1;
             $dataPackage['address'] = $address;
+            $dataPackage['ratio'] = $contractRes['ratio'];
             if(D('Card_package')->data($dataPackage)->add())
                 dexit(['error'=>0,'msg'=>'添加成功']);
             else

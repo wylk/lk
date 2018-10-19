@@ -46,6 +46,10 @@ if(isset($_POST['phone'])){
     if(isset($_POST['logintype']) && $_POST['logintype'] == "checkAccount"){
         $phone = trim($_POST['phone']);
         $code = trim($_POST['password']);
+        import("PlatformCurrency");
+        $platformObj = new PlatformCurrency();
+        $unphone = $platformObj->getPhone();
+        if($unphone == $phone) dexit(["res"=>1,'msg'=>"该手机号无登录权限"]);
         // if($code != $_SESSION['verify'][$phone]){
         //  dexit(["res"=>1,'msg'=>"验证码错误"]);
         // }
@@ -53,8 +57,6 @@ if(isset($_POST['phone'])){
 
         if(!$phoneRes){
             // 注册账户接口
-            import("PlatformCurrency");
-            $platformObj = new PlatformCurrency();
             $userdata = array();
             $userdata['phone'] = $phone;
             if(!empty($_SESSION['weixin']['userinfo'])){
