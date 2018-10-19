@@ -75,7 +75,7 @@ class PlatformCurrency{
         // 判断是否可以交易
         if(!option('hairpan_set.coin_open'))    return ['res'=>1,"msg"=>"暂时停止交易"];
         $checkRes = $this->checkAccount();
-        if($checkRes['res']) return ['res'=>1,"msg"=>"交易还未开通"];
+        // if($checkRes['res']) return ['res'=>1,"msg"=>"交易还未开通"];
         // 判断售卖规则是否符合
         $platform =$this->platform[$this->packageId] = D("Card_package")->where(['id'=>$this->packageId])->find();
 

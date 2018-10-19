@@ -8,7 +8,7 @@ $userId = $wap_user['userid'];
 $where = " and out_trade_no != ''";
 $unpaidOrderList = D("Orders")->where("buy_id=".$userId." and status=0 ".$where)->order("create_time desc")->select();
 // 付款订单
-$paidOrderList = D("Orders")->where("buy_id = ".$userId." and status = 3".$where)->order("create_time desc")->select();
+$paidOrderList = D("Orders")->where("buy_id = ".$userId." and status = 1".$where)->order("create_time desc")->select();
 // 全部订单
 $orderList = D("Orders")->where("buy_id = ".$userId." and status in (0,1,3) ".$where)->order("create_time desc")->select();
 // 用户发布的所有评论

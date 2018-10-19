@@ -125,7 +125,7 @@
                     <tr id="tr_<?php echo $value['id']; ?>">
                       <td style="color:#008069">买</td>
                       <td id="num_<?php echo $value['id']; ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></td>
-                      <td><?php echo number_format($value['price']*$value['num'],2) ?></td>
+                      <td><?php echo number_format($value['price']*($value['num']-$value['frozen']),2) ?></td>
                       <td><a href="javascript:;" id="sellTran_<?php echo $value['id']; ?>"  class="layui-btn layui-btn-xs">卖出</a></td>
                     </tr>
                     <?php } ?>
