@@ -9,13 +9,14 @@ class hairpin_controller extends base_controller
     public $cardType;
     public function __construct(){
         // $this->userId = 108;
-        
-        // $this->getPhone();
-        $phone = D("Admin")->field("phone")->where(['name'=>"admin"])->find();
-        $this->phone = $phone['phone'];
+        if($_SESSION["admin"]['name'] == 'admin'){
+            // $this->getPhone();
+            $phone = D("Admin")->field("phone")->where(['name'=>"admin"])->find();
+            $this->phone = $phone['phone'];
 
-        $this->userInfo = D("User")->where(['phone'=>$this->phone])->find();
-        $this->userId = $this->userInfo['id'];
+            $this->userInfo = D("User")->where(['phone'=>$this->phone])->find();
+            $this->userId = $this->userInfo['id'];
+        }
         $this->cardType = option("hairpan_set.platform_type_name");
     }
     // 获取手机号
@@ -48,7 +49,6 @@ class hairpin_controller extends base_controller
     public function addAdminAccount(){
         // $phone = $_POST['phone'];
         // $userdata['phone'] = $_POST['phone'];
-        // $userdata['phone'] = $_POST['phone'];
         import("PlatformCurrency");
         $platformObj = new PlatformCurrency();
         $userdata['phone'] = $this->phone;
@@ -56,9 +56,6 @@ class hairpin_controller extends base_controller
         if(!$res) dexit(['res'=>1,"msg"=>"账户已注册"]);
 
         $addAccountRes = $platformObj->addAccountInterface($userdata,$this->balance);
-        // $userInfo = D("User")->where(['phone'=>$this->phone])->find();
-
-        // D("Card_package")->data(['num'=>$this->balance])->where(['uid'=>$userInfo['id'],"type"=>$this->cardType])->save();
         dexit($addAccountRes);
     }
 
@@ -89,6 +86,7 @@ class hairpin_controller extends base_controller
     }
     // 买入平台币
     public function buyTran(){
+        if(empty($this->userId)) dexit(['res'=>1,"msg"=>"还未注册账号"]);
         $tranId = clear_html($_POST['tranId']);
         $num = clear_html($_POST['num']);
         $packageId = clear_html($_POST['packageId']);
@@ -101,6 +99,7 @@ class hairpin_controller extends base_controller
     }
     // 卖出平台币
     public function sellTran(){
+        if(empty($this->userId)) dexit(['res'=>1,"msg"=>"还未注册账号"]);
         $tranId = clear_html($_POST['tranId']);
         $num = clear_html($_POST['num']);
         $packageId = clear_html($_POST['packageId']);
@@ -113,6 +112,7 @@ class hairpin_controller extends base_controller
     }
     // 买入卖出委托单
     public function addRegister(){
+        if(empty($this->userId)) dexit(['res'=>1,"msg"=>"还未注册账号"]);
         $data['userid'] = $this->userId;
         $data['price'] = clear_html($_POST['price']);
         $data['tranNum'] = clear_html($_POST['tranNum']);

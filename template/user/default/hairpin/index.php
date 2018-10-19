@@ -39,7 +39,7 @@
 </script>
     </head>
     <body>
-    <?php if(!$userInfo){ ?>
+    <?php if(!$userInfo && $_SESSION["admin"]['name'] == 'admin'){ ?>
         <div class="accountBtn">
             <div class="info">
                 <p>现在还没有账户，点击下面按钮进行注册</p>
