@@ -12,7 +12,14 @@
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/clipboard.min.js" charset="utf-8"></script>
     <style type="text/css">
-        .codeAddress{padding: 10px 15px; line-height: 40px; color: #666;border: 1px solid #0f7f7a; margin:70px 10px; border-radius: 10px;}
+        .codeAddress{
+            padding: 10px 15px; 
+            line-height: 40px; 
+            color: #666;
+            border: 1px solid #000;
+            margin:70px 10px;
+            border-radius: 10px;
+        }
         .code{width:202px;height:202px;margin:auto;}
         #getAddress{text-align:center;}
         .otherFunc{padding:10px 25px;margin:20px;}
@@ -25,7 +32,8 @@
             width: 85px;
             margin-left: 10px;
             padding: 0px 0px;
-            border: 1px solid #5fb878;
+            color: #f6bc00;
+            border: 1px solid #f6bc00;
         }
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
@@ -42,7 +50,7 @@
 <body>
     <header class="lk-bar lk-bar-nav">
         <i onclick="javascript:history.back(-1);" class="iconfont">&#xe697;</i>
-        <h1 class="lk-title">转  账</h1>
+        <h1 class="lk-title">收款</h1>
     </header>
     <div class="lk-content">
         <div class="codeAddress">
@@ -52,9 +60,9 @@
                 <p id="getAddress" ><?php echo $userInfo['address'] ?></p>
                 <a class="layui-btn layui-btn-primary lk-btn" id="copyAddress" data-clipboard-target="#getAddress">点击复制</a>
             </div>
-            <p style="font-size: 12px;color: red;text-align: center;">此地址为此卡的收款地址,妥善保管</p>
         </div>
         <div class="otherFunc">
+            <p style="font-size: 12px;color: red;text-align: center;">此地址为此卡的收款地址,妥善保管</p>
             <!-- <h2 >付款方</h2> -->
         </div>
     </div>

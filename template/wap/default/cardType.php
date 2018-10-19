@@ -21,7 +21,7 @@
         width: 85px;
       }
       .dy2 h2{
-        color:#228B22;margin-left:127px;margin-top:-44px;
+        color:red;margin-left:127px;margin-top:-44px;
       }
       .dy3{
         margin-top: 7px;
@@ -32,8 +32,14 @@
       .layui-col-space10{
         font-size: 17px;
       }
-      button{
-        width: 118px;height:39px;border: 1.3px solid #228B22;margin-left: 20px;
+
+      .layui-btn{
+        width: 118px;
+        height:39px;
+        border: 1.3px solid #f6bc00;
+        margin-left: 20px;
+        color:#f6bc00;
+        border-radius: 5px;
       }
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
@@ -55,8 +61,8 @@
   <div class="layui-container">
     <div class="layui-row dy1">
       <font size="3">
-        <i style="color:red">注</i>
-        <i style="margin-left: 24px;">选择要发布的会员卡有的需要保证金</i>
+        <i style="color:red">注 :</i>
+        <i style="margin-left: 24px;font-size: 14px;">选择要发布的会员卡有的提现时按发布的卡券比例锁住平台币;交易完成后可以解除锁定。</i>
       </font>
     </div>
   </div>

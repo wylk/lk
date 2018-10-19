@@ -12,7 +12,7 @@
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
         .block{width:100%;height:50px;}
-        .block-header{width: 90%;height: 100px;margin: 5px auto;}
+        .block-header{width: 90%;height: 42px;margin: 5px auto;}
         .crad_logo{width:55px;height: 55px;margin: 0px auto}
         .crad_logo img{width:100%;height: 100%;}
         .imgstyle{width:15%;float:left;text-align:right;line-height: 50px;}
@@ -53,8 +53,8 @@
         .layui-btn{
             width: 70%;
             background: #fff;
-            color: #000;
-            border: 1px solid green;
+            color: #efd21d;
+            border: 1px solid #efd21d;
         }
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
@@ -75,7 +75,7 @@
     </header>
     <div class="lk-content">
         <div class="block-header">
-            <div class="crad_logo"><img src="<?php echo STATIC_URL;?>/images/default_send_logo.png" /></div>
+            <!-- <div class="crad_logo"><img src="<?php echo STATIC_URL;?>/images/default_send_logo.png" /></div> -->
            <div class="block-balance">
                 <span>可用金额：</span><span style="font-weight: bold"><?php echo number_format($cardInfo['num'],2) ?></span>
            </div>

@@ -11,9 +11,6 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>/sweetalert/js/sweet-alert.min.js"></script>
-
-
-
     <style type="text/css">
 
         .item-row{
@@ -96,10 +93,10 @@
     <div class="row-flow"></div>
 </div>
 <div class="cont" style="display: none;margin-top:30px; ">
-<div style="margin-top:76px ">
-    <span style="color: #40753a;margin-left: 15px;font-size: 18px;">请输入您的位置：</span><input type="text" name="" id="tipinput" style="z-index: 9999;float: right;width: 174px;height: 35px;margin-right: 22px;"></div>
-<div id="container" style="height: 386px;width: 100%;border: 1px solid #2e8a2f;position: relative;background: rgb(252, 249, 242);margin-top: 40px;"></div>
-<div style="margin-left: 27%;margin-top: 22px;"><button style="margin-top: 15px;margin-right: 25px;width: 73px;height: 32px;background-color: #1f9407" id="addmap">确认</button><button style="margin-top: 15px;margin-right: 25px;width: 73px;height: 32px;background-color: #1f9407" id="delete">取消</button></div>
+    <div style="margin-top:76px ">
+        <span style="color: #40753a;margin-left: 15px;font-size: 18px;">请输入您的位置：</span><input type="text" name="" id="tipinput" style="z-index: 9999;float: right;width: 174px;height: 35px;margin-right: 22px;"></div>
+    <div id="container" style="height: 386px;width: 100%;border: 1px solid #2e8a2f;position: relative;background: rgb(252, 249, 242);margin-top: 40px;"></div>
+    <div style="margin-left: 27%;margin-top: 22px;"><button style="margin-top: 15px;margin-right: 25px;width: 73px;height: 32px;background-color: #1f9407" id="addmap">确认</button><button style="margin-top: 15px;margin-right: 25px;width: 73px;height: 32px;background-color: #1f9407" id="delete">取消</button></div>
 </div>
 
 </body>
@@ -196,29 +193,28 @@
             }
             // 地图定位
             // 地址入库
-             $('#addmap').click(function(e){
+            $('#addmap').click(function(e){
                 var input=$('#tipinput').val();
                 if(input==''){
                     alert('请填写您的位置');
                 }else{
-                       $.ajax({
-                                type:"post",
-                                url:"http://lk.com/wap/map_name.php",
-                                data:{name:input},
-                                dataType:'json',
-                                success:function(r){
-                                    if(r.res=1){
-                                        alert(r.msg);
-                                        window.location.href = "http://lk.com/wap/setup.php";
-                                    }
-                                }
-                           })
-                    }
-                         })
-             $('#delete').click(function(){
-                 // history.back(-1);
-                  history.go(-1)
-             })
+                   $.ajax({
+                        type:"post",
+                        url:"http://lk.com/wap/map_name.php",
+                        data:{name:input},
+                        dataType:'json',
+                        success:function(r){
+                            if(r.res=1){
+                                alert(r.msg);
+                                window.location.href = "http://lk.com/wap/setup.php";
+                            }
+                        }
+                    });
+                }
+            })
+            $('#delete').click(function(){
+               $('.cont').css('display', 'none');
+            })
 </script>
 
 
