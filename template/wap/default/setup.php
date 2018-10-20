@@ -173,7 +173,7 @@
                 //经纬度入库
                 $.ajax({
                     type:"post",
-                    url:"http://lk.com/wap/add_map.php",
+                    url:"./add_map.php",
                     data:{lnglat:lnglat},
                     dataType:'json',
                     success:function(r){
@@ -200,13 +200,13 @@
                 }else{
                    $.ajax({
                         type:"post",
-                        url:"http://lk.com/wap/map_name.php",
+                        url:"./map_name.php",
                         data:{name:input},
                         dataType:'json',
                         success:function(r){
                             if(r.res=1){
                                 alert(r.msg);
-                                window.location.href = "http://lk.com/wap/setup.php";
+                                window.location.href = "./setup.php";
                             }
                         }
                     });
