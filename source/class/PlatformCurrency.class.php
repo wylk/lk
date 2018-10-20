@@ -208,6 +208,7 @@ class PlatformCurrency{
         if($data['type']){
             $tranWhere['type'] = $data['type'];
         }
+        //dump($tranWhere);
         return D("Card_transaction")->where($tranWhere)->order("createtime desc")->select();
     }
     // 直接与市场中的委托单交易
@@ -306,7 +307,7 @@ class PlatformCurrency{
         return ['res'=>0,"msg"=>"已成功通知对方"];
     }
     public function revokeOrder($orderId){
-        $res = D("Orders")->where(['id'=>$orderId])->setField("status",2);
+        $res = D("Orders")->where(['id'=>$orderId,"status"=>'0'])->setField("status",2);
         if(!$res) return ['res'=>1,"msg"=>"撤销失败"];
         // 解冻package transaction
         $orderInfo = D("Orders")->where(['id'=>$orderId])->find();

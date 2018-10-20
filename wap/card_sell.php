@@ -57,7 +57,7 @@ foreach($userRes as $key=>$value){
 }
 
 $register = $platformObj->selectPersonRegister(['card_id'=>$platformInfo['card_id'],"userId"=>$userId,'type'=>'2']);
-// dump($register);die();
+//dump($register);die();
 include display('card_sell');
 echo ob_get_clean();
 function check($userId){
