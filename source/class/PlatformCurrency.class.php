@@ -208,6 +208,7 @@ class PlatformCurrency{
         if($data['type']){
             $tranWhere['type'] = $data['type'];
         }
+        //dump($tranWhere);
         return D("Card_transaction")->where($tranWhere)->order("createtime desc")->select();
     }
     // 直接与市场中的委托单交易
