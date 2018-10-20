@@ -46,16 +46,19 @@ if(isset($_POST['type']) && $_POST['type'] == "transaction"){
 // 交易单撤销请求
 if(isset($_POST['type']) && $_POST['type'] == "revoke"){
 	$revokeId = trim($_POST['id']);
-	// $revokeNum = trim($_POST['num']);
 	$revokeCardId = trim($_POST['cardId']);
+	// 判断是否有订单未处理
+	$checkRes = D("Orders")->where("(tran_id = ".$revokeId." or tran_other = ".$revokeId.") and status = 0")->sum("number");
+	if($checkRes) dexit(['res'=>1,"msg"=>"还有".$checkRes."订单未处理"]);
 	$revokeInfo = D("Card_transaction")->where(['id'=>$revokeId])->find();
 	$res = D("Card_transaction")->data(['status'=>2,"updatetime"=>time()])->where(['id'=>$revokeId])->save();
 
 	if(!$res) {
 		dexit(['res'=>1,"msg"=>"订单撤销失败",'other'=>$res]);
 	}
-	$res = D("Card_package")->where(['uid'=>$userId,"card_id"=>$revokeCardId])->setDec("frozen",$revokeInfo['num']);
-	D("Card_package")->where(['uid'=>$userId,"card_id"=>$revokeCardId])->setInc("num",$revokeInfo['num']);
+	$revokeNum = $revokeInfo['num'] - $revokeInfo['frozen'];
+	$res = D("Card_package")->where(['uid'=>$userId,"card_id"=>$revokeCardId])->setDec("frozen",$revokeNum);
+	D("Card_package")->where(['uid'=>$userId,"card_id"=>$revokeCardId])->setInc("num",$revokeNum);
 	dexit(['res'=>0,"msg"=>"订单撤销成功"]);
 }
 
