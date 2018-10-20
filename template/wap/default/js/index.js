@@ -33,7 +33,7 @@
     function get_near_shops(){
         $.post('index_ajax.php',{i:i,plugin:plugin,lng:lng,lat:lat},function(re){
             ++i;
-            console.log(del);
+           // console.log(del);
             if(del){
                 $('.stores').html('');
             }
@@ -49,7 +49,7 @@
                         map:map
                     });
                     marker.on('click', function(r){
-                        console.log(r);
+                       //console.log(r);
                     });
                 })
 
@@ -158,8 +158,8 @@
           result.innerHTML = str;
         }
       });
-      Marker.setPosition(map.getCenter())
-      Marker.setAnimation('AMAP_ANIMATION_DROP')
+      Marker.setPosition(map.getCenter());
+      Marker.setAnimation('AMAP_ANIMATION_DROP');
     });
 
     // 加载地理位置编码插件
@@ -259,6 +259,7 @@
         Marker.setAnimation('AMAP_ANIMATION_DROP')
       } else {
         // 标记不存在则实例化一个新的标记，且把当前地图中心点设置给标记
+        console.log(map);
         Marker = new AMap.Marker({
           position: map.getCenter(),
           animation: 'AMAP_ANIMATION_DROP'
