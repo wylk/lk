@@ -18,6 +18,9 @@
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+      .layui-input{width: 100%;}
+    </style>
   </head>
 
   <body>
@@ -32,12 +35,12 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
+     <!--    <form class="layui-form layui-col-md12 x-so"> -->
           <div class="layui-input-inline">
-            <input type="text" name="username"  placeholder="发卡用户" autocomplete="off" class="layui-input">
+            <input type="text" id="username"  placeholder="发卡用户" autocomplete="off" class="layui-input">
           </div>
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach" ><i class="layui-icon">&#xe615;</i></button>
-        </form>
+          <button class="layui-btn" ><i class="layui-icon" id="set">&#xe615;</i></button>
+  <!--       </form> -->
       </div>
         <span class="x-right" style="line-height:40px">共有数据：<?php  echo $count ?> 条</span>
       <table class="layui-table">
@@ -108,4 +111,13 @@
       });
     });
   });
+
+
+
+  $("#set").click(function(){
+    var username=$("#username").val();
+   $.post('?c=coiling&a=index_to',{username:username}, function(res) {
+      console.log(res);
+   },'json')
+  })
 </script>
