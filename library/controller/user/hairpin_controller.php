@@ -10,9 +10,9 @@ class hairpin_controller extends base_controller
     public function __construct(){
         // $this->userId = 108;
         if($_SESSION["admin"]['name'] == 'admin'){
-            // $this->getPhone();
-            $phone = D("Admin")->field("phone")->where(['name'=>"admin"])->find();
-            $this->phone = $phone['phone'];
+            $this->getPhone();
+            // $phone = D("Admin")->field("phone")->where(['name'=>"admin"])->find();
+            // $this->phone = $phone['phone'];
 
             $this->userInfo = D("User")->where(['phone'=>$this->phone])->find();
             $this->userId = $this->userInfo['id'];
