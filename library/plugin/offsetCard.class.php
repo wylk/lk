@@ -88,22 +88,25 @@ class offsetCard extends Card
     {
         $datas = D('')->table("Card_transaction as a")
                         ->join('User_audit as b ON a.uid=b.uid','LEFT')
+                        ->join("User as u On a.uid=u.id","LEFT")
                         ->where("a.card_id='".$data['card_id']."' and a.status=0")
-                        ->field("a.*,b.uid as b_uid,b.type as b_type,b.name as b_name")
+                        ->field("a.*,b.uid as b_uid,b.type as b_type,b.name as b_name,u.avatar")
                         ->order("b_type desc")
                         ->limit((($data['i']-1)*10).",10")
                         ->select();
+   
         if($datas){
         $str = '';
         foreach ($datas as $k => $value) {
             $b_type = $value['b_type'] == 1 ?'个人认证':'店铺认证';
             $price = number_format($value['price'],2);
             $limit = number_format($value['limit'],0).'-'.number_format($value['num'],0);
+            $img = empty($value['avatar']) ? "http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" : $value['avatar'];
             $str .=  <<<EOM
            <div class="home-plugin-info-row">
              <div class="home-plugin-info-row-card line-heights">
                 <div class="home-plugin-info-row-card-img">
-                    <img src="http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" style="height:100%;width:100%;border-radius: 20%;">
+                    <img src="{$img}" style="height:100%;width:100%;border-radius: 20%;">
                 </div>
              </div>
              <div class="home-plugin-info-row-card row-card2">

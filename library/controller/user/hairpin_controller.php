@@ -37,7 +37,6 @@ class hairpin_controller extends base_controller
 
         // 交易记录
         $books = D("Record_books")->where("type = '".$this->cardType."'")->select();
-        // dump($books);
 
         $this->assign('datas',$datas);
         $this->assign('userInfo',$this->userInfo);
