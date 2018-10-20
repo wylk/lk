@@ -32,7 +32,8 @@ if($payType == 'platform'){
 	// 平台币转账
 	import("PlatformCurrency");
     $platformObj = new PlatformCurrency(['userid'=>$userId]);
-	$platformObj->payTran($order['sell_id'],$order['buy_id'],$order['number']*$order['price'],$order['price']);
+	$payRes = $platformObj->payTran($order['sell_id'],$order['buy_id'],$order['number']*$order['price'],$order['price']);
+	if($payRes['res']) dexit(['res'=>1,"msg"=>"平台币转账"]);
 }
 
 // dexit(['errcode'=>3,'msg'=>$data]);

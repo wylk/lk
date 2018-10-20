@@ -341,6 +341,7 @@ class PlatformCurrency{
     public function payTran($sellUid,$buyUid,$num,$price=0){
         $sellInfo = D("Card_package")->where(['uid'=>$sellUid,"type"=>$this->cardType])->find();
         $buyInfo = D("Card_package")->where(['uid'=>$buyUid,"type"=>$this->cardType])->find();
+        if($buyInfo['num'] >= $num) return ['res'=>1,"msg"=>"平台币不足"];
 
         // 保证金冻结
         $bailRes = $this->bailInter($num,$buyInfo['id']);
