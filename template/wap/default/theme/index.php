@@ -116,7 +116,7 @@
             height: 0;
             border: 8px solid transparent;
             position: absolute;
-            top: 6px;
+            top: 5px;
             border-right: 8px solid #f6bc00;
             left: -16px;
         }
