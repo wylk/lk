@@ -45,7 +45,7 @@ if(IS_POST){
 $UserAud = D("Card_transaction")->where(array('id'=>$_GET['id']))->find();
 // dump($UserAud);
 $UserAud['limit'] = number_format($UserAud['limit'],2);
-$UserAud['num'] = number_format($UserAud['num'],2);
+$UserAud['num'] = number_format($UserAud['num']-$UserAud['frozen'],2);
 $UserAud['price'] = number_format($UserAud['price'],2);
 
 $shopInfo = D("User_audit")->where(['uid'=>$UserAud['uid']])->find();
