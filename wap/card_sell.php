@@ -74,5 +74,5 @@ function check($userId){
 	if($pay_img==null){
 		 dexit(['res'=>3,"msg"=>"请设置支付管理","url"=>"pay_zf.php"]);
 	}
-	 dexit(['res'=>0,"msg"=>"成功"]);
+	 // dexit(['res'=>0,"msg"=>"成功"]);
 }

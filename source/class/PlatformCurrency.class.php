@@ -320,10 +320,11 @@ class PlatformCurrency{
             // 保证金数据处理  （转账直接成功后处理的，撤销订单无需处理）
             if(!empty($orderInfo['bail']) && $orderInfo['bail'] > 0){
                 $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['bail'],"field"=>"bail"];
+            }
+                // 在括号外
             $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
             $packageList[] = ['id'=>$packageInfo['id'],"operator"=>"+","step"=>$orderInfo['number']+$orderInfo['bail'],"field"=>"num"];
             M("Card_package")->dataModification($packageList);
-            }
         }
         $frozenList[$orderInfo['tran_id']] = ['id'=>$orderInfo['tran_id'],"operator"=>"-","step"=>$orderInfo['number'],"field"=>"frozen"];
         $this->tradeSheetFrozen($frozenList);
