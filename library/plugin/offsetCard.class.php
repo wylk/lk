@@ -100,7 +100,7 @@ class offsetCard extends Card
         foreach ($datas as $k => $value) {
             $b_type = $value['b_type'] == 1 ?'个人认证':'店铺认证';
             $price = number_format($value['price'],2);
-            $limit = number_format($value['limit'],0).'-'.number_format($value['num'],0);
+            $limit = number_format($value['limit'],0).'-'.number_format($value['num']-$value['frozen'],0);
             $img = empty($value['avatar']) ? "http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" : $value['avatar'];
             $str .=  <<<EOM
            <div class="home-plugin-info-row">
