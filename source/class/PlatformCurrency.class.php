@@ -353,7 +353,8 @@ class PlatformCurrency{
             $buyRes = $blockchainRes['buyRes'];
             $sellRes = $blockchainRes['sellRes'];
         }else{
-            $imitateRes = $this->imitateInterface($sellInfo,$buyInfo,$num);
+            // $imitateRes = $this->imitateInterface($sellInfo,$buyInfo,$num);
+            $imitateRes = $this->imitateInterface($buyInfo,$sellInfo,$num);
             if($imitateRes['res']) return $imitateRes;
             $buyRes = $buyInfo['num']-$bailNum-$num;
             $sellRes = $sellInfo['num']+$num;

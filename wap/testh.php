@@ -35,14 +35,8 @@ require_once dirname(__FILE__).'/global.php';
 // echo get_cfg_var ("upload_max_filesize")?get_cfg_var ("upload_max_filesize"):"不允许上传附件";
 // dump(get_cfg_var ("upload_max_filesize"));
 // include display('testh');
-
-dump(strlen("2018101857575348"));
-	dump(strlen(date("Ymd")));
-for($i=0;$i<6;$i++){
-// $time = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
-$time = date('Ymd').rand(10000,99999).rand(100,999);
-	dump($time);
-	// dump(uniqid());
-	// dump(substr(uniqid(), 7, 13));
-	dump(rand(10000,99999));
-}
+$userId = $wap_user['userid'];
+$order  = D('Orders')->where(['out_trade_no'=>"20181020151223148583"])->find();
+import("PlatformCurrency");
+$platformObj = new PlatformCurrency(['userid'=>$userId]);
+$platformObj->payTran($order['sell_id'],$order['buy_id'],$order['number']*$order['price'],$order['price']);
