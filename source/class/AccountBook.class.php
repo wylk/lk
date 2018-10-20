@@ -108,6 +108,7 @@ MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCpaBKcZHVDbOwgKCrSGaqHbYG9MarI
 			if($k > 0){
 				$new_block = new blockBill($books[$k-1]['address_send'],$books[$k-1]['address_get'],$books[$k-1]['num'],$books[$k-1]['card_id'],$books[$k-1]['time'],$v['hash']);
 				if($books[$k-1]['hash'] != ($new_block->hash)){
+                    //dump($v);
 					$res = false;
 				}
 			}
