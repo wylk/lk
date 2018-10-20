@@ -90,7 +90,7 @@
         </div>
         <hr>
         <hr>
-  
+
         <?php foreach($buyList as $key=>$value){ ?>
         <?php if($value['num'] <= $value['frozen']) continue; ?>
         <div class="lk-container-flex">
@@ -135,6 +135,8 @@ layui.use(['layer'],function(){
                 layer.msg(res.msg,{icon:1,skin:"demo-class"});
                 window.location.reload(true);
             }else{
+               if(res.url)
+               window.location.href = res.url;
                layer.msg(res.msg,{icon:1,skin:"demo-class"});
             }
         },"json");

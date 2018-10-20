@@ -69,7 +69,7 @@ function index($data){
     	            </div >
     	            <div class="price">
     	            	<div>{$v['enterprise']}</div>
-    	            	<div><span style="color:red;font-size:20px;">6-7</span>&nbsp;&nbsp;折卡券&nbsp;&nbsp;已购<span style="color:red;font-size:15px;">30万</span></div>
+    	            	<div><span style="color:red;font-size:20px;">6-9.9</span>&nbsp;&nbsp;折卡券&nbsp;&nbsp;已购<span style="color:red;font-size:15px;">30万</span></div>
     	            </div>
     	            <div class="num">
     	            	<div>{$juli}</div>
