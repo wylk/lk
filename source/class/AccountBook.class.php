@@ -30,7 +30,7 @@ MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCpaBKcZHVDbOwgKCrSGaqHbYG9MarI
             $account_book = D('Account_book')->field('id,account_balance')->where(['address'=>$sendAddress])->order('id DESC')->find();
             $get_account_book = D('Account_book')->field('id,account_balance')->where(['address'=>$getAddress])->order('id DESC')->find();
 
-            if($get_account_book && $account_book['account_balance'] > $num && $num > 0.0001){
+            if($get_account_book && $account_book['account_balance'] >= $num && $num > 0.0001){
                 $this->commAccount($contract_id,$sendAddress,($account_book['account_balance'] - $num));
                 $this->commAccount($contract_id,$getAddress,($get_account_book['account_balance'] + $num));
                 $this->accontBill($encrypte);
