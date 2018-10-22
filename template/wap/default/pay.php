@@ -103,7 +103,7 @@ layui.use(['form', 'layer'],function() {
             alert(payinfo.msg);
             return;
           }
-          window.WeixinJSBridge.invoke("getBrandWCPayRequest",res.data,function(res1){
+          window.WeixinJSBridge.invoke("getBrandWCPayRequest",payinfo.data,function(res1){
             if(res1.err_msg=="get_brand_wcpay_request:ok"){
               alert("支付成功");
             }else{
