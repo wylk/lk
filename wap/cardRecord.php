@@ -10,8 +10,8 @@ $uid = array_column($recordList, "uid");
 $userInfoRes = D("User")->where(['id'=>['in',$uid]])->select();
 // dump($userInfoRes);
 foreach($userInfoRes as $key=>$value){
-	$userInfo[$value['uid']]['name'] = $value['name'];
-	$userInfo[$value['uid']]['avatar'] = $value['avatar'];
+	$userInfo[$value['id']]['name'] = $value['name'];
+	$userInfo[$value['id']]['avatar'] = $value['avatar'];
 }
 // $userInfo = array_column($userInfo, null,"id");
 // var_dump($userInfo);

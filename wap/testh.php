@@ -11,7 +11,7 @@ require_once dirname(__FILE__).'/global.php';
 // $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$appid.'&redirect_uri='.$redirect_uri.'&response_type=code&scope='.$scope.'&state=STATE#wechat_redirect';
 // header('location:'.$url);
 
-// // 微信登录
+// // 微信支付
 // implode('weixin_pay');
 // $data = [
 // 	'appid' => "wxcf45e0f03cb2fe06", 
@@ -37,6 +37,6 @@ require_once dirname(__FILE__).'/global.php';
 // include display('testh');
 $userId = $wap_user['userid'];
 $order  = D('Orders')->where(['out_trade_no'=>"20181020151223148583"])->find();
-import("PlatformCurrency");
-$platformObj = new PlatformCurrency(['userid'=>$userId]);
-$platformObj->payTran($order['sell_id'],$order['buy_id'],$order['number']*$order['price'],$order['price']);
+import("CardAction");
+$card = new CardAction();
+$card->buyCard();
