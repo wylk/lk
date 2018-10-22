@@ -18,7 +18,7 @@
     .lk-container-flex {padding: 0 5px;}
     .order-left{width: 63%}
     .order-right{width: 37%;text-align: right;}
-    .layui-tab-title li{min-width: 30px;}
+    .layui-tab-title li{/*min-width: 30px;*/width: 23%;}
     .margin-t10{
         margin-top:5px; 
     }
@@ -46,7 +46,6 @@
                     <li class="layui-this ">全部订单</li>
                     <li class="">未付款订单</li>
                     <li class="">付款订单</li>
-                    <li class="">评价</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show ">
@@ -107,34 +106,6 @@
                         </div>
                         <hr>
                         <?php } ?>
-                    </div>
-                    <div class="layui-tab-item ">
-                        <table lay-skin="line" class="layui-table laytable-cell-space">
-                        <colgroup>
-                          <col width="5%">
-                          <col width="">
-                          <col width="30%">
-                          <col width="25%">
-                        </colgroup>
-                        <thead >
-                          <tr >
-                            <th id="laytable-cell-space">序号</th>
-                            <th id="laytable-cell-space">内容</th>
-                            <th id="laytable-cell-space">卡券</th>
-                            <th id="laytable-cell-space">时间</th>
-                          </tr> 
-                        </thead>
-                        <tbody>
-                          <?php foreach($evaluate as $key=>$value) { ?>
-                          <tr>
-                            <td><?php echo $key ?></td>
-                            <td><?php echo $value['content'] ?></td>
-                            <td><?php echo $value['card_id'] ?></td>
-                            <td><?php echo date("Y-m-d H:i:s",$value['createtime']); ?></td>
-                          </tr>
-                            <?php }?>
-                        </tbody>
-                      </table>
                     </div>
                 </div>
             </div>

@@ -25,8 +25,8 @@ foreach ($cardRes as $key => $value) {
 // dump($cardAttrArr);
 
 // 获取店铺名称
-$cardType = D("User_audit")->field('name,uid')->where("uid in ('".implode($cardUid, "','")."')")->select();
-$cardType = array_column($cardType, 'name','uid');
+$cardType = D("User_audit")->field('enterprise,uid')->where("uid in ('".implode($cardUid, "','")."')")->select();
+$cardType = array_column($cardType, 'enterprise','uid');
 // dump($cardType);
 
 include display('card_package');
