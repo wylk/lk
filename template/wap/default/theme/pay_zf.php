@@ -54,7 +54,7 @@
         <h6>设置收款方式必须是本人账号</h6>
         <div class="content">
         <div class="yl">
-            <img src="http://lk.com/template/wap/default/images/yl.jpg">
+            <img src="<?php echo $config['site_url']?>/template/wap/default/images/yl.jpg">
             <span value="1">绑定银行卡</span>
             <div class="checkbox">
                 <input type="checkbox" id="checkbox-9-4" /><label for="checkbox-9-4"></label>
@@ -62,7 +62,7 @@
             <!-- <div class="qj"><i id="yl">>>></i></div> -->
         </div>
         <div class="zfb">
-            <img src="http://lk.com/template/wap/default/images/zfb.jpg">
+            <img src="<?php echo $config['site_url']?>/template/wap/default/images/zfb.jpg">
             <span value="2">绑定支付宝</span>
             <div class="checkbox">
                 <input type="checkbox" id="checkbox-9-3" /><label for="checkbox-9-3"></label>
@@ -70,7 +70,7 @@
              <div class="j"><i id="zfb">>>></i></div>
         </div>
         <div class="wx">
-            <img src="http://lk.com/template/wap/default/images/wx.jpg">
+            <img src="<?php echo $config['site_url']?>/template/wap/default/images/wx.jpg">
             <span value="3">绑定微信</span>
             <div class="checkbox">
                 <input type="checkbox" id="checkbox-9-2" /><label for="checkbox-9-2"></label>
@@ -90,7 +90,7 @@ $('#yl').click(function(){
      if(a==false){
          return false;
      }else{
-          window.location.href = "http://lk.com/wap/pay_xq.php?type="+tex+"";
+          window.location.href = "./pay_xq.php?type="+tex+"";
      }
 })
 $('#zfb').click(function(){
@@ -99,7 +99,7 @@ $('#zfb').click(function(){
      if(a==false){
          return false;
      }else{
-          window.location.href = "http://lk.com/wap/pay_xq.php?type="+tex+"";
+          window.location.href = "<?php echo $config['site_url']?>/wap/pay_xq.php?type="+tex+"";
      }
 })
 $('#wx').click(function(){
@@ -108,7 +108,7 @@ $('#wx').click(function(){
      if(a==false){
          return false;
      }else{
-          window.location.href = "http://lk.com/wap/pay_xq.php?type="+tex+"";
+          window.location.href = "<?php echo $config['site_url']?>/wap/pay_xq.php?type="+tex+"";
      }
 })
 </script>

@@ -80,7 +80,7 @@
 
         #up-map-div{
             width:100%;
-            height:700px;
+            height:500px;
             top:200px;
             left:0px;
             position:absolute;
@@ -174,7 +174,7 @@
         <?php include display('public_menu');?>
     </body>
 </html>
-<script src="http://code.jquery.com/jquery-1.8.0.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-1.8.0.min.js" type="text/javascript"></script>
 <!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp"></script> -->
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.5&key=0bda08c2afb77bff30115186de665721&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
