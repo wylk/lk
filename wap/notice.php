@@ -19,13 +19,16 @@ if(!empty($xml)){
 
 }
 
-// $file = LEKA_PATH.'/upload/log/order.txt';
-// file_put_contents($file,$data['order_id']);
+$file = LEKA_PATH.'/upload/log/xml';
+file_put_contents($file,$xml);
 
 
 
 $order  = D('Orders')->where(['out_trade_no'=>$data['out_trade_no']])->find();
 
+if($order['status']){
+	dexit(['errcode'=>1,'msg'=>"订单已经支付"]);
+}
 // 转账处理
 
 if($payType == 'platform'){

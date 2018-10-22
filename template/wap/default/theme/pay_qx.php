@@ -113,7 +113,7 @@
          console.log(res)
          if(res.res == 0){
             alert(res.msg)
-            window.location.href = "http://lk.com/wap/my.php";
+            window.location.href = "<?php echo $config['site_url']?>/wap/my.php";
           }else{
             alert(res.msg)
           }

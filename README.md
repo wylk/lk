@@ -50,3 +50,12 @@ $page = new Page($bank_count, 20);
 $banks = $bank->order('`bank_id` DESC')->limit($page->firstRow, $page->listRows)->select();
 $this->assign('banks',$banks);
 $this->assign('page', $page->show());
+------------mysql-----------------------
+
+'DB_HOST'=>'59.110.45.7',
+'DB_NAME'=>'bcc',
+'DB_USER'=>'Zeh9orS',
+'DB_PWD'=>'dOpHWFjXHzbesWr9',
+'DB_PORT'=>'3306',
+'DB_PREFIX'=>'lk_',
+'STATIC_RESOURCE'=>'1'
