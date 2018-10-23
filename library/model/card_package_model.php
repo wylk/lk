@@ -49,14 +49,16 @@ class card_package_model extends base_model
 	public function dataModification($data,$additional=null){
 		foreach ($data as $key => $value) {
 			if(is_array($value['id'])){
-				$case[$value['field']] .= " when ".$value['id']['val']." then ";
+				$case[$value['field']] .= " when '".$value['id']['val']."' then ";
 				$field[$value['field']] = $value['id']['field'];
-				$fieldIds[$value['id']['field']][] = $value['id']['val'];
+				if(!in_array($value['id']['val'], $fieldIds[$value['id']['field']]))
+					$fieldIds[$value['id']['field']][] = $value['id']['val'];
 			}else{
 				$case[$value['field']] .= " when ".$value['id']." then ";
 				// $ids[] = $value['id'];
 				$field[$value['field']] = 'id';
-				$fieldIds['id'][] = $value['id'];
+				if(!in_array($value['id'], $fieldIds['id']))
+					$fieldIds['id'][] = $value['id'];
 			}
 			if($value['operator'] == '=')
 				$case[$value['field']] .= $value['step'];
@@ -69,7 +71,7 @@ class card_package_model extends base_model
 		$update = substr($update, 0,-1);
 		$sql = "update lk_card_package set ".$update." where ";
 		foreach ($fieldIds as $key => $value) {
-			$where .= $key." in (".implode($value, ',').") or ";
+			$where .= $key." in ('".implode($value, '\',\'')."') or ";
 		}
 		$sql .= substr($where, 0,-3);
 		if(!empty($additional)){

@@ -39,15 +39,19 @@ $userId = $wap_user['userid'];
 // dump($userId);
 // $order  = D('Orders')->where(['out_trade_no'=>"20181020151223148583"])->find();
 $cardId = "0b170a15dd8ea510bd0267c9d8b2ae73";
-$id = 18;
-$num = 2;
-$price = 0.8;
-$limit = 2;
+
+// dump();die();
+
+$data['num'] = 2;
+$data['type'] = "offset";
+$data['cardId'] = $cardId;
+$data['sendAddress'] = "c0391df98c9e521d06f8e683228e63e4";
+$data['getAddress'] = "8ce142b799fad5ee468cfeff0ceb21c7";
 
 import("CardAction");
 $card = new CardAction(['userid'=>$userId]);
-$data = ['revokeCardId'=>$cardId,'revokeId'=>$id];
-$sellRes = $card->revokeTran($data);
+// $data = ['cardId'=>$cardId,'getAddress'=>$id,"sendAddress","num","type",""];
+$sellRes = $card->addressTran($data);
 dump($sellRes);
 
 // $editList[] = ['id'=>['field'=>"uid","val"=>$userId],"field"=>"frozen","operator"=>"+","step"=>$num];
