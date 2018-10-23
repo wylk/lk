@@ -135,9 +135,12 @@ layui.use(['layer'],function(){
                 layer.msg(res.msg,{icon:1,skin:"demo-class"});
                 window.location.reload(true);
             }else{
-               if(res.url)
-               window.location.href = res.url;
                layer.msg(res.msg,{icon:1,skin:"demo-class"});
+               if(res.url){
+                    setTimeout(function(){
+                        window.location.href = res.url;
+                    })
+               }
             }
         },"json");
     })

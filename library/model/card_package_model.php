@@ -77,7 +77,7 @@ class card_package_model extends base_model
 				$sql .= " and ".$value['field'].$value['operator']." '".$value['val']."'";
 			}
 		}
-		return $this->db->query($sql);
+		return $this->db->execute($sql);
 			// return [$a,$sql];
 		// return $sql;
 	}
