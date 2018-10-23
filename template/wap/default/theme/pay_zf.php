@@ -12,19 +12,20 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
+         body{background:white;}
         .lines{width: 90%;margin: 50px auto;}
         .content{margin-top:45px; }
         .yl img{width: 100px;margin-top: -7px;}
-        .yl span{font-size: 21px;border-bottom: 2px solid #e0dede;}
+        .yl span{font-size: 21px;}
         .zfb img{width: 72px;margin-left: 17px;margin-top: 5px;}
-        .zfb span{font-size: 21px;border-bottom: 2px solid #e0dede;margin-left: 10px;}
+        .zfb span{font-size: 21px;margin-left: 10px;}
         .wx img{width: 50px;margin-left: 27px;margin-top: 6px;}
-        .wx span{font-size: 21px;border-bottom: 2px solid #e0dede;margin-left: 22px;}
+        .wx span{font-size: 21px;margin-left: 22px;}
         h1{font-size: 40px;margin-top: 39px;margin-left: 35px;}
         h6{color: red;margin-top: 27px;font-size: 16px;margin-left: 19px;}
         .checkbox{float: right;margin-right: 50px;margin-top: 13px;}
        [id^="checkbox-9-"] + label {background-color: #FFF;padding: 9px;border-radius: 5px;display: inline-block;position: relative;margin-left: -20px;z-index: -1;z-index: -1px;width: 45px;box-shadow: 0 0 1px rgba(0,0,0,0.6);height: 10px;}
-       [id^="checkbox-9-"]:checked + label:after {content: 'YES';left: 25px;color: #21BE92;}
+       [id^="checkbox-9-"]:checked + label:after {content: 'YES';left: 25px;color:#2828FF;}
        [id^="checkbox-9-"] + label:after {content: 'NO';position: absolute;top: 7px;left: 37px;font-size: 1.2em;color: #868686;}
        [id^="checkbox-9-"]{width: 21px;height: 24px;top: 2px;left: 2px;}
        .qj i{color: red;float: right;margin-top: -27px;margin-right: 15px;}

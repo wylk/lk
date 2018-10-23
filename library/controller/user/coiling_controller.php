@@ -8,7 +8,6 @@ class coiling_controller extends base_controller
 	public function index()
     {
         $contract = D('Contract')->where(['status'=>1])->select();
-
         $cardNum = D("Card")->where(['c_id'=>6])->select();
         foreach($cardNum as $key=>$value){
             $contractInfo[$value['type']."Card"]['sum'] += $value['val'];
@@ -25,36 +24,63 @@ class coiling_controller extends base_controller
         $this->assign('contractInfo',$contractInfo);
         $this->display();
     }
+    //搜索
+      public function cardsFind(){
+            $type=$_POST['type'];
+            $username=$_POST['username'];
+            $enterprise=$_POST['enterprise'];
+        // $type = "offset";
+        // $username = '测';
+        // $enterprise = '美';
+            if($username && $enterprise){
+                $where = "name like '%".$username."%' and enterprise like '%".$enterprise."%'";
+            }elseif($username){
+                $where = "name like '%".$username."%' ";
+            }elseif($enterprise){
+                $where = "enterprise like '%".$enterprise."%'";
+            }
+            $userInfo = D("User_audit")->field("name,enterprise,uid")->where($where)->select();
+            foreach($userInfo as $key=>$value){
+                $user[$value['uid']]['name'] = $value['name'];
+                $user[$value['uid']]['enterprise'] = $value['enterprise'];
+                if(!in_array($value['uid'],$uid)) $uid[] = $value['uid'];
+            }
 
-        // import('user_page');
-        // $user =D('User')->where(array('isdelete' =>0))->select();
-        // $count=count($user);
-        // $page = new Page(count($user),4);
-        // $res = D('User')->where()->order('`id` DESC')->limit("$page->firstRow, $page->listRows")->select();
-        // $this->assign('page', $page->show());
-        // $this->assign('res',$res);
-        // $this->assign('count',$count);
-        // $this->display();
+            $card = D("Card")->where(['type'=>$type])->select();
+            $Contract_field = D('Contract_field')->select();
+            $Contract_fields = [];
+            foreach ($Contract_field as $kk => $vv) {
+                $Contract_fields[$vv['id']] = $vv['val'];
+            }
+            // dump($Contract_fields);
+            foreach ($card as $k => $v) {
+                $cards[$v['card_id']][$Contract_fields[$v['c_id']]] = $v['val'];
+                $cards[$v['card_id']]['uid'] = $v['uid'];
+                $cards[$v['card_id']]['card_id'] = $v['card_id'];
+            }
 
+            $packageInfo = D("Card_package")->field("ratio,uid,card_id")->where("uid in (".implode($uid,",").") and type = '".$type."' and is_publisher=1")->select();
 
+            // var_dump($cards);
+            // var_dump($packageInfo);die;
+          if($userInfo){
+             $this->dexit(['error'=>0,'data'=>['userInfo'=>$userInfo,"packageInfo"=>$packageInfo,"cards"=>$cards]]);
+            }else{
+             $this->dexit(['error'=>1,'msg'=>'该用户不存在']);
+            }
 
-
-
+    }
 
     public function cards()
     {
         $type = $_GET['type'];
+
         $type = substr($type, 0,-4);
 
         $cardName = D("Contract")->field("contract_name")->where(['contract_title'=>$_GET['type']])->find();
         $cardName['type'] = $type;
-        // import('user_page');
-        // $res = D('Card')->where(['type'=>])->select();
-        // $count=count($res);
-        // $page = new Page(count($res),2);
-        // $card = D('Card')->where()->order('`id` DESC')->limit("$page->firstRow, $page->listRows")->select();
         $card = D("Card")->where(['type'=>$type])->select();
-        $Contract_field = D('Contract_field')->where()->select();
+        $Contract_field = D('Contract_field')->select();
         $Contract_fields = $uid = [];
         foreach ($Contract_field as $kk => $vv) {
             $Contract_fields[$vv['id']] = $vv['val'];
@@ -78,14 +104,17 @@ class coiling_controller extends base_controller
             $ratio[$value['uid']] = $value['ratio'];
         }
 // dump($ratio);
+        import('user_page');
+        $count=count($cards);
+        $page = new Page(count($cards),3);
 
-        // dump($cards);
+         // dump($user);die;
         $this->assign('cards',$cards);
         $this->assign('user',$user);
         $this->assign('cardName',$cardName);
         $this->assign('ratio',$ratio);
-        // $this->assign('page', $page->show());
-        // $this->assign('count',$count);
+        $this->assign('page', $page->show());
+        $this->assign('count',$count);
         $this->display();
     }
 
