@@ -139,7 +139,7 @@ layui.use(['layer'],function(){
                if(res.url){
                     setTimeout(function(){
                         window.location.href = res.url;
-                    })
+                    },1000);
                }
             }
         },"json");

@@ -7,21 +7,18 @@ import("PlatformCurrency");
 // 卖单挂单处理
 
 if(IS_POST && $_POST['type'] == "register"){
-    $checkRes = checkUserSet($userId);
-    if($checkRes['res']) dexit($checkRes);
 	$data['price'] = clear_html($_POST['price']);
 	$data['tranNum'] = clear_html($_POST['num']);
 	$data['limitNum'] = clear_html($_POST['limitNum']);
 	$data['packageId'] = clear_html($_POST['id']);
 	$data['type'] = 2;
 	$data['userid'] = $userId;
+	
 	$platformObj = new PlatformCurrency($data);
 	$res = $platformObj->addEntrust();
 	dexit($res);
 }
 if(IS_POST && $_POST['type'] == "transaction"){
-    $checkRes = checkUserSet($userId);
-    if($checkRes['res']) dexit($checkRes);
 	$orderData['userId'] = $userId;
 	$orderData['tranId'] = clear_html($_POST['tranId']);
 	$orderData['packageId'] = clear_html($_POST['packageId']);
