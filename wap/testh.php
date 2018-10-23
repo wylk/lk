@@ -36,17 +36,18 @@ require_once dirname(__FILE__).'/global.php';
 // dump(get_cfg_var ("upload_max_filesize"));
 // include display('testh');
 $userId = $wap_user['userid'];
-dump($userId);
+// dump($userId);
 // $order  = D('Orders')->where(['out_trade_no'=>"20181020151223148583"])->find();
 $cardId = "0b170a15dd8ea510bd0267c9d8b2ae73";
+$id = 18;
 $num = 2;
 $price = 0.8;
 $limit = 2;
 
 import("CardAction");
 $card = new CardAction(['userid'=>$userId]);
-$data = ['cardId'=>$cardId,'num'=>$num,'price'=>$price,'limit'=>$limit];
-$sellRes = $card->sellCard($data);
+$data = ['revokeCardId'=>$cardId,'revokeId'=>$id];
+$sellRes = $card->revokeTran($data);
 dump($sellRes);
 
 // $editList[] = ['id'=>['field'=>"uid","val"=>$userId],"field"=>"frozen","operator"=>"+","step"=>$num];
