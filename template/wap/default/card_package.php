@@ -50,7 +50,10 @@
         <div class="lk-container-flex lk-card-package lk-flex-direction-c">
             <div class="lk-container-flex" style="padding:10px 0">
                 <div class="item-flex card-info">
-                    <p><?php echo $value['type']==option("hairpan_set.platform_type_name") ? '乐卡' : $cardType[$cardAttrArr[$value['card_id']]['uid']]; ?>：<?php echo isset($cardAttrArr[$value['card_id']]['name']) ? $cardAttrArr[$value['card_id']]['name'] : $value['type'] ?></p>
+                    <p><?php echo $value['type']==option("hairpan_set.platform_type_name") ? '乐卡' : $cardType[$cardAttrArr[$value['card_id']]['uid']]; ?>
+                    ：
+                        <?php echo isset($cardAttrArr[$value['card_id']]['name']) ? $cardAttrArr[$value['card_id']]['name'] : $value['type'] ?>
+                    </p>
                     <p style="font-size: 12px"><b style="margin-right: 20px;font-size:16px">可用：<?php echo number_format($value['num'],2) ?></b> 锁定：<?php echo number_format($value['frozen']+$value['bail'],2) ?></p>
                 </div>
                 <div class="item-flex card-logo">

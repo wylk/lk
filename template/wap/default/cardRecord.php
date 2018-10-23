@@ -57,7 +57,7 @@
         <tbody>
           <?php foreach($recordList as $key=>$value) { ?>
           <tr>
-            <td><?php echo $userInfo[$value['uid']]['avatar'] ?></td>
+            <td><img src="<?php echo !empty($userInfo[$value['uid']]['avatar']) ? $userInfo[$value['uid']]['avatar'] : 'http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg' ?>" style="border-radius: 20%;width: 100%;"  /></td>
             <td><?php echo $userInfo[$value['uid']]['name'] ?></td>
             <td><?php echo number_format($value['num']+$value['frozen'],2) ?></td>
             <td><?php echo number_format($value['sell_count']) ?></td>
