@@ -37,7 +37,10 @@
       <div class="layui-row">
      <!--    <form class="layui-form layui-col-md12 x-so"> -->
           <div class="layui-input-inline">
-            <input type="text" id="username"  placeholder="发卡用户" autocomplete="off" class="layui-input">
+            <input type="text" id="username"  placeholder="用户名称" autocomplete="off" class="layui-input">
+          </div>
+          <div class="layui-input-inline">
+            <input type="text" id="enterprise"  placeholder="店铺名称" autocomplete="off" class="layui-input">
           </div>
           <button class="layui-btn" ><i class="layui-icon" id="set">&#xe615;</i></button>
   <!--       </form> -->
@@ -48,14 +51,14 @@
           <tr>
             <th>用户名</th>
             <th>店铺名称</th>
-            <th>合约名</th>
+            <th>卡券合约</th>
             <th>量</th>
             <th>logo</th>
             <th>描述</th>
             <th>保证金比例</th>
             <th>操作</th>
         </thead>
-        <tbody>
+        <tbody id="body">
 
           <?php foreach($cards as $k=>$v){ ?>
           <tr>
@@ -85,7 +88,9 @@
 
 </html>
 <script type="text/javascript">
+  var layer;
   layui.use(['layer'],function(){
+    layer = layui.layer;
     $("[id^=ratio_]").bind("change",function(){
       var ratio = $(this).val();
       var type = $("#type").html();
@@ -112,12 +117,66 @@
     });
   });
 
-
-
   $("#set").click(function(){
+    var type=$("#type").html();
+    var enterprise=$("#enterprise").val();
     var username=$("#username").val();
-   $.post('?c=coiling&a=index_to',{username:username}, function(res) {
-      console.log(res);
+   $.post('?c=coiling&a=cardsFind',{username:username,type:type,enterprise:enterprise}, function(res) {
+    // console.log(res);
+      if(res.error == 0){
+              //console.log(res['data']['packageInfo']);
+              $('#body').empty();
+              var cards = res['data']['cards'];
+              var packageInfo = res['data']['packageInfo'];
+              var userInfo=res['data']['userInfo'];
+              // console.log(userInfo);
+              var str = '';
+                  for(var ite in userInfo){
+                  var uid=userInfo[ite]['uid'];
+                  var username1=userInfo[ite]['name'];
+                  var enterprise=userInfo[ite]['enterprise'];
+
+                  var name = cards[packageInfo[ite]['card_id']]['name'];
+                  var card_log = cards[packageInfo[ite]['card_id']]['card_log'];
+                  var sum = cards[packageInfo[ite]['card_id']]['sum'];
+                  var describe = cards[packageInfo[ite]['card_id']]['describe'];
+                  var ratio=packageInfo[ite]['ratio'];
+
+            str +="<tr><td id='name_"+packageInfo[ite]['uid']+"'>"+username1+"</td><td>"+enterprise+"</td><td>"+name+"</td><td>"+sum+"</td><td>"+"<img src='"+card_log+"' ></img>"+"</td><td>"+describe+"</td><td>"+"<input onchange=ratioEdit('"+packageInfo[ite]['uid']+"') id='id_"+packageInfo[ite]['uid']+"' class='layui-input' type='text' name='ratio' value="+ratio+" style='width: 50px;' />"+"</td><td>"+"<button class='layui-btn layui-bg-red' onclick=\"x_admin_show('交易信息','?c=coiling&a=lists&uid="+packageInfo[ite]['uid']+"&card_id="+packageInfo[ite]['card_id']+"',600,400)\" style='height:44px'><i class='layui-icon'></i>交易信息</button>"+"</td></tr>";
+               }
+
+               $('#body').append(str);
+
+
+            }else{
+                alert(res.msg);
+           }
+         // })
    },'json')
   })
+  function ratioEdit(uid){
+    console.log(uid);
+    var ratio = $("#id_"+uid).val();
+    var type=$("#type").html();
+    var name = $("#name_"+uid).html();
+    layer.confirm("确定要修改“"+name+"”的保证金数据吗？",function(){
+    var data = {uid:uid,ratio:ratio,type:type};
+    // console.log(data);
+    layer.load();
+    $.post("?c=coiling&a=editRatio",data,function(result){
+    layer.closeAll();
+    // console.log(result);
+    if(!result['res']){
+      layer.msg(result.msg,{icon:1,skin:"demo-class"});
+      window.location.reload(true);
+    }else{
+      layer.msg(result.msg,{icon:5,skin:"demo-class"});
+    }
+  },"json");
+
+},function(){
+        window.location.reload(true);
+      });
+  }
+
 </script>
