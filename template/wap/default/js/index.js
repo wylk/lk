@@ -122,7 +122,8 @@
         if (status === 'complete' && data.info === 'OK') {
             //获得了有效的地址信息:
             //即，
-            var str = '<p>获取成功</p>';
+            var str = '';
+            //var str = '<p>获取成功</p>';
             str += '<p>当前位置：' + data.regeocode.formattedAddress + '</p>';
             result.innerHTML = str;
             //console.log(data.regeocode.formattedAddress)
@@ -202,7 +203,8 @@
      */
     function onComplete(data) {
       Marker = null;
-      var str = '<p>定位成功</p>';
+      var str = '';
+      //var str = '<p>定位成功</p>';
       lng = data.position.getLng();
       lat = data.position.getLat();
       //str += '<p>经度：' + data.position.getLng() + '</p>';
@@ -235,7 +237,8 @@
      *解析定位错误信息
      */
     function onError(data) {
-      var str = '<p>定位失败</p>';
+      var str = '';
+      //var str = '<p>定位失败</p>';
       str += '<p>错误信息：'
       switch (data.info) {
         case 'PERMISSION_DENIED':

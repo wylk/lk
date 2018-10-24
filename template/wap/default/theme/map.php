@@ -38,9 +38,9 @@
 <body>
 <div class="cont" style="display: block;margin-top:30px; ">
     <div style="margin-top:76px ">
-        <span style="color: #40753a;margin-left: 15px;font-size: 18px;">请输入您的位置：</span><input type="text" name="" id="tipinput" style="z-index: 9999;float: right;width: 174px;height: 35px;margin-right: 22px;"></div>
-    <div id="container" style="height: 386px;width: 100%;border: 1px solid #2e8a2f;position: relative;background: rgb(252, 249, 242);margin-top: 40px;"></div>
-    <div style="margin-left: 27%;margin-top: 22px;"><button style="margin-top: 15px;margin-right: 25px;width: 73px;height: 32px;background-color: #1f9407" id="addmap">确认</button><button style="margin-top: 15px;margin-right: 25px;width: 73px;height: 32px;background-color: #1f9407" id="delete">取消</button></div>
+        <span style="margin-left: 15px;font-size: 18px;">请输入您的位置：</span><input type="text" name="" id="tipinput" style="border-style: none;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #168fbb;height: 47px;margin-left: 19px;width: 52%;"></div>
+    <div id="container" style="height: 350px;width: 100%;border: 1px solid #94bef1;position: relative;background: rgb(252, 249, 242);margin-top: 40px;"></div>
+    <div style="margin-left: 27%;margin-top: 22px;"><button style="margin-top: 15px;margin-right: 25px;width: 73px;height: 32px;background-color: #168fbb" id="addmap">确认</button><button style="margin-top: 15px;margin-right: 25px;width: 73px;height: 32px;background-color: #168fbb" id="delete">取消</button></div>
 </div>
 </body>
 </html>

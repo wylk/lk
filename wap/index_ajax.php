@@ -57,9 +57,11 @@ function index($data){
                 $mapinfo[$k]['lat'] = $v['lat'];
                 $mapinfo[$k]['enterprise'] = $v['enterprise'];
                 if($v['juli']>1000){
-                    $juli = round(($v['juli']/1000),2).'km';
+                    $juli = round(($v['juli']/1000),2);
+                    $m = 'km';
                 }else{
-                    $juli = ($v['juli']/1).'m';
+                    $juli = ($v['juli']/1);
+                    $m = 'm';
                 }
                 $str .=  <<<EOM
                 <a  href="./home.php?card_id={$v['card_id']}&plugin=offset&shoreUid={$v['uid']}" >
@@ -68,12 +70,12 @@ function index($data){
     	                <img src="{$v['logo']}" class="imgs"/>
     	            </div >
     	            <div class="price">
-    	            	<div>{$v['enterprise']}</div>
-    	            	<div><span style="color:red;font-size:20px;">6-9.9</span>&nbsp;&nbsp;折卡券&nbsp;&nbsp;已购<span style="color:red;font-size:15px;">30万</span></div>
+    	            	<div class="font18 black">{$v['enterprise']}</div>
+    	            	<div><span class="black">6-9.9</span>折卡券&nbsp;&nbsp;已购<span class="black" style="font-size:15px;">30</span>万</div>
     	            </div>
     	            <div class="num">
-    	            	<div>{$juli}</div>
-    	            	<div style="font-size:13px;color:#e88d0b;">正在抢购</div>
+    	            	<div ><span class="black">{$juli}</span>{$m}</div>
+    	            	<div class="black">正在抢购</div>
     	            </div>
     	         </div></a>
 
