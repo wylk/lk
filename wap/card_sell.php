@@ -68,7 +68,7 @@ echo ob_get_clean();
 // 检测用户是否 认证，设置地理位置，支付密码
 function checkUserSet($userId){
 	// 判断用户是否认证
-	$userJudge = D("User_audit")->where(['uid'=>$userId,"status"=>1])->find();
+	$userJudge = D("User")->where(['id'=>$userId])->find();
 	if(empty($userJudge['pay_num']))
 		 return ['res'=>1,"msg"=>"请设置支付管理","url"=>"pay_zf.php"];
 	return ['res'=>0,"msg"=>"检测通过"];
