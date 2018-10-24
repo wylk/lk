@@ -50,6 +50,8 @@ switch ($payType) {
 			$pay_method['pay_weixin_mchid'] = option('config.platform_weixin_mchid');
 			$pay_method['pay_weixin_key'] = option('config.platform_weixin_key');
 		}
+		$sign = $array_data['sign'];
+		unset($array_data['sign']);
 		$check = new weixin_pay($pay_method['pay_weixin_appid'],$pay_method['pay_weixin_mchid'],$pay_method['pay_weixin_key']);
 		$checkSign = $check->getSign($array_data);
 		if($checkSign != $sign){
