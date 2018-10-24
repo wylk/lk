@@ -14,7 +14,7 @@ if(IS_POST && $_POST['type'] == "register"){
 	$data['type'] = 2;
 	$data['userid'] = $userId;
 
-	$checkRes = checkUserSet();
+	$checkRes = checkUserSet($userId);
 	if($checkRes['res']) dexit($checkRes);
 	
 	$platformObj = new PlatformCurrency($data);
@@ -27,7 +27,7 @@ if(IS_POST && $_POST['type'] == "transaction"){
 	$orderData['packageId'] = clear_html($_POST['packageId']);
 	$orderData['num'] = clear_html($_POST['num']);
 
-	$checkRes = checkUserSet();
+	$checkRes = checkUserSet($userId);
 	if($checkRes['res']) dexit($checkRes);
 
 	$platformObj = new PlatformCurrency();
@@ -69,7 +69,7 @@ echo ob_get_clean();
 function checkUserSet($userId){
 	// 判断用户是否认证
 	$userJudge = D("User")->where(['id'=>$userId])->find();
-	if(empty($userJudge['pay_num']))
+	if(empty($userJudge['pay_img']))
 		 return ['res'=>1,"msg"=>"请设置支付管理","url"=>"pay_zf.php"];
 	return ['res'=>0,"msg"=>"检测通过"];
 }
