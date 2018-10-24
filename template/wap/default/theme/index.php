@@ -91,7 +91,7 @@
         #up-map-div{
             width:100%;
             height:560px;
-            top:220px;
+            top:320px;
             left:0px;
             position:absolute;
             z-index:1;
@@ -203,7 +203,7 @@ var startX,//触摸时的坐标
     startY,
      x, //滑动的距离
      y,
-     aboveY=220; //设一个全局变量记录上一次内部块滑动的位置
+     aboveY=320; //设一个全局变量记录上一次内部块滑动的位置
 
 var inner=document.getElementById("up-map-div");
 
