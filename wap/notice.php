@@ -4,6 +4,9 @@
  */
 require_once dirname(__FILE__) . '/global.php';
 // $file = LEKA_PATH.'/upload/log/order.txt';
+// $data['out_trade_no'] = "20181024144134619461";
+// $payType = "platform";
+// $userId = 9;
 $payType = isset($_REQUEST['payType']) ? $_REQUEST['payType'] : 'weixin';
 
 // 支付方式判断
@@ -22,16 +25,15 @@ if(!empty($xml)){
 
 }
 
-$file = LEKA_PATH.'/upload/log/xml';
-file_put_contents($file,$xml);
+// $file = LEKA_PATH.'/upload/log/xml';
+// file_put_contents($file,$xml);
 
 
 
 $payData = $order  = D('Orders')->where(['out_trade_no'=>$data['out_trade_no']])->find();
-if(empty($payData['status'])) pay_return(['res'=>"FAIL","msg"=>"订单失效","type"=>$payType]);
-
 if($order['status']){
-	dexit(['errcode'=>1,'msg'=>"订单已经支付"]);
+	// dexit(['errcode'=>1,'msg'=>"订单已经支付"]);
+	pay_return(['res'=>"FAIL","msg"=>"订单已经支付","type"=>$payType]);
 }
 // 转账处理
 switch ($payType) {
@@ -48,7 +50,7 @@ switch ($payType) {
 			$pay_method['pay_weixin_mchid'] = option('config.platform_weixin_mchid');
 			$pay_method['pay_weixin_key'] = option('config.platform_weixin_key');
 		}
-		$check = new weixin_pay(option('config.platform_weixin_appid'),option('config.platform_weixin_mchid'),option('config.platform_weixin_key'));
+		$check = new weixin_pay($pay_method['pay_weixin_appid'],$pay_method['pay_weixin_mchid'],$pay_method['pay_weixin_key']);
 		$checkSign = $check->getSign($array_data);
 		if($checkSign != $sign){
 			// dexit(['return_code'=>"FAIL","return_msg"=>"验签失败"]);
@@ -77,6 +79,7 @@ switch ($payType) {
 // }
 
 $packageList = D("Card_package")->where(['uid'=>['in',[$order['sell_id'],$order['buy_id']]],"card_id"=>$order['card_id']])->select();
+file_put_contents(LEKA_PATH.'/upload/log/notice1.txt', "llll",FILE_APPEND);
 foreach ($packageList as $key => $value) {
 	if($value['uid']==$order['sell_id']) $sendAddress = $value;
 	if($value['uid']==$order['buy_id']) $getAddress = $value;
@@ -98,8 +101,8 @@ $payData['getAddress'] = $getAddress['address'];
 $payData['type'] = $sendAddress['type'];
 import("CardAction");
 $card = new CardAction(['userid'=>$userId]);
-$payRes = $card->payTran($payData);
-if($payRes['res']) pay_return(['res'=>"FAIL","msg"=>$payRes['msg'],"type"=>$payType]);
+$payTranRes = $card->payTran($payData);
+if($payTranRes['res']) pay_return(['res'=>"FAIL","msg"=>$payTranRes['msg'],"type"=>$payType]);
 
 // //1减去交易单
 // // D('Card_transaction')->where(array('id'=>$order['tran_id']))->setDec('frozen',$order['number']);
