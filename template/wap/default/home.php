@@ -300,7 +300,7 @@
         lk.is_weixin() && function(){
             $('.lk-bar-nav').css('display','none');
             $('.lk-content').css({"padding":"0px"});
-            $('.shop_headline').css({"top":"73px"});
+            $('.shop_headline').css({"top":"72.5px"});
         }()
     })
 </script>

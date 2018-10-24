@@ -171,7 +171,8 @@
     
         <div id="up-map-div">
             <div id="touch" class="touch">  
-                <img src="../template/wap/default/images/icon_map.png?r=12" style="height:33px;margin-top:-5px;border-r:"></div>     
+                <!-- <img src="../template/wap/default/images/icon_map.png?r=12" style="height:33px;margin-top:-5px;border-r:"> -->
+            </div>     
             <div class="wind_f" id="work">
               <div id="pullrefreshs" style="touch-action: none;">
                
