@@ -58,7 +58,11 @@
           <?php foreach($recordList as $key=>$value) { ?>
           <tr>
             <td><img src="<?php echo !empty($userInfo[$value['uid']]['avatar']) ? $userInfo[$value['uid']]['avatar'] : 'http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg' ?>" style="border-radius: 20%;width: 100%;"  /></td>
-            <td><?php echo mb_substr($userInfo[$value['uid']]['name'], 0,2,"utf-8") ?></td>
+            <?php if(mb_strlen($userInfo[$value['uid']]['name']) > 2){ ?>
+              <td><?php echo mb_substr($userInfo[$value['uid']]['name'], 0,2,"utf-8") ?>...</td>
+            <?php }else{ ?>
+              <td><?php echo $userInfo[$value['uid']]['name']; ?></td>
+            <?php } ?>
             <td><?php echo number_format($value['num']+$value['frozen'],2) ?></td>
             <td><?php echo number_format($value['sell_count']) ?></td>
             <td><?php echo number_format($value['recovery_count']) ?></td>
