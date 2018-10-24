@@ -247,14 +247,15 @@
             &nbsp;&nbsp; <span>抵现卡</span> &nbsp;&nbsp;| &nbsp;&nbsp; 积分卡
         </div>
     </div>
-    <div id="pullrefreshs" style="touch-action: none;">
-        <div class="pull" >
-            <div class="home-plugin-info" >
-               
+    <div style="min-height:380px;background-color: #fff">
+        <div id="pullrefreshs" style="touch-action: none;">
+            <div class="pull" >
+                <div class="home-plugin-info" >
+                   
+                </div>
             </div>
         </div>
     </div>
-   
 </div>
   	<?php include display('public_menu');?>
     <div id="up-div">
