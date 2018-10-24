@@ -1,1 +1,1 @@
-update lk_card_package set  `num` = (case uid when '9' then `num` +5 end), `recovery_count` = (case uid when '9' then `recovery_count` +5 end) where uid in ('9')  and card_id= '0b170a15dd8ea510bd0267c9d8b2ae73'
+update lk_card_package set  where  and type= 'leka'
