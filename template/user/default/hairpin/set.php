@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>/sweetalert/css/sweet-alert.css">
     <script type="text/javascript">
-      var delAuthUrl = "<?php dourl('delset');?>";
-      var authUrl = "<?php dourl('set');?>";
+      var delAuthUrl = "<?php dourl('delset',[],1);?>";
+      var authUrl = "<?php dourl('set',[],1);?>";
     </script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>/sweetalert/js/sweet-alert.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
