@@ -9,61 +9,94 @@
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
+    
     <style type="text/css">
-        #label-form{
-            width:40px;
-            overflow:visible;
+        html body{
+            margin:0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+           /*  background-color: #fff; */
         }
-        #input-bloc{
-            margin-left:90px;
+
+        .shop_headlines{
+            height: 120px;
+            width: 100%;
+            margin:0px auto 0px;
+            border-radius: 0px;
+            background-image: url('../template/wap/default/images/home_head.png');
+            background-repeat:no-repeat;
+            background-size:100% 100%;
+            -moz-background-size:100% 100%;
+           display: flex;
+           align-items: flex-end;
+           justify-content: flex-end;
         }
-        .input-m{
-            width: 85%;
-            margin: 30px auto;
+        .shop_infos{
+            line-height: 30px;
+            width: 20%;
+            
         }
-        .home-plugin{
-             background: #fff;
-            margin-top: 10px;
-            display:flex;
-            justify-content: space-around;
+        .shop_info{
+            color: rgb(160, 124, 124,0.85);
         }
-        .home-plugin-menu{
-            border: 1px solid #259B24;
-            border-radius: 5%;
-            height: 100px;
-            width: 25%;
+        .shop_headline{
+            height: 75px;
+            width: 30%;
             text-align: center;
-
+            position: absolute;
+            top: 65px;
+            left: 0%;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto; 
         }
-
-        .home-plugin-menu-img{
-            height: 60%;
+        .shop_head_img{
+            height: 72px;
+            width: 72px;
+            margin:0px auto;
+            border-radius: 50%;
+            border:1px solid #fff;
+        }
+        .shop_headline img{ 
+            height:100%;
+            width: 100%;
+            border-radius: 50%;
+        }
+        .flex-g>p:first-child{
+            line-height: 30px;
+            font-size: 18px;
+            color: #333;
+        }
+        .plugin-title{
+            border-bottom: 1px solid #e6e6e6;
+            line-height: 35px;
+            width: 100%;
             margin: 0px auto 5px;
+            color: #999;
+            background: #fff;
         }
-        .home-plugin-menu-title{
-            margin: 0px auto 5px;
-            width: 90%;
+        .plugin-title span{
+            color: rgb(160, 124, 124);
         }
-
-         .home-plugin-info{
+        .pull{
+            height: 100%;
+            width: 100%;
+        }
+        .home-plugin-info{
             background: #fff;
             margin-top: 5px;
             min-height: 100px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
         }
         .home-plugin-info-row{
-            height: 80px;
+            height: 60px;
             display: flex;
             justify-content: space-between;
+            color: #999;
         }
         .line-heights{
             width: 20%;
-            line-height: 80px;
+            line-height: 55px;
         }
         .row-card2{
            flex-grow: 1;
@@ -71,57 +104,34 @@
            align-items:center;
 
         }
+        .back{
+            color: #333;
+            font-size: 18px;
+        }
 
         .home-plugin-info-row-card-img{
-            width: 50px;
-            height: 50px;
-            border-radius: 20%;
-            margin: 2px auto;
+            width: 45px;
+            height: 45px;
         }
         .layui-btn-primary{
-            border: 1px solid #f1cd1f;
-            color: #f1cd1f;
+            border: 1px solid #999;
+            color: #999;
             height: 30px;
             line-height: 30px;
             border-radius: 5px;
         }
         .card-3{
             text-align: center;
-            line-height: 65px;
         }
         .layui-badge{
             margin-left: 5px;
         }
         .home-plugin-info-row, hr{
-          width: 97%;
+          width: 95%;
           margin: 0px auto;
         }
-        .plugins{   
-            height: 60px;
-            display: flex;
-            justify-content:space-around;
-        }
 
-        .plugin{
-            width: 40%;
-           /*  background: #f1cd1f; */
-            border:1px solid #9a9393;
-            color: #9a9393; 
-            line-height: 30px;
-            margin: auto auto;
-            border-radius: 30px;
-            text-align: center;
-            font-size: 16px;
-            /* font-weight:bold; */
-        }
-        .offset_action{
-           color: #f1cd1f;
-           border:1px solid #f1cd1f; 
-        }
-        .layui-badge{
-            background-color: #cc6600;
-        } 
-
+        /* 弹框 */
         #up-div{
             position:absolute;
             top: 0;
@@ -137,7 +147,7 @@
             top: 0px;
             left: 0px;
             right: 0px;
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0,0,0,0.3);
             z-index: 1000;
             transition: none 0.2s ease 0s;
             opacity: 1;
@@ -147,50 +157,7 @@
             background-color: #fff;
             position:absolute;left;0;bottom:0;
         }
-    </style>
-    <script type="text/javascript">
-        var type = "<?php echo $type;?>";
-        var card_id = "<?php echo $card_id;?>";
-        $(function(){
-            lk.is_weixin() && function(){
-                $('.lk-bar-nav').css('display','none');
-                $('.lk-content').css({"padding":"0px"});
-            }()
-        })
-    </script>
-</head>
-<body >
-<div id="pullrefreshs" style="touch-action: none;">
-<div>
-<header class="lk-bar lk-bar-nav">
-    <i onclick="javascript:history.back(-1);" class="iconfont"  style="font-size: 20px;">&#xe697;</i>
-    <h1 class="lk-title">交易</h1>
-</header>
-<div class="lk-content" style="background: #f0f0f0;margin-bottom:10px;" >
-    <div style="background: #fff;border-radius: 0px 0px 10px 10px;">
-        <div style="width: 100%;margin: 0px auto;border-radius: 5%;">
-            <div class="layui-carousel" id="test1" style="width: 80%">
-                <div carousel-item>
-                    <div><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539002871374&di=b35bcf931ee46cac6811da452f692e15&imgtype=0&src=http%3A%2F%2Fhao.qudao.com%2Fupload%2Farticle%2F20150514%2F82458704441431567671.jpg" style="height: 100%;width: 100%"></div>
-                    <div><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2498859936,599523319&fm=26&gp=0.jpg" style="height: 100%;width: 100%"></div>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="plugins">
-            <div class="plugin offset_action">抵现卡</div>
-            <div class="plugin">积分卡</div>
-        </div>
-    </div>
-    <div class="home-plugin-info" >
-    
-    </div>
-   
-</div>
-</div>
-</div>
-<style type="text/css">
-    .card{
+        .card{
             height: 120px;
         }
         .card-info{
@@ -206,31 +173,85 @@
             height: 37px;
             width: 85%;
             margin: 0 auto;
+            
+        }
+        .tips{
             line-height: 37px;
+            display: flex;
+            justify-content: space-between;
         }
         .card-data-style{
-            color: rgb(37, 155, 36);
+            color: #999;
             font-size: 12px;
         }
         .layui-input{
             display:inline;
+            height: 30px;
             width: 26%;
+            border: 0;
+            border-radius: 0px;
+            border-bottom: 1px solid #999;
         }
-</style>
+        .card-buy{
+            text-align: center;
+            line-height: 70px;
+        }
+        #buy{
+            width: 80%;
+            background-color: #fff;
+            border:1px solid #29aee7;
+            border-radius: 5px;
+            height: 35px;
+            line-height: 35px;
+        }
+        /* end */
+    </style>
+   
+</head>
+<body >
+
+<header class="lk-bar lk-bar-nav">
+    <i onclick="javascript:history.back(-1);" class="iconfont"  style="font-size: 20px;">&#xe697;</i>
+    <h1 class="lk-title">交易</h1>
+</header>
+<div class="lk-content">
+    <div class="shop_headlines">
+        <div class="shop_infos">
+            <div class="shop_info">信用:9分</div>
+        </div>
+        <div class="shop_headline">
+            <div class="shop_head_img"><img src="../template/wap/default/images/default_home_user.png"></div>
+            <div class="flex-g">
+                <p>呷哺呷哺</p>
+            </div>
+        </div>
+    </div>
+    <div class="plugin-title">
+        &nbsp;&nbsp; <span>抵现卡</span> &nbsp;&nbsp;| &nbsp;&nbsp; 积分卡
+    </div>
+    <div id="pullrefreshs" style="touch-action: none;">
+        <div class="pull" >
+            <div class="home-plugin-info" >
+               
+            </div>
+        </div>
+    </div>
+   
+</div>
   	<?php include display('public_menu');?>
     <div id="up-div">
         <div id="up-index"> 
             <div class="receivea">
                 <form>
                    <div class="card card-num">
-                       <div class="card-data" style="width:95%;display: flex;justify-content: space-between;">你想买多少<a href="img-xx"><div><img src="../static/images/xx_03.jpg"/></div></a></div>
+                       <div class="card-data tips">你想买多少<a href="img-xx"><div><img src="../static/images/xx_03.jpg"/></div></a></div>
 
-                       <div class="card-data card-data-style">交易限制:<i id="limit"><?= floatval($UserAud['limit']) ?></i>-<i id="num"><?= floatval($UserAud['num']) ?></i> 单价:<i id="price"><?= floatval($UserAud['price']) ?></i></div>
-                       <div class="card-data">购买量:
-
-                        <input type="text" name="number" required  lay-verify="required" autocomplete="off" class="layui-input number">
-                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" name="prices" required  lay-verify="required" autocomplete="off" class="layui-input prices" >
+                        <div class="card-data card-data-style">
+                        交易限制:<i id="limit"></i>-<i id="num"></i> 单价:<i id="price"></i>
+                         </div>
+                        <div class="card-data">购买量:
+                            <input type="text" name="number" required  lay-verify="required" autocomplete="off" class="layui-input number">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="text" name="prices" required  lay-verify="required" autocomplete="off" class="layui-input prices" >
                         CNY
                     </div>
                     <input type="hidden" id="card_id" value="">
@@ -240,8 +261,8 @@
                     <input type="hidden" id="c_price" value="">
                     <input type="hidden" id="c_limit" value="">
                    </div>
-                   <div class="card" style="text-align: center;line-height: 120px;">
-                        <p class="layui-btn" id="buy" style="width: 60%;background-color: #efc914;color: #000;">购买</p>
+                   <div class="card card-buy">
+                        <p class="layui-btn back" id="buy">购买</p>
                    </div>
                   
                  </form>
@@ -249,20 +270,23 @@
         </div>
     </div>
 </body>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
 </html>
+<script type="text/javascript">
+    var type = "<?php echo $type;?>";
+    var card_id = "<?php echo $card_id;?>";
+    $(function(){
+        lk.is_weixin() && function(){
+            $('.lk-bar-nav').css('display','none');
+            $('.lk-content').css({"padding":"0px"});
+            $('.shop_headline').css({"top":"17px"});
+        }()
+    })
+</script>
 <script>
-layui.use('carousel', function(){
-    var carousel = layui.carousel;
-    //建造实例
-    carousel.render({
-        elem: '#test1'
-        ,width: '100%' //设置容器宽度
-        ,height:100
-        //,arrow: 'always' //始终显示箭头
-        //,anim: 'updown' //切换动画方式
-    });
-});
-
     var i = 1;
     mui.init({
         pullRefresh : {
@@ -300,11 +324,11 @@ layui.use('carousel', function(){
     }
 
     function pulldownRefresh() {
-        i = 1;//当前页码数
+       // i = 1;//当前页码数
         setTimeout(function() {
-            //mui('#pullrefreshs').pullRefresh().endPulldownToRefresh(); //refresh completed
-            //mui('#pullrefreshs').pullRefresh().refresh(true); //激活上拉加载
-            window.location.reload();
+            mui('#pullrefreshs').pullRefresh().endPulldownToRefresh(); //refresh completed
+            mui('#pullrefreshs').pullRefresh().refresh(true); //激活上拉加载
+            //window.location.reload();
         }, 1500);
     }
 

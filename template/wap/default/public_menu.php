@@ -37,10 +37,10 @@ background-color: #F9F5F5;
 text-align: center;
 }
 .wx_nav a:active, .wx_nav a.on {
-	color: #f6bc00;
+	color: #333;
 }
 .wx_nav a:before {
-background-image: url(../template/wap/default/images/icon_nav.png);
+background-image: url(../template/wap/default/images/icon_nav.png?r=23);
 background-repeat: no-repeat;
 background-size: 207px 46px;
 -webkit-background-size: 207px 46px;
@@ -69,7 +69,7 @@ background-position-y: -23px;
 }
 </style>
 <div class="wx_nav">
-	<a href="./index.php" class="nav_index <?php if($php_self == 'index.php'){ echo 'on';}?>">首页</a>
+	<a href="./index.php" class="nav_index <?php if($php_self == 'index.php' || $php_self == 'home.php'){ echo 'on';}?>">首页</a>
 	<a href="./card_package.php" class="card_buy <?php if($php_self == 'card_package.php' || $php_self == 'card_buy.php' || $php_self == 'card_sell.php' || $php_self == 'card_order.php' || $php_self == 'card_orderlist.php' || $php_self == 'transaction.php'){ echo 'on';}?>">卡包</a>
 	<a href="./orderList.php" class="nav_shopcart <?php if($php_self == 'orderList.php'){ echo 'on';}?>">订单</a>
 	<a href="./my.php" class="nav_me <?php if($php_self == 'my.php'){ echo 'on';}?>">个人中心</a>

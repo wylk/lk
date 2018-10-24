@@ -23,12 +23,13 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	$sendAdressInfo = D("Card_package")->where(['uid'=>$userId,'address'=>$sendAddress])->find();
 	$num > 0 ? true : dexit(['res'=>1,"msg"=>"您转账的数目不能低于0"]);
 	$sendAdressInfo['num'] >= $num ? true : dexit(['res'=>1,"msg"=>"您转账的数目已超支"]);
+	
 	// 判断地址是否保存过
 	$remarkCheckRes = D("User_address")->where(['uid'=>$userId,"address"=>$getAddress])->find();
 	if(!$remarkCheckRes){
-		$res = D("User_address")->data(['uid'=>$userId,"address"=>$getAddress,"card_id"=>$cardId,"name"=>$addressName,'createtime'=>time()])->add();
+		D("User_address")->data(['uid'=>$userId,"address"=>$getAddress,"card_id"=>$cardId,"name"=>$addressName,'createtime'=>time()])->add();
 	}elseif($remarkCheckRes['name'] != $addressName){
-		$res = D("User_address")->data(['name'=>$addressName])->where(['uid'=>$userId,"address"=>$getAddress])->save();
+		D("User_address")->data(['name'=>$addressName])->where(['uid'=>$userId,"address"=>$getAddress])->save();
 	}
 	
 	// 添加账本信息
@@ -49,18 +50,12 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 			if(!$bookRes){
 				dexit(['res'=>1,"msg"=>"添加账本错误"]);
 			}
-			// 添加交易记录
-			$recodRes = D("Record_books")->data(['card_id'=>$cardId,'send_address'=>$sendAddress,'get_address'=>$getAddress,'num'=>$num,"type"=>$sendAdressInfo['type'],"createtime"=>time()])->add();
-			if(!$recodRes){
-				dexit(['res'=>1,"msg"=>"记录添加失败","other"=>$recodRes]);
-			}
-			// 卡包数据处理
-			$sendRes = D("Card_package")->where(['uid'=>$userId,'address'=>$sendAddress])->setDec("num",$num);
-			$getRes = D("Card_package")->where(['address'=>$getAddress])->setInc("num",$num);
-			
-			D("Card_package")->where(['address'=>$getAddress])->setInc("recovery_count",$num);
-			D("Card_package")->where(['address'=>$sendAddress])->setInc("sell_count",$num);
-			if(!($getRes || $sendRes)) dexit(['res'=>1,"msg"=>"转账失败！"]);
+
+			// 卡券转账
+			import("CardAction");
+			$card = new CardAction(['userid'=>$userId]);
+			$tranRes = $card->addressTran(['num'=>$num,"type"=>$cardType,"cardId"=>$cardId,"sendAddress"=>$sendAddress,"getAddress"=>$getAddress]);
+			dexit($tranRes);
 			break;
 	}
 

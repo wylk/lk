@@ -36,7 +36,26 @@ require_once dirname(__FILE__).'/global.php';
 // dump(get_cfg_var ("upload_max_filesize"));
 // include display('testh');
 $userId = $wap_user['userid'];
-$order  = D('Orders')->where(['out_trade_no'=>"20181020151223148583"])->find();
+// dump($userId);
+// $order  = D('Orders')->where(['out_trade_no'=>"20181020151223148583"])->find();
+$cardId = "0b170a15dd8ea510bd0267c9d8b2ae73";
+
+// dump();die();
+
+$data['num'] = 2;
+$data['type'] = "offset";
+$data['cardId'] = $cardId;
+$data['sendAddress'] = "c0391df98c9e521d06f8e683228e63e4";
+$data['getAddress'] = "8ce142b799fad5ee468cfeff0ceb21c7";
+
 import("CardAction");
-$card = new CardAction();
-$card->buyCard();
+$card = new CardAction(['userid'=>$userId]);
+// $data = ['cardId'=>$cardId,'getAddress'=>$id,"sendAddress","num","type",""];
+$sellRes = $card->addressTran($data);
+dump($sellRes);
+
+// $editList[] = ['id'=>['field'=>"uid","val"=>$userId],"field"=>"frozen","operator"=>"+","step"=>$num];
+// $editList[] = ['id'=>['field'=>"uid","val"=>$userId],"field"=>"num","operator"=>"-","step"=>$num];
+// $addition[] = ['field'=>"card_id","val"=>$cardId,"operator"=>'='];
+// $res = M("Card_package")->dataModification($editList,$addition);
+// dump($res);

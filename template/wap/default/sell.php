@@ -174,6 +174,11 @@ layui.use(['form','layer'], function(){
           })
         }else{
           layer.msg(res.msg,{icon:5,skin:'demo-class'});
+          if(res.url){
+              setTimeout(function(){
+                  window.location.href = res.url;
+              },1000);
+         }
         }
         layer.closeAll("loading");
       },"json");

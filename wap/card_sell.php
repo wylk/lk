@@ -7,19 +7,18 @@ import("PlatformCurrency");
 // 卖单挂单处理
 
 if(IS_POST && $_POST['type'] == "register"){
-    check($userId);
 	$data['price'] = clear_html($_POST['price']);
 	$data['tranNum'] = clear_html($_POST['num']);
 	$data['limitNum'] = clear_html($_POST['limitNum']);
 	$data['packageId'] = clear_html($_POST['id']);
 	$data['type'] = 2;
 	$data['userid'] = $userId;
+	
 	$platformObj = new PlatformCurrency($data);
 	$res = $platformObj->addEntrust();
 	dexit($res);
 }
 if(IS_POST && $_POST['type'] == "transaction"){
-    check($userId);
 	$orderData['userId'] = $userId;
 	$orderData['tranId'] = clear_html($_POST['tranId']);
 	$orderData['packageId'] = clear_html($_POST['packageId']);
@@ -60,19 +59,14 @@ $register = $platformObj->selectPersonRegister(['card_id'=>$platformInfo['card_i
 //dump($register);die();
 include display('card_sell');
 echo ob_get_clean();
-function check($userId){
+// 检测用户是否 认证，设置地理位置，支付密码
+function checkUserSet($userId){
 	// 判断用户是否认证
 	$userJudge = D("User_audit")->where(['uid'=>$userId,"status"=>1])->find();
-	if($userJudge==null){
-     dexit(['res'=>1,"msg"=>"请先认证","url"=>"./postcard.php"]);
-	}
-	$map=D("Map")->where(array('uid'=>$userId))->find();
-	if($map==null){
-		 dexit(['res'=>2,"msg"=>"请先输入地理位置","url"=>"./setup.php"]);
-	}
-	$pay_img=D("Pay")->where(array('uid'=>$userId))->find();
-	if($pay_img==null){
-		 dexit(['res'=>3,"msg"=>"请设置支付管理","url"=>"pay_zf.php"]);
-	}
-	 // dexit(['res'=>0,"msg"=>"成功"]);
+	if(!$userJudge) return ['res'=>1,"msg"=>"请先认证","url"=>"./postcard.php"];
+	if(empty($userJudge['address']))
+		 return ['res'=>1,"msg"=>"请先输入地理位置","url"=>"./setup.php"];
+	if(empty($userJudge['pay_num']))
+		 return ['res'=>1,"msg"=>"请设置支付管理","url"=>"pay_zf.php"];
+	return ['res'=>0,"msg"=>"检测通过"];
 }
