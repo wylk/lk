@@ -33,21 +33,23 @@
         .row-flow{
             height: 10px;
         }
+        button{width: 130px;
+    height: 36px;
+    background-color: #168fbb;
+    border: 0px;}
+    .up{margin-left:15%; }
     </style>
 </head>
 <body>
-<div class="cont" style="display: block;margin-top:30px; ">
-
-    <div id="container" style="height: 500px;width: 100%;border: 1px solid #94bef1;position: relative;background: rgb(252, 249, 242);margin-top: -40px;"></div>
-     <div style="margin-top:76px ">
-       <input type="text" name="" id="tipinput" style="border-style: none;border-bottom-style: solid;border-bottom-width: 3px;border-bottom-color: #168fbb;height: 47px;margin-left: 38px;width: 52%;" placeholder="请输入店铺位置">
-  <button style="    width: 49px;
-    height: 50px;
-    background-color: #168fbb;
-    border: 0px;
-    border-radius: 99px;
-    margin-left: 30px;" id="addmap">确认</button></div>
+<div class="cont" style="display: block;margin-top:30px;">
+   <input type="text" name="" id="tipinput" style="border-bottom-width: 3px;height: 31px;margin-left: 38px;" placeholder="请输入店铺位置">
+    <div id="container" style="height:400px;margin-top:5px;"></div>
 </div>
+<div class="up">
+    <button id="addmap">确认</button>|<button id="delete">取消</button>
+</div>
+
+
 </body>
 </html>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.5&key=0bda08c2afb77bff30115186de665721&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
