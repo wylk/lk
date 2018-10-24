@@ -208,7 +208,6 @@ var startX,//触摸时的坐标
 var inner=document.getElementById("up-map-div");
 
 function touchSatrt(e){//触摸
-    $('#up-map-div').css('display','none')
     e.preventDefault();
     var touch=e.touches[0];
     startY = touch.pageY;   //刚触摸时的坐标
