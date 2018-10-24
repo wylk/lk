@@ -81,7 +81,8 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 			$data['uid'] = $userId;
 			$data['create_time'] = time();
 			$data['update_time'] = time();
-			$res = D("User_audit")->data($data)->add();
+			$res = D("User_audit")->data($data)->where(['uid'=>$userId])->save();
+			// $res = D("User_audit")->data($data)->add();
 			D('User')->data(['status'=>$data['type']])->where(array('id' =>$data['uid']))->save();
 
 		}

@@ -14,12 +14,16 @@ if(IS_POST){
         $data['pay_num']=$res['pay_num'];
         $data['pay_img'] =$res['pay_img'];
         $data['pay_type']=$res['type'];
-        $rag=D('User_audit')->data($data)->where(array('uid'=>$user['id']))->save();
-        if($rag){
-                 dexit(["res"=>0,'msg'=>"支付宝设置完成"]);
+        $data['uid']=$user['id'];
+        $uid=D('User_audit')->where(array('uid'=>$user['id']))->select();
+        if($uid){
+            $rag=D('User_audit')->data($data)->where(array('uid'=>$user['id']))->save();
+             dexit(["res"=>0,'msg'=>"支付宝设置完成"]);
         }else{
-                 dexit(["res"=>3,'msg'=>"支付宝设置失败"]);
+            $rag=D('User_audit')->data($data)->add();
         }
+
+
 }
 
 include display('pay_qx');

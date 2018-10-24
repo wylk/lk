@@ -16,12 +16,12 @@
         .lines{width: 90%;margin: 50px auto;}
         .content{margin-top:45px; }
         .yl img{width: 100px;margin-top: -7px;}
-        .yl span{font-size: 17px;}
+        .yl span{font-size: 16px;}
         .zfb img{width: 72px;margin-left: 17px;}
-        .zfb span{font-size: 17px;margin-left: 10px;}
+        .zfb span{font-size: 16px;margin-left: 10px;}
         .wx img{width: 50px;margin-left: 27px;}
-        .wx span{font-size: 17px;margin-left: 22px;}
-        h1{font-size: 40px;margin-top: 39px;margin-left: 35px;}
+        .wx span{font-size: 16px;margin-left: 22px;}
+        h1{font-size: 18px;margin-top: 39px;margin-left: 35px;}
         h6{color: #737e82;margin-top: 27px;font-size: 16px;margin-left: 19px;}
         .checkbox{float: right;margin-right: 50px;margin-top: 13px;}
        [id^="checkbox-9-"] + label {background-color: #FFF;padding: 9px;border-radius: 5px;display: inline-block;position: relative;margin-left: -20px;z-index: -1;z-index: -1px;width: 45px;box-shadow: 0 0 1px rgba(0,0,0,0.6);height: 10px;}
