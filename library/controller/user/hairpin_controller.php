@@ -188,7 +188,7 @@ class hairpin_controller extends base_controller
         );
         $sets = D("Hairpan_set")->where(['status'=>0])->select();
         import('HtmlForm');
-        $html = new HtmlForm('edit',url('add_set'));
+        $html = new HtmlForm('edit',url('add_set',[],1));
 
         foreach ($sets as $k => $v) {
             switch ($v['type']) {
