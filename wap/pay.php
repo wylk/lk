@@ -17,11 +17,11 @@ if(IS_POST){
 	}
 
 	$userInfo = D('User')->field('pay_password,openid')->where(['id'=>$userId])->find();
-	if(empty($userInfo['openid'])) dexit(['res'=>1,"msg"=>"openid错误"]);
 	$out_trade_no = date('YmdHis', $_SERVER['REQUEST_TIME']) . mt_rand(100000, 999999);	
 	$payType = $_POST['payType'];	
 	switch ($payType) {
 		case 'weixin':
+			if(empty($userInfo['openid'])) dexit(['res'=>1,"msg"=>"openid错误"]);
 			implode('weixin_pay');
 			$data = [
 				'appid' => option('config.platform_weixin_appid'),

@@ -78,20 +78,20 @@ require_once dirname(__FILE__).'/global.php';
 
 $xml = "<xml><appid><![CDATA[wxcf45e0f03cb2fe06]]></appid>
 <bank_type><![CDATA[CFT]]></bank_type>
-<cash_fee><![CDATA[1]]></cash_fee>
+<cash_fee><![CDATA[10]]></cash_fee>
 <fee_type><![CDATA[CNY]]></fee_type>
 <is_subscribe><![CDATA[Y]]></is_subscribe>
 <mch_id><![CDATA[1504906041]]></mch_id>
-<nonce_str><![CDATA[vnREIq2k1quutS9pfC60ZcYq5t8Az0ov]]></nonce_str>
-<openid><![CDATA[o3Dhqwc9CxIbKGtiCG_UfK7HmNiM]]></openid>
-<out_trade_no><![CDATA[20181020193941381565]]></out_trade_no>
+<nonce_str><![CDATA[1L4NoXan0mG5dWg75KxGRESLu1hhFPZ6]]></nonce_str>
+<openid><![CDATA[o3DhqwYWyDquFkGfPz6bAwj2POD0]]></openid>
+<out_trade_no><![CDATA[20181024141515119353]]></out_trade_no>
 <result_code><![CDATA[SUCCESS]]></result_code>
 <return_code><![CDATA[SUCCESS]]></return_code>
-<sign><![CDATA[688C7D610D9A770A24EC4EEB92755628]]></sign>
-<time_end><![CDATA[20181020193946]]></time_end>
-<total_fee>1</total_fee>
+<sign><![CDATA[3F4E9FF986C9A68105CA60A03405378A]]></sign>
+<time_end><![CDATA[20181024141523]]></time_end>
+<total_fee>10</total_fee>
 <trade_type><![CDATA[JSAPI]]></trade_type>
-<transaction_id><![CDATA[4200000199201810208324940030]]></transaction_id>
+<transaction_id><![CDATA[4200000204201810243021513395]]></transaction_id>
 </xml>";
 
 $array_data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
@@ -100,9 +100,10 @@ $sign = $array_data['sign'];
 unset($array_data['sign']);
 dump($array_data);
 $check = new weixin_pay(option('config.platform_weixin_appid'),option('config.platform_weixin_mchid'),option('config.platform_weixin_key'));
-// $res = $check->getSign($array_data);
-$xml1 = $check->arrayToXml($array_data);
-dump($xml1);
+$res = $check->getSign($array_data);
+if($res != $sign) echo "失败";
+else echo "成功";
+
 // function checkSign($xml){
 // 	$array_data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
 // 	// dump($array_data);

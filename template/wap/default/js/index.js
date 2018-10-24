@@ -1,4 +1,4 @@
-        
+
     var lk = {};
     var i = 1,
     geolocation = null,
@@ -114,7 +114,8 @@
     // 添加地图全局移动事件
     // 移动中
     AMap.event.addListener(map, 'dragging', function() {
-      Marker.setPosition(map.getCenter())
+        $('#up-map-div').css('display','none');
+        Marker.setPosition(map.getCenter())
     });
     // 停止移动
     AMap.event.addListener(map, 'dragend', function() {
