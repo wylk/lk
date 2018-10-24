@@ -13,6 +13,9 @@ if(IS_POST && $_POST['type'] == "register"){
 	$data['packageId'] = clear_html($_POST['id']);
 	$data['type'] = 2;
 	$data['userid'] = $userId;
+
+	$checkRes = checkUserSet();
+	if($checkRes['res']) dexit($checkRes);
 	
 	$platformObj = new PlatformCurrency($data);
 	$res = $platformObj->addEntrust();
@@ -23,6 +26,9 @@ if(IS_POST && $_POST['type'] == "transaction"){
 	$orderData['tranId'] = clear_html($_POST['tranId']);
 	$orderData['packageId'] = clear_html($_POST['packageId']);
 	$orderData['num'] = clear_html($_POST['num']);
+
+	$checkRes = checkUserSet();
+	if($checkRes['res']) dexit($checkRes);
 
 	$platformObj = new PlatformCurrency();
 	$orderRes = $platformObj->marksetTrade($orderData);
@@ -63,9 +69,6 @@ echo ob_get_clean();
 function checkUserSet($userId){
 	// 判断用户是否认证
 	$userJudge = D("User_audit")->where(['uid'=>$userId,"status"=>1])->find();
-	if(!$userJudge) return ['res'=>1,"msg"=>"请先认证","url"=>"./postcard.php"];
-	if(empty($userJudge['address']))
-		 return ['res'=>1,"msg"=>"请先输入地理位置","url"=>"./setup.php"];
 	if(empty($userJudge['pay_num']))
 		 return ['res'=>1,"msg"=>"请设置支付管理","url"=>"pay_zf.php"];
 	return ['res'=>0,"msg"=>"检测通过"];
