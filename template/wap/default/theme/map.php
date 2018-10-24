@@ -38,7 +38,7 @@
 <body>
 <div class="cont" style="display: block;margin-top:30px; ">
 
-    <div id="container" style="height: 500px;width: 100%;border: 1px solid #94bef1;position: relative;background: rgb(252, 249, 242);margin-top: -40px;"></div>
+    <div id="container" style="height: 100%;width: 100%;border: 1px solid #94bef1;position: relative;background: rgb(252, 249, 242);margin-top: -40px;"></div>
      <div style="margin-top:76px ">
        <input type="text" name="" id="tipinput" style="border-style: none;border-bottom-style: solid;border-bottom-width: 3px;border-bottom-color: #168fbb;height: 47px;margin-left: 38px;width: 52%;" placeholder="请输入店铺位置">
   <button style="    width: 49px;

@@ -110,13 +110,9 @@
          console.log(res)
          if(res.res == 0){
             alert(res.msg)
-<<<<<<< HEAD
-            window.location.href = "http://lk.com/wap/my.php";
-=======
             window.location.href = "<?php echo $config['site_url']?>/wap/my.php";
           }else{
             alert(res.msg)
->>>>>>> 32c5ff56cc2c8d7663de30dd1e87fc4f4b1ee396
           }
         },'json');
     });
