@@ -37,7 +37,9 @@
     </header>
     <div class="lk-content">
         <div class="detail">
-            <div class='menuStyle'><span class="spanLeft">订单号：<?php echo $orderInfo['onumber'] ?></span><span class="spanRight">
+          <div class='menuStyle'><span class="spanLeft">订单号：<?php echo $orderInfo['onumber'] ?></span></div>
+            <hr>
+            <div class='menuStyle'><span class="spanLeft">状态：</span><span class="spanRight">
              <?php if($orderInfo['sell_id'] == $userId){ ?>
             <p style="color:gray;">
               <?php if($orderInfo['status'] == '0') echo "未收款" ?>
