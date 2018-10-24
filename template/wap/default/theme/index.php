@@ -2,7 +2,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-        <title>乐卡</title>
+        <title>用乐卡更省钱</title>
         <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
         <style type="text/css">
         body, html,#allmap {
@@ -96,6 +96,7 @@
             position:absolute;
             z-index:1;
             background-color:rgba(0, 0, 02, 0.6);
+            display: none;
         }
         .wind_f{
           overflow:scroll;
