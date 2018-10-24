@@ -80,4 +80,25 @@ class CardAction{
 		if($editRes>0) return ['res'=>0,"msg"=>"转账成功"];
 		return ['res'=>1,"msg"=>"转账失败！"];
 	}
+	public function payTran($data){
+		//2添加买家卡包金额/减卖家卡包金额
+		$addition[] = ['field'=>"card_id","operator"=>'=',"val"=>$data['card_id']];
+		$sellList[] = ['id'=>['val'=>$data['sell_id'],"field"=>"uid"],"field"=>"frozen","operator"=>"-","step"=>$data['number']];
+		$sellList[] = ['id'=>['val'=>$data['sell_id'],"field"=>"uid"],"field"=>"sell_count","operator"=>"+","step"=>$data['number']];
+		$sellRes = M("Card_package")->dataModification($sellList,$addition);
+
+		$buyList[] = ['id'=>['val'=>$data['buy_id'],"field"=>"uid"],"field"=>"num","operator"=>"+","step"=>$data['number']];
+		$buyList[] = ['id'=>['val'=>$data['buy_id'],"field"=>"uid"],"field"=>"recovery_count","operator"=>"+","step"=>$data['number']];
+		$buyRes = M("Card_package")->dataModification($buyList,$addition);
+		if($sellRes <= 0 || $buyRes <= 0) return ['res'=>1,'msg'=>"转账数据修改错误"];
+
+		$res = D('Orders')->data(['status'=>1])->where(['out_trade_no' =>$data['out_trade_no']])->save();
+		if(!$res) return ['res'=>1,"msg"=>"订单状态修改失败"];
+
+		// 添加交易记录
+		$recordRes = D("Record_books")->data(['card_id'=>$data['card_id'],"send_address"=>$data['sendAddress'],'get_address'=>$data['getAddress'],'num'=>$data['number'],"price"=>$data['price'],"type"=>$data['type'],'createtime'=>time()])->add();
+		if(!$recordRes) return ['res'=>1,"msg"=>"添加交易记录失败"];
+
+		return ['res'=>0,"msg"=>"转账成功"];
+	}
 }

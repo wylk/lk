@@ -195,12 +195,15 @@ layui.use(['form','layer'], function(){
     $.post("./transaction.php",data,function(res){
       console.log(res);
       if(!res.res){
-        console.log($(this).parent().remove());
-        $("#"+id).remove();
-        var surplusNum = $("#surplusNum i").html();
-        surplusNum = Number(surplusNum) + Number(num);
-        $("#surplusNum i").html(surplusNum);
+        // console.log($(this).parent().remove());
+        // $("#"+id).remove();
+        // var surplusNum = $("#surplusNum i").html();
+        // surplusNum = Number(surplusNum) + Number(num);
+        // $("#surplusNum i").html(surplusNum);
         layer.msg(res.msg,{icon:1,skin:"demo-class"});
+        setTimeout(function(){
+          window.location.reload(true);
+        });
       }else{
         layer.msg(res.msg,{icon:5,skin:"demo-class"});
       }

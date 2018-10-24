@@ -35,27 +35,89 @@ require_once dirname(__FILE__).'/global.php';
 // echo get_cfg_var ("upload_max_filesize")?get_cfg_var ("upload_max_filesize"):"不允许上传附件";
 // dump(get_cfg_var ("upload_max_filesize"));
 // include display('testh');
-$userId = $wap_user['userid'];
-// dump($userId);
-// $order  = D('Orders')->where(['out_trade_no'=>"20181020151223148583"])->find();
-$cardId = "0b170a15dd8ea510bd0267c9d8b2ae73";
 
-// dump();die();
 
-$data['num'] = 2;
-$data['type'] = "offset";
-$data['cardId'] = $cardId;
-$data['sendAddress'] = "c0391df98c9e521d06f8e683228e63e4";
-$data['getAddress'] = "8ce142b799fad5ee468cfeff0ceb21c7";
 
-import("CardAction");
-$card = new CardAction(['userid'=>$userId]);
-// $data = ['cardId'=>$cardId,'getAddress'=>$id,"sendAddress","num","type",""];
-$sellRes = $card->addressTran($data);
-dump($sellRes);
+// 回调测试
+// $userId = $wap_user['userid'];
+// // dump($userId);
+// // $order  = D('Orders')->where(['out_trade_no'=>"20181020151223148583"])->find();
+// $cardId = "0b170a15dd8ea510bd0267c9d8b2ae73";
+
+// // dump();die();
+// $data = $order = D('Orders')->where(['out_trade_no'=>"20181023183350877126"])->find();
+// $sendAddress = D('Card_package')->field('address')->where(['uid'=>$order['sell_id'],'card_id'=>$order['card_id']])->find();
+// $getAddress = D('Card_package')->field('address,is_publisher,bail')->where(['uid'=>$order['buy_id'],'card_id'=>$order['card_id']])->find();
+// // $data = $order;
+// $data['sendAddress'] = "c0391df98c9e521d06f8e683228e63e4";
+// $data['getAddress'] = "8ce142b799fad5ee468cfeff0ceb21c7";
+// $data['type'] = "8ce142b799fad5ee468cfeff0ceb21c7";
+
+// // $data['tran_id'] = "8ce142b799fad5ee468cfeff0ceb21c7";
+// // $data['sell_id'] = "8ce142b799fad5ee468cfeff0ceb21c7";
+// // $data['buy_id'] = "8ce142b799fad5ee468cfeff0ceb21c7";
+// // $data['card_id'] = "8ce142b799fad5ee468cfeff0ceb21c7";
+// // $data['number'] = "8ce142b799fad5ee468cfeff0ceb21c7";
+// // $data['price'] = "8ce142b799fad5ee468cfeff0ceb21c7";
+// // $data['out_trade_no'] = "8ce142b799fad5ee468cfeff0ceb21c7";
+
+// dump($data);
+// // die();
+
+// import("CardAction");
+// $card = new CardAction(['userid'=>$userId]);
+// // $data = ['cardId'=>$cardId,'getAddress'=>$id,"sendAddress","num","type",""];
+// $sellRes = $card->payTran($data);
+// dump($sellRes);
 
 // $editList[] = ['id'=>['field'=>"uid","val"=>$userId],"field"=>"frozen","operator"=>"+","step"=>$num];
 // $editList[] = ['id'=>['field'=>"uid","val"=>$userId],"field"=>"num","operator"=>"-","step"=>$num];
 // $addition[] = ['field'=>"card_id","val"=>$cardId,"operator"=>'='];
 // $res = M("Card_package")->dataModification($editList,$addition);
+// dump($res);
+
+$xml = "<xml><appid><![CDATA[wxcf45e0f03cb2fe06]]></appid>
+<bank_type><![CDATA[CFT]]></bank_type>
+<cash_fee><![CDATA[1]]></cash_fee>
+<fee_type><![CDATA[CNY]]></fee_type>
+<is_subscribe><![CDATA[Y]]></is_subscribe>
+<mch_id><![CDATA[1504906041]]></mch_id>
+<nonce_str><![CDATA[vnREIq2k1quutS9pfC60ZcYq5t8Az0ov]]></nonce_str>
+<openid><![CDATA[o3Dhqwc9CxIbKGtiCG_UfK7HmNiM]]></openid>
+<out_trade_no><![CDATA[20181020193941381565]]></out_trade_no>
+<result_code><![CDATA[SUCCESS]]></result_code>
+<return_code><![CDATA[SUCCESS]]></return_code>
+<sign><![CDATA[688C7D610D9A770A24EC4EEB92755628]]></sign>
+<time_end><![CDATA[20181020193946]]></time_end>
+<total_fee>1</total_fee>
+<trade_type><![CDATA[JSAPI]]></trade_type>
+<transaction_id><![CDATA[4200000199201810208324940030]]></transaction_id>
+</xml>";
+
+$array_data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+dump($array_data);
+$sign = $array_data['sign'];
+unset($array_data['sign']);
+dump($array_data);
+$check = new weixin_pay(option('config.platform_weixin_appid'),option('config.platform_weixin_mchid'),option('config.platform_weixin_key'));
+// $res = $check->getSign($array_data);
+$xml1 = $check->arrayToXml($array_data);
+dump($xml1);
+// function checkSign($xml){
+// 	$array_data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+// 	// dump($array_data);
+// 	foreach($array_data as $key=>$value){
+// 		if($key == "sign") continue;
+// 		$str .= $key."=".$value."&";
+// 	}
+// 	$str = md5(substr($str, 0,-1));
+// 	// dump($str);dump($array_data['sign']);
+// 	if($str == $array_data['sign']){
+// 		echo "验证通过";
+// 	}else{
+// 		echo "验证失败";
+// 	}
+// 	return $str;
+// }
+// $res = checkSign($xml);
 // dump($res);

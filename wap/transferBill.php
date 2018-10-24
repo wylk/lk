@@ -23,7 +23,7 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	$sendAdressInfo = D("Card_package")->where(['uid'=>$userId,'address'=>$sendAddress])->find();
 	$num > 0 ? true : dexit(['res'=>1,"msg"=>"您转账的数目不能低于0"]);
 	$sendAdressInfo['num'] >= $num ? true : dexit(['res'=>1,"msg"=>"您转账的数目已超支"]);
-	
+
 	// 判断地址是否保存过
 	$remarkCheckRes = D("User_address")->where(['uid'=>$userId,"address"=>$getAddress])->find();
 	if(!$remarkCheckRes){
@@ -82,7 +82,7 @@ if(IS_POST && $_POST['type'] == "addEval"){
 
 // 转账是否需要身份认证 true:需要身份认证 false:不需要身份认证
 if(option("hairpan_set.identity_judge")){
-	$identityJudgeRes = D("User_audit")->where(['uid'=>$userId])->find();
+	$identityJudgeRes = D("User_audit")->where(['uid'=>$userId,'status'=>1])->find();
 	if(!$identityJudgeRes){
 		header("location:postcard.php");
 	}
