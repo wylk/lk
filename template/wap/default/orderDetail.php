@@ -76,7 +76,7 @@
         </div>
         <hr>
         <div class="container">
-            <p>数量:<?php echo number_format($orderInfo['number'],2); ?>&nbsp;&nbsp;  * &nbsp;&nbsp;  单价:<?php echo $orderInfo['price'] ?></p>
+            <p>数量:<?php echo number_format($orderInfo['number'],2); ?>&nbsp;&nbsp;  * &nbsp;&nbsp;  单价:<?php echo number_format($orderInfo['price'],2); ?></p>
             <p class="sum">实付：¥<?php echo number_format($orderInfo['prices'],2)?></p>
         </div>
     </div>
