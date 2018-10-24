@@ -104,22 +104,22 @@ class offsetCard extends Card
             $img = empty($value['avatar']) ? "../template/wap/default/images/default_home_user.png" : $value['avatar'];
             $str .=  <<<EOM
            <div class="home-plugin-info-row">
-             <div class="home-plugin-info-row-card line-heights">
+             <div class="home-plugin-info-row-card line-heights line-width1">
                 <div class="home-plugin-info-row-card-img">
                     <img src="{$img}" style="height:100%;width:100%;border-radius: 2px;">
                 </div>
              </div>
              <div class="home-plugin-info-row-card row-card2">
-                <div style="height: 45px;line-height: 22.5px">
-               <p><span class="back">{$value['b_name']}</span>
+                <div style="height: 48px;line-height: 23.5px">
+               <p><span class="back font-16">{$value['b_name']}</span>
               <!-- <span class="layui-badge"> {$b_type} </span>-->
                
               
                </p>
-               <p>单价:¥&nbsp <span class="back">{$price}</span> &nbsp;&nbsp; 限购:&nbsp;<i class="back">{$limit}</i></p>
+               <p>单价:¥&nbsp <span class="back font-16">{$price}</span> &nbsp;&nbsp; 限购:&nbsp;<i class="back">{$limit}</i></p>
                </div>
              </div>
-             <div class="home-plugin-info-row-card card-3 line-heights" >
+             <div class="home-plugin-info-row-card card-3 line-heights line-width3" >
                 <a href="click-buy" data-id="{$value['id']}" data-uid="{$value['uid']}" class="layui-btn layui-btn-primary">购买</a>
              </div>
          </div>

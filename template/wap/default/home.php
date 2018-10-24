@@ -30,51 +30,52 @@
             -moz-background-size:100% 100%;
            display: flex;
            align-items: flex-end;
-           justify-content: flex-end;
+           justify-content: center;
         }
         .shop_infos{
-            line-height: 30px;
+            line-height: 35px;
             width: 20%;
             
-        }
-        .shop_info{
-            color: rgb(160, 124, 124,0.85);
         }
         .shop_headline{
             height: 75px;
             width: 30%;
             text-align: center;
             position: absolute;
-            top: 65px;
-            left: 0%;
-            right: 0;
-            margin-left: auto;
-            margin-right: auto; 
+            top: 125px;
+            /* left: 0%; */
+            right: -10px;
+            /* margin-left: auto; */
+            /* margin-right: auto; */ 
         }
         .shop_head_img{
             height: 72px;
             width: 72px;
             margin:0px auto;
-            border-radius: 50%;
-            border:1px solid #fff;
         }
         .shop_headline img{ 
             height:100%;
             width: 100%;
-            border-radius: 50%;
+            border-radius: 2px;
         }
         .flex-g>p:first-child{
-            line-height: 30px;
-            font-size: 18px;
-            color: #333;
+            line-height: 20px;
+            color: #999;
+            font-size: 12px;
         }
         .plugin-title{
             border-bottom: 1px solid #e6e6e6;
-            line-height: 35px;
+            height: 50px;
             width: 100%;
             margin: 0px auto 5px;
             color: #999;
             background: #fff;
+            display: flex;
+            align-items: flex-end;
+
+        }
+        .plugin-title div{
+            line-height: 30px; 
         }
         .plugin-title span{
             color: rgb(160, 124, 124);
@@ -95,8 +96,14 @@
             color: #999;
         }
         .line-heights{
-            width: 20%;
             line-height: 55px;
+        }
+
+        .line-width1{
+            width: 17%;
+        }
+        .line-width3{
+            width: 20%;
         }
         .row-card2{
            flex-grow: 1;
@@ -106,7 +113,14 @@
         }
         .back{
             color: #333;
+        }
+
+        .font-max{
             font-size: 18px;
+        }
+
+        .font-16{
+            font-size: 16px;
         }
 
         .home-plugin-info-row-card-img{
@@ -217,17 +231,21 @@
 <div class="lk-content">
     <div class="shop_headlines">
         <div class="shop_infos">
-            <div class="shop_info">信用:9分</div>
+            <div class="shop_info font-max">呷哺呷哺</div>
         </div>
         <div class="shop_headline">
             <div class="shop_head_img"><img src="../template/wap/default/images/default_home_user.png"></div>
             <div class="flex-g">
-                <p>呷哺呷哺</p>
+                <p>信用:9分</p>
             </div>
         </div>
     </div>
+   
     <div class="plugin-title">
-        &nbsp;&nbsp; <span>抵现卡</span> &nbsp;&nbsp;| &nbsp;&nbsp; 积分卡
+        <div>
+            
+            &nbsp;&nbsp; <span>抵现卡</span> &nbsp;&nbsp;| &nbsp;&nbsp; 积分卡
+        </div>
     </div>
     <div id="pullrefreshs" style="touch-action: none;">
         <div class="pull" >
@@ -339,6 +357,8 @@
     mui('body').on('tap','a',function(){
         var url = this.href;
         if(url.indexOf("img-xx") != -1 ){
+            $("input[name='number']").val('');
+            $("input[name='prices']").val('');
             $('#up-div').css('display','none');
         }else if(url.indexOf("click-buy") != -1 ){
             var id = this.getAttribute("data-id");
