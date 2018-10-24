@@ -52,7 +52,7 @@
               <span class="show">
                     <a href="./pay_zf.php">
                          <div class="item-row lk-container-flex" style="margin: 0px auto">
-                            <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;"><img src="http://lk.com/template/wap/default/images/zf.png" width="23px;"></i></div>
+                            <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;"><img src="<?php echo $config['site_url']?>/template/wap/default/images/zf.png" width="23px;"></i></div>
                             <div class="item-row-title row" >支付管理</div>
                             <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
                         </div>
