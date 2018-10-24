@@ -144,7 +144,7 @@ layui.use(['layer'],function(){
                 layer.msg(res.msg,{icon:1,skin:"demo-class"});
                 window.location.reload(true);
             }else{
-               layer.msg(res.msg,{icon:1,skin:"demo-class"});
+               layer.msg(res.msg,{icon:5,skin:"demo-class"});
                if(res.url){
                     setTimeout(function(){
                         window.location.href = res.url;
@@ -173,6 +173,11 @@ layui.use(['layer'],function(){
                 window.location.href = "./card_order.php";
             }else{
                 layer.msg(result.msg,{icon:5,skin:"demo-class"});
+                if(res.url){
+                    setTimeout(function(){
+                        window.location.href = res.url;
+                    },1000);
+               }
             }
         },'json');
     });
