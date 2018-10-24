@@ -11,6 +11,9 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
+        html body {
+            background-color: #fff;
+        }
         .container{flex-direction:column;text-align:center;height:130px;background-color: white;}
         .container h3,.container h2{margin:10px;padding:10px;}
         .detail{flex-direction:column;background-color: white;margin-top:30px;width: 95%;margin:0 auto;}
