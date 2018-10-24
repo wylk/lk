@@ -2,7 +2,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-        <title>乐卡</title>
+        <title>用乐卡更省钱</title>
         <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
         <style type="text/css">
         body, html,#allmap {
@@ -91,11 +91,12 @@
         #up-map-div{
             width:100%;
             height:560px;
-            top:220px;
+            top:330px;
             left:0px;
             position:absolute;
             z-index:1;
             background-color:rgba(0, 0, 02, 0.6);
+            display: none;
         }
         .wind_f{
           overflow:scroll;
@@ -202,11 +203,12 @@ var startX,//触摸时的坐标
     startY,
      x, //滑动的距离
      y,
-     aboveY=220; //设一个全局变量记录上一次内部块滑动的位置
+     aboveY=330; //设一个全局变量记录上一次内部块滑动的位置
 
 var inner=document.getElementById("up-map-div");
 
 function touchSatrt(e){//触摸
+    $('#up-map-div').css('display','none')
     e.preventDefault();
     var touch=e.touches[0];
     startY = touch.pageY;   //刚触摸时的坐标

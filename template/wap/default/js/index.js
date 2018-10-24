@@ -31,6 +31,8 @@
     });
 
     function get_near_shops(){
+        console.log();
+        ($('#up-map-div').css('display') == 'none') && $('#up-map-div').css('display','block');
         $.post('index_ajax.php',{i:i,plugin:plugin,lng:lng,lat:lat},function(re){
             ++i;
            // console.log(del);
