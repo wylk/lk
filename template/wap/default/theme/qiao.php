@@ -37,16 +37,10 @@
 </head>
 <body>
 <div class="cont" style="display: block;margin-top:30px; ">
-
-    <div id="container" style="height: 500px;width: 100%;border: 1px solid #94bef1;position: relative;background: rgb(252, 249, 242);margin-top: -40px;"></div>
-     <div style="margin-top:76px ">
-       <input type="text" name="" id="tipinput" style="border-style: none;border-bottom-style: solid;border-bottom-width: 3px;border-bottom-color: #168fbb;height: 47px;margin-left: 38px;width: 52%;" placeholder="请输入店铺位置">
-  <button style="    width: 49px;
-    height: 50px;
-    background-color: #168fbb;
-    border: 0px;
-    border-radius: 99px;
-    margin-left: 30px;" id="addmap">确认</button></div>
+    <div style="margin-top:76px ">
+        <span style="margin-left: 15px;font-size: 18px;">请输入您的位置：</span><input type="text" name="" id="tipinput" style="border-style: none;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #168fbb;height: 47px;margin-left: 19px;width: 52%;"></div>
+    <div id="container" style="height: 350px;width: 100%;border: 1px solid #94bef1;position: relative;background: rgb(252, 249, 242);margin-top: 40px;"></div>
+    <div style="margin-left: 27%;margin-top: 22px;"><button style="margin-top: 15px;margin-right: 25px;width: 73px;height: 32px;background-color: #168fbb;border:0px;" id="addmap">确认</button><button style="margin-top: 15px;margin-right: 25px;width: 73px;height: 32px;background-color: #168fbb;border:0px;" id="delete">取消</button></div>
 </div>
 </body>
 </html>

@@ -12,7 +12,7 @@
     <style type="text/css">
         .item-headers{
             margin: 0px auto 10px;
-            background: #477359;
+            background: #4887bf;
             height: 100px;
             color: #fff;
         }
