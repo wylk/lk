@@ -41,7 +41,7 @@
         })
     </script>
 </head>
-<body>
+<body style="background-color: white;">
 <header class="lk-bar lk-bar-nav">
     <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">支付页面</h1>
