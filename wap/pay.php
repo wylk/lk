@@ -31,22 +31,16 @@ $out_trade_no = date('YmdHis', $_SERVER['REQUEST_TIME']) . mt_rand(100000, 99999
 $payType = $_POST['payType'];	
 switch ($payType) {
 	case 'weixin':
-	// dexit(['res'=>1,"msg"=>'weixin支付']);
 		implode('weixin_pay');
-		// $data = [
-		// 	'appid' => "wxcf45e0f03cb2fe06", 
-	 //        'mch_id' => "1504906041", 
-	 //        'api_key' => "7458e55e72ea67b4e03c8380668a8793",
-		// ];
 		$data = [
 			'appid' => option('config.platform_weixin_appid'),
 			'mch_id' => option('config.platform_weixin_mchid'),
 			'api_key' => option('config.platform_weixin_key'),
 		];
-		$money = '0.01';
-		$out_trade_no = time();
+		$money = $orderInfo['number']*$orderInfo['price'];
+		// $out_trade_no = time();
 		// $out_trade_no = $userInfo['trade_no'];
-		$userInfo['openid'] = 'o3Dhqwc9CxIbKGtiCG_UfK7HmNiM';
+		// $userInfo['openid'] = 'o3Dhqwc9CxIbKGtiCG_UfK7HmNiM';
 
 		$pay = new weixin_pay($data['appid'],$data['mch_id'],$data['api_key']);
 		$res = $pay->getPrePayOrder('乐卡支付',$out_trade_no,$money,$userInfo['openid'],'JSAPI');
@@ -77,14 +71,6 @@ switch ($payType) {
 			dexit(['res'=>1,"msg"=>'支付失败','data'=>$result]);
 		}
 		dexit(['res'=>0,"msg"=>'支付成功','orderId'=>$orderId,'data'=>$result]);
-		// //模拟支付回调
-		// import('LkApi');
-		// $api = new LkApi(['appid'=>'23432','mchid'=>'1273566173','key'=>'sdagjjjjjk']);
-		// $payData['order_id'] = $orderinfo['id'];
-		// $rwx = $api->weixinPay($payData);
-		// dump($rwx);
-		// D('Orders')->data(['status'=>1])->where(array('onumber'=>$orderinfo['onumber']))->save();
-		// dexit(['res'=>0,"msg"=>"购买成功","orderId"=>$orderinfo['id']]);
 		break;
 	case 'platform_pass' :
 	// 判断是否有平台支付密码
@@ -102,5 +88,3 @@ switch ($payType) {
 		# code...
 		break;
 }
-// $orderResult = ['error'=>0,'msg'=>'已生成订单',"orderId"=>$order_id];
-// dexit($orderResult);
