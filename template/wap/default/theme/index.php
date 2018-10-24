@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
         <style type="text/css">
         body, html,#allmap {
-        width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";
+            width: 100%;height: 100%;overflow: hidden;margin:0px;padding:0px;font-family:"微软雅黑";
         }
         .lk-titles{
           border-bottom: 1px solid #f0f0f0;
@@ -20,11 +20,11 @@
           width: 62px;
           line-height: 40px;
           text-align: center;
-          color: #000;
+          color: #999;
         }
         .action{
-          color: #f6bc00;
-          border-bottom: 1px solid #f6bc00;
+          color: rgba(76, 76, 73, 1); 
+          border-bottom: 1px solid #29aee7;
         }
         .stores{
             margin: 0 auto;
@@ -32,13 +32,13 @@
             width: 95%;
         }
         .store{
-            margin-top:10px;
+            margin-top:5px;
             display: flex;
             align-items:center;
             height: 80px;
             background-color: #fff;
             border-radius: 5px;
-            color:#000;
+            color:#999;
         }
         .img{
             width: 20%;
@@ -48,8 +48,8 @@
         .price{
            width: 50%;
            height: 80px;
-           font-size: 12px;
-           border-right: 1px dashed #00000040;
+           font-size: 13px;
+           border-right: 1px dashed #999;
         }
         .price div{
             line-height: 40px;
@@ -57,12 +57,22 @@
             text-align: left;
 
         }
+        .font18{
+            font-size: 18px;
+        }
+        .font20{
+            font-size: 18px;
+        }
         .num{
             height:80px;
             width: 25%;
         }
         .num div{
             line-height: 40px;
+            font-size: 13px;
+        }
+        .black{
+                color: rgba(76, 76, 73, 1);
         }
         .imgs{
             height: 65px;
@@ -80,12 +90,12 @@
 
         #up-map-div{
             width:100%;
-            height:500px;
-            top:200px;
+            height:560px;
+            top:220px;
             left:0px;
             position:absolute;
             z-index:1;
-            background-color:rgba(12, 12, 12, 0.8);
+            background-color:rgba(0, 0, 02, 0.6);
         }
         .wind_f{
           overflow:scroll;
@@ -95,9 +105,9 @@
         .marker-route{
             width: 70px;
             height: 27px;
-            color: red;
-            border:1px solid #f6bc00;
-            background-color: #f6bc00;
+            color: #999;
+            border:1px solid #29aee7;
+            background-color: #29aee7;
             border-radius: 7px;
             overflow:hidden;
             font-size: 14px;
@@ -117,10 +127,13 @@
             border: 8px solid transparent;
             position: absolute;
             top: 5px;
-            border-right: 8px solid #f6bc00;
+            border-right: 8px solid #29aee7;
             left: -16px;
         }
-
+        .marker-route p{
+            line-height: 25px;
+            color: #000;
+        }
 
         #resultMapInfo {
           position: absolute;
@@ -128,11 +141,18 @@
           top: 30px;
           z-index: 1;
         }
-        p{
+        #resultMapInfo p{
             color: #000;
+            margin-top: 15px;
         }
         .amap-geo{
             display: none;
+        }
+        .touch{
+            height: 20px;
+            width:100%;
+            display: flex;
+            justify-content:center;
         }
         </style>
         <script type="text/javascript">
@@ -146,11 +166,12 @@
                 <a href="index.php?id=<?php echo $v['id'];?>"><div class="lk-ti <?php echo ($_GET['id'] == $v['id'])?'action':'';?>" id="stree"><?php echo $v['name'] ?></div></a>
             <?php } ?>            
         </div>
-        <div id="resultMapInfo">请使用4G网络获取定位精确度高</div>
+        <div id="resultMapInfo"></div>
         <div class="map" id="map"></div>
     
         <div id="up-map-div">
-            <div id="touch" style="height: 20px;width: 100%;"></div>
+            <div id="touch" class="touch">  
+                <img src="../template/wap/default/images/icon_map.png?r=12" style="height:33px;margin-top:-5px;border-r:"></div>     
             <div class="wind_f" id="work">
               <div id="pullrefreshs" style="touch-action: none;">
                
@@ -165,11 +186,6 @@
               </div>
             </div>
         </div>
-        <div class="mui-loading" v-if="loading">
-            <div class="mui-spinner">
-            </div>
-            玩命加载中...
-        </div>
 
         <?php include display('public_menu');?>
     </body>
@@ -180,61 +196,12 @@
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.5&key=0bda08c2afb77bff30115186de665721&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
 <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo TPL_URL;?>js/index.js?r=<?=time();?>"></script>
-
-<!-- <script type="text/javascript">
-    $(function(){
-        var lng = 116.397428;
-        var lat = 39.90923;
-        var map = new AMap.Map("map", {
-            resizeEnable: true,
-            center: [lng, lat],
-            zoom: 15
-        });
-        var marker = new Array();
-        marker1 = new AMap.Marker({
-            position: [lng, lat],
-            draggable:1,
-            raiseOnDrag:1,
-            clickable:1
-        });
-        marker1.setMap(map);
-
-        var endIcon = new AMap.Icon({
-            size: new AMap.Size(25, 34),
-            image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png',
-            imageSize: new AMap.Size(135, 40),
-            imageOffset: new AMap.Pixel(-95, -3)
-        });
-
-        // 将 icon 传入 marker
-        var endMarker = new AMap.Marker({
-            position: new AMap.LngLat(116.45,39.93),
-            icon: endIcon,
-            offset: new AMap.Pixel(-10, -10)
-        });
-
-        var content = '<div class="marker-route" >老王咖啡</div>';
-
-        var marker2 = new AMap.Marker({
-            content: content,  // 自定义点标记覆盖物内容
-            position:  [lng, lat], // 基点位置
-            offset: new AMap.Pixel(-10, -10) // 相对于基点的偏移位置
-        });
-
-
-        map.add([marker2,endMarker]);
-
-        marker1.on('click', function(r){
-            console.log(r);
-        });
-    });
-</script> -->
 <script>
 var startX,//触摸时的坐标
     startY,
      x, //滑动的距离
      y,
-     aboveY=200; //设一个全局变量记录上一次内部块滑动的位置
+     aboveY=220; //设一个全局变量记录上一次内部块滑动的位置
 
 var inner=document.getElementById("up-map-div");
 
@@ -251,7 +218,8 @@ function touchMove(e){//滑动
     //console.log(inner.style.top);
     //console.log(aboveY+y);
     var hei = document.documentElement.clientHeight;
-    document.getElementById("work").style.height = (hei-(aboveY+y+80))+'px';
+    document.getElementById("work").style.height = (hei-(aboveY+y+80-20))+'px';
+    document.getElementById("up-map-div").style.height = (hei-(aboveY+y+80-30))+'px';
     if((aboveY+y) < 40){
         inner.style.top="40px"; //这一句中的aboveY是inner上次滑动后的位置
     } else{

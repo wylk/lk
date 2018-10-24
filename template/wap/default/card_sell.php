@@ -13,8 +13,8 @@
     <style type="text/css">
         .lk-container-flex {padding: 0 5px;}
         .lk-content hr{margin: 0}
-        .lk-nav-link a{width:30%;text-align: center; line-height: 45px; font-size:.5rem;}
-        .lk-deal-link a{text-align: center; line-height: 45px; font-size:.5rem;padding: 0 20px;}
+        .lk-nav-link a{width:30%;text-align: center; line-height: 45px; font-size:15px;}
+        .lk-deal-link a{text-align: center; line-height: 45px; font-size:15px;padding: 0 3px;}
         .lk-deal-link a input[type='text']{
             display: inline;
             border:none;
@@ -26,6 +26,15 @@
         .item-buy{align-self:center;  border:1px solid #FF5722; width:45px; border-radius: 50px; line-height: 45px; text-align: center;}
         .register div{width:20%;height:38px;line-height:38px;margin-left:20px;}
     </style>
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function(){
+            lk.is_weixin() && function(){
+                $('.lk-bar-nav').css('display','none');
+                $('.lk-content').css({"padding":"0px"});
+            }()
+        })
+    </script>
 </head>
 
 <body>

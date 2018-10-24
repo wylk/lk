@@ -101,22 +101,22 @@ class offsetCard extends Card
             $b_type = $value['b_type'] == 1 ?'个人认证':'店铺认证';
             $price = number_format($value['price'],2);
             $limit = number_format($value['limit'],0).'-'.number_format($value['num']-$value['frozen'],0);
-            $img = empty($value['avatar']) ? "http://img2.imgtn.bdimg.com/it/u=2883786711,2369301303&fm=200&gp=0.jpg" : $value['avatar'];
+            $img = empty($value['avatar']) ? "../template/wap/default/images/default_home_user.png" : $value['avatar'];
             $str .=  <<<EOM
            <div class="home-plugin-info-row">
              <div class="home-plugin-info-row-card line-heights">
                 <div class="home-plugin-info-row-card-img">
-                    <img src="{$img}" style="height:100%;width:100%;border-radius: 20%;">
+                    <img src="{$img}" style="height:100%;width:100%;border-radius: 2px;">
                 </div>
              </div>
              <div class="home-plugin-info-row-card row-card2">
-                <div style="height: 50px;line-height: 28px">
-               <p><span style="font-weight: bold">{$value['b_name']}</span>
-               <span class="layui-badge"> {$b_type} </span>
+                <div style="height: 45px;line-height: 22.5px">
+               <p><span class="back">{$value['b_name']}</span>
+              <!-- <span class="layui-badge"> {$b_type} </span>-->
                
               
                </p>
-               <p>单价:¥&nbsp <span style="color:red;">{$price}</span> &nbsp;&nbsp; 限制:&nbsp;{$limit}</p>
+               <p>单价:¥&nbsp <span class="back">{$price}</span> &nbsp;&nbsp; 限购:&nbsp;<i class="back">{$limit}</i></p>
                </div>
              </div>
              <div class="home-plugin-info-row-card card-3 line-heights" >
