@@ -79,7 +79,6 @@ switch ($payType) {
 // }
 
 $packageList = D("Card_package")->where(['uid'=>['in',[$order['sell_id'],$order['buy_id']]],"card_id"=>$order['card_id']])->select();
-file_put_contents(LEKA_PATH.'/upload/log/notice1.txt', "llll",FILE_APPEND);
 foreach ($packageList as $key => $value) {
 	if($value['uid']==$order['sell_id']) $sendAddress = $value;
 	if($value['uid']==$order['buy_id']) $getAddress = $value;
@@ -135,6 +134,10 @@ function pay_return($data){
 	if($data['type'] == 'weixin'){
 		dexit(['return_code'=>$data['res'],"msg"=>$data['msg']]);
 	}else{
-		dexit(['errcode'=>1,"msg"=>$data['msg']]);
+		if($data['res'] == "SUCCESS"){
+			dexit(['errcode'=>0,"msg"=>$data['msg']]);
+		}else{
+			dexit(['errcode'=>1,"msg"=>$data['msg']]);
+		}
 	}
 }
