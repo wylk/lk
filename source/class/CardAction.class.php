@@ -7,6 +7,7 @@ class CardAction{
 	}
 	public function tran(){}
 	// 卡券出售挂单   测试完成
+	// ['cardId'=>'',"num"=>'',"price"=>'',"limit"=>''];
 	public function sellCard($data){
 		$cardBagInfo = D("Card_package")->field("num,address,is_publisher,frozen")->where(['uid'=>$this->userId,'card_id'=>$data['cardId']])->find();
 		if(!$cardBagInfo) return ['res'=>1,"msg"=>"该卡券失效"];
@@ -39,6 +40,7 @@ class CardAction{
 
 	}
 	// 挂单撤销
+	// ['revokeId','revokeCardId',,,,];
 	public function revokeTran($data){
 		// 判断是否有订单未处理
 		$checkRes = D("Orders")->where("(tran_id = ".$data['revokeId']." or tran_other = ".$data['revokeId'].") and status = 0")->sum("number");
