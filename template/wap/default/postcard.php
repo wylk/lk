@@ -19,11 +19,23 @@
     .layui-btn .layui-icon{font-size:22px;}
     .uploadImg img {width: 100%; height:100%;}
     .layui-form-item .layui-form-label{position: relative;width: 84px; padding-right: 8px}
-    .layui-btn-warm{width:100%;height:50px; line-height: 50px; border:0; position: relative;left: -45px }
+    .layui-btn-warm{
+        width:100%;
+        height:35px;
+        line-height: 35px;
+        border:0; 
+        position: relative;
+        left: -45px;
+        background: #fff;
+        color: #00adff;
+        border: 1px solid #00adff;
+        border-radius: 5px;
+     }
     .layui-input-block { width: 200px; margin-left: 110px;}
     .hidden { display: none;}
     .cardBody { width: 100%; margin-top: 46px; text-align: center;}
     .img-block{height: 95px}
+
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
      <script type="text/javascript">
@@ -58,14 +70,15 @@
         </div>
         <hr>
         <div class="layui-container">
-            <div class="layui-tab layui-tab-card" lay-filter="aduitTab">
+            <div class="layui-tab layui-tab-brief" lay-filter="aduitTab">
                 <ul class="layui-tab-title">
                     <li class="<?php echo $type==2 ? " layui-btn-disabled " : "layui-this "?>">个人认证</li>
-                    <li class="<?php echo $type==2 ? " layui-this " : " "?>">企业认证</li>
+                    <li class="<?php echo $type==2 ? " layui-this " : " "?>">店铺认证</li>
+                    <li class="<?php echo $type==3 ? " layui-this " : " "?>">企业认证</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item <?php echo $type==2 ? " " : "layui-show "?>">
-                        <?php echo $type==2 ? "<p class='cardBody'>您已选择企业认证，不能再进行个人认证</p>" : ""?>
+                        <?php echo $type==2 ? "<p class='cardBody'>您已选择店铺认证，不能再进行个人认证</p>" : ""?>
                         <?php echo $type==2 ? "<form class='layui-form hidden'>" : "<form class='layui-form'>"?>
                         <input type="hidden" name="type" value="1">
                         <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : ""?>">
@@ -139,9 +152,9 @@
                     <input type="hidden" name="type" value="2">
                     <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : " "?>">
                     <div class='layui-form-item'>
-                        <label class="layui-form-label">企业名称：</label>
+                        <label class="layui-form-label">店铺名称：</label>
                         <div class="layui-input-block">
-                            <input type="text" class='layui-input' name="enterprise" required lay-verify='enterprise' value="<?php echo isset($audit['enterprise']) ? $audit['enterprise'] : " "?>" placeholder="企业名称" />
+                            <input type="text" class='layui-input' name="enterprise" required lay-verify='enterprise' value="<?php echo isset($audit['enterprise']) ? $audit['enterprise'] : " "?>" placeholder="店铺名称" />
                         </div>
                     </div>
                     <div class='layui-form-item'>
@@ -173,6 +186,18 @@
                         <label class="layui-form-label">营业执照号：</label>
                         <div class="layui-input-block">
                             <input type="text" class='layui-input' name="businessLicense" required lay-verify='busiNumber' value="<?php echo isset($audit['business_img']) ? $audit['business_license'] : " "?>" placeholder="营业执照号" />
+                        </div>
+                    </div>
+                    <div class='layui-form-item'>
+                        <label class="layui-form-label">店铺logo：</label>
+                        <div class="layui-input-block img-block">
+                            <a type="button" class="layui-btn layui-btn-primary" id="upload_shop_logo">
+                                <i class="layui-icon">&#xe654;</i>
+                            </a>
+                            <div id="upload_shop_logo" class='uploadImg'>
+                                <img src="<?php echo isset($audit['logo']) ? $audit['logo'] : " "?>" />
+                                <input type="hidden" name="logo" value="<?php echo isset($audit['logo']) ? $audit['logo'] : " "?>">
+                            </div>
                         </div>
                     </div>
                     <div class='layui-form-item'>
@@ -214,7 +239,70 @@
                     </div>
                 </div>
                 </form>
+
             </div>
+            <!-- 企业 -->
+             <div class="layui-tab-item">
+              <form class='layui-form <?php if(isset($type)){ echo 'hidden';}?>'>
+                <input type="hidden" name="type" value="3">
+                <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : " "?>">
+                <div class='layui-form-item'>
+                    <label class="layui-form-label">企业名称：</label>
+                    <div class="layui-input-block">
+                        <input type="text" class='layui-input' name="enterprise" required lay-verify='enterprise' value="<?php echo isset($audit['enterprise']) ? $audit['enterprise'] : " "?>" placeholder="企业名称" />
+                    </div>
+                </div>
+                <div class='layui-form-item'>
+                    <label class="layui-form-label">法人姓名：</label>
+                    <div class="layui-input-block">
+                        <input type="text" class='layui-input' name="name" required lay-verify='name' value="<?php echo isset($audit['name']) ? $audit['name'] : " "?>" placeholder="法人姓名" />
+                    </div>
+                </div>
+                <div class='layui-form-item'>
+                    <label class="layui-form-label">营业执照号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" class='layui-input' name="businessLicense" required lay-verify='busiNumber' value="<?php echo isset($audit['business_img']) ? $audit['business_license'] : " "?>" placeholder="营业执照号" />
+                    </div>
+                </div>
+                <div class='layui-form-item'>
+                    <label class="layui-form-label">营业执照：</label>
+                    <div class="layui-input-block img-block">
+                        <a type="button" class="layui-btn layui-btn-primary" id="upload_business">
+                            <i class="layui-icon">&#xe654;</i>
+                        </a>
+                        <div id="uploadBusiness" class='uploadImg'>
+                            <img src="<?php echo isset($audit['business_img']) ? $audit['business_img'] : " "?>" />
+                            <input type="hidden" name="uploadBusiness" value="<?php echo isset($audit['business_img']) ? $audit['business_img'] : " "?>">
+                        </div>
+                    </div>
+                </div>
+                <div class='layui-form-item'>
+                    <label class="layui-form-label">手持身份证：</label>
+                    <div class="layui-input-block img-block">
+                        <a type="button" class="layui-btn layui-btn-primary" id="upload_oneself">
+                            <i class="layui-icon">&#xe654;</i>
+                        </a>
+                        <div id="uploadOneself" class='uploadImg'>
+                            <img src="<?php echo isset($audit['img_oneself']) ? $audit['img_oneself'] : " "?>" />
+                            <input type="hidden" name="uploadImg_3" value="<?php echo isset($audit['img_oneself']) ? $audit['img_oneself'] : " "?>">
+                        </div>
+                    </div>
+                </div>
+
+                <?php echo (isset($audit['status']) && $audit['status'] == 2 ) ? "<div class='layui-form-item'>" : "<div class='layui-form-item hidden'>"?>
+                <label class="layui-form-label">驳回原因：</label>
+                <div class="layui-input-block">
+                    <div class="layui-textarea">
+                        <?php echo isset($audit['remarks']) ? $audit['remarks'] : ""?>
+                    </div>
+                </div>
+            </div>
+            <div class='layui-form-item'>
+                <div class="layui-input-block">
+                    <button type='submit' lay-submit class='layui-btn layui-btn-warm ' lay-filter='formBusiness'>提交</button>
+                </div>
+            </div>
+            <!-- end -->
         </div>
     </div>
     </div>
@@ -340,6 +428,23 @@ layui.use(["element", "upload", "layer", 'form'], function() {
                 $("#uploadBusiness img").attr("src", res.msg);
                 $("#uploadBusiness input").val(res.msg);
                 $("#uploadBusiness").show();
+            }
+        },
+        error: function() {}
+    });
+     var uploadInst4 = upload.render({
+        elem: "#upload_shop_logo",
+        url: "postcard.php?type=uploadFile",
+        before: function() {
+            layer.load();
+        },
+        done: function(res, index, upload) {
+            layer.closeAll("loading");
+            console.log(res);
+            if (!res.res) {
+                $("#upload_shop_logo img").attr("src", res.msg);
+                $("#upload_shop_logo input").val(res.msg);
+                $("#upload_shop_logo").show();
             }
         },
         error: function() {}
