@@ -93,16 +93,17 @@ $xml = "<xml><appid><![CDATA[wxcf45e0f03cb2fe06]]></appid>
 <trade_type><![CDATA[JSAPI]]></trade_type>
 <transaction_id><![CDATA[4200000204201810243021513395]]></transaction_id>
 </xml>";
+return $xml;
 
-$array_data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
-dump($array_data);
-$sign = $array_data['sign'];
-unset($array_data['sign']);
-dump($array_data);
-$check = new weixin_pay(option('config.platform_weixin_appid'),option('config.platform_weixin_mchid'),option('config.platform_weixin_key'));
-$res = $check->getSign($array_data);
-if($res != $sign) echo "失败";
-else echo "成功";
+// $array_data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+// dump($array_data);
+// $sign = $array_data['sign'];
+// unset($array_data['sign']);
+// dump($array_data);
+// $check = new weixin_pay(option('config.platform_weixin_appid'),option('config.platform_weixin_mchid'),option('config.platform_weixin_key'));
+// $res = $check->getSign($array_data);
+// if($res != $sign) echo "失败";
+// else echo "成功";
 
 // function checkSign($xml){
 // 	$array_data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
@@ -122,3 +123,4 @@ else echo "成功";
 // }
 // $res = checkSign($xml);
 // dump($res);
+

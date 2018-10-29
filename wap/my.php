@@ -124,7 +124,7 @@ if($type == 2 && $status == 1 && empty($isDelete)){
 	$menu = [
             ['icon'=>'&#xe6f5;','url'=>'./postcard.php','title'=>'身份认证'],
             ['icon'=>'&#xe758;','url'=>'./cardType.php','title'=>'卡/券'],
-            ['icon'=>'&#xe803;','url'=>'','title'=>'API接口'],
+            ['icon'=>'&#xe803;','url'=>'./userApi.php','title'=>'API接口'],
             ['icon'=>'&#xe83a;','url'=>'','title'=>'店员管理'],
             ['icon'=>'&#xe6ae;','url'=>'./setup.php','title'=>'设置'],
         ];
