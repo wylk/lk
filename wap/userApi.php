@@ -28,7 +28,7 @@ if($_POST['type'] == "apply"){
 
 	$key = md5($phone."-".$userId);
 
-	$res = D("User_audit")->data(['mid'=>$mid,"key"=>$key])->where(['uid'=>$userId])->save();
+	$res = D("User_audit")->data(['mid'=>$mid,"mid_key"=>$key])->where(['uid'=>$userId])->save();
 	if($res) dexit(['res'=>0,"msg"=>"您的审核已提交成功"]);
 	else dexit(['res'=>1,"msg"=>"您的审核提交失败，请您重新提交"]);
 }

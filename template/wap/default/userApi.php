@@ -71,7 +71,7 @@
         <div class="layui-form-item"  style="border-top:1px solid #F0F0F0">
             <label class="layui-form-label">秘钥：</label>
             <div class="layui-input-inline us-input-inline" style="padding-left:0px;">
-                <input type="text" id="key" name="key" length="16" placeholder="<?php echo $userInfo['key'] ?>" autocomplete="off" class="layui-input" value="<?php echo $userInfo['key']; ?>" >
+                <input type="text" id="key" name="key" length="16" placeholder="<?php echo $userInfo['mid_key'] ?>" autocomplete="off" class="layui-input" value="<?php echo $userInfo['mid_key']; ?>" >
             </div>
             <button id="copy_key" data-clipboard-target="#key">复制</button>
         </div>
