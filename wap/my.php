@@ -74,7 +74,7 @@ if(isset($_POST['phone']) && isset($_POST['type'])){
 	// 修改密码、支付密码 获取验证码
 	if($_POST['type'] == 'verify'){
 		$code = rangdNumber($verifyLen);
-		require_once dirname(__FILE__).'/class/Transfer.class.php';
+		// require_once dirname(__FILE__).'/class/Transfer.class.php';
 		$a = new Transfer();
 		$p = '15703216915';
 		$messageRes = $a->message($p,["code"=>$code]);

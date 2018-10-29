@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?<?=time()?>">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>js/clipboard.min.js" charset="utf-8"></script>
     <style type="text/css">
       .layui-input-block{margin-right: 50px;}
       .layui-input{border:0; padding-left:6px;}
@@ -64,16 +63,16 @@
         <div class="layui-form-item">
             <label class="layui-form-label">工商号：</label>
             <div class="layui-input-inline us-input-inline" style="padding-left:0px;">
-                <input type="text" id="mid" name="mid" placeholder="<?php echo $userInfo['mid'] ?>" autocomplete="off" class="layui-input" value="<?php echo $userInfo['mid']; ?>" readonly>
+                <input type="text" name="mid" placeholder="<?php echo $userInfo['mid'] ?>" autocomplete="off" class="layui-input" value="<?php echo $userInfo['mid']; ?>" readonly>
             </div>
-            <button id="copy_mid" data-clipboard-target="#mid">复制</button>
+            <button>复制</button>
         </div>
         <div class="layui-form-item"  style="border-top:1px solid #F0F0F0">
             <label class="layui-form-label">秘钥：</label>
             <div class="layui-input-inline us-input-inline" style="padding-left:0px;">
-                <input type="text" id="key" name="key" length="16" placeholder="<?php echo $userInfo['key'] ?>" autocomplete="off" class="layui-input" value="<?php echo $userInfo['key']; ?>" >
+                <input type="text" name="key" length="16" placeholder="<?php echo $userInfo['key'] ?>" autocomplete="off" class="layui-input" value="<?php echo $userInfo['key']; ?>" >
             </div>
-            <button id="copy_key" data-clipboard-target="#key">复制</button>
+            <button>复制</button>
         </div>
       <?php } ?>
   </div>
@@ -94,37 +93,25 @@
   layui.use(['layer'],function(){
     layer = layui.layer;
   });
-	$("#getVerify").bind("click",function(){
-		var data = {type:"verify"};
-		$.post("./userApi.php",data,function(res){
-		  console.log(res);
-		  // if($)
-		},"json");
-	});
-	$("#layui-btn").bind("click",function(){
-		var pwd = $("[name=password]").val();
-		var data = {type:'apply',pwd:pwd};
-		$.post("./userApi.php",data,function(res){
-		  console.log(res);
-		  if(!res['res']){
-		    layer.msg(res.msg,{icon:1,skin:'demo-class'});
-		    setTimeout(function(){
-		      window.location.reload(true);
-		    },1000);
-		  }else
-		    layer.msg(res.msg,{icon:5,skin:'demo-class'});
-		},"json");
-	});
-	$("[id^=copy_]").bind("click",function(){
-		// console.log('ddd');
-		var idStr = $(this).attr('id');
-	    var clipboard = new ClipboardJS("#"+idStr);
-	    clipboard.on("success",function(e){
-	        e.clearSelection();
-	        layer.msg("复制成功",{ icon: 1, skin: "demo-class" });
-	    })
-	    clipboard.on("error",function(e){
-	        layer.msg("复制失败",{ icon: 5, skin: "demo-class" });
-	    })
-	})
+  $("#getVerify").bind("click",function(){
+    var data = {type:"verify"};
+    $.post("./userApi.php",data,function(res){
+      console.log(res);
+      // if($)
+    },"json");
+  });
+  $("#layui-btn").bind("click",function(){
+    var pwd = $("[name=password]").val();
+    var data = {type:'apply',pwd:pwd};
+    $.post("./userApi.php",data,function(res){
+      console.log(res);
+      if(!res['res']){
+        layer.msg(res.msg,{icon:1,skin:'demo-class'});
+        setTimeout(function(){
+          window.location.reload(true);
+        },1000);
+      }else
+        layer.msg(res.msg,{icon:5,skin:'demo-class'});
+    },"json");
+  });
 </script>
