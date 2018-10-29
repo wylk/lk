@@ -97,15 +97,20 @@
 	$("#getVerify").bind("click",function(){
 		var data = {type:"verify"};
 		$.post("./userApi.php",data,function(res){
-		  console.log(res);
-		  // if($)
+		  if(res.messageRes)
+		  	layer.msg("验证码发送成功",{icon:1,skin:'demo-class'});
+		  else 
+		  	layer.msg("验证码发送失败",{icon:5,skin:'demo-class'});
 		},"json");
 	});
 	$("#layui-btn").bind("click",function(){
 		var pwd = $("[name=password]").val();
+		if(pwd.length != 6){
+			layer.msg("验证码不正确",{icon:5,skin:'demo-class'});
+			return;
+		}
 		var data = {type:'apply',pwd:pwd};
 		$.post("./userApi.php",data,function(res){
-		  console.log(res);
 		  if(!res['res']){
 		    layer.msg(res.msg,{icon:1,skin:'demo-class'});
 		    setTimeout(function(){
@@ -116,7 +121,6 @@
 		},"json");
 	});
 	$("[id^=copy_]").bind("click",function(){
-		// console.log('ddd');
 		var idStr = $(this).attr('id');
 	    var clipboard = new ClipboardJS("#"+idStr);
 	    clipboard.on("success",function(e){

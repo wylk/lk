@@ -18,8 +18,8 @@ if($_POST['type'] == 'verify'){
 }
 if($_POST['type'] == "apply"){
 	$pwd = $_POST['pwd'];
-	if($pwd != $_SESSION['verify'][$phone])
-		dexit(['res'=>1,"msg"=>"验证码错误！"]);
+	// if($pwd != $_SESSION['verify'][$phone])
+	// 	dexit(['res'=>1,"msg"=>"验证码错误！"]);
 
 	$str1 = strrev(substr($phone,0,3));
 	$str2 = strrev(substr($phone,3,4));
