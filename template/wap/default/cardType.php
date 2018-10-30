@@ -5,19 +5,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    
+    <title>应用</title>
     <style type="text/css">
-    html body p{
+    *{
         padding: 0px;
         margin: 0px;  
     }
     html body {
-        border-color: #f0f0f0;
-        height: 100%;  
+       /*  height: 100%;   */
     }
     .container{
         background-color: #fff;
-        width: 95%;
+        width: 97%;
         margin:5px auto;
         font-size: 12px;
         color: #999;
@@ -27,15 +26,16 @@
     }
     .cards{
         min-height: 400px;
-        margin: 10px auto;
-        width: 95%;
+        margin: 8px auto;
+        width: 97%;
     }
     .card{
         height: 120px;
         width: 100%;
         border:1px solid #f0f0f0;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         border-radius: 1px;
+        background-color: #fff;
     }
     .card-b{
         width: 95%;
@@ -136,7 +136,9 @@
                 var title = t.data('card');
                 var card = title.substring(9,title.indexOf("Card"));
                 console.log(card);
-                window.location.href = "./cardmaking.php?card="+card;
+                if(card == 'offset'){
+                    window.location.href = "./cardmaking.php?card="+card;
+                }
             }else if(type == 2){
                 window.location.href='./cardList.php';
             }

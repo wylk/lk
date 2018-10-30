@@ -43,7 +43,7 @@
             lk.is_weixin() && function(){
                 $('.lk-bar-nav').css('display','none');
                 $('.lk-content').css({"padding":"0px"});
-            }
+            }()
         })
     </script>
 </head>
@@ -55,7 +55,7 @@
     </header>
     <div class="lk-content">
         <div class="layui-container">
-            <p style="font-size: 12px;"><i>注:</i>普通用户无需认证 发VIP1/VIP2请完成认证</p>
+            <p style="font-size: 12px;margin-top: 8px;"><i>注:</i>普通用户无需认证 发VIP1/VIP2请完成认证</p>
         </div>
         <hr>
         <div class="layui-container">
