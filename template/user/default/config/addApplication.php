@@ -91,7 +91,7 @@
                     <i class="layui-icon">&#xe67c;</i></a>
                   </div>
                   <div class="layui-col-xs8">
-                    <input type="text" value="<?php echo $contract['pc_logo'];?>" id="wap_logo" name="wap_logo" required="" lay-verify="required" autocomplete="off" class="layui-input" style="width: 190px">
+                    <input type="text" value="<?php echo $contract['wap_logo'];?>" id="wap_logo" name="wap_logo" required="" lay-verify="required" autocomplete="off" class="layui-input" style="width: 190px">
                   </div>
                 </div>
                   
