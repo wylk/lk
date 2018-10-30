@@ -209,6 +209,19 @@ class userAudit_controller extends base_controller
         // $this->assign('ratio',$ratioRes['ratio']);
         include display();
     }
+    // 企业认证
+    public function enterprise(){
+        import('user_page');
+        $num = D('User_audit')->where(array('type'=>3,'isdelete' =>0))->count();
+        $page = new Page($num,2);
+        $res = D('User_audit')->where(array('type'=>3))->order('`id` DESC')->limit("$page->firstRow, $page->listRows")->select();
+        $s_id=D('Shopclass')->select();
+        $this->assign('page', $page->show());
+        $this->assign('res',$res);
+        $this->assign('num',$num);
+        $this->assign('s_id',$s_id);
+        $this->display();
+    }
 }
 
 
