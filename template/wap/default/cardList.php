@@ -5,15 +5,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>卡券管理</title>
   <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
-  <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
-  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-  <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=1">
   <style type="text/css">
     .lk-rows{
       min-height: 100px;
-      margin: 10px auto;
+      margin: 0px auto 10px;
       background-color: #fff;
     }
     .lk-row{
@@ -26,8 +24,8 @@
       line-height: 45px;
     }
     .lk-row-title>span{
-      font-weight: bold;
-      font-size: 18px;
+        color: #333;
+        font-size: 18px;
     }
     .lk-row-infos{
         height: 90px;
@@ -51,32 +49,29 @@
     }
     .lk-row-btn{
         border-radius: 5px;
-        border: 1px solid #259B24;
+        border: 1px solid #29aee7;
         height: 35px;
         width: 18%;
         text-align: center;
         line-height: 35px;
     }
+    a{
+        color: #999;
+    }
     .info-btn{
         width: 35%;
         height: 28px;
         line-height: 28px;
-        color: #259B24;
+        color: #29aee7;
     }
     .info-edit{
         display: flex;
         justify-content:space-between;
     }
+    .lk-content {
+        color: #999;
+    }
   </style>
-   <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
-     <script type="text/javascript">
-        $(function(){
-            lk.is_weixin() && function(){
-                $('.lk-bar-nav').css('display','none');
-                $('.lk-content').css({"padding":"0px"});
-            }()
-        })
-    </script>
 </head>
 <body>
    <header class="lk-bar lk-bar-nav">
@@ -115,13 +110,23 @@
 
     </div>
 </div>
-<?php include display('public_menu');?>
+<?php //include display('public_menu');?>
 </body>
 </html>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
 <script type="text/javascript">
-  $("a[id^=transaction_]").bind("click",function(res){
-    var cardId = $(this).attr("title");
-    window.location.href = "./transaction.php?cardId="+cardId;
-  })
+$(function(){
+    lk.is_weixin() && function(){
+        $('.lk-bar-nav').css('display','none');
+        $('.lk-content').css({"padding":"0px"});
+    }()
+    $("a[id^=transaction_]").bind("click",function(res){
+        var cardId = $(this).attr("title");
+        window.location.href = "./transaction.php?cardId="+cardId;
+    })
+})
+
 
 </script>
