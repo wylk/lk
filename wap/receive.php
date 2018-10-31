@@ -25,7 +25,7 @@ if(IS_POST){
     // 判断购买卡片是否是本人发布
     $tranInfo = D("Card_transaction")->where(['id'=>$data['tran_id']])->find();
     $tranInfo['uid'] != $userId ? true : dexit(['error'=>1,'msg'=>'此交易为本人发布']);
-    !$tranInfo['status'] ? true : dexit(['error'=>1,'msg'=>"此交易已失效"]);
+    $tranInfo['status'] == '0' ? true : dexit(['error'=>1,'msg'=>"此交易已失效"]);
     ($tranInfo['num'] - $tranInfo['frozen']) > $datas['number'] ? true : dexit(['error'=>1,'msg'=>"购买数量不合法"]);
 
 
