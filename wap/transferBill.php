@@ -88,5 +88,13 @@ if(option("hairpan_set.identity_judge")){
 	}
 }
 // $cardInfo = D("Card_package")->where(['uid'=>$userId,'type'=>option("hairpan_set.platform_type_name")])->find();
+
+$address = (isset($_GET['address']))?$_GET['address']:'';
+$name = (isset($_GET['name']))?$_GET['name']:'';
+
 $cardInfo = D("Card_package")->where(['uid'=>$userId,'card_id'=>$_GET['cardId']])->find();
+$is_self = false;
+if($address == $cardInfo['address']){
+	$is_self = 1;
+}
 include display("transferBill");

@@ -11,6 +11,9 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
+        html body{
+            background-color: #fff;
+        }
         .block{width:100%;height:50px;}
         .block-header{width: 90%;height: 42px;margin: 5px auto;}
         .crad_logo{width:55px;height: 55px;margin: 0px auto}
@@ -56,6 +59,10 @@
             color: #efd21d;
             border: 1px solid #efd21d;
         }
+        .btn-theme{
+            border-color: #29aee7;
+            color: #999;
+        }
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
      <script type="text/javascript">
@@ -98,7 +105,7 @@
                     <i class="layui-icon imgstyle">&#xe612;</i>
                 </div>
                 <div class="dataBox">
-                    <input type="text" name="getAddress" required lay-verify="address" placeholder="请输入对方地址" /><i class="layui-icon" id="addRemark">&#xe61f;</i>
+                    <input type="text" name="getAddress" value="<?php echo $address;?>" required lay-verify="address" placeholder="请输入对方地址" /><i class="layui-icon" id="addRemark">&#xe61f;</i>
                 </div><hr/>
             </div>
             <div class="block block-line">
@@ -106,14 +113,16 @@
                     <i class="layui-icon imgstyle">&#xe66f;</i>
                 </div>
                 <div class="dataBox">
-                    <input type="text" name="addressName" required lay-verify="addressName" placeholder="请输入地址备注名称" />
+                    <input type="text" value="<?php echo $name;?>" name="addressName" required lay-verify="addressName" placeholder="请输入地址备注名称" />
                 </div><hr/>
             </div>
+            <?php if(!$is_self){?>
             <div class="block btnStyle">
                 <input type="hidden" name="sendAddress" value="<?php echo $cardInfo['address'] ?>">
                 <input type="hidden" name="cardId" value="<?php echo $cardInfo['card_id'] ?>">
-                <button lay-submit class='layui-btn' lay-filter="subTransfer" >确认转账</button>
+                <button lay-submit class='layui-btn btn-theme' lay-filter="subTransfer" >确认转账</button>
             </div>
+            <?php }?>
         </form>
         <div class="evaluate">
             <div class="text">
@@ -125,7 +134,7 @@
             </div>
         </div>
     </div>
-    <?php include display('public_menu');?>
+    <?php //include display('public_menu');?>
 </body>
 <script type="text/javascript">
     layui.use(['form','layer'],function(){

@@ -12,30 +12,7 @@ if($identityJudge){
 	}
 }
 $id = $_GET['id'];
-$userInfo = D("Card_package")->where(['id'=>$id])->find();
-
-
-
-
-
-
-
-
-
-
-
-
-
-require_once('../wap/phpqrcode.php');
-$codePath = $_SERVER['DOCUMENT_ROOT']."/upload/qrcode";
-if(!file_exists($codePath)) {
-	mkdir($codePath, 0777, true);
-}
-$codeFile = $codePath."/qrcode.png";
-QRcode::png($userInfo['address'],$codeFile,2,6,2);
-$code = "/upload/qrcode/qrcode.png";
-// var_dump($url);
-// 获取用户信息
-
+$card_package = D("Card_package")->where(['id'=>$id])->find();
+$user = D('User')->where(['id'=>$userId])->find();
 include display("changeInto");
 
