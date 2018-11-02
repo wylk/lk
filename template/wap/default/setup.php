@@ -111,7 +111,7 @@
 </script>
 <script type="text/javascript">
 
-
+         var url = "<?php echo './login.php?referer='.urlencode($_SERVER['REQUEST_URI']);?>";   
         layui.use(['form','layer'], function(){
             var layer = layui.layer;
             //退出登录
@@ -120,7 +120,7 @@
                 $.post("./login.php",{phone:phone,type:"signOut"},function(res){
                     if(res.error == 0){
                         layer.msg(res.msg,{icon:1,time:2000},function(){
-                            window.location.href = "./login.php";
+                            window.location.href = url;
                         });
                     }
                 },'json')
