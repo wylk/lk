@@ -95,6 +95,11 @@
             justify-content: space-between;
             color: #999;
         }
+
+        .home-plugin-info-row-card{
+            display: flex;
+            align-items: center;
+        }
         .line-heights{
             line-height: 55px;
         }
@@ -107,9 +112,6 @@
         }
         .row-card2{
            flex-grow: 1;
-           display: flex;
-           align-items:center;
-
         }
         .back{
             color: #333;
