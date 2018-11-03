@@ -5,15 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>个人中心</title>
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=33">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
         .item-headers{
-            margin: 0px auto 5px;
-            background: #fff;
-            height: 80px;
+            margin: 0px auto 20px;
+            background-image: url('../template/wap/default/images/my.jpg?r=234');
+            background-repeat:no-repeat;
+            background-size:100% 100%;
+            -moz-background-size:100% 100%;
+            height: 100px;
             color: #fff;
         }
         .item-header-img{
@@ -26,7 +30,7 @@
             color: #999;
         }
         .item-rows{
-            min-height: 200px;
+            min-height: 80px;
             background: #fff;
             padding-top: 10px;
         }
@@ -44,12 +48,12 @@
             width: 18%;
         }
         .user_info p:first-child{
-            color: #333;
+            color: #fff;
             font-size: 16px;
         }
         img{
-           height: 56px;
-           width: 56px;
+           height: 65px;
+           width: 65px;
            border-radius: 2%; 
         }
     </style>
@@ -68,7 +72,7 @@
     <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">个人中心</h1>
   </header>
-<div class="lk-content" style="background-color: #f0f0f0;">
+<div class="lk-content" style="background-color: #f2f2f2;">
 
 
         <div class="item-headers lk-container-flex" >
@@ -86,7 +90,7 @@
                              <p>乐卡用户</p>
                         <?php }?>
 
-                    <p style="margin-top: 5px;">手机号:<?php echo $phone; ?></p>
+                    <p style="margin-top: 10px;color: #f0f0f0;">手机号:<?php echo $phone; ?></p>
                     </div>
             </div>
 
