@@ -79,6 +79,8 @@ if(IS_POST){
 
 $orderId = $_GET['id'];
 $orderinfo = D("Orders")->where(['id'=>$orderId])->find();
+$store_name = D('User_audit')->field('enterprise as name')->where(['uid'=>$orderinfo['sell_id'],'type'=>2])->find();
+$store_name = $store_name['name'];
 if($orderinfo['status']){
 	header('location:orderDetail.php?id='.$orderId);
 }

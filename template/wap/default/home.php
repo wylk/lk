@@ -238,10 +238,10 @@
 <div class="lk-content">
     <div class="shop_headlines">
         <div class="shop_infos">
-            <div class="shop_info font-max">呷哺呷哺</div>
+            <div class="shop_info font-max"><?php echo $store['enterprise'];?></div>
         </div>
         <div class="shop_headline">
-            <div class="shop_head_img"><img src="../template/wap/default/images/default_home_user.png"></div>
+            <div class="shop_head_img"><img src="<?php echo (!empty($store['logo']))?$store['logo']:'../template/wap/default/images/default_home_user.png"';?>"/></div>
             <div class="flex-g">
                 <p>信用:9分</p>
             </div>

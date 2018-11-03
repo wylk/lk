@@ -5,25 +5,72 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>支付</title>
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=1">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
-        .container{flex-direction:column;text-align:center;line-height:30px;background-color: white;margin-top:50px; }
-        .paySelect{position: relative;bottom: 0px;left: 0px;font-size:15px;margin-left: 10px;/*display: none;*/margin-top: 40px;}
-        /*.paySelect p{margin: 5px;}*/
-        .paySelect div{height: 45px; display: block;margin-top:3px;text-align: center;}
-        .paySelect img{height: 37px;margin: 5px;}
-        .paySelect span{float: right;margin-right: 30px; line-height: 45px; font-size: 25px;}
-        .paySelect button{width: 200px;border-radius: 4px;}
-        /*.platformPay{border:1px solid red;height: 180px;position: absolute;left: 10%;top: 200px;width: 80%;background-color: #f0f9f3; border-radius: 10px;display: flex;flex-direction:column;}*/
-        /*.platformPay div{width: 100%; text-align: center; background-color: white; border: 1px solid #daf3e2; border-radius: 10px; line-height: 40px; height: 40px;}*/
-        /*.platformPwd{height:140px;flex-direction: column;display: flex;align-items: center}
-        .platformPwd input{height: 20px; width: 167px;}
-        .platformBtn div{width: 100%; text-align: center; background-color: #4ad053; border: 1px solid #daf3e2; border-radius: 10px; line-height: 40px; height: 40px;}
-        .platformBtn{display: flex;flex-direction: row;}*/
-        /*.platformPay label{font-size: 14px;line-height: 80px;}*/
+        body{
+            min-height: 0px;
+            background-color: #f2f2f2;
+
+        }
+        .content{
+            background-color: #fff;
+            margin: 15px 15px 0px;
+            border-radius: 3px;
+            border-color: #f0f0f0;
+            color: #999;
+        }
+
+        .title{
+            height: 120px;
+            padding-top: 10px;
+        }
+        .title p{
+            width: 50%;
+            text-align: center;
+            margin: 5px auto;
+        }
+        .title p:first-child{
+            font-size: 18px;
+            margin-bottom: 15px; 
+            color: #333;
+        }
+        .sum span{
+           font-size: 20px;
+        }
+        .paySelect{
+            height: 145PX;
+           padding-top: 20px;
+        }
+        .paySelect div{
+            text-align: center;
+            margin-top: 8px;
+        }
+        .layui-btn-normal{
+            /* height: 30px;
+            line-height: 30px; */
+            background-color: #FFF;
+            border: 1px solid #259B24;
+            color: #999;
+        }
+        .layui-btn:hover{
+            color: #999;
+        }
+        .btn-theme{
+            border-color: #29AEE7;
+        }
+        .paySelect button{
+            width: 82%;
+            border-radius: 5px;
+            margin-top: 10px; 
+        }
+
+      
+
+        /* 支付弹框 */
         .platform{border: 1px solid #4ea9a0;width: 80%;border-radius: 5px;position: absolute;left: 10%;top: 200px;background-color: white;display: none;}
        .platform h3{text-align: center;margin:20px;}
        .platform input{width: 70%;}
@@ -31,40 +78,28 @@
        .platform button{width: 40%;}
        .payBtnColor{background-color:white;}
     </style>
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
-     <script type="text/javascript">
-        $(function(){
-            lk.is_weixin() && function(){
-                $('.lk-bar-nav').css('display','none');
-                $('.lk-content').css({"padding":"0px"});
-            }()
-        })
-    </script>
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script> 
 </head>
-<body style="background-color: white;">
-<header class="lk-bar lk-bar-nav">
-    <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
-    <h1 class="lk-title">支付页面</h1>
-</header>
-<div class="lk-content">
-  <div class="container">
-      <p>数量:<?php echo number_format($orderinfo['number'],2); ?>&nbsp;&nbsp;  * &nbsp;&nbsp;  单价:<?php echo number_format($orderinfo['price'],2) ?></p>
-      <p class="sum">实付：¥<?php echo number_format($orderinfo['prices'],2)?></p>
+<body>
+
+<div class="content">
+  <div class="title">
+        <p><?php echo (!empty($store_name))?$store_name:'呷哺呷哺';?>抵现卡</p>
+        <p class="sum" style="margin-bottom: 8px;margin-top: 33px;color: #333;">实付：¥&nbsp;<span><?php echo number_format($orderinfo['prices'],2)?></span></p>
+        <p style="font-size: 12px;">数量：<?php echo number_format($orderinfo['number'],2); ?>&nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;&nbsp;  单价：<?php echo number_format($orderinfo['price'],2) ?></p>
   </div>
   <div class="paySelect">
     <input type="hidden" name="orderId" value="<?php echo $orderId ?>" />
-    <!-- <p>支付方式：</p> -->
-      <div id="platform_pay">
-        <!-- <img src="<?php echo STATIC_URL;?>images/wx_logo.png" />平台币支付 -->
-        <!-- <span class="layui-icon" style="color: #fb113c;">&#x1005;</span> -->
-        <button class="layui-btn layui-btn-normal">平台币支付</button>
-      </div>
-      <div id="weixin_pay">
-        <!-- <img src="<?php echo STATIC_URL;?>images/wx_logo.png" />微信支付 -->
-        <!-- <span class="layui-icon" style="color:#cac3c3">&#x1005;</span> -->
-        <button class="layui-btn layui-btn-normal">微信支付</button>
-      </div>
+        <div id="weixin_pay">
+            <button class="layui-btn layui-btn-normal">微信支付</button>
+        </div>
+        <div id="platform_pay">
+            <button class="layui-btn layui-btn-normal btn-theme">平台币支付</button>
+        </div>
   </div>
+
+</div>
+<!-- 支付弹框 -->
  <div class="layui-form platform">
     <h3>平台支付</h3>
     <div class="layui-form-item">
@@ -81,7 +116,6 @@
       </div>
     </div>
   </div>
-</div>
   	<?php //include display('public_menu');?>
 </body>
 </html>
