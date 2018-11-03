@@ -84,6 +84,7 @@ if(IS_POST && $_POST['type'] == "addEval"){
 	dexit(['res'=>1,"msg"=>"评价失败",'other'=>$addEvalRes]);
 }
 
+
 // 转账是否需要身份认证 true:需要身份认证 false:不需要身份认证
 if(option("hairpan_set.identity_judge")){
 	$identityJudgeRes = D("User_audit")->where(['uid'=>$userId,'status'=>1])->find();
@@ -97,6 +98,9 @@ $address = (isset($_GET['address']))?$_GET['address']:'';
 $name = (isset($_GET['name']))?$_GET['name']:'';
 
 $cardInfo = D("Card_package")->where(['uid'=>$userId,'card_id'=>$_GET['cardId']])->find();
+
+$cardName = D("Card")->where(['card_id'=>$_GET['cardId'],"c_id"=>1])->find();
+
 $is_self = false;
 if($address == $cardInfo['address']){
 	$is_self = 1;

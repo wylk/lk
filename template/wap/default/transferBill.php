@@ -8,25 +8,33 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
+    <title>转账</title>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
         html body{
-            background-color: #fff;
+            background-color: #f2f2f2;min-height: 0px;
         }
+        .lk-content{background-color: white;margin: 15px; border-radius: 5px;}
         .block{width:100%;height:50px;}
-        .block-header{width: 90%;height: 42px;margin: 5px auto;}
+        .block-header{width: 90%;height: 90px;margin: 15px auto; color: #333;}
+        .block-header h2{text-align: center;padding-top: 15px;}
         .crad_logo{width:55px;height: 55px;margin: 0px auto}
         .crad_logo img{width:100%;height: 100%;}
         .imgstyle{width:15%;float:left;text-align:right;line-height: 50px;}
+        #addRemark{width:15%;float:right;text-align:left;line-height: 50px;}
         .dataTitle i{font-size: 18px;}
-        .dataBox{width:70%;height:50px;float:left;line-height:50px;margin-left: 10px;}
-        .dataBox input{border:0px;width: 75%;height: 30px;margin-left: 20px;}
+        .dataBox{width:65%;height:50px;float:left;line-height:50px;margin-left: 10px;}
+        .dataBox input{border:0px;width: 80%;height: 30px;margin-left: 20px;}
         /* .dataBox input{border:0;border-bottom:1px solid gray;height:30px;} */
-        .btnStyle{text-align:center;margin-top:40px;}
-        .blockLeft,.blockRight{width:40%;height:50px;float:left;text-align:center;}
+        .btnStyle{text-align:center;margin-top:40px;padding-bottom: 30px;}
+        .blockSpan{height: 35px; text-align: center; margin: 5px auto; width: 85%;}
+        .blockSpan .spanLeft{float: left; margin: 10px auto;width: 45%;padding-right: 5px;}
+        .blockSpan .spanRight{float: right; margin: 10px auto;width: 45%;padding-left: 5px;}
+        .spanLeft span{float: right;height: 23px;line-height: 23px;}
+        .spanRight span{float: left;height: 23px;line-height: 23px;}
         /*{border:1px solid red;width:40%;height:50px;float:left;}*/
-        .blockRight span,.blockRight span{}
+        /*.blockRight span,.blockRight span{}*/
         /*.remarkList,.remark,.remarkName,.remarkAddress{border:1px solid red;width:100%;}*/
         .remarkList{
             position: relative;
@@ -52,7 +60,7 @@
         .evaluate textarea{width:280px;height:80px;}
         .evaluate button{float:left; margin-left: 50px;}
         .block-line{width: 90%;margin: 0px auto}
-        .block-balance{line-height: 40px;width: 100%;text-align: center;}
+        /*.block-balance{line-height: 40px;width: 100%;text-align: center;}*/
         .layui-btn{
             width: 70%;
             background: #fff;
@@ -62,6 +70,8 @@
         .btn-theme{
             border-color: #29aee7;
             color: #999;
+            border-radius: 5px;
+            width: 90%;
         }
         /*转账弹框*/
         .platform{border: 1px solid #4ea9a0;width: 80%;border-radius: 5px;position: absolute;left: 10%;top: 200px;background-color: white;display: none;}
@@ -83,18 +93,13 @@
 </head>
 
 <body>
-    <header class="lk-bar lk-bar-nav">
-        <i onclick="javascript:history.back(-1);" class="iconfont">&#xe697;</i>
-        <h1 class="lk-title">转  账</h1>
-    </header>
     <div class="lk-content">
         <div class="block-header">
-            <!-- <div class="crad_logo"><img src="<?php echo STATIC_URL;?>/images/default_send_logo.png" /></div> -->
-           <div class="block-balance">
-                <span>可用金额：</span><span style="font-weight: bold"><?php echo number_format($cardInfo['num'],2) ?></span>
+            <h2><?php echo $cardName['val']; ?></h2>
+           <div class="blockSpan">
+               <div class="spanLeft"><span><?php echo number_format($cardInfo['num'],2) ?></span><span style="color: #999;">可用：</span></div> 
+               <div class="spanRight"><span style="color: #999;">锁定：</span><span><?php echo number_format($cardInfo['frozen'],2) ?></span></div> 
            </div>
-          <!--  <div class="blockRight"><span>冻结金额：</span><span><?php echo number_format($cardInfo['frozen'],2) ?></span></div>  -->
-          <hr>
         </div>
 
         <form class="layui-form">
@@ -112,15 +117,19 @@
                     <i class="layui-icon imgstyle">&#xe612;</i>
                 </div>
                 <div class="dataBox">
-                    <input type="text" name="getAddress" value="<?php echo $address;?>" required lay-verify="address" placeholder="请输入对方地址" /><i class="layui-icon" id="addRemark">&#xe61f;</i>
-                </div><hr/>
+                    <input type="text" name="getAddress" value="<?php echo $address;?>" required lay-verify="address" placeholder="请输入转账地址" />
+                </div>
+                <!-- <div class="dataTitle"> -->
+                    <i class="layui-icon" id="addRemark">&#xe654;</i>
+                <!-- </div> -->
+                <hr/>
             </div>
             <div class="block block-line">
                 <div class="dataTitle">
                     <i class="layui-icon imgstyle">&#xe66f;</i>
                 </div>
                 <div class="dataBox">
-                    <input type="text" value="<?php echo $name;?>" name="addressName" required lay-verify="addressName" placeholder="请输入地址备注名称" />
+                    <input type="text" value="<?php echo $name;?>" name="addressName" required lay-verify="addressName" placeholder="请输入地址备注" />
                 </div><hr/>
             </div>
             <?php if(!$is_self){?>
