@@ -13,6 +13,10 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	$cardId = $post['cardId'];
 	$num = $post['num'];
 	$addressName = $post['addressName'];
+	// 判断支付密码
+	$checkPwd = D("User")->field("pay_password")->where(['id'=>$userId])->find();
+	if(md5($post['pwd']) != $checkPwd['pay_password'])
+		dexit(['res'=>1,"msg"=>"支付密码不正确",'data'=>[$checkPwd['pay_password'],$post['pwd']]]);
 	// 转账信息判断
 	$getAddressInfo = D("Card_package")->where(['address'=>$getAddress])->find();
 	$cardType = $getAddressInfo['type'];

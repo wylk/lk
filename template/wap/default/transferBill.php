@@ -199,20 +199,19 @@
         form.on("submit(formDemo)",function(datas){
             var pwd = $("[name=pwd]").val();
             if(!pwd.length) layer.msg("请先输入密码",{icon:5,skin:"demo-class"});
-            console.log(datas);
+            // console.log(datas);
             var data = datas.field;
+            data.getAddress = $("[name=getAddress]").val();
+            data.addressName = $("[name=addressName]").val();
+            data.num = $("[name=num]").val();
             data.type = "transferBill";
-            return false;
+            console.log(data);
+            // return false;
             $.post("./transferBill.php",data,function(res){
                 console.log(res);
                 if(!res.res){
-                    // layer.msg(res.msg,{icon:1,skin:"demo-class"});
-                    /*if(res.isPublisher){
-                        $(".evaluate").show();
-                    }else{ }*/
-                        layer.msg(res.msg,{icon:1,skin:"demo-class"});
-                        window.location.href = "./card_package.php"
-                   
+                    layer.msg(res.msg,{icon:1,skin:"demo-class"});
+                    window.location.href = "./card_package.php"
                 }else{
                     layer.msg(res.msg,{icon:5,skin:"demo-class"});
                 }
