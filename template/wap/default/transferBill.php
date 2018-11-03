@@ -63,6 +63,13 @@
             border-color: #29aee7;
             color: #999;
         }
+        /*转账弹框*/
+        .platform{border: 1px solid #4ea9a0;width: 80%;border-radius: 5px;position: absolute;left: 10%;top: 200px;background-color: white;display: none;}
+       .platform h3{text-align: center;margin:20px;}
+       .platform input{width: 70%;}
+       .layui-form-block{text-align: center;}
+       .platform button{width: 40%;}
+       .payBtnColor{background-color:white;}
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
      <script type="text/javascript">
@@ -134,6 +141,28 @@
             </div>
         </div>
     </div>
+<!-- 转账弹框 -->
+<div class="layui-form platform">
+    <h3>平台支付</h3>
+    <form action="javascript:;">
+        <input type="hidden" name="sendAddress" value="<?php echo $cardInfo['address'] ?>">
+        <input type="hidden" name="cardId" value="<?php echo $cardInfo['card_id'] ?>">
+    <div class="layui-form-item">
+      <label class="layui-form-label">密码：</label>
+      <div class="layui-input-block">
+        <input type="password" name="pwd" value="" placeholder="请输入密码" class="layui-input">
+      </div>
+      <!-- 密码：<input type="" name=""> -->
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-form-block">
+        <button class="layui-btn layui-btn-primary">取消</button>
+        <button class="layui-btn" id='submit' lay-submit lay-filter="formDemo">确认</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
     <?php //include display('public_menu');?>
 </body>
 <script type="text/javascript">
@@ -160,12 +189,20 @@
                 }
             }
         });
-        form.on("submit(subTransfer)",function(datas){
+        $(".layui-btn-primary").click(function(){
+           $(".platform").hide();
+           $("[name=pwd]").val('');
+        })
+        // $(".btn-theme").bind("click",function(){
+        //     $(".platform").show();
+        // });
+        form.on("submit(formDemo)",function(datas){
+            var pwd = $("[name=pwd]").val();
+            if(!pwd.length) layer.msg("请先输入密码",{icon:5,skin:"demo-class"});
             console.log(datas);
-            var num = datas.field.num;
             var data = datas.field;
             data.type = "transferBill";
-            // return false;
+            return false;
             $.post("./transferBill.php",data,function(res){
                 console.log(res);
                 if(!res.res){
@@ -180,6 +217,31 @@
                     layer.msg(res.msg,{icon:5,skin:"demo-class"});
                 }
             },"json");
+            return false;
+        });
+        form.on("submit(subTransfer)",function(datas){
+            $(".platform").show();
+            console.log(datas);
+            var num = datas.field.num;
+            var data = datas.field;
+            data.type = "transferBill";
+            console.log(data);
+            return false;
+            // return false;
+            // $.post("./transferBill.php",data,function(res){
+            //     console.log(res);
+            //     if(!res.res){
+            //         // layer.msg(res.msg,{icon:1,skin:"demo-class"});
+            //         // if(res.isPublisher){
+            //         //     $(".evaluate").show();
+            //         // }else{ }
+            //             layer.msg(res.msg,{icon:1,skin:"demo-class"});
+            //             window.location.href = "./card_package.php"
+                   
+            //     }else{
+            //         layer.msg(res.msg,{icon:5,skin:"demo-class"});
+            //     }
+            // },"json");
             return false;
         })
         $("#addRemark").bind("click",function(){
