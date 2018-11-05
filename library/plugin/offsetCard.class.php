@@ -106,7 +106,7 @@ class offsetCard extends Card
            <div class="home-plugin-info-row">
              <div class="home-plugin-info-row-card line-heights line-width1">
                 <div class="home-plugin-info-row-card-img">
-                    <img src="{$img}" style="height:100%;width:100%;border-radius: 2px;">
+                    <img src="{$img}" style="height:100%;width:100%;border-radius: 2px;vertical-align: top;">
                 </div>
              </div>
              <div class="home-plugin-info-row-card row-card2">
