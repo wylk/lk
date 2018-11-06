@@ -82,6 +82,7 @@ class CardAction{
 		if($editRes>0) return ['res'=>0,"msg"=>"转账成功"];
 		return ['res'=>1,"msg"=>"转账失败！"];
 	}
+	// 根据付款转账
 	public function payTran($data){
 		//2添加买家卡包金额/减卖家卡包金额
 		$addition[] = ['field'=>"card_id","operator"=>'=',"val"=>$data['card_id']];
@@ -94,7 +95,7 @@ class CardAction{
 		$buyRes = M("Card_package")->dataModification($buyList,$addition);
 		if($sellRes <= 0 || $buyRes <= 0) return ['res'=>1,'msg'=>"转账数据修改错误"];
 
-		$res = D('Orders')->data(['status'=>1])->where(['out_trade_no' =>$data['out_trade_no']])->save();
+		$res = D('Orders')->data(['status'=>1,"pay_type"=>$data['pay_type']])->where(['out_trade_no' =>$data['out_trade_no']])->save();
 		if(!$res) return ['res'=>1,"msg"=>"订单状态修改失败"];
 
 		// 添加交易记录

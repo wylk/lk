@@ -1,1 +1,1 @@
-SUCCESS支付成功platform
+FAIL平台币转账失败
