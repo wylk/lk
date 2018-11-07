@@ -109,19 +109,11 @@
                     <img src="<?php echo $userInfo[$value['uid']]['avatar'] ?>" style="height:60px;border-radius: 20%;"/>
                 </div>
                 <div style="width: 50%;">
-                    <p><span id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></span> WLK</p>
+                    <p><span id="num_<?php echo $value['id'] ?>" num="<?php echo $value['num']-$value['frozen'] ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></span> WLK</p>
                     <p>价格：<?php echo number_format($value['price'],2) ?></p>
                     <p>限额：<?php echo number_format($value['limit'],2) ?> - <?php echo number_format($value['num']-$value['frozen'],2) ?></p>
                 </div>
             </div>
-            <!-- <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
-                <p class="item-flex">王**</p>
-                <p class="item-flex"><span id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></span>WLK</p>
-                <p class="item-flex">在线</p>
-                <p class="item-flex">价格：<?php echo number_format($value['price'],2) ?></p>
-                <p class="item-flex">logo</p>
-                <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?>-<?php echo number_format($value['num'],2) ?></p>
-            </div> -->
             <div class="lk-container-flex">
                 <p class="item-buy"><a href="javascript:;" id="transaction_<?php echo $value['id'] ?>">买入</a></p>
             </div>
@@ -169,7 +161,7 @@
             var tranId = idStr.substring(idStr.indexOf("_")+1);
             // console.log(idStr,idStr.indexOf("_"),id);
             var packageId = "<?php echo $platformInfo['id']; ?>";
-            var num = $("#num_"+tranId).html();
+            var num = $("#num_"+tranId).attr("num");
             var data = {"type":"transaction","tranId":tranId,"packageId":packageId,"num":num}
             console.log(data);
             $.post("./card_buy.php",data,function(result){

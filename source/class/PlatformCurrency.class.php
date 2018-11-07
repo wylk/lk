@@ -215,13 +215,13 @@ class PlatformCurrency{
     public function marksetTrade($data){
         $this->userId = $data['userId'];
         $tranId = $data['tranId'];
-        $num = $data['num'];
+        $num = (int)$data['num'];
 
         if(!option('hairpan_set.coin_open'))    return ['res'=>1,"msg"=>"暂时停止交易"];
 
         $tradeInfo = D("Card_transaction")->where(['id'=>$tranId])->find();
 
-        if($num > $tradeInfo['num'] || $tradeInfo['num'] - $tradeInfo['frozen'] <= 0)
+        if($num > ($tradeInfo['num']-$tradeInfo['frozen']) || ($tradeInfo['num'] - $tradeInfo['frozen']) <= 0)
             return ['res'=>1,"msg"=>"交易单已失效，请选择其他订单"];
         if($this->userId == $tradeInfo['uid']) return ['res'=>1,"msg"=>"此单为本人发布"];
         if($tradeInfo['status'] != '0') return ['res'=>1,"msg"=>"此交易单已关闭"];
