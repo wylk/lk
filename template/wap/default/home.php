@@ -304,6 +304,7 @@
 <script type="text/javascript">
     var type = "<?php echo $type;?>";
     var card_id = "<?php echo $card_id;?>";
+    var referer = './login.php?referer='.urlencode($_SERVER['REQUEST_URI']);
     $(function(){
         lk.is_weixin() && function(){
             $('.lk-bar-nav').css('display','none');
@@ -441,13 +442,17 @@ layui.use(['form', 'layer'],function() {
             //     //此处演示关闭
                 layer.closeAll('loading');
                 layer.msg(data.msg,{icon: 1,time:1000});
-                window.location.href = './pay.php?id='+data.orderId;
+                setTimeout(function(){
+                    window.location.href = './pay.php?id='+data.orderId;
+                },2000);
             }else{
                 //此处演示关闭
                 layer.closeAll('loading');
                 layer.msg(data.msg,{icon: 5,time:1000});
-                if(data.referer){
-                  window.location.href = data.referer;
+                if(data.error == 9){
+                    setTimeout(function(){
+                        window.location.href = referer;
+                    },2000);
                 }
             }
         },'json');

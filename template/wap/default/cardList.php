@@ -6,122 +6,164 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <title>卡券管理</title>
-  <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
-  <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=1">
+   <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
   <style type="text/css">
-    .lk-rows{
-      min-height: 100px;
-      margin: 0px auto 10px;
-      background-color: #fff;
+    *{
+        padding: 0px;margin:0px;
     }
-    .lk-row{
-      min-height: 200px;
-      width: 95%;
-      margin: 2px auto;
-    }
-    .lk-row-title{
-      height: 45px;
-      line-height: 45px;
-    }
-    .lk-row-title>span{
-        color: #333;
-        font-size: 18px;
-    }
-    .lk-row-infos{
-        height: 90px;
-        display: flex;
-        justify-content: space-between;
-    }
-    .lk-row-info{
-        height: 90px;
-        width: 35%;
-    }
-    .info-grow{
-        flex-grow:1;
-        line-height: 27px;
-        padding-left: 50px;
-    }
-    .lk-row-btns{
-        height: 60px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .lk-row-btn{
-        border-radius: 5px;
-        border: 1px solid #29aee7;
-        height: 35px;
-        width: 18%;
-        text-align: center;
-        line-height: 35px;
+    html,body{
+        height: 100%;
     }
     a{
         color: #999;
     }
-    .info-btn{
-        width: 35%;
-        height: 28px;
-        line-height: 28px;
-        color: #29aee7;
-    }
-    .info-edit{
-        display: flex;
-        justify-content:space-between;
-    }
-    .lk-content {
+    .content {
+        height: 100%;
+        background-color: #f2f2f2;
         color: #999;
+    }
+    .color-black3{
+        color: #333;
+    }
+    .mar-top{
+        margin-top: 2px;
+    }
+    .card{
+        font-size: 14px;
+        position: relative;
+        overflow: hidden;
+        margin: 10px;
+        border-radius: 5px;
+        background-color: #fff;
+        background-clip: padding-box;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+
+    }
+    .card-title{
+        height: 100px;
+        margin: 10px 20px;
+        background-image: url('../template/wap/default/images/card2.jpg?r=3322');
+        background-repeat:no-repeat;
+        background-size:100% 100%;
+        -moz-background-size:100% 100%;  
+        border-radius: 5px;
+        padding:10px;
+    }
+    .card-name{
+        text-align: center;
+        margin-top: 30px;
+        font-size: 20px;
+        color: #333;
+        font-weight:bold;
+    }
+    .mui-card-content-inne{
+        display: flex;
+        justify-content:space-around;
+    }
+    .card_info{
+        width: 20%;
+        height: 50px;
+        text-align: center;
+    }
+
+    .data-line-header{
+        font-size: 14px;
+        padding: 0px 5px;
+        min-height: 26px;
+    }
+
+    .data-line-content{
+        height: 88%;
+        background-image: url('../template/wap/default/images/856880807256349200.jpg?r=33');
+        background-repeat:no-repeat;
+        background-size:100% 100%;
+        -moz-background-size:100% 100%;  
+    }
+    
+    .user-card-edit{
+        line-height: 30px;
+        text-align: center;
+        width: 23%;
+        border-right:1px solid #c8c7cc;
+    }
+    .user-card-infos{
+        height: 60px;
+        display: flex;
+        justify-content:center;
+    }
+    .user-card-info{
+        width: 32%;
+        line-height: 60px;
+        text-align: center;
+    }
+    .user_card_info_span{
+        color: #29aee7;
+        font-size: 16px;
     }
   </style>
 </head>
 <body>
-   <header class="lk-bar lk-bar-nav">
-    <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
-    <h1 class="lk-title"  >卡券管理</h1>
-  </header>
-<div class="lk-content" style="background-color: #f0f0f0;">
-    <div class="lk-rows"> 
-
-    <?php foreach ($cardBagList as $key => $value) { ?>
-      <div class="lk-row">
-        <div class="lk-row-title"><span>抵现卡:</span><?php echo $value['card_id']; ?></div>
-        <div class="lk-row-infos">
-            <div class="lk-row-info info-logo">
-                <img src="https://free.modao.cc/uploads3/images/1907/19079609/raw_1523959707.jpeg" style="height: 100%;width: 100%;">
-            </div>
-            <div class="lk-row-info info-grow" >
-                <div>
-                    <p>累计核销:<?php echo number_format($value['recovery_count'],2); ?></p>
-                    <p>累计出售:<?php echo number_format($value['sell_count'],2); ?></p>
+   <div class="content" style="padding-top:1px;">
+        <div class="card">
+            <div class="mui-card-content-inner card-title">
+                <div class="card-id" style="overflow: hidden;color:#333">
+                    <?=$card['card_id'];?>
                 </div>
-                <div class="info-edit">
-                    <p>未  售:<?php echo number_format($value['num'],2); ?></p> <a class="lk-row-btn info-btn" id="transaction_<?php echo $key;?>" title="<?php echo $value['card_id']; ?>">交易</a>
+                <div class="card-name">
+                    <?=$card['val'];?>
+                </div>
+                <div></div>
+            </div>
+            <!--  <a href="transactionRecord.php?cardId=<?php echo $value['card_id']; ?>">全部交易</a>
+                        <a href="cardRecord.php?cardId=<?php echo $value['card_id'] ?>" class="lk-row-btn">持卡记录</a> -->
+            <div class="mui-card-content-inne">
+                <div class="card_info">
+                    <div class="color-black3"><?=$sum['val']?></div>
+                    <div class="mar-top">发布总数</div>
+                </div>
+                <div class="card_info">
+                    <div class="color-black3"><?=$count_fand;?></div>
+                    <div class="mar-top"><a href="cardRecord.php?cardId=<?php echo $user_card['card_id'] ?>">会员</a></div>
+                </div>
+                <div class="card_info">
+                    <div class="color-black3"><?=$count_record;?></div>
+                    <div class="mar-top"><a href="transactionRecord.php?cardId=<?php echo $user_card['card_id']; ?>">转账记录</a></div>
                 </div>
             </div>
         </div>
-        <div class="lk-row-btns">
-            <a href="./shopAccount.php?id=<?php echo $value['id'] ?>" class="lk-row-btn">核销</a>
-            <a href="myDeal.php?id=<?php echo $value['id']; ?>" class="lk-row-btn">我的交易</a>
-            <a href="transactionRecord.php?cardId=<?php echo $value['card_id']; ?>" class="lk-row-btn">全部交易</a>
-            <a href="cardRecord.php?cardId=<?php echo $value['card_id'] ?>" class="lk-row-btn">持卡记录</a>
-        </div>
-      </div>
-      <hr class="layui-bg-gray">
-    <?php }?>
 
+         <div class="card" style="height: 40%">
+            <div class="mui-card-header data-line-header">交易量</div>         
+            <div class="data-line-content">     
+            </div>
+        </div>
+
+        <div class="card">    
+            <div class="user-card-infos">
+                <div class="user-card-info">可用：<span style="color: #333"><?= round(($user_card['num']),2);?></span></div>
+                <div class="user-card-info" style="">锁定：<?= round($user_card['frozen'],2);?></div>
+                <div class="user-card-info"><a href="./home.php?card_id=<?=$user_card['card_id'];?>&plugin=offset&shoreUid=<?=$user_card['uid'];?>"><span class="user_card_info_span">+</span> &nbsp;店铺</a></div>
+            </div>
+            
+            
+            
+            <div class="mui-card-footer" style="padding: 7px 15px">
+                <div class="user-card-edit"><a href="transferBill.php?cardId=<?=$user_card['card_id']?>">转账</a></div>
+                 <div class="user-card-edit"><a href="changeInto.php?id=<?= $user_card['id'];?>" >充值</a></div>
+                <div class="user-card-edit"><a href="recordBooks.php?cardId=<?=$user_card['card_id']?>">账单</a></div>
+                <div class="user-card-edit" style="border:0;"><a href="transaction.php?cardId=<?=$user_card['card_id']?>">交易</a></div>
+            </div>
+        </div> 
+        
     </div>
-</div>
 <?php //include display('public_menu');?>
 </body>
 </html>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
 <script type="text/javascript">
 $(function(){
-    lk.is_weixin() && function(){
-        $('.lk-bar-nav').css('display','none');
-        $('.lk-content').css({"padding":"0px"});
-    }()
+    
     $("a[id^=transaction_]").bind("click",function(res){
         var cardId = $(this).attr("title");
         window.location.href = "./transaction.php?cardId="+cardId;
