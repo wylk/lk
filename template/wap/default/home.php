@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
-    
+
     <style type="text/css">
         html body{
             margin:0;
@@ -35,7 +35,7 @@
         .shop_infos{
             line-height: 35px;
             width: 20%;
-            
+
         }
         .shop_headline{
             height: 75px;
@@ -46,14 +46,14 @@
             /* left: 0%; */
             right: -10px;
             /* margin-left: auto; */
-            /* margin-right: auto; */ 
+            /* margin-right: auto; */
         }
         .shop_head_img{
             height: 72px;
             width: 72px;
             margin:0px auto;
         }
-        .shop_headline img{ 
+        .shop_headline img{
             height:100%;
             width: 100%;
             border-radius: 2px;
@@ -75,7 +75,7 @@
 
         }
         .plugin-title div{
-            line-height: 30px; 
+            line-height: 30px;
         }
         .plugin-title span{
             color: rgb(160, 124, 124);
@@ -83,6 +83,7 @@
         .pull{
             height: 100%;
             width: 100%;
+            overflow: auto;
         }
         .home-plugin-info{
             background: #fff;
@@ -167,7 +168,7 @@
             opacity: 1;
         }
         .receivea{
-            height: 210px; 
+            height: 210px;
             background-color: #fff;
             position:absolute;left;0;bottom:0;
         }
@@ -187,7 +188,7 @@
             height: 37px;
             width: 85%;
             margin: 0 auto;
-            
+
         }
         .tips{
             line-height: 37px;
@@ -218,9 +219,12 @@
             height: 35px;
             line-height: 35px;
         }
+        .lk-content{
+            margin-bottom: 100px;
+        }
         /* end */
     </style>
-   
+
 </head>
 <body >
 
@@ -228,6 +232,7 @@
     <i onclick="javascript:history.back(-1);" class="iconfont"  style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">交易</h1>
 </header>
+ <div id="pullrefreshs" style="touch-action: none;">
 <div class="lk-content">
     <div class="shop_headlines">
         <div class="shop_infos">
@@ -240,24 +245,24 @@
             </div>
         </div>
     </div>
-   
+
     <div class="plugin-title">
         <div>
-            
+
             &nbsp;&nbsp; <span>抵现卡</span> &nbsp;&nbsp;| &nbsp;&nbsp; 积分卡
         </div>
     </div>
-        <div id="pullrefreshs" style="touch-action: none;">
+
             <div class="pull" >
                 <div class="home-plugin-info" >
-                   
+
                 </div>
             </div>
         </div>
 </div>
   	<?php include display('public_menu');?>
     <div id="up-div">
-        <div id="up-index"> 
+        <div id="up-index">
             <div class="receivea">
                 <form>
                    <div class="card card-num">
@@ -281,7 +286,7 @@
                    <div class="card card-buy">
                         <p class="layui-btn back" id="buy">购买</p>
                    </div>
-                  
+
                  </form>
             </div>
         </div>
@@ -316,7 +321,7 @@
                 auto:true,
                 contentrefresh : "正在加载...",
                 contentnomore:'没有更多数据了',
-                callback :pullupRefresh 
+                callback :pullupRefresh
             }
         }
     });
@@ -336,7 +341,7 @@
     function pullupRefresh(){
         setTimeout(function() {
             data();
-        },1000); 
+        },1000);
         mui.init();
     }
 
@@ -377,7 +382,7 @@
                     $('#c_limit').val(re.msg.limit);
 
                 }else{
-                    
+
                 }
 
             },'json');
@@ -391,7 +396,7 @@
 layui.use(['form', 'layer'],function() {
     layer = layui.layer;
 
-    
+
 
      $("input[name='number']").bind('input',function(){
         var price = $("#c_price").val();

@@ -13,7 +13,7 @@ class CardAction{
 		if(!$cardBagInfo) return ['res'=>1,"msg"=>"该卡券失效"];
 		// $cardBagInfo['is_publisher'] == 1 ? true : dexit(["res"=>1,'msg'=>"不是本人发布"]);
 		if($cardBagInfo['num'] - $num < 0) return ['res'=>1,"发布额度超出现有额度"];
-		
+
 		// 判断发布的数值超出
 		$tranData['card_id'] = $data['cardId'];
 		$tranData['num'] = $data['num'];
@@ -45,7 +45,7 @@ class CardAction{
 		// 判断是否有订单未处理
 		$checkRes = D("Orders")->where("(tran_id = ".$data['revokeId']." or tran_other = ".$data['revokeId'].") and status = 0")->sum("number");
 		if($checkRes) return ['res'=>1,"msg"=>"还有".$checkRes."订单未处理"];
-		
+
 		$revokeInfo = D("Card_transaction")->where(['id'=>$data['revokeId']])->find();
 		if($revokeInfo['status']) return ['res'=>1,"msg"=>"此订单已失效"];
 
