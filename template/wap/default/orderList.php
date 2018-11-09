@@ -16,7 +16,7 @@
 
     <style type="text/css">
     body,.lk-content{ background-color: #f2f2f2;}
-    .order-content{height:86px;background-color: white;border-radius: 5px;padding:8px 15px;margin-bottom:10px;display: block;}
+    .order-content{height:106px;background-color: white;border-radius: 5px;padding:8px 15px;margin-bottom:10px;display: block;}
     .order-line{color:#999;width: 100%;margin: 3px 0;font-size: 16px;padding:3px 0;}
     .order-attr{width: 30%;}
     .left{float: left;}
@@ -51,14 +51,14 @@
                     <li class="" name="tab_unpaid">未付款订单</li>
                     <li class="" name="tab_paid">付款订单</li>
                 </ul>
-                <div class="layui-tab-content">
-                    <div class="layui-tab-item layui-show " id="pullrefreshs_all" style="touch-action: none;">
-                        <div id="content_all" style="overflow: auto;" ></div>
+                <div class="layui-tab-content" style="border:1px solid red;">
+                    <div class="layui-tab-item layui-show " id="pullrefreshs_all" style="touch-action: none;overflow: auto;height: 500px;">
+                        <div id="content_all" ></div>
                     </div>
-                    <div class="layui-tab-item " id="pullrefreshs_unpaid" style="touch-action: none;">
+                    <div class="layui-tab-item " id="pullrefreshs_unpaid" style="touch-action: none;overflow: auto;height: 500px;">
                         <div id="content_unpaid" ></div>
                     </div>
-                    <div class="layui-tab-item " id="pullrefreshs_paid" style="touch-action: none;">
+                    <div class="layui-tab-item " id="pullrefreshs_paid" style="touch-action: none;overflow: auto;height: 500px;">
                         <div id="content_paid" ></div>
                     </div>
                 </div>
@@ -73,10 +73,16 @@
     var element = layui.element;
   })
 // ***************** 分页 start *****************
+mui("body").on("tap","a",function(){
+    document.location.href = this.href;
+})
 $(function(){
     inter("./orderList.php",'.layui-tab-title li','#pullrefreshs_','#content_','name');
 });
 function strFunc(data){
+    var price = Number(data['price']);
+    var number = Number(data['number']);
+    var sumPrices = Number(data['price']*data['number']);
   var str = '';
     str += '<a class="order-content" href="./orderDetail.php?id='+data['id']+'">';
     str += '<div class="order-line"><span>订单：'+data['onumber']+'</span>';
@@ -92,9 +98,9 @@ function strFunc(data){
     }
     str += '<div class="order-line order-font"><span>'+data['create_time']+'</span></div>';
     str += '<div class="order-line">';
-        str += '<div class="order-attr left order-font"><span>数量：</span><span class="order-color">'+data['number']+'</span></div>';
-        str += '<div class="order-attr left order-font"><span>价格：</span><span class="order-color">'+data['price']+'</span></div>';
-        str += '<div class="order-attr right order-color"><span class="right">总额：'+data['price']*data['number']+'</span></div>';
+        str += '<div class="order-attr left order-font"><span>数量：</span><span class="order-color">'+number.toFixed(2)+'</span></div>';
+        str += '<div class="order-attr left order-font"><span>价格：</span><span class="order-color">'+price.toFixed(2)+'</span></div>';
+        str += '<div class="order-attr right order-color"><span class="right">总额：'+sumPrices.toFixed(2)+'</span></div>';
     str += '</div>';
     str += '</a>';
   return str;
