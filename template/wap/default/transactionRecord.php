@@ -25,12 +25,13 @@
     .layui-container p{ line-height: 25px;}
         .layui-container p i { color: red; margin-right: 10px;}
         .layui-tab-content { height: auto}
-        .lk-content hr{margin: 0}
-        .lk-container-flex {padding: 0 5px;}
-        .order-left{width: 63%;}
-        .order-left p{color: #999;}
-        .order-right{width: 42.9%;text-align: right;}
-        .order-right a{padding: 5px 2px;font-weight: bold;color: #333;}
+        .lk-content hr{margin: 0;height: 1px;}
+        .lk-container-flex {padding: 0 3px; width:100%;display: block;
+    height: 60px}
+        .order-left{float: left;}
+        .order-left p{color: #333;}
+        .order-right{text-align: right;padding:0;float: right;}
+        .order-right a{padding: 0px;color: #999;font-size: 12px;}
   </style>
    <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
      <script type="text/javascript">
@@ -73,8 +74,8 @@ function strFunc(data){
   var str = '';
   str += '<div class="lk-container-flex">';
     str += '<div class="order-left">';
-      str += '<p>账户:'+data['send_address'].substring(0,20)+'...</p>';
-      str += '<p>转到:'+data['get_address'].substring(0,20)+'...</p>';
+      str += '<p>账户:'+data['send_address'].substring(0,16)+'...</p>';
+      str += '<p>转到:'+data['get_address'].substring(0,16)+'...</p>';
     str += '</div>';
     str += '<div class="order-right">';
       str += '<p style="color: red"><span class="total">'+num.toFixed(2)+'hsr</span></p>';
