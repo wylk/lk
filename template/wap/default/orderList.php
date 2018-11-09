@@ -52,109 +52,14 @@
                     <li class="" name="tab_paid">付款订单</li>
                 </ul>
                 <div class="layui-tab-content">
-                    <!-- <div id="pullrefreshs" style="touch-action: none;" class="mui-content mui-scroll-wrapper"> -->
-                    <div class="layui-tab-item layui-show " id="pullrefreshs_all" style="touch-action: none;border:1px solid red;height: 600px;">
-                        <div id="content_all" ></div>
-                        <!-- <?php foreach($orderList as $key=>$value){ ?>
-                        <a class="order-content" href="./orderDetail.php?id=<?php echo $value['id']; ?>">
-                            <div class="order-line">
-                                <span>订单：<?php echo $value['onumber'] ?></span>
-                                <?php if($value['status']==0){ ?>
-                                    <span class="right" style="color: #333;"><i class="layui-icon" style="color: #29aee7;">&#xe654;</i>&nbsp;付款</span>
-                                <?php }else{ ?>
-                                <span class="right" style="color: #29aee7;">
-                                    <?php if($value['status']==1) echo "交易成功"; ?>
-                                    <?php if($value['status']==2) echo "订单取消"; ?>
-                                    <?php if($value['status']==3) echo "已付款"; ?>
-                                    <?php if($value['status']==4) echo "订单超时"; ?>
-                                </span>
-                                <?php } ?>
-                            </div>
-                            <div class="order-line order-font">
-                                <span><?php echo date("Y-m-d H:i:s",$value['create_time']) ?></span>
-                            </div>
-                            <div class="order-line">
-                                <div class="order-attr left order-font">
-                                    <span>数量：</span><span class="order-color"><?php echo number_format($value['number'],2)?></span>
-                                </div>
-                                <div class="order-attr left order-font">
-                                    <span>价格：</span><span class="order-color"><?php echo number_format($value['price'],2); ?></span>
-                                </div>
-                                <div class="order-attr right order-color">
-                                    <span class="right">总额：<?php echo number_format($value['price']*$value['number'],2); ?></span>
-                                </div>
-                            </div>
-                        </a>
-                        <?php } ?> -->
+                    <div class="layui-tab-item layui-show " id="pullrefreshs_all" style="touch-action: none;">
+                        <div id="content_all" style="overflow: auto;" ></div>
                     </div>
-                    <!-- <div class="layui-tab-item " id="content_unpaid"> -->
-                    <div class="layui-tab-item " id="pullrefreshs_unpaid" style="touch-action: none;border:1px solid red;height: 600px;">
+                    <div class="layui-tab-item " id="pullrefreshs_unpaid" style="touch-action: none;">
                         <div id="content_unpaid" ></div>
-                        <?php foreach($unpaidOrderList as $key=>$value){ ?>
-                        <a class="order-content" href="./orderDetail.php?id=<?php echo $value['id']; ?>">
-                            <div class="order-line">
-                                <span>订单：<?php echo $value['onumber'] ?></span>
-                                <span class="right" style="color: #29aee7;">
-                                <?php if($value['status']==0){ ?>
-                                    <span class="right" style="color: #333;"><i class="layui-icon" style="color: #29aee7;">&#xe654;</i>&nbsp;付款</span>
-                                <?php }else{ ?>
-                                <span class="right" style="color: #29aee7;">
-                                    <?php if($value['status']==1) echo "交易成功"; ?>
-                                    <?php if($value['status']==2) echo "订单取消"; ?>
-                                    <?php if($value['status']==3) echo "已付款"; ?>
-                                    <?php if($value['status']==4) echo "订单超时"; ?>
-                                </span>
-                                <?php } ?>
-                                </span>
-                            </div>
-                            <div class="order-line order-font">
-                                <span><?php echo date("Y-m-d H:i:s",$value['create_time']) ?></span>
-                            </div>
-                            <div class="order-line">
-                                <div class="order-attr left order-font">
-                                    <span>数量：</span><span class="order-color"><?php echo number_format($value['number'],2)?></span>
-                                </div>
-                                <div class="order-attr left order-font">
-                                    <span>价格：</span><span class="order-color"><?php echo number_format($value['price'],2); ?></span>
-                                </div>
-                                <div class="order-attr right order-color">
-                                    <span class="right">总额：<?php echo number_format($value['price']*$value['number'],2); ?></span>
-                                </div>
-                            </div>
-                        </a>
-                        <?php } ?>
-
                     </div>
-                    <div class="layui-tab-item " id="pullrefreshs_paid" style="touch-action: none;border:1px solid red;height: 600px;">
+                    <div class="layui-tab-item " id="pullrefreshs_paid" style="touch-action: none;">
                         <div id="content_paid" ></div>
-                        <!-- <?php foreach($paidOrderList as $key=>$value){ ?>
-                        <a class="order-content" href="./orderDetail.php?id=<?php echo $value['id']; ?>">
-                            <div class="order-line">
-                                <span>订单：<?php echo $value['onumber'] ?></span>
-                                <span class="right" style="color: #29aee7;">
-                                    <?php if($value['status']==0) echo "<a style='color:red' href='./pay.php?id={$value['id']}'>付款</a>"; ?>
-                                    <?php if($value['status']==1) echo "交易成功"; ?>
-                                    <?php if($value['status']==2) echo "订单取消"; ?>
-                                    <?php if($value['status']==3) echo "已付款"; ?>
-                                    <?php if($value['status']==4) echo "订单超时"; ?>
-                                </span>
-                            </div>
-                            <div class="order-line order-font">
-                                <span><?php echo date("Y-m-d H:i:s",$value['create_time']) ?></span>
-                            </div>
-                            <div class="order-line">
-                                <div class="order-attr left order-font">
-                                    <span>数量：</span><span class="order-color"><?php echo number_format($value['number'],2)?></span>
-                                </div>
-                                <div class="order-attr left order-font">
-                                    <span>价格：</span><span class="order-color"><?php echo number_format($value['price'],2); ?></span>
-                                </div>
-                                <div class="order-attr right order-color">
-                                    <span class="right">总额：<?php echo number_format($value['price']*$value['number'],2); ?></span>
-                                </div>
-                            </div>
-                        </a>
-                        <?php } ?> -->
                     </div>
                 </div>
             </div>
@@ -163,7 +68,6 @@
     <?php include display('public_menu');?>
 </body>
 <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.slidingPage.js?r=<?php echo time(); ?>" charset="utf-8"></script>
-<!-- <script src="<?php echo STATIC_URL;?>mui/js/mui.pullToRefresh.js?r=random()"></script> -->
 <script type="text/javascript">
   layui.use(['element'],function(){
     var element = layui.element;

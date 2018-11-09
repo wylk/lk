@@ -2,25 +2,26 @@ mui.init();
   var page = new Array();
   function inter(file,outContainer,container,content,attrName=null){
      $.each(document.querySelectorAll(outContainer), function(index, pullRefreshEl) {
-      console.log(attrName);
+      // console.log(attrName);
       if(attrName){
-        console.log(attrName+"+++");
         var nameStr = $(pullRefreshEl).attr(attrName);
         var type = nameStr.substring(nameStr.indexOf("_")+1);
         var containerId = container+type;
         var contentId = content+type;
+        var file1 = file+"?action="+type;
+        // var file1 = file;
       }else{
-        console.log(attrName+"---");
         var type = "default_type";
         var contentId = content;
         var containerId = container;
+        var file1 = file;
       }
         page[type] = 1;
         mui(containerId).pullRefresh({
             container:containerId,
             down: {
                 callback: function(){
-                    pulldownRefresh({type:type,containerId:containerId,contentId:contentId,file:file});
+                    pulldownRefresh({type:type,containerId:containerId,contentId:contentId,file:file1});
                 }
             },
             up: {
@@ -29,7 +30,7 @@ mui.init();
                 contentrefresh : "正在加载...",
                 contentnomore:'没有更多数据了',
                 callback :function(){
-                    pullupRefresh({type:type,containerId:containerId,contentId:contentId,file:file});
+                    pullupRefresh({type:type,containerId:containerId,contentId:contentId,file:file1});
                 }
             }
         })  
