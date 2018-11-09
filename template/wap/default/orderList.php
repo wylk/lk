@@ -73,9 +73,6 @@
     var element = layui.element;
   })
 // ***************** 分页 start *****************
-mui("body").on("tap","a",function(){
-    document.location.href = this.href;
-})
 $(function(){
     inter("./orderList.php",'.layui-tab-title li','#pullrefreshs_','#content_','name');
 });

@@ -1,3 +1,6 @@
+mui("body").on("tap","a",function(){
+    document.location.href = this.href;
+})
 mui.init();
   var page = new Array();
   function inter(file,outContainer,container,content,attrName=null){
@@ -38,7 +41,6 @@ mui.init();
   }
 
   function pulldownRefresh(arr){
-    console.log("down");
     setTimeout(function(){
       arr['action'] = 'down';
       arr['page'] = 1;
@@ -55,7 +57,6 @@ mui.init();
   }
 
   function data(arr){
-    console.log(arr);
     $.post(arr["file"],{page:arr["page"]},function(res){
       console.log(res);
       if(!res['error']){
