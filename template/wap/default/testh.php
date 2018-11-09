@@ -19,21 +19,37 @@
 <div id="pullrefreshs" style="touch-action: none;" class="mui-content mui-scroll-wrapper">
 <div style="margin:20px" id="content">
 </div>
-
+1541742628<br/>
+<?php echo date("Y-m-d H:i:s","1541742628"); ?><br/>
+<span id="a"></span>
+<span id="b"></span>
 </body>
 </html>
 
 <script type="text/javascript">
-$(function(){
-  slidingPage("./testh.php","content");
-});
-function strFunc(data){
-  var str = '';
-  str += '<div style="margin:5px;height: 50px;border:1px solid red;">';
-  str += '<div style="width: 70%;float: left;overflow: hidden;">';
-  str += '<span style="float:left">'+data['send_address']+'</span>';
-  str += '<span style="float:left;">'+data['get_address']+'</span></div>';
-  str += '<div style="width:20%;float: left;margin-left: 8px;text-align: center;">'+data['num']+'</div></div>';
-  return str;
+  $(function(){
+    var time = getTime("1541742628");
+    var time2 = getTime('');
+    $("#a").html(time);
+    $("#b").html(time2);
+  })
+function getTime(time=null){
+  var date = new Date();
+  if(time){
+    date.setTime(time * 1000);
+  }
+  var y = date.getFullYear();
+  var m = date.getMonth() + 1;
+  m = m < 10 ? ("0"+m) : m;
+  var d = date.getDate();
+  d = d < 10 ? ("0" + d) : d;
+  var h = date.getHours();
+  h = h < 10 ? ("0" + h) : h;
+  var i = date.getMinutes();
+  i = i < 10 ? ("0" + i) : i;
+  var s = date.getSeconds();
+  s = s < 10 ? ("0" + s) : s;
+  // console.log(time,time,y,m,d,h,s);
+  return y+"-"+m+"-"+d+" "+h+":"+i+":"+s;
 }
 </script>

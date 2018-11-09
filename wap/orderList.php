@@ -31,17 +31,4 @@ $action = $_GET['action'];
 	dexit(['error'=>1,"msg"=>"数据","data"=>["data"=>$orderList,"limit"=>$limitNum,"page"=>$page+1],"action"=>$action]);
 }
 
-// $orderList = D("Orders")->where("buy_id = ".$userId."and status in (0,1,3) ".$where)->order("create_time desc")->limit(4)->select();
-// dump($orderList);
-
-// 全部订单
-// $where = " and out_trade_no != ''";
-// $orderList = D("Orders")->where("buy_id = ".$userId." and status in (0,1,3) ".$where)->order("create_time desc")->limit(5)->select();
-// $orderList = D("Orders")->where("buy_id = ".$userId." and status = 1 ".$where)->order("create_time desc")->limit(5)->select();
-// dump($orderList);	
-// $re = D("Orders")->select();
-// dump($orderList);
-// dump($re);
-// $paidOrderList = D("Orders")->where("buy_id = ".$userId."and status = 1 ".$where)->order("create_time desc")->limit(5)->select();
-// $unpaidOrderList = D("Orders")->where("buy_id = ".$userId."and status = 3 ".$where)->order("create_time desc")->limit(5)->select();
 include display("orderList");

@@ -123,17 +123,17 @@ require_once dirname(__FILE__).'/global.php';
 // }
 // $res = checkSign($xml);
 // dump($res);
-$num = 4;
-if(IS_POST){
-	$page = $_POST['page'];
-	if($page == 1) $limit = $num;
-	else $limit = ($page-1)*$num.",".$num;
-	$bookRes = D("Record_books")->limit($limit)->select();
-	if($bookRes)
-		dexit(['error'=>0,"msg"=>"第".$page."页数据","data"=>["data"=>$bookRes,"page"=>$page+1,"limit"=>$num]]);
-	else
-		dexit(['error'=>1,"msg"=>"加载失败","data"=>$bookRes]);
-}
+// $num = 4;
+// if(IS_POST){
+// 	$page = $_POST['page'];
+// 	if($page == 1) $limit = $num;
+// 	else $limit = ($page-1)*$num.",".$num;
+// 	$bookRes = D("Record_books")->limit($limit)->select();
+// 	if($bookRes)
+// 		dexit(['error'=>0,"msg"=>"第".$page."页数据","data"=>["data"=>$bookRes,"page"=>$page+1,"limit"=>$num]]);
+// 	else
+// 		dexit(['error'=>1,"msg"=>"加载失败","data"=>$bookRes]);
+// }
 
 // $bookRes = D("Record_books")->limit("15,30")->select();
 // dump($bookRes);

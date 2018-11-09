@@ -93,7 +93,7 @@ function strFunc(data){
         if(data['status'] == 4) str += "订单超时";
         str += "</span></div>";
     }
-    str += '<div class="order-line order-font"><span>'+data['create_time']+'</span></div>';
+    str += '<div class="order-line order-font"><span>'+getTime(data['create_time'])+'</span></div>';
     str += '<div class="order-line">';
         str += '<div class="order-attr left order-font"><span>数量：</span><span class="order-color">'+number.toFixed(2)+'</span></div>';
         str += '<div class="order-attr left order-font"><span>价格：</span><span class="order-color">'+price.toFixed(2)+'</span></div>';

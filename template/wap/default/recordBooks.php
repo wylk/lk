@@ -61,7 +61,7 @@ function strFunc(data){
     var str = '';
     str += '<div class="lk-container-flex">';
         str += '<div class="order-left">';
-            str += '<p>账户:'+data['get_address'].substring(0,16)+'...</p><p>时间:'+data['createtime']+'</p>';
+            str += '<p>账户:'+data['get_address'].substring(0,16)+'...</p><p>时间:'+getTime(data['createtime'])+'</p>';
         str += '</div>';
         str += '<div class="order-right">';
         if(data['send_address'] == '<?php echo $address ?>'){
@@ -75,4 +75,5 @@ function strFunc(data){
     str += '</div><hr>';
   return str;
 }
+
 </script>

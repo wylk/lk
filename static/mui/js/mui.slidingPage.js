@@ -86,3 +86,22 @@ mui.init();
       }
     },"json");
   }
+function getTime(time=null){
+  var date = new Date();
+  if(time){
+    date.setTime(time * 1000);
+  }
+  var y = date.getFullYear();
+  var m = date.getMonth() + 1;
+  m = m < 10 ? ("0"+m) : m;
+  var d = date.getDate();
+  d = d < 10 ? ("0" + d) : d;
+  var h = date.getHours();
+  h = h < 10 ? ("0" + h) : h;
+  var i = date.getMinutes();
+  i = i < 10 ? ("0" + i) : i;
+  var s = date.getSeconds();
+  s = s < 10 ? ("0" + s) : s;
+  // console.log(time,time,y,m,d,h,s);
+  return y+"-"+m+"-"+d+" "+h+":"+i+":"+s;
+}

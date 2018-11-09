@@ -28,7 +28,4 @@ if(IS_POST){
 $userInfo = D("Card_package")->where(['uid'=>$userId,'card_id'=>$cardId])->find();
 $address = $userInfo['address'];
 
-// $where = "`card_id` ='".$cardId."' and ( `get_address`='".$address."' or `send_address`='".$address."' )";
-// $recordList = D("Record_books")->where($where)->order("createtime desc")->select();
-// dump($recordList);
 include display("recordBooks");
