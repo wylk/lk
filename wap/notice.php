@@ -18,7 +18,7 @@ if(!empty($xml)){
 }else if($payType == 'platform'){
 	$userId = $_REQUEST['userid'];
 	$data['out_trade_no'] = $_REQUEST['out_trade_no'];
-	
+
 }else{
 	// dexit(['errcode'=>2,'msg'=>"当前不支持".$payType."支付方式",'data'=>$payType]);
 	pay_return(['res'=>"FAIL","msg"=>"当前不支持".$payType."支付方式","type"=>$payType]);

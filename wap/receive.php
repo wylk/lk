@@ -20,11 +20,11 @@ if(IS_POST){
     $data['prices'] = $datas['prices'];
     $data['price'] = $datas['price'];
     $data['tran_id'] = $datas['tranId'];
+    $data['type'] = 1;
     $data['create_time'] = time();
     $data['onumber'] = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
     $data['out_trade_no'] = date('YmdHis', $_SERVER['REQUEST_TIME']) . mt_rand(100000, 999999);
 
-    
 
     // 判断购买卡片是否是本人发布
     $tranInfo = D("Card_transaction")->where(['id'=>$data['tran_id']])->find();
