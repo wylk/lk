@@ -1,3 +1,4 @@
+
 <?php
 require_once dirname(__FILE__).'/global.php';
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
@@ -10,7 +11,7 @@ $userId = isset($wap_user['userid']) ? $wap_user['userid'] : 1;
 
 // 清除超时订单
 $deadline = option('hairpan_set.expiry_time') ? option('hairpan_set.expiry_time') : 60*30;
-$where = ['create_time'=>["<=",time()-$deadline],"status"=>"0",'app_id'=>0];
+$where = ['create_time'=>["<=",time()-$deadline],"status"=>"0",'type'=>['!=',2]];
 $orderlist = D("Orders")->where($where)->select();
 if($orderlist){
 	foreach($orderlist as $key=>$value){
@@ -125,7 +126,7 @@ if($type == 2 && $status == 1 && empty($isDelete)){
             ['icon'=>'&#xe6f5;','url'=>'./postcard.php','title'=>'认证'],
             ['icon'=>'&#xe758;','url'=>'./cardType.php','title'=>'卡/券'],
             ['icon'=>'&#xe803;','url'=>'./userApi.php','title'=>'接口'],
-            ['icon'=>'&#xe83a;','url'=>'','title'=>'店员管理'],
+            ['icon'=>'&#xe83a;','url'=>'promotion.php','title'=>'推广'],
         ];
 }elseif($type == 3 && $status == 1 && empty($isDelete)){
 	$menu = [
@@ -148,3 +149,4 @@ $res=D('User')->where(['phone' => $phone])->find();
 include display('my');
 echo ob_get_clean();
 exit();
+

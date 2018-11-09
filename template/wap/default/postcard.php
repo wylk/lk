@@ -6,11 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>认证</title>
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
+    html,body{
+        background-color: #fff;
+    }
 /*     .layui-container p{ line-height: 35px;} */
     .layui-container p i { color: red; margin-right: 10px;}
     .layui-tab-content { height: auto}
@@ -47,6 +51,7 @@
     }
     .lk-content{
         color: #555;
+        margin-bottom: 0px;
     }
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
@@ -323,7 +328,7 @@
     </div>
     </div>
     </div>
-    <?php include display('public_menu');?>
+    <?php //include display('public_menu');?>
 </body>
 <script type="text/javascript">
 <?php if($audit['status'] == 1 || $audit['status'] == "0"){ ?>

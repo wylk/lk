@@ -51,7 +51,7 @@
                     <li class="" name="tab_unpaid">未付款订单</li>
                     <li class="" name="tab_paid">付款订单</li>
                 </ul>
-                <div class="layui-tab-content" style="border:1px solid red;">
+                <div class="layui-tab-content" >
                     <div class="layui-tab-item layui-show " id="pullrefreshs_all" style="touch-action: none;overflow: auto;height: 500px;">
                         <div id="content_all" ></div>
                     </div>

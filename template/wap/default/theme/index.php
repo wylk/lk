@@ -175,7 +175,7 @@
                 <!-- <img src="../template/wap/default/images/icon_map.png?r=12" style="height:33px;margin-top:-5px;border-r:"> -->
             </div>     
             <div class="wind_f" id="work">
-              <div id="pullrefreshs" style="touch-action: none;">
+              <div id="pullrefreshs" style="touch-action: none;overflow: hidden;height: 300px;">
                
                       <div class="lk-content" style="padding-top:0px ">
 
@@ -221,6 +221,7 @@ function touchMove(e){//滑动
     //console.log(aboveY+y);
     var hei = document.documentElement.clientHeight;
     document.getElementById("work").style.height = (hei-(aboveY+y+80-20))+'px';
+    document.getElementById("pullrefreshs").style.height = (hei-(aboveY+y+80-21))+'px';
     document.getElementById("up-map-div").style.height = (hei-(aboveY+y+80-30))+'px';
     if((aboveY+y) < 40){
         inner.style.top="40px"; //这一句中的aboveY是inner上次滑动后的位置
