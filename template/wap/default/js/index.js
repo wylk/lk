@@ -36,7 +36,7 @@
         $.post('index_ajax.php',{i:i,plugin:plugin,lng:lng,lat:lat},function(re){
             ++i;
            // console.log(del);
-            if(del){
+            if(del && re.error == 0){
                 $('.stores').html('');
             }
             if(re.error == 0){
