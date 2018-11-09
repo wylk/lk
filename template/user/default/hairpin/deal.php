@@ -124,7 +124,7 @@
                     <?php if($value['num'] <= $value['frozen']) continue; ?>
                     <tr id="tr_<?php echo $value['id']; ?>">
                       <td style="color:#008069">买</td>
-                      <td id="num_<?php echo $value['id']; ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></td>
+                      <td id="num_<?php echo $value['id']; ?>" num="<?php echo $value['num']-$value['frozen'] ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></td>
                       <td><?php echo number_format($value['price']*($value['num']-$value['frozen']),2) ?></td>
                       <td><a href="javascript:;" id="sellTran_<?php echo $value['id']; ?>"  class="layui-btn layui-btn-xs">卖出</a></td>
                     </tr>
@@ -146,7 +146,7 @@
                     <?php if($value['num'] <= $value['frozen']) continue; ?>
                     <tr id="tr_<?php echo $value['id']; ?>">
                       <td style="color:red">卖</td>
-                      <td id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></td>
+                      <td id="num_<?php echo $value['id'] ?>" num="<?php echo $value['num']-$value['frozen'] ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></td>
                       <td><?php echo number_format($value['price']*$value['num'],2) ?></td>
                       <!-- onclick="x_admin_show('卖出','?c=hairpin&a=transaction&type=0&id=<?= 1 ?>',500,500)" -->
                       <td><a href="javascript:;" id="buyTran_<?php echo $value['id'] ?>"  class="layui-btn layui-btn-xs" >买入</a></td>
@@ -359,7 +359,7 @@ layui.use(["layer",'element'], function(){
     layer.load();
     var idStr = $(this).attr("id");
     var tranId = idStr.substring(idStr.indexOf("_")+1);
-    var num = $("#num_"+tranId).html();
+    var num = $("#num_"+tranId).attr("num");
     var packageId = "<?php echo $packageInfo['id'] ?>"
     console.log(tranId);
     var data = {"tranId":tranId,"num":num,"packageId":packageId};
@@ -380,7 +380,7 @@ layui.use(["layer",'element'], function(){
     layer.load();
     var idStr = $(this).attr("id");
     var tranId = idStr.substring(idStr.indexOf("_")+1);
-    var num = $("#num_"+tranId).html();
+    var num = $("#num_"+tranId).attr("num");
     var packageId = "<?php echo $packageInfo['id'] ?>"
     console.log(tranId);
     var data = {"tranId":tranId,"num":num,"packageId":packageId};

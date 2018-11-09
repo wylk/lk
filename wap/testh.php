@@ -76,24 +76,24 @@ require_once dirname(__FILE__).'/global.php';
 // $res = M("Card_package")->dataModification($editList,$addition);
 // dump($res);
 
-$xml = "<xml><appid><![CDATA[wxcf45e0f03cb2fe06]]></appid>
-<bank_type><![CDATA[CFT]]></bank_type>
-<cash_fee><![CDATA[10]]></cash_fee>
-<fee_type><![CDATA[CNY]]></fee_type>
-<is_subscribe><![CDATA[Y]]></is_subscribe>
-<mch_id><![CDATA[1504906041]]></mch_id>
-<nonce_str><![CDATA[1L4NoXan0mG5dWg75KxGRESLu1hhFPZ6]]></nonce_str>
-<openid><![CDATA[o3DhqwYWyDquFkGfPz6bAwj2POD0]]></openid>
-<out_trade_no><![CDATA[20181024141515119353]]></out_trade_no>
-<result_code><![CDATA[SUCCESS]]></result_code>
-<return_code><![CDATA[SUCCESS]]></return_code>
-<sign><![CDATA[3F4E9FF986C9A68105CA60A03405378A]]></sign>
-<time_end><![CDATA[20181024141523]]></time_end>
-<total_fee>10</total_fee>
-<trade_type><![CDATA[JSAPI]]></trade_type>
-<transaction_id><![CDATA[4200000204201810243021513395]]></transaction_id>
-</xml>";
-return $xml;
+// $xml = "<xml><appid><![CDATA[wxcf45e0f03cb2fe06]]></appid>
+// <bank_type><![CDATA[CFT]]></bank_type>
+// <cash_fee><![CDATA[10]]></cash_fee>
+// <fee_type><![CDATA[CNY]]></fee_type>
+// <is_subscribe><![CDATA[Y]]></is_subscribe>
+// <mch_id><![CDATA[1504906041]]></mch_id>
+// <nonce_str><![CDATA[1L4NoXan0mG5dWg75KxGRESLu1hhFPZ6]]></nonce_str>
+// <openid><![CDATA[o3DhqwYWyDquFkGfPz6bAwj2POD0]]></openid>
+// <out_trade_no><![CDATA[20181024141515119353]]></out_trade_no>
+// <result_code><![CDATA[SUCCESS]]></result_code>
+// <return_code><![CDATA[SUCCESS]]></return_code>
+// <sign><![CDATA[3F4E9FF986C9A68105CA60A03405378A]]></sign>
+// <time_end><![CDATA[20181024141523]]></time_end>
+// <total_fee>10</total_fee>
+// <trade_type><![CDATA[JSAPI]]></trade_type>
+// <transaction_id><![CDATA[4200000204201810243021513395]]></transaction_id>
+// </xml>";
+// return $xml;
 
 // $array_data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
 // dump($array_data);
@@ -123,4 +123,18 @@ return $xml;
 // }
 // $res = checkSign($xml);
 // dump($res);
+$num = 4;
+if(IS_POST){
+	$page = $_POST['page'];
+	if($page == 1) $limit = $num;
+	else $limit = ($page-1)*$num.",".$num;
+	$bookRes = D("Record_books")->limit($limit)->select();
+	if($bookRes)
+		dexit(['error'=>0,"msg"=>"第".$page."页数据","data"=>["data"=>$bookRes,"page"=>$page+1,"limit"=>$num]]);
+	else
+		dexit(['error'=>1,"msg"=>"加载失败","data"=>$bookRes]);
+}
 
+// $bookRes = D("Record_books")->limit("15,30")->select();
+// dump($bookRes);
+include display('testh');

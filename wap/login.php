@@ -1,8 +1,12 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
 $verifyLen = "6";  //验证码长度
-$referer=clear_html($_GET['referer']);
+//$referer=clear_html($_GET['referer']);
+$referer = $_GET['referer'] ? $_GET['referer'] : ($_SERVER['HTTP_REFERER'] ? $_SERVER['HTTP_REFERER'] : $config['site_url']);
 
+if (strpos($referer,'&amp;')) {
+    $referer = str_replace('&amp;','&',$referer);
+}
 // 判断是否是微信、支付宝、手机号登录
 // 1、微信号
 // 2、支付宝
@@ -97,7 +101,8 @@ if(is_weixin()){
         $_SESSION['wap_user']['userid'] = $userinfo['id'];
         $_SESSION['wap_user']['logintime'] = time();
         // dump($_SESSION['wap_user']);
-        header("Location:https://bcc.51ao.com/wap/my.php");
+        redirect($referer);
+        //header("Location:https://bcc.51ao.com/wap/my.php");
     }
 
 }

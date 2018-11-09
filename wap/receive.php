@@ -2,7 +2,11 @@
 require_once dirname(__FILE__).'/global.php';
 $userId = $wap_user['userid'];
 if(!D("User")->where(['id'=>$userId])->find()) {
-    redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
+    if (IS_AJAX) {
+        dexit(['error'=>9,'msg'=>'没有登录']);
+    }else{
+        redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
+    }
 }
 // $res = D('Card')->where(array('uid' =>38,'c_id' =>6))->find();
 if(IS_POST){
@@ -25,6 +29,8 @@ if(IS_POST){
     // 判断购买卡片是否是本人发布
     $tranInfo = D("Card_transaction")->where(['id'=>$data['tran_id']])->find();
     $tranInfo['uid'] != $userId ? true : dexit(['error'=>1,'msg'=>'此交易为本人发布']);
+    $tranInfo['status'] == '0' ? true : dexit(['error'=>1,'msg'=>"此交易已失效"]);
+    ($tranInfo['num'] - $tranInfo['frozen']) > $datas['number'] ? true : dexit(['error'=>1,'msg'=>"购买数量不合法"]);
 
 
     if($data['number'] <= $datas['quantity']){
@@ -55,6 +61,9 @@ $addressInfo = D("Map")->where(['uid'=>$UserAud['uid']])->find();
 if(!D('Card_package')->where(['uid'=>$userId,'card_id'=>$UserAud['card_id']])->find()){
     $contract = $_GET['card']?$_GET['card']:'offset';
     $res = hook('addCardPackage',['card_id'=>$UserAud['card_id'],'uid'=>$userId],$contract);
+    if(!$res){
+        dexit(['error'=>1,'msg'=>'网络错误稍后再试']);   
+    }
 }
 dexit(['error'=>0,'msg'=>$UserAud]);
 //include display('receive');

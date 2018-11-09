@@ -7,43 +7,33 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css" type="text/css">
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.slidingPage.js?r=random()" charset="utf-8"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
+    <!-- <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script> -->
     <style type="text/css">
-       .platform{border:1px solid red;width: 90%; margin: auto;border-radius: 5px;}
-       .platform h3{text-align: center;margin:20px;}
-       .platform input{width: 70%;}
-       .layui-form-block{text-align: center;}
-       .platform button{width: 40%;}
     </style>
 </head>
 <body>
-
-<div class="lk-content">
-  <div class="layui-form platform">
-    <h3>平台支付</h3>
-    <div class="layui-form-item">
-      <label class="layui-form-label">密码：</label>
-      <div class="layui-input-block">
-        <input type="password" name="pwd" value="" class="layui-input">
-      </div>
-      <!-- 密码：<input type="" name=""> -->
-    </div>
-    <div class="layui-form-item">
-      <div class="layui-form-block">
-        <button class="layui-btn layui-btn-primary">取消</button>
-        <button class="layui-btn" lay-submit lay-filter="formDemo">确认</button>
-      </div>
-    </div>
-  </div>
+<div id="pullrefreshs" style="touch-action: none;" class="mui-content mui-scroll-wrapper">
+<div style="margin:20px" id="content">
 </div>
+
 </body>
 </html>
 
 <script type="text/javascript">
-layui.use(['form', 'layer'],function() {
-    layer = layui.layer;
-
-
+$(function(){
+  slidingPage("./testh.php","content");
 });
+function strFunc(data){
+  var str = '';
+  str += '<div style="margin:5px;height: 50px;border:1px solid red;">';
+  str += '<div style="width: 70%;float: left;overflow: hidden;">';
+  str += '<span style="float:left">'+data['send_address']+'</span>';
+  str += '<span style="float:left;">'+data['get_address']+'</span></div>';
+  str += '<div style="width:20%;float: left;margin-left: 8px;text-align: center;">'+data['num']+'</div></div>';
+  return str;
+}
 </script>

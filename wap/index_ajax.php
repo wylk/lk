@@ -32,7 +32,7 @@ function index($data){
         $lng = $data['lng'];
         $lat = $data['lat'];
 
-        $join = "ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN(({$lat}*PI()/180-`sc`.`lat`*PI()/180)/2),2)+COS({$lat}*PI()/180)*COS(`sc`.`lat`*PI()/180)*POW(SIN(({$lng}*PI()/180-`sc`.`lng`*PI()/180)/2),2)))*1000)";
+        $join = "ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN(({$lat}*PI()/180-`b`.`lat`*PI()/180)/2),2)+COS({$lat}*PI()/180)*COS(`b`.`lat`*PI()/180)*POW(SIN(({$lng}*PI()/180-`b`.`lng`*PI()/180)/2),2)))*1000)";
 
        /* $store_list_min = D('')->table(array('Store_contact'=>'sc','Store'=>'s'))->field("`s`.`store_id`,`s`.`name`,`s`.`logo`,`s`.`distance`,`s`.`specified_amount`,`sc`.`address`,`s`.`intro`,".$join."AS juli")->where("`sc`.`store_id`=`s`.`store_id` AND s.drp_supplier_id = '0' AND `s`.`status`='1' AND ".$join."<5000")->order("`juli` ASC")->limit(12)->select();*/
 
@@ -40,13 +40,12 @@ function index($data){
         $store_package = D('')->table("User_audit as b")
                   ->join('Card_package as a ON a.uid=b.uid','LEFT')
                   ->join('Card as c ON b.uid=c.uid','LEFT')
-                  ->join('Map as sc ON sc.uid=a.uid','LEFT')
-                  ->field("a.card_id as card_id,b.*,c.val as logo,$join as juli,sc.lng as lng,sc.lat as lat")
+                  //->join('Map as sc ON sc.uid=a.uid','LEFT')
+                  ->field("a.card_id as card_id,b.*,c.val as logo,$join as juli")
                   ->where("a.is_publisher=1 and a.type='offset' and c.c_id=2 and c.type='offset' and b.status=1 and b.isdelete=0 $where")
                   ->order("`juli` ASC")
                   ->limit((($data['i']-1)*10).",10")
                   ->select();
-        //dump($store_package);die;
 	if($store_package){
 
         $str = '';

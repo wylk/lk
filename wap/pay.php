@@ -38,18 +38,18 @@ if(IS_POST){
 		case 'platform':
 			$payPwd = $_POST['payPwd'];
 			// 订单信息
-			$orderInfo = D("Orders")->field('out_trade_no')->where(['id'=>$orderId])->find();
+			// $orderInfo = D("Orders")->where(['id'=>$orderId])->find();
 			// 判断密码
 			if(md5($payPwd) != $userInfo['pay_password']){
 				dexit(['res'=>1,'msg'=>'支付密码错误','data'=>md5($payPwd),'id'=>$userId]);
 			}
 			// 判断余额
 			$userPackinfo = D("Card_package")->field('num')->where(['uid'=>$userId,'type'=>option("hairpan_set.platform_type_name")])->find();
-			if($orderinfo['number'] - $userPackinfo['num'] > 0) dexit(['res'=>1,'msg'=>'平台币余额不足']);
+			if(($orderinfo['number']*$orderinfo['price']) - $userPackinfo['num'] > 0) dexit(['res'=>1,'msg'=>'平台币余额不足']);
 			// 调用回调
 			import('source.class.Http');
 			$payment_url = option('config.wap_site_url') . '/notice.php';
-			$data['out_trade_no'] = $orderInfo['out_trade_no'];
+			$data['out_trade_no'] = $orderinfo['out_trade_no'];
 			$data['payType'] = 'platform';
 			$data['userid'] = $userId;
 			$result = Http::curlPost($payment_url, $data);
@@ -79,6 +79,8 @@ if(IS_POST){
 
 $orderId = $_GET['id'];
 $orderinfo = D("Orders")->where(['id'=>$orderId])->find();
+$store_name = D('User_audit')->field('enterprise as name')->where(['uid'=>$orderinfo['sell_id'],'type'=>2])->find();
+$store_name = $store_name['name'];
 if($orderinfo['status']){
 	header('location:orderDetail.php?id='.$orderId);
 }

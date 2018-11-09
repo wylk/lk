@@ -9,7 +9,7 @@ display: -webkit-flex;
 }
 .wx_nav {
 overflow: hidden;
-height: 49px;
+height: 50px;
 border-top: 1px solid #ddd;
 position: fixed;
 z-index: 900;
@@ -50,7 +50,7 @@ width: 23px;
 height: 23px;
 content: '\20';
 display: block;
-margin: 0 auto 2px auto;
+margin: 0 auto 1px auto;
 }
 .wx_nav .nav_index:before {
 background-position: 0 0;

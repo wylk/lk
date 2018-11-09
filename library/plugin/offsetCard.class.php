@@ -67,12 +67,16 @@ class offsetCard extends Card
         $Account_book = new AccountBook();
         $json = json_encode(['uid'=>$data['uid'],'contract_id'=>$data['card_id'],'account_balance'=>0]);
         $address = $Account_book->addAccount(encrypt($json,option('version.public_key')));
-        $card['address'] = $address;
-        $card['type'] = 'offset';
-        $card['card_id'] = $data['card_id'];
-        $card['uid'] = $data['uid'];
-        return D('Card_package')->data($card)->add();
-
+        if($address){
+            $card['address'] = $address;
+            $card['type'] = 'offset';
+            $card['card_id'] = $data['card_id'];
+            $card['uid'] = $data['uid'];
+            return D('Card_package')->data($card)->add();
+        }else{
+            return false;
+        }
+       
     }
     public function receive()
     {
@@ -106,7 +110,7 @@ class offsetCard extends Card
            <div class="home-plugin-info-row">
              <div class="home-plugin-info-row-card line-heights line-width1">
                 <div class="home-plugin-info-row-card-img">
-                    <img src="{$img}" style="height:100%;width:100%;border-radius: 2px;">
+                    <img src="{$img}" style="height:100%;width:100%;border-radius: 2px;vertical-align: top;">
                 </div>
              </div>
              <div class="home-plugin-info-row-card row-card2">

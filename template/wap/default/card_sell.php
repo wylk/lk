@@ -109,16 +109,10 @@
                     <img src="<?php echo $userInfo[$value['uid']]['avatar'] ?>" style="height:60px;border-radius: 20%;"/>
                 </div>
                 <div style="width: 50%;">
-                    <p><span id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num']-$value['frozen'],2)  ?></span> WLK</p>
+                    <p><span id="num_<?php echo $value['id'] ?>" num="<?php echo $value['num']-$value['frozen'] ?>"><?php echo number_format($value['num']-$value['frozen'],2)  ?></span> WLK</p>
                     <p>价格：<?php echo number_format($value['price'],2) ?></p>
                     <p>限额：<?php echo number_format($value['limit'],2) ?> - <?php echo number_format($value['num']-$value['frozen'],2) ?></p>
                 </div>
-              <!--   <p class="item-flex"><?php echo $userInfo[$value['uid']]['name']?></p>
-                <p class="item-flex"><span id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num']-$value['frozen'],2)  ?></span> WLK</p>
-                <p class="item-flex"><img src="<?php echo $userInfo[$value['uid']]['avatar'] ?>" style="height:60px;border-radius: 20%;"/></p> -->
-                <!-- <p class="item-flex">在线</p> -->
-                <!-- <p class="item-flex">价格：<?php echo number_format($value['price'],2) ?></p>
-                <p class="item-flex">限额：<?php echo number_format($value['limit'],2) ?> - <?php echo number_format($value['num'],2) ?></p> -->
             </div>
             <div class="lk-container-flex">
                 <p class="item-buy"><a href="javascript:;" id="transaction_<?php echo $value['id'] ?>">卖出</a></p>

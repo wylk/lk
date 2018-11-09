@@ -5,5 +5,7 @@ $storeUid = clear_html($_GET['shoreUid']);
 $type = isset($_GET['plugin'])?$_GET['plugin']:'offset';
 $card_id = isset($_GET['card_id'])?$_GET['card_id']:'';
 
+$store = D('User_audit')->where(['uid'=>$_GET['shoreUid'],'type'=>2])->find();
+
 include display('home');
 echo ob_get_clean();

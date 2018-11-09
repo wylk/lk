@@ -42,7 +42,7 @@
   </header>
 <div class="lk-content" style="background-color: #f0f0f0;">
     <a href="./pay_pw.php">
-        <div class="item-row lk-container-flex" style="margin: 20px auto 0px;">
+        <div class="item-row lk-container-flex" style="margin: 0px auto 0px;">
             <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe71c;</i></div>
             <div class="item-row-title row" >账户安全设置</div>
             <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
@@ -100,9 +100,18 @@
 </div>
 </body>
 </html>
+<script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
+ <script type="text/javascript">
+    $(function(){
+        lk.is_weixin() && function(){
+            $('.lk-bar-nav').css('display','none');
+            $('.lk-content').css({"padding":"0px"});
+        }()
+    })
+</script>
 <script type="text/javascript">
 
-
+         var url = "<?php echo './login.php?referer='.urlencode($_SERVER['REQUEST_URI']);?>";   
         layui.use(['form','layer'], function(){
             var layer = layui.layer;
             //退出登录
@@ -111,7 +120,7 @@
                 $.post("./login.php",{phone:phone,type:"signOut"},function(res){
                     if(res.error == 0){
                         layer.msg(res.msg,{icon:1,time:2000},function(){
-                            window.location.href = "./login.php";
+                            window.location.href = url;
                         });
                     }
                 },'json')

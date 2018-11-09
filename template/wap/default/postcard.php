@@ -35,7 +35,19 @@
     .hidden { display: none;}
     .cardBody { width: 100%; margin-top: 46px; text-align: center;}
     .img-block{height: 95px}
+    .layui-tab-brief>.layui-tab-title{
+        color: #999;
+    }
+    .layui-tab-brief>.layui-tab-title .layui-this{
+        color: #333;
+    }
 
+    .layui-tab-brief>.layui-tab-more li.layui-this:after, .layui-tab-brief>.layui-tab-title .layui-this:after{
+        border-bottom: 1px solid #29aee7;
+    }
+    .lk-content{
+        color: #555;
+    }
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
      <script type="text/javascript">
@@ -54,12 +66,14 @@
         <h1 class="lk-title">认 证</h1>
     </header>
     <div class="lk-content">
+        <?php if(empty($type)){?>
         <div class="layui-container">
             <p style="font-size: 12px;margin-top: 8px;"><i>注:</i>普通用户无需认证 发VIP1/VIP2请完成认证</p>
+            <hr>
         </div>
-        <hr>
+        <?php }?>
         <div class="layui-container">
-            <p>认证状态：<font style="color: red">
+            <p style="margin-top: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;认证状态：<font style="color: #b37272">
                 <?php
                 if($audit['status']==1) echo "恭喜您，通过认证";
                 elseif($audit['status']==2) echo "未通过，查看驳回原因，修改后重新提交。";
@@ -67,8 +81,9 @@
                 else echo "请添加您的信息";
                 ?> </font>
             </p>
+            <hr>
         </div>
-        <hr>
+        
         <div class="layui-container">
             <div class="layui-tab layui-tab-brief" lay-filter="aduitTab">
                 <ul class="layui-tab-title">
@@ -78,7 +93,7 @@
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item <?php echo (empty($type) || $type ==1 )? "layui-show" : ""?>">
-                     <?php if(!empty($type) && $type !=1){ echo "<p class='cardBody'>您已选择其他认证，不能再进行个人认证</p>";}?>
+                     <?php if(!empty($type) && $type !=1){ echo "<p class='cardBody'>您已选择其他认证，不能再进行个人认证!</p>";}?>
                         <form class='layui-form <?php if( !empty($type) && $type != 1 ){ echo 'hidden';}?>'>
                         <input type="hidden" name="type" value="1">
                         <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : ""?>">
@@ -147,7 +162,7 @@
                     </form>
                 </div>
                 <div class="layui-tab-item <?php echo ($type ==2 ) ? " layui-show " : " "?>">
-                   <?php if(!empty($type) && $type !=2){ echo "<p class='cardBody'>您已选择其他认证，不能再进行个人认证</p>";}?>
+                   <?php if(!empty($type) && $type !=2){ echo "<p class='cardBody'>您已选择其他认证，不能再进行个人认证!</p>";}?>
                     <form class='layui-form <?php if( !empty($type) && $type != 2 ){ echo 'hidden';}?>'>
                     <input type="hidden" name="type" value="2">
                     <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : " "?>">
@@ -243,7 +258,7 @@
             </div>
             <!-- 企业 -->
              <div class="layui-tab-item <?php echo ( $type ==3 ) ? " layui-show " : " "?>">
-                <?php if(!empty($type) && $type !=3){ echo "<p class='cardBody'>您已选择其他认证，不能再进行个人认证</p>";}?>
+                <?php if(!empty($type) && $type !=3){ echo "<p class='cardBody'>您已选择其他认证，不能再进行个人认证!</p>";}?>
               <form class='layui-form <?php if(!empty($type) && $type != 3){ echo 'hidden';}?>'>
                 <input type="hidden" name="type" value="3">
                 <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : " "?>">
