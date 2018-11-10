@@ -111,7 +111,8 @@
 </script>
 <script type="text/javascript">
 
-         var url = "<?php echo './login.php?referer='.urlencode($_SERVER['REQUEST_URI']);?>";   
+         //var url = "<?php echo './login.php?referer='.urlencode($_SERVER['REQUEST_URI']);?>";   
+        var url = "index.php";   
         layui.use(['form','layer'], function(){
             var layer = layui.layer;
             //退出登录
