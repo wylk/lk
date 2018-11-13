@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>设置</title>
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>/sweetalert/css/sweet-alert.css">
@@ -40,7 +41,7 @@
     <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
     <h1 class="lk-title">设置</h1>
   </header>
-<div class="lk-content" style="background-color: #f0f0f0;">
+<div class="lk-content" style="background-color: #f2f2f2;height: 100%;margin-bottom: 0px;">
     <a href="./pay_pw.php">
         <div class="item-row lk-container-flex" style="margin: 0px auto 0px;">
             <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe71c;</i></div>
@@ -58,6 +59,7 @@
                         </div>
                     </a>
                     <hr class="layui-bg-gray">
+                    <?php if($user['status'] == 2){?>
                     <a href="./map.php">
                     <div class="item-row lk-container-flex" style="margin: 0px auto" >
                         <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe715;</i></div>
@@ -65,20 +67,21 @@
                         <div class="item-row-arrow row center" ><i class="iconfont"   style="font-size: 20px;">&#xe6a7;</i></div>
                     </div>
                     </a>
+                    <?php }?>
                 </span>
 
-    <div class="item-row lk-container-flex" style="margin: 20px auto 0px;">
+     <div class="item-row lk-container-flex" style="margin: 20px auto 0px;">
         <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe6ba;</i></div>
-        <div class="item-row-title row" >消息设置</div>
-        <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
-    </div>
-
-    <hr class="layui-bg-gray">
-    <div class="item-row lk-container-flex" style="margin: 0px auto">
-        <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe6c7;</i></div>
         <div class="item-row-title row" >联系客服</div>
         <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
     </div>
+
+   <!--  <hr class="layui-bg-gray">
+   <div class="item-row lk-container-flex" style="margin: 20px auto 0px;>
+       <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe6c7;</i></div>
+       <div class="item-row-title row" >联系客服</div>
+       <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
+   </div> -->
     <hr class="layui-bg-gray">
     <div class="item-row lk-container-flex" style="margin: 0px auto">
         <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe6f5;</i></div>
@@ -96,7 +99,6 @@
         <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
     </div>
     </a>
-    <div class="row-flow"></div>
 </div>
 </body>
 </html>

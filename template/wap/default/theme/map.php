@@ -25,18 +25,21 @@
             top: 6px;
             left: 10%;
             z-index: 1;
+            border: 1px solid #01AAED;
+            border-radius: 5px;
+            text-align: center;
         }
         .button{
             width: 130px;
             line-height: 36px;
-            background-color: #39aed8fc;
+            background-color: #01AAED;
             border: 0px;
             border-radius: 5px;
             text-align: center;
         }
         .up{
             position: absolute;
-            bottom: 15px;
+            bottom: 25px;
             z-index: 1px;
             width: 100%;
         }
@@ -53,7 +56,6 @@
 </div>
 <div class="up">
     <div class="btns">
-        
         <div class="button" id="delete">取消</div>
         <div class="button" id="addmap">确认</div>
     </div>

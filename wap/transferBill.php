@@ -98,8 +98,12 @@ $address = (isset($_GET['address']))?$_GET['address']:'';
 $name = (isset($_GET['name']))?$_GET['name']:'';
 
 $cardInfo = D("Card_package")->where(['uid'=>$userId,'card_id'=>$_GET['cardId']])->find();
-
 $cardName = D("Card")->where(['card_id'=>$_GET['cardId'],"c_id"=>1])->find();
+if(!$cardInfo){
+	redirect('home.php?card_id='.$_GET['cardId'].'&plugin=offset&shoreUid='.$cardName['uid']);
+}
+
+
 
 $is_self = false;
 if($address == $cardInfo['address']){
