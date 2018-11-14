@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>地址设置</title>
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>/sweetalert/css/sweet-alert.css">
     
     <style type="text/css">
@@ -117,8 +118,11 @@ $(function() {
 
         }, 'json');
     })
+    
     $('#delete').click(function() {
-        window.location.href = "./setup.php";
+        setTimeout(function(){
+            window.history.go(-1)
+        } ,1000);    
     })
 
     AMap.event.addListener(map, 'dragging', function() {
