@@ -9,8 +9,6 @@
     <title>认证</title>
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>LUploader/css/LUploader.css?r=2321">
-    <script src="<?php echo STATIC_URL;?>LUploader/js/LUploader.js?r=32443345"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
@@ -120,71 +118,37 @@
                         <div class='layui-form-item'>
                             <label class="layui-form-label">身份证正面：</label>
                             <div class="layui-input-block img-block">
-<div class="LUploader" id="uploadImg_1">
-    <?php if(isset($audit['img_just'])){ ?>
-    <div class="LUploader-container" style="background-image: url(<?php echo $audit['img_just'] ?>);    background-size: 100%;background-repeat: no-repeat; ">
-    <?php }else{ ?>
-    <div class="LUploader-container">
-    <?php } ?>
-        <input data-LUploader="uploadImg_1" data-form-file='basestr' data-upload-type='front' type="file" />
-        <ul class="LUploader-list"></ul>
-    </div>
-    <?php if(isset($audit['img_just'])){ ?>
-    <div style="display: none;">
-    <?php }else{ ?>
-    <div>
-    <?php } ?>
-        <div class="icon icon-camera font20"></div>
-        <p>单击上传</p>
-    </div>
-</div>
+                                <a href="javascript:;" type="button" class="layui-btn layui-btn-primary upload" id="upload_1">
+                                    <i class="layui-icon">&#xe654;</i>
+                                </a>
+                                <div id="uploadImg_1" class='uploadImg'>
+                                    <img src="<?php echo isset($audit['img_just']) ? $audit['img_just'] : " "?>" />
+                                    <input type="hidden" name="uploadImg_1" value="<?php echo isset($audit['img_just']) ? $audit['img_just'] : " "?>">
+                                </div>
                             </div>
                         </div>
                         <div class='layui-form-item'>
                             <label class="layui-form-label">身份证反面：</label>
                             <div class="layui-input-block img-block">
-<div class="LUploader" id="uploadImg_2">
-    <?php if(isset($audit['img_back'])){ ?>
-    <div class="LUploader-container" style="background-image: url(<?php echo $audit['img_back'] ?>);    background-size: 100%;background-repeat: no-repeat; ">
-    <?php }else{ ?>
-    <div class="LUploader-container">
-    <?php } ?>
-        <input data-LUploader="uploadImg_2" data-form-file='basestr' data-upload-type='front' type="file" />
-        <ul class="LUploader-list"></ul>
-    </div>
-    <?php if(isset($audit['img_back'])){ ?>
-    <div style="display: none;">
-    <?php }else{ ?>
-    <div>
-    <?php } ?>
-        <div class="icon icon-camera font20"></div>
-        <p>单击上传</p>
-    </div>
-</div>
-
+                                <a href="javascript:;" type="button" class="layui-btn layui-btn-primary upload" id="upload_2">
+                                    <i class="layui-icon">&#xe654;</i>
+                                </a>
+                                <div id="uploadImg_2" class='uploadImg'>
+                                    <img src="<?php echo isset($audit['img_back']) ? $audit['img_back'] : " "?>" />
+                                    <input type="hidden" name="uploadImg_2" value="<?php echo isset($audit['img_back']) ? $audit['img_back'] : " "?>">
+                                </div>
                             </div>
                         </div>
                         <div class='layui-form-item'>
                             <label class="layui-form-label">手持身份证：</label>
                             <div class="layui-input-block img-block">
-<div class="LUploader" id="uploadImg_3">
-    <?php if(isset($audit['img_oneself'])){ ?>
-    <div class="LUploader-container" style="background-image: url(<?php echo $audit['img_oneself'] ?>);    background-size: 100%;background-repeat: no-repeat; ">
-    <?php }else{ ?>
-    <div class="LUploader-container">
-    <?php } ?>
-        <input data-LUploader="uploadImg_3" data-form-file='basestr' data-upload-type='front' type="file" />
-        <ul class="LUploader-list"></ul>
-    </div>
-    <?php if(isset($audit['img_oneself'])){ ?>
-    <div style="display: none;">
-    <?php }else{ ?>
-    <div>
-    <?php } ?>
-        <div class="icon icon-camera font20"></div>
-        <p>单击上传</p>
-    </div>
-</div>
+                                <a href="javascript:;" type="button" class="layui-btn layui-btn-primary upload" id="upload_3">
+                                    <i class="layui-icon">&#xe654;</i>
+                                </a>
+                                <div id="uploadImg_3" class='uploadImg'>
+                                    <img src="<?php echo isset($audit['img_oneself']) ? $audit['img_oneself'] : " "?>" />
+                                    <input type="hidden" name="uploadImg_3" value="<?php echo isset($audit['img_oneself']) ? $audit['img_oneself'] : " "?>">
+                                </div>
                             </div>
                         </div>
                         <?php echo (isset($audit['status']) && $audit['status'] == 2 ) ? "<div class='layui-form-item'>" : "<div class='layui-form-item hidden'>"?>
@@ -247,71 +211,37 @@
                     <div class='layui-form-item'>
                         <label class="layui-form-label">店铺logo：</label>
                         <div class="layui-input-block img-block">
-<div class="LUploader" id="logo">
-    <?php if(isset($audit['logo'])){ ?>
-    <div class="LUploader-container" style="background-image: url(<?php echo $audit['logo'] ?>);    background-size: 100%;background-repeat: no-repeat; ">
-    <?php }else{ ?>
-    <div class="LUploader-container">
-    <?php } ?>
-        <input data-LUploader="logo" data-form-file='basestr' data-upload-type='front' type="file" />
-        <ul class="LUploader-list"></ul>
-    </div>
-    <?php if(isset($audit['logo'])){ ?>
-    <div style="display: none;">
-    <?php }else{ ?>
-    <div>
-    <?php } ?>
-        <div class="icon icon-camera font20"></div>
-        <p>单击上传</p>
-    </div>
-</div>
-
+                            <a type="button" class="layui-btn layui-btn-primary" id="upload_shop_logo">
+                                <i class="layui-icon">&#xe654;</i>
+                            </a>
+                            <div id="upload_shop_logo" class='uploadImg'>
+                                <img src="<?php echo isset($audit['logo']) ? $audit['logo'] : " "?>" />
+                                <input type="hidden" name="logo" value="<?php echo isset($audit['logo']) ? $audit['logo'] : " "?>">
+                            </div>
                         </div>
                     </div>
                     <div class='layui-form-item'>
                         <label class="layui-form-label">营业执照：</label>
                         <div class="layui-input-block img-block">
-<div class="LUploader" id="uploadBusiness">
-    <?php if(isset($audit['business_img'])){ ?>
-    <div class="LUploader-container" style="background-image: url(<?php echo $audit['business_img'] ?>);    background-size: 100%;background-repeat: no-repeat; ">
-    <?php }else{ ?>
-    <div class="LUploader-container">
-    <?php } ?>
-        <input data-LUploader="uploadBusiness" data-form-file='basestr' data-upload-type='front' type="file" />
-        <ul class="LUploader-list"></ul>
-    </div>
-    <?php if(isset($audit['business_img'])){ ?>
-    <div style="display: none;">
-    <?php }else{ ?>
-    <div>
-    <?php } ?>
-        <div class="icon icon-camera font20"></div>
-        <p>单击上传</p>
-    </div>
-</div>
+                            <a type="button" class="layui-btn layui-btn-primary" id="upload_business">
+                                <i class="layui-icon">&#xe654;</i>
+                            </a>
+                            <div id="uploadBusiness" class='uploadImg'>
+                                <img src="<?php echo isset($audit['business_img']) ? $audit['business_img'] : " "?>" />
+                                <input type="hidden" name="uploadBusiness" value="<?php echo isset($audit['business_img']) ? $audit['business_img'] : " "?>">
+                            </div>
                         </div>
                     </div>
                     <div class='layui-form-item'>
                         <label class="layui-form-label">手持身份证：</label>
                         <div class="layui-input-block img-block">
-<div class="LUploader" id="uploadOneself">
-    <?php if(isset($audit['img_oneself'])){ ?>
-    <div class="LUploader-container" style="background-image: url(<?php echo $audit['img_oneself'] ?>);    background-size: 100%;background-repeat: no-repeat; ">
-    <?php }else{ ?>
-    <div class="LUploader-container">
-    <?php } ?>
-        <input data-LUploader="uploadOneself" data-form-file='basestr' data-upload-type='front' type="file" />
-        <ul class="LUploader-list"></ul>
-    </div>
-    <?php if(isset($audit['img_oneself'])){ ?>
-    <div style="display: none;">
-    <?php }else{ ?>
-    <div>
-    <?php } ?>
-        <div class="icon icon-camera font20"></div>
-        <p>单击上传</p>
-    </div>
-</div>
+                            <a type="button" class="layui-btn layui-btn-primary" id="upload_oneself">
+                                <i class="layui-icon">&#xe654;</i>
+                            </a>
+                            <div id="uploadOneself" class='uploadImg'>
+                                <img src="<?php echo isset($audit['img_oneself']) ? $audit['img_oneself'] : " "?>" />
+                                <input type="hidden" name="uploadImg_3" value="<?php echo isset($audit['img_oneself']) ? $audit['img_oneself'] : " "?>">
+                            </div>
                         </div>
                     </div>
 
@@ -358,61 +288,25 @@
                 <div class='layui-form-item'>
                     <label class="layui-form-label">营业执照：</label>
                     <div class="layui-input-block img-block">
-<div class="LUploader" id="uploadBusine">
-    <?php if(isset($audit['business_img'])){ ?>
-    <div class="LUploader-container" style="background-image: url(<?php echo $audit['business_img'] ?>);    background-size: 100%;background-repeat: no-repeat; ">
-    <?php }else{ ?>
-    <div class="LUploader-container">
-    <?php } ?>
-        <input data-LUploader="uploadBusine" data-form-file='basestr' data-upload-type='front' type="file" />
-        <ul class="LUploader-list"></ul>
-    </div>
-    <?php if(isset($audit['business_img'])){ ?>
-    <div style="display: none;">
-    <?php }else{ ?>
-    <div>
-    <?php } ?>
-        <div class="icon icon-camera font20"></div>
-        <p>单击上传</p>
-    </div>
-</div>
-                        <!-- <a type="button" class="layui-btn layui-btn-primary" id="upload_busine">
+                        <a type="button" class="layui-btn layui-btn-primary" id="upload_busine">
                             <i class="layui-icon">&#xe654;</i>
                         </a>
                         <div id="uploadBusine" class='uploadImg'>
                             <img src="<?php echo isset($audit['business_img']) ? $audit['business_img'] : " "?>" />
                             <input type="hidden" name="uploadBusiness" value="<?php echo isset($audit['business_img']) ? $audit['business_img'] : " "?>">
-                        </div> -->
+                        </div>
                     </div>
                 </div>
                 <div class='layui-form-item'>
                     <label class="layui-form-label">手持身份证：</label>
                     <div class="layui-input-block img-block">
-<div class="LUploader" id="uploadOneselfs">
-    <?php if(isset($audit['img_oneself'])){ ?>
-    <div class="LUploader-container" style="background-image: url(<?php echo $audit['img_oneself'] ?>);    background-size: 100%;background-repeat: no-repeat; ">
-    <?php }else{ ?>
-    <div class="LUploader-container">
-    <?php } ?>
-        <input data-LUploader="uploadOneselfs" data-form-file='basestr' data-upload-type='front' type="file" />
-        <ul class="LUploader-list"></ul>
-    </div>
-    <?php if(isset($audit['img_oneself'])){ ?>
-    <div style="display: none;">
-    <?php }else{ ?>
-    <div>
-    <?php } ?>
-        <div class="icon icon-camera font20"></div>
-        <p>单击上传</p>
-    </div>
-</div>
-                        <!-- <a type="button" class="layui-btn layui-btn-primary" id="upload_oneselfs">
+                        <a type="button" class="layui-btn layui-btn-primary" id="upload_oneselfs">
                             <i class="layui-icon">&#xe654;</i>
                         </a>
                         <div id="uploadOneselfs" class='uploadImg'>
                             <img src="<?php echo isset($audit['img_oneself']) ? $audit['img_oneself'] : " "?>" />
                             <input type="hidden" name="uploadImg_3" value="<?php echo isset($audit['img_oneself']) ? $audit['img_oneself'] : " "?>">
-                        </div> -->
+                        </div>
                     </div>
                 </div>
 
@@ -437,17 +331,6 @@
     <?php //include display('public_menu');?>
 </body>
 <script type="text/javascript">
- [].slice.call(document.querySelectorAll('input[data-LUploader]')).forEach(function(el) {
-    new LUploader(el, {
-        url: './upload.php',//post请求地址
-        multiple: false,//是否一次上传多个文件 默认false
-        maxsize: 102400,//忽略压缩操作的文件体积上限 默认100kb
-        accept: 'image/*',//可上传的图片类型
-        quality: 0.5,//压缩比 默认0.1  范围0.1-1.0 越小压缩率越大
-        //showsize:true//是否显示原始文件大小 默认false
-    });
-});
-
 <?php if($audit['status'] == 1 || $audit['status'] == "0"){ ?>
     $(".uploadImg").css('left','0');
     $('button[lay-submit]').css('display','none');
@@ -686,12 +569,6 @@ layui.use(["element", "upload", "layer", 'form'], function() {
         if(data.field.uploadBusiness == " " || data.field.uploadImg_3 == " "){
             layer.msg("请您上传营业执照或者手持身份证照片",{ icon: 5, skin: "demo-class" });
             return false;
-        }
-        if(data.field.uploadOneselfs.length > 1){
-            data.field.uploadOneself = data.field.uploadOneselfs;
-        }
-        if(data.field.uploadBusine.length > 1){
-            data.field.uploadBusiness = data.field.uploadBusine;
         }
         beatCount++;
         layer.load();

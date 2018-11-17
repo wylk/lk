@@ -63,7 +63,7 @@ if(isset($_GET['pagetype']) && $_GET['pagetype'] == "postcardBackstage"){
 		$data['enterprise'] = isset($_POST['enterprise']) ? $_POST['enterprise'] : "";
 		$data['business_license'] = isset($_POST['businessLicense']) ? $_POST['businessLicense'] : "";
 		$data['business_img'] = isset($_POST['uploadBusiness']) ? $_POST['uploadBusiness'] : "";
-		$data['img_oneself'] = isset($_POST['uploadImg_3']) ? $_POST['uploadImg_3'] : "";
+		$data['img_oneself'] = isset($_POST['uploadOneself']) ? $_POST['uploadOneself'] : "";
 		if($type == 2){
 			$data['logo'] = isset($_POST['logo']) ? $_POST['logo'] : "";
 			$data['s_id']= isset($_POST['shopclass']) ? $_POST['shopclass'] : "";
