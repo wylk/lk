@@ -24,6 +24,10 @@ if(IS_POST){
         }
         
     }else{
+        
+        if($pay_img['img'] != $data['pay_img']){
+            unlink('..'.$pay_img['img']);
+        }
         if(D('Pay_img')->data(['account'=>$data['pay_num'],'img'=>$data['pay_img']])->where(['id'=>$data['id']])->save()){
             dexit(["res"=>0,'msg'=>"保存成功"]);
         }else{
