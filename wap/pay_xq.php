@@ -1,27 +1,46 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
 if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
-$user = D('User')->where(['id'=>$wap_user['userid']])->find();
-$verifyLen = "6";  //验证码长度
-$tex=$_GET['type'];
 
 if(IS_POST){
-       $res=$_POST;
-       $pwd=md5($res['password']);
-       if($pwd != $user['pay_password']){
-            dexit(["res"=>2,'msg'=>"支付密码输入错误"]);
+   $data = clear_html($_POST);
+   $user = D('User')->where(['id'=>$wap_user['userid']])->find();
+    if(!$user['pay_password']){
+        dexit(["res"=>3,'msg'=>"未设置支付密码"]);
+    }
+    if(md5($data['password']) != $user['pay_password']){
+        dexit(["res"=>2,'msg'=>"支付密码输入错误"]);
+    }
+    $pay_img = D('Pay_img')->where(['uid'=>$user['id'],'type'=>$data['type']])->find();
+
+    if($data['post_type'] == 'add'){
+        if($pay_img){
+            dexit(["res"=>1,'msg'=>"保存失败"]);
         }
-        $data['pay_num']=$res['pay_num'];
-        $data['pay_img'] =$res['pay_img'];
-        $data['pay_type']=$res['type'];
-        // var_dump($data);die;
-        $rag=D('User')->data($data)->where(array('id'=>$user['id']))->save();
-
-        dexit(["res"=>0,'msg'=>"支付宝设置完成"]);
-
-
-
+        if(D('Pay_img')->data(['account'=>$data['pay_num'],'uid'=>$wap_user['userid'],'type'=>$data['type'],'img'=>$data['pay_img']])->add()){
+            dexit(["res"=>0,'msg'=>"保存成功"]);
+        }else{
+            dexit(["res"=>1,'msg'=>"保存失败"]);
+        }
+        
+    }else{
+        if(D('Pay_img')->data(['account'=>$data['pay_num'],'img'=>$data['pay_img']])->where(['id'=>$data['id']])->save()){
+            dexit(["res"=>0,'msg'=>"保存成功"]);
+        }else{
+            dexit(["res"=>1,'msg'=>"保存失败"]);
+        }
+   }
 }
+$pay_img = D('Pay_img')->where(['uid'=>$wap_user['userid'],'type'=>$_GET['type']])->find();
+if($pay_img){
+   $post_type = 'save'; 
+}else{
+   $post_type = 'add';  
+}
+
+$referer_url = './pay_pw.php?referer='.urlencode($_SERVER['REQUEST_URI']);
+$verifyLen = "6";  //验证码长度
+$tex=$_GET['type'];
 
 include display('pay_qx');
 
