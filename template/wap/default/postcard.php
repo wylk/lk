@@ -204,7 +204,7 @@
                 </div>
                 <div class="layui-tab-item <?php echo ($type ==2 ) ? " layui-show " : " "?>">
                    <?php if(!empty($type) && $type !=2){ echo "<p class='cardBody'>您已选择其他认证，不能再进行个人认证!</p>";}?>
-                    <form class='layui-form <?php if( !empty($type) && $type != 2 ){ echo 'hidden';}?>'>
+                    <form class='layui-form <?php if( !empty($type) && $type != 2 ){ echo 'hidden';}?>' action="javascript:;">
                     <input type="hidden" name="type" value="2">
                     <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : " "?>">
                     <div class='layui-form-item'>
@@ -665,7 +665,7 @@ layui.use(["element", "upload", "layer", 'form'], function() {
             if (!result.res) {
                 // window.location.href = "./postcard.php?pagetype=postcard";
                 layer.msg(result.msg, { icon: 1, skin: "demo-class" }, function() {
-                    // window.location.href = "./postcard.php";
+                    window.location.href = "./postcard.php";
                 })
             } else {
                 layer.msg(result.msg, { icon: 5, skin: "demo-class" });
@@ -687,10 +687,10 @@ layui.use(["element", "upload", "layer", 'form'], function() {
             layer.msg("请您上传营业执照或者手持身份证照片",{ icon: 5, skin: "demo-class" });
             return false;
         }
-        if(data.field.uploadOneselfs.length > 1){
+        if(data.field.uploadOneselfs){
             data.field.uploadOneself = data.field.uploadOneselfs;
         }
-        if(data.field.uploadBusine.length > 1){
+        if(data.field.uploadBusine){
             data.field.uploadBusiness = data.field.uploadBusine;
         }
         beatCount++;
