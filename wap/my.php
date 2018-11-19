@@ -10,7 +10,7 @@ $userId = isset($wap_user['userid']) ? $wap_user['userid'] : 1;
 
 // 清除超时订单
 $deadline = option('hairpan_set.expiry_time') ? option('hairpan_set.expiry_time') : 60*30;
-$where = ['create_time'=>["<=",time()-$deadline],"status"=>"0",'app_id'=>0];
+$where = ['create_time'=>["<=",time()-$deadline],"status"=>"0",'type'=>['!=',2]];
 $orderlist = D("Orders")->where($where)->select();
 if($orderlist){
 	foreach($orderlist as $key=>$value){

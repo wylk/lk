@@ -1731,3 +1731,9 @@ function func_gzuncompress($str)
     return $str;
 }
 
+function order_status($k)
+{
+    $data = ['0'=>'待支付','1'=>'订单已支付','2'=>'订单已作废','3'=>'订单完成','4'=>'订单超时'];
+    return $data[$k];
+}
+
