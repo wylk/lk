@@ -6,91 +6,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>支付密码</title>
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
+    <title>支付绑定</title>
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>LUploader/css/LUploader.css?r=2321">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
     <script src="<?php echo STATIC_URL;?>LUploader/js/LUploader.js?r=32443345"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
-        body{background: white}
-        .lines{width: 90%;margin: 50px auto;}
-        h6{color:#737e82;margin-top: 26px;font-size: 16px;margin-left: 23px;}
-        h3{font-size: 17px;margin-top: 29px;margin-left: 30px;}
-        h4{color: #737e82;;margin-top: 25px;text-align: center;font-size: 16px;}
-        button{font-size: 19px;color: white;width: 94%;height: 46px;margin-left: 2%;margin-top: 51px;background-color: #168fbb;border-radius: 8px;border:0px;}
-        .uploadImg img{width: 23%;margin-left: 48px;width: 40%;height: 100px;border:1px solid #000;}
-        #upload_1{border: 4px solid  #168fbb;background-color: #fff;color: #06179c;margin-left: 47px;}
-        .wrapper_cent{height:100px;width: 230px;margin: 14px auto;}
-
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        html,body{
+           /*  height: 100%; */
+            background-color:#f2f2f2;
+            color: #999;
+        }
+        .line{margin: 5px 15px;}
+        input[type=text],input[type=password]{
+            width: 60%;
+            line-height: 21px;
+            height: 40px;
+            border: 1px solid rgba(0, 0, 0, .2);
+            outline: 0;
+            border:0;
+            -webkit-appearance: none;
+            margin: 0px;
+            font-size: 14px;
+        }
+        .line-head{
+            background-color: #fff;
+            padding-bottom: 15px;
+        }
+        .pay_type{
+            margin: 0px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            line-height: 45px;
+            color: #333;
+        }
+        .wrapper{
+            background-color: #fff;
+            height: 155px;
+            margin-top: 10px;
+        }
+        h5{color: #333;text-align: center;font-size: 14px;line-height: 30px;}
+        .wrapper_cent{height:100px;width: 65%;margin: 5px auto;}
+        .foot{
+            height: 80px;
+            width: 100%;
+            margin-top: 20px;
+            background: #fff;
+        }
+        button{
+            font-size: 18px;
+            color: #29aee7;
+            width: 90%;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid #29aee7;
+            margin: 20px;
+        }
+        
+      
     </style>
-     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
-     <script type="text/javascript">
-        $(function(){
-            lk.is_weixin() && function(){
-                $('.lk-bar-nav').css('display','none');
-                $('.lk-content').css({"padding":"0px"});
-            }()
-        })
-    </script>
 </head>
 
 <body>
-    <header class="lk-bar lk-bar-nav">
-        <i onclick="javascript:history.back(-1);" class="iconfont">&#xe697;</i>
-        <h1 class="lk-title">
-        <?php if($tex=='1'){?>修改银行卡
-        <?php }else if($tex=='2'){?>
-             修改支付宝
-        <?php }else{?>
-             修改微信
-        <?php } ?>
-        </h1>
-    </header>
-<div class="lk-content">
-            <?php if($tex=='1'){?>
-                   <h6>必须是本人的银行卡</h6>
-            <?php }else if($tex=='2'){?>
-                  <h6>必须是本人的支付宝账号</h6>
+<div class="content">
+    <div class="line" style="font-size: 14px;">必须是本人的<?php echo ($tex=='2')?'支付宝':'微信';?>账号</div>
+    <div class="line-head">
+        <div class="pay_type">     
+            <?php if($tex=='2'){?>
+                  支付宝号:<input id="zf" type="text" value="<?php if($post_type=='save'){echo $pay_img["account"];} ?>"  placeholder="请输入支付宝账号">
             <?php }else{?>
-                  <h6>必须是本人的微信账号</h6>
+                  微信账号:<input id="zf" type="text" value="<?php if($post_type=='save'){echo $pay_img["account"];} ?>"  placeholder="请输入微信账号">
             <?php } ?>
-            <div class="num">
-                <?php if($tex=='1'){?>
-                       <h3>银行卡卡号:<input type="text" value="" style="border-style: none;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #168fbb;height: 47px;margin-left: 19px;width: 54%;"></h3>
-                <?php }else if($tex=='2'){?>
-                      <h3>支付宝账号:<input type="text" value="" class="zf" style="border-style: none;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #168fbb;height: 47px;margin-left: 19px;width: 54%;"></h3>
-                <?php }else{?>
-                      <h3>微信账号:<input type="text" value="" style="border-style: none;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #168fbb;height: 47px;margin-left: 19px;width: 54%;"></h3>
-                <?php } ?>
-            </div>
-        <div><h3>乐卡支付密码:<input type="password" class="password" style="border-style: none;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #168fbb;height: 47px;margin-left: 2px;width: 54%;"></h3></div>
-        <h4>收款二维码</h4>
-        <div class="wrapper">
-            <div class="wrapper_cent">
-                <div class="LUploader" id="up_img">
-                    <div class="LUploader-container">
-                        <input data-LUploader="up_img" data-form-file='basestr' data-upload-type='front' type="file" />
-                        <ul class="LUploader-list"></ul>
-                    </div>
-                    <div>
-                        <div class="icon icon-camera font20"></div>
-                        <p>单击上传</p>
-                    </div>
+        </div>
+        <div class="pay_type">支付密码:<input id="paw" type="password" value="" placeholder="请输入支付密码"></div>
+    </div>
+
+    
+    <div class="wrapper">
+        <h5>收款二维码</h5>
+        <div class="wrapper_cent">
+            <div class="LUploader" id="up_img">
+                <div class="LUploader-container">
+                    <input data-LUploader="up_img" data-form-file='basestr' data-upload-type='front' type="file" />
+                    <ul class="LUploader-list"></ul>
+                </div>
+                <div>
+                    <div class="icon icon-camera font20"></div>
+                    <p>单击上传</p>
                 </div>
             </div>
         </div>
-                <button  class="sub">提交</button>
+    </div>
+    <div class="foot">
+        
+        <button  class="sub">提交</button>
+    </div>
 </div>
-    <?php include display('public_menu');?>
+    <?php //include display('public_menu');?>
 </body>
 
 
 </html>
+<script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
 <script type="text/javascript">
+    var type=<?php echo $tex ?>;
+    var post_type = '<?=$post_type;?>';
+    if(post_type  == 'save'){
+        var id = '<?=$pay_img['id'];?>'
+    }
 
- [].slice.call(document.querySelectorAll('input[data-LUploader]')).forEach(function(el) {
+    [].slice.call(document.querySelectorAll('input[data-LUploader]')).forEach(function(el) {
         new LUploader(el, {
             url: './upload.php',//post请求地址
             multiple: false,//是否一次上传多个文件 默认false
@@ -101,19 +129,45 @@
         });
     });
 
-   $('.sub').click(function(){
-        var pay_num=$('.zf').val();
-        var type=<?php echo $tex ?>;
-        var password=$('.password').val();
+    $('.sub').click(function(){
+        var pay_num=$('#zf').val();
+        var password=$('#paw').val();
         var pay_img=$("input[name='up_img']").val();
-         $.post("./pay_xq.php",{pay_num:pay_num,password:password,type:type,pay_img:pay_img}, function(res) {
-         console.log(res)
-         if(res.res == 0){
-            alert(res.msg)
-            window.location.href = "<?php echo $config['site_url']?>/wap/my.php";
-          }else{
-            alert(res.msg)
-          }
+        if(pay_num.length < 5){
+            mui.toast('请输入正确的账号');return;
+        }
+        if(password.length != 6){
+            mui.toast('请输入正确支付密码');return;
+        }
+
+        if(pay_img.length < 1){
+            mui.toast('请上传收款二维码！');return;
+        }
+        var data = {}
+        data.pay_num = pay_num;
+        data.password = password;
+        data.type = type;
+        data.pay_img = pay_img;
+        data.post_type = post_type;
+        if(post_type == 'save'){
+            data.id = id;
+        }
+
+        $.post("./pay_xq.php",data, function(res) {
+            console.log(res)
+            if(res.res == 0){ 
+                mui.toast(res.msg);
+                setTimeout(function(){
+                    window.history.go(-3);
+                },2000);
+            }else if(res.res == 3){
+                mui.toast(res.msg);
+                setTimeout(function(){
+                    window.location.href = "<?=$referer_url;?>";
+                },2000)
+            }else{
+                mui.toast(res.msg);
+            }
         },'json');
     });
 </script>

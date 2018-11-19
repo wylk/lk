@@ -9,7 +9,11 @@ switch ($type) {
 		$name = (isset($_GET['name']))?$_GET['name']:'';
 		$url = $_G['config']['wap_site_url'].'/transferBill.php?cardId='.$cardId.'&address='.$address.'&name='.$name;
 		break;
-	
+	case 'store':
+		$shoreUid = (isset($_GET['mid']))?$_GET['mid']:'';
+		$cardId = (isset($_GET['cardId']))?$_GET['cardId']:'';
+		$url = $_G['config']['wap_site_url'].'/home.php?plugin=offset&shoreUid='.$shoreUid.'&card_id='.$cardId;
+		break;
 	default:
 		# code...
 		break;

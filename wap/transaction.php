@@ -48,8 +48,8 @@ function checkUserSet($userId){
 	// 判断用户是否认证
 	$userJudge = D("User_audit")->where(['uid'=>$userId,"status"=>1])->find();
 	if(!$userJudge) return ['res'=>1,"msg"=>"请先认证","url"=>"./postcard.php"];
-	if(empty($userJudge['address']))
-		 return ['res'=>1,"msg"=>"请先输入地理位置","url"=>"./map.php"];
+	/*if(empty($userJudge['address']))
+		 return ['res'=>1,"msg"=>"请先输入地理位置","url"=>"./map.php"];*/
 	$userInfo = D("User")->where(['id'=>$userId])->find();
 	if(!D('Pay_img')->where(['uid'=>$userId])->find())
 		 return ['res'=>1,"msg"=>"请设置支付管理","url"=>"pay_zf.php"];
