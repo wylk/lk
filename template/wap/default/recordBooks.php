@@ -24,29 +24,20 @@
         .order-right{width: 36.9%;text-align: right;}
         .order-right a{padding: 5px 7px;font-weight: bold; color: #333;}
 
-    </style>
-     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
-     <script type="text/javascript">
-        $(function(){
-            lk.is_weixin() && function(){
-                $('.lk-bar-nav').css('display','none');
-                $('.lk-content').css({"padding":"0px"});
-            }()
-        })
-    </script>
+    </style> 
 </head>
 
 <body>
-    <header class="lk-bar lk-bar-nav">
-        <i onclick="javascript:history.back(-1);" class="iconfont">&#xe697;</i>
-        <h1 class="lk-title">账单记录</h1>
-    </header>
-    <div class="lk-content">
+    
+    <div class="lk-content" style="margin: 0px;padding: 0px;">
         <div class="layui-container" id="pullrefreshs" style="touch-action: none;overflow: auto;height: 500px;">
-            <div class="layui-tab" lay-filter="aduitTab" id="content"></div>
+            <div>
+                
+                <div class="layui-tab" lay-filter="aduitTab" id="content"></div>
+            </div>
         </div>
     </div>
-    <?php include display('public_menu');?>
+    <?php //include display('public_menu');?>
 </body>
 </html>
 <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.slidingPage.js?r=<?php echo time(); ?>" charset="utf-8"></script>

@@ -12,6 +12,10 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
+        html,body{
+            background: #fff;
+            min-height: 0px;
+        }
         .lines{
             width: 90%;
             margin: 50px auto;
@@ -46,7 +50,7 @@
             </form>
         </div>
     </div>
-    <?php include display('public_menu');?>
+    <?php //include display('public_menu');?>
 </body>
 <script type="text/javascript">
  

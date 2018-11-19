@@ -55,6 +55,7 @@
         color: #555;
         margin-bottom: 0px;
     }
+    .layui-tab-title li{width: 33%;}
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
      <script type="text/javascript">
@@ -91,7 +92,7 @@
             <hr>
         </div>
         
-        <div class="layui-container">
+        <div class="layui-container" style="padding: 0;">
             <div class="layui-tab layui-tab-brief" lay-filter="aduitTab">
                 <ul class="layui-tab-title">
                     <li class="<?php echo ($type==1 || empty($type)) ? "layui-this" : " "?>">个人认证</li>

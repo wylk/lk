@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>订单详情</title>
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -106,65 +107,6 @@
       <?php }else if($orderInfo['sell_id'] == $userId && in_array($orderInfo['status'], ['3'])){ ?>
         <span class="color_black" style="width: 85%;text-align:center;padding:8px;margin:3px auto;border-radius:5px;border:1px solid #01AAED;display: block;">我已转账</span>
       <?php } ?>
-      <!-- <br/><br/> -->
-        <!-- <div class="detail">
-          <div class='menuStyle'><span class="spanLeft">订单号：<?php echo $orderInfo['onumber'] ?></span></div>
-            <hr>
-            <div class='menuStyle'><span class="spanLeft">状态：</span><span class="spanRight">
-             <?php if($orderInfo['sell_id'] == $userId){ ?>
-            <p style="color:gray;">
-              <?php if($orderInfo['status'] == '0') echo "未收款" ?>
-              <?php if($orderInfo['status'] == '1') echo "交易成功" ?>
-              <?php if($orderInfo['status'] == '2') echo "交易取消" ?>
-              <?php if($orderInfo['status'] == '3') echo "已收款" ?>
-              <?php if($orderInfo['status'] == '4') echo "订单超时" ?>
-            </p>
-           <?php } ?>
-           <?php if($orderInfo['buy_id'] == $userId){ ?>
-           <p style="color:gray;">
-              <?php if($orderInfo['status'] == '0') echo "未付款" ?>
-              <?php if($orderInfo['status'] == '1') echo "交易成功" ?>
-              <?php if($orderInfo['status'] == '2') echo "交易取消" ?>
-              <?php if($orderInfo['status'] == '3') echo "已付款" ?>
-              <?php if($orderInfo['status'] == '4') echo "订单超时" ?>
-           </p>
-           <?php } ?>
-          </span></div>
-          <hr>
-            <div class='menuStyle'><span class="spanLeft">数量：<?php echo number_format($orderInfo['number'],2); ?></span><span class="spanRight">单价：￥<?php echo number_format($orderInfo['price'],2); ?></span></div>
-            <hr>
-           <div class='menuStyle'><span class="spanLeft">总额：</span><span class="spanRight" style="color: red;">￥<?php echo number_format($orderInfo['price']*$orderInfo['number'],2)?></span></div>
-            <hr>
-           <div class='menuStyle'><span class="spanLeft">创建时间：</span><span class="spanRight"><?php echo date("Y-m-d H:i:s",$orderInfo['create_time']) ?></span></div>
-          <hr>
-          <?php if($orderInfo['sell_id'] == $userId){ ?>
-            <div class='menuStyle'><span class="spanLeft">交易状态：</span>
-            <?php echo $orderInfo['status'] == '1' ? "<span class='spanRight' >已转账</span>" :
-            (!in_array($orderInfo['status'], ['2','4']) ? "<button class='spanRight' id='confirmTran'>确认收款</button>" : "<span class='spanRight' >交易取消</span>")  ?>
-          </div>
-            <?php if(in_array($orderInfo['status'],['0'])){ ?>
-              <div class='menuStyle'><span class="spanLeft"></span><button id="revokeOrder_<?php echo $orderInfo['id']; ?>" class='spanRight' >取消订单</button></div>
-            <?php } ?>
-          <?php } ?>
-          <?php if($orderInfo['buy_id'] == $userId){ ?>
-             <div class='menuStyle'><span class="spanLeft">收款人：老王</span><span class="spanRight">支付宝</span></div>
-             <?php if($orderInfo['status'] != '1'){ ?>
-              <div class='menuStyle'><span class="spanLeft"></span>
-              <?php if($orderInfo['status'] == '0') echo "<button class='spanRight' id='payMoeny'>已付款</button>" ?>
-              <?php if($orderInfo['status'] == '3') echo "<span class='spanRight'>已付款</span>" ?>
-              </div>
-            <?php } ?>
-            <?php if(!in_array($orderInfo['status'],['1','2','3'])){ ?>
-              <div class='menuStyle'><span class="spanLeft"></span><button id="revokeOrder_<?php echo $orderInfo['id']; ?>" class='spanRight' >取消订单</button></div>
-            <?php } ?>
-            <hr>
-            <?php if($res['pay_img']){?>
-                <div class='codeStyle'><span class="spanLeft">二维码：</span>
-            <div class="codeAddress"><img src="<?php echo $res['pay_img'];?>" /></div>
-          </div>
-           <?php  } ?>
-          </div>
-          <?php } ?> -->
 
         </div>
     </div>
