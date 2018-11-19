@@ -51,7 +51,7 @@ function checkUserSet($userId){
 	/*if(empty($userJudge['address']))
 		 return ['res'=>1,"msg"=>"请先输入地理位置","url"=>"./map.php"];*/
 	$userInfo = D("User")->where(['id'=>$userId])->find();
-	if(empty($userInfo['pay_img']))
+	if(!D('Pay_img')->where(['uid'=>$userId])->find())
 		 return ['res'=>1,"msg"=>"请设置支付管理","url"=>"pay_zf.php"];
 	return ['res'=>0,"msg"=>"检测通过"];
 }
