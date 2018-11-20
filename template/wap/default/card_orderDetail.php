@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
@@ -122,66 +123,65 @@
 </body>
 <script type="text/javascript">
 
-
+// var info = document.getElementById("info");
+var btnArray = ['取消','确定'];
+// 转账事件
 $("#confirmTran").bind("click",function(){
-  console.log('df');
-  var btnArray = ['取消','确定'];
-  mui.confirm('MUI是个好框架，确认？', 'Hello MUI', btnArray, function(e) {
+  mui.confirm('确定已收款？确定后平台币会转账到对方账户', '转账确认', btnArray, function(e) {
     if (e.index == 1) {
-      info.innerText = '你刚确认MUI是个好框架';
-    } else {
-      info.innerText = 'MUI没有得到你的认可，继续加油'
-    }
+      var orderId = "<?php echo $orderInfo['id'] ?>";
+      var data = {"orderId" : orderId, "type" : "confirmTran"};
+      $.post("./card_orderDetail.php",data,function(result){
+        if(!result.res){
+          mui.toast(result.msg);
+          setTimeout(function(){
+            window.location.reload(true);
+          },1000);
+        }else mui.toast(result.msg);
+      },"json"); 
+    } else mui.toast("取消转账");
   })
-  // layer.confirm("确定收款吗？确定后平台币会转账到对方账户",function(){
-      // if(value){
-      //   // var orderId = "<?php echo $orderInfo['id'] ?>";
-      //   // var data = {"orderId" : orderId, "type" : "confirmTran"};
-      //   // $.post("./card_orderDetail.php",data,function(result){
-      //   //   console.log(result);
-      //   //   if(!result.res){
-      //   //     swal("提示框",result.msg,"success");
-      //   //     window.location.reload(true);
-      //   //   }else swal("提示框",result.msg,"error");
-      //   // },"json"); 
-      // }else swal("取消转账");
-    });
-  // })
-//})
-// $("#payMoeny").bind("click",function(){
-//   // layer.confirm("确定已经付款了吗？",function(){
-//     swal("确认提示","确定已经付款了吗？");
-//     .then((value)=>{
-//       if(value){
-//         var orderId = "<?php echo $orderInfo['id'] ?>";
-//         var data = {'orderId':orderId,"type":"payMoeny"}
-//         $.post("./card_orderDetail.php",data,function(result){
-//           console.log(result);
-//           if(!result.res){
-//             swal("提示框",result.msg,"success");
-//             window.location.reload(true);
-//           }else swal("提示框",result.msg,"error");
-//         },"json");
-//       }else swal("提示框","已取消付款");
-//     });
-//   // });
+});
+// 确认付款事件
+$("#payMoeny").bind("click",function(){
+  mui.confirm("确认已经付款了吗？","付款确认",btnArray,function(e){
+    if(e.index == 1){
+      var orderId = "<?php echo $orderInfo['id'] ?>";
+      var data = {'orderId':orderId,"type":"payMoeny"}
+      $.post("./card_orderDetail.php",data,function(result){
+        console.log(result);
+        if(!result.res){
+          mui.toast(result.msg);
+          setTimeout(function(){
+            window.location.reload(true);
+          },1000);
+        }else mui.toast(result.msg);
+      },"json");
+    }else mui.toast('付款确认取消');
+  });
+});
+// 取消订单事件
+$("[id^=revokeOrder_]").bind("click",function(){
+  var idStr = $(this).attr("id");
+  var orderId = idStr.substring(idStr.indexOf("_")+1);
+  mui.confirm("确认取消该订单吗？","订单确认",btnArray,function(e){
+    if(e.index == 1){
+      var data = {"orderId":orderId,"type":"revokeOrder"};
+      $.post("./card_orderDetail.php",data,function(result){
+        console.log(result);
+        if(!result.res){
+          mui.toast(result.msg);
+          setTimeout(function(){
+            window.location.reload(true);
+          },1000);
+        }else{
+          mui.toast(result.msg);
+        }
+      },"json");
+    }else mui.toast("未取消订单");
+  });
+});
 
-// })
-// $("[id^=revokeOrder_]").bind("click",function(){
-//   var idStr = $(this).attr("id");
-//   var orderId = idStr.substring(idStr.indexOf("_")+1);
-//   var data = {"orderId":orderId,"type":"revokeOrder"};
-//   $.post("./card_orderDetail.php",data,function(result){
-//     console.log(result);
-//     if(!result.res){
-//       swal("提示框",result.msg,"success");
-//       window.location.reload(true);
-//     }else{
-//       swal("提示框",result.msg,"error");
-//     }
-//   },"json");
-
-// })
 </script>
 
 </html>
