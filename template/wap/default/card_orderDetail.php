@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <!-- <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script> -->
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
     <style type="text/css">
         html body {
             background-color: #fff;
@@ -77,11 +77,12 @@
         </div>
       </div>
       <div >
+        <?php if($orderInfo['buy_id'] == $userId){ ?>
         <p class="word">请选择以下方式给卖家打款</p>
         <?php foreach($payInfo as $value){ ?>
         <div class="detail1" style="height: 80px;padding: 3px;margin-bottom: 2px;">
           <div class="spanLeft1 color_gray" style="width:50%;float:left;">
-            <span style="display: block;">姓名：李三</span>
+            <span style="display: block;">姓名：<?php echo $userRes['name'] ?></span>
             <span style="display: block;">支付宝账号：<?php echo $value['account'] ?></span>
             <span style="display: block;">不要备注如何信息</span>
           </div>
@@ -91,141 +92,96 @@
           </div>
         </div>
         <?php } ?>
+        <?php } ?>
       </div>
       <br/>
       <div class="detail1">
         <div style="display: block;padding:10px;" class="color_gray">
           <span style="border:1px solid #c5c3c3;width: 80px;padding:5px;margin:5px;">申述</span>
-          <span style="border:1px solid #c5c3c3;width: 80px;padding:5px;margin:5px;">取消订单</span>
-        </div>
-        <span style="padding: 10px;height: 34px;width: 90%; display: block;color:red">未打款并点击付款付款完成，经核实，将会暂停账号功能</span>
-      </div>
-      <br/>
-      <?php if($orderInfo['buy_id'] == $userId && in_array($orderInfo['status'], ['0'])){ ?>
-        <span class="color_black" style="width: 85%;text-align:center;padding:8px;margin:3px auto;border-radius:5px;border:1px solid #01AAED;display: block;">我已付款</span>
-      <?php }else if($orderInfo['sell_id'] == $userId && in_array($orderInfo['status'], ['3'])){ ?>
-        <span class="color_black" style="width: 85%;text-align:center;padding:8px;margin:3px auto;border-radius:5px;border:1px solid #01AAED;display: block;">我已转账</span>
-      <?php } ?>
-      <!-- <br/><br/> -->
-        <!-- <div class="detail">
-          <div class='menuStyle'><span class="spanLeft">订单号：<?php echo $orderInfo['onumber'] ?></span></div>
-            <hr>
-            <div class='menuStyle'><span class="spanLeft">状态：</span><span class="spanRight">
-             <?php if($orderInfo['sell_id'] == $userId){ ?>
-            <p style="color:gray;">
-              <?php if($orderInfo['status'] == '0') echo "未收款" ?>
-              <?php if($orderInfo['status'] == '1') echo "交易成功" ?>
-              <?php if($orderInfo['status'] == '2') echo "交易取消" ?>
-              <?php if($orderInfo['status'] == '3') echo "已收款" ?>
-              <?php if($orderInfo['status'] == '4') echo "订单超时" ?>
-            </p>
-           <?php } ?>
-           <?php if($orderInfo['buy_id'] == $userId){ ?>
-           <p style="color:gray;">
-              <?php if($orderInfo['status'] == '0') echo "未付款" ?>
-              <?php if($orderInfo['status'] == '1') echo "交易成功" ?>
-              <?php if($orderInfo['status'] == '2') echo "交易取消" ?>
-              <?php if($orderInfo['status'] == '3') echo "已付款" ?>
-              <?php if($orderInfo['status'] == '4') echo "订单超时" ?>
-           </p>
-           <?php } ?>
-          </span></div>
-          <hr>
-            <div class='menuStyle'><span class="spanLeft">数量：<?php echo number_format($orderInfo['number'],2); ?></span><span class="spanRight">单价：￥<?php echo number_format($orderInfo['price'],2); ?></span></div>
-            <hr>
-           <div class='menuStyle'><span class="spanLeft">总额：</span><span class="spanRight" style="color: red;">￥<?php echo number_format($orderInfo['price']*$orderInfo['number'],2)?></span></div>
-            <hr>
-           <div class='menuStyle'><span class="spanLeft">创建时间：</span><span class="spanRight"><?php echo date("Y-m-d H:i:s",$orderInfo['create_time']) ?></span></div>
-          <hr>
-          <?php if($orderInfo['sell_id'] == $userId){ ?>
-            <div class='menuStyle'><span class="spanLeft">交易状态：</span>
-            <?php echo $orderInfo['status'] == '1' ? "<span class='spanRight' >已转账</span>" :
-            (!in_array($orderInfo['status'], ['2','4']) ? "<button class='spanRight' id='confirmTran'>确认收款</button>" : "<span class='spanRight' >交易取消</span>")  ?>
-          </div>
-            <?php if(in_array($orderInfo['status'],['0'])){ ?>
-              <div class='menuStyle'><span class="spanLeft"></span><button id="revokeOrder_<?php echo $orderInfo['id']; ?>" class='spanRight' >取消订单</button></div>
-            <?php } ?>
+          <?php if($orderInfo['status'] == 0){ ?>
+          <span style="border:1px solid #c5c3c3;width: 80px;padding:5px;margin:5px;" id="revokeOrder_<?php echo $orderInfo['id']; ?>">取消订单</span>
           <?php } ?>
-          <?php if($orderInfo['buy_id'] == $userId){ ?>
-             <div class='menuStyle'><span class="spanLeft">收款人：老王</span><span class="spanRight">支付宝</span></div>
-             <?php if($orderInfo['status'] != '1'){ ?>
-              <div class='menuStyle'><span class="spanLeft"></span>
-              <?php if($orderInfo['status'] == '0') echo "<button class='spanRight' id='payMoeny'>已付款</button>" ?>
-              <?php if($orderInfo['status'] == '3') echo "<span class='spanRight'>已付款</span>" ?>
-              </div>
-            <?php } ?>
-            <?php if(!in_array($orderInfo['status'],['1','2','3'])){ ?>
-              <div class='menuStyle'><span class="spanLeft"></span><button id="revokeOrder_<?php echo $orderInfo['id']; ?>" class='spanRight' >取消订单</button></div>
-            <?php } ?>
-            <hr>
-            <?php if($res['pay_img']){?>
-                <div class='codeStyle'><span class="spanLeft">二维码：</span>
-            <div class="codeAddress"><img src="<?php echo $res['pay_img'];?>" /></div>
-          </div>
-           <?php  } ?>
-          </div>
-          <?php } ?> -->
-
+        </div>
+        <span style="padding: 10px;height: 34px;width: 90%; display: block;color:red">
+        <?php if($orderInfo['buy_id'] == $userId){ ?>
+          未打款并点击付款付款完成，经核实，将会暂停账号功能
+        <?php }else{ ?>
+          对方已打款，不给予转账者，经核实，将会暂停账号功能
+        <?php } ?>
+        </span>
+      </div>
+      <br/> 
+      <?php if($orderInfo['buy_id'] == $userId && in_array($orderInfo['status'], ['0'])){ ?>
+        <span class="color_black" style="width: 85%;text-align:center;padding:8px;margin:3px auto;border-radius:5px;border:1px solid #01AAED;display: block;" id='payMoeny'>我已付款</span>
+      <?php }else if($orderInfo['sell_id'] == $userId && in_array($orderInfo['status'], ['3'])){ ?>
+        <span class="color_black" style="width: 85%;text-align:center;padding:8px;margin:3px auto;border-radius:5px;border:1px solid #01AAED;display: block;" id='confirmTran'>转账</span>
+      <?php } ?>
         </div>
     </div>
     <?php include display('public_menu');?>
 </body>
 <script type="text/javascript">
-  layui.use(['element','layer'],function(){
-    var element = layui.element;
-    var layer = layui.layer;
-    $("#confirmTran").bind("click",function(){
-      layer.confirm("确定收款吗？确定后平台币会转账到对方账户",function(){
-        layer.load();
-        var orderId = "<?php echo $orderInfo['id'] ?>";
-        var data = {"orderId" : orderId, "type" : "confirmTran"};
-        $.post("./card_orderDetail.php",data,function(result){
-          console.log(result);
-          layer.closeAll("loading");
-          if(!result.res){
-            layer.msg(result.msg,{icon:1,skin:"demo-class"});
-            window.location.reload(true);
-          }else{
-            layer.msg(result.msg,{icon:5,skin:"demo-class"});
-          }
-        },"json");
-      })
-    })
-    $("#payMoeny").bind("click",function(){
-      layer.confirm("确定已经付款了吗？",function(){
-        layer.load()
-        var orderId = "<?php echo $orderInfo['id'] ?>";
-        var data = {'orderId':orderId,"type":"payMoeny"}
-        $.post("./card_orderDetail.php",data,function(result){
-          console.log(result);
-          layer.closeAll("loading");
-          if(!result.res){
-            layer.msg(result.msg,{icon:1,skin:"demo-class"});
-            window.location.reload(true);
-          }else{
-            layer.msg(result.msg,{icon:5,skin:"demo-class"});
-          }
-        },"json");
-      });
 
-    })
-    $("[id^=revokeOrder_]").bind("click",function(){
-      layer.load();
-      var idStr = $(this).attr("id");
-      var orderId = idStr.substring(idStr.indexOf("_")+1);
-      var data = {"orderId":orderId,"type":"revokeOrder"};
-      $.post("./card_orderDetail.php",data,function(result){
-        console.log(result);
-        if(!result.res){
-          layer.msg(result.msg,{icon:1,skin:"demo-class"});
-          window.location.reload(true);
-        }else{
-          layer.msg(result.msg,{icon:5,skin:"demo-class"});
-        }
-      },"json");
 
-    })
+$("#confirmTran").bind("click",function(){
+  console.log('df');
+  var btnArray = ['取消','确定'];
+  mui.confirm('MUI是个好框架，确认？', 'Hello MUI', btnArray, function(e) {
+    if (e.index == 1) {
+      info.innerText = '你刚确认MUI是个好框架';
+    } else {
+      info.innerText = 'MUI没有得到你的认可，继续加油'
+    }
   })
+  // layer.confirm("确定收款吗？确定后平台币会转账到对方账户",function(){
+      // if(value){
+      //   // var orderId = "<?php echo $orderInfo['id'] ?>";
+      //   // var data = {"orderId" : orderId, "type" : "confirmTran"};
+      //   // $.post("./card_orderDetail.php",data,function(result){
+      //   //   console.log(result);
+      //   //   if(!result.res){
+      //   //     swal("提示框",result.msg,"success");
+      //   //     window.location.reload(true);
+      //   //   }else swal("提示框",result.msg,"error");
+      //   // },"json"); 
+      // }else swal("取消转账");
+    });
+  // })
+//})
+// $("#payMoeny").bind("click",function(){
+//   // layer.confirm("确定已经付款了吗？",function(){
+//     swal("确认提示","确定已经付款了吗？");
+//     .then((value)=>{
+//       if(value){
+//         var orderId = "<?php echo $orderInfo['id'] ?>";
+//         var data = {'orderId':orderId,"type":"payMoeny"}
+//         $.post("./card_orderDetail.php",data,function(result){
+//           console.log(result);
+//           if(!result.res){
+//             swal("提示框",result.msg,"success");
+//             window.location.reload(true);
+//           }else swal("提示框",result.msg,"error");
+//         },"json");
+//       }else swal("提示框","已取消付款");
+//     });
+//   // });
+
+// })
+// $("[id^=revokeOrder_]").bind("click",function(){
+//   var idStr = $(this).attr("id");
+//   var orderId = idStr.substring(idStr.indexOf("_")+1);
+//   var data = {"orderId":orderId,"type":"revokeOrder"};
+//   $.post("./card_orderDetail.php",data,function(result){
+//     console.log(result);
+//     if(!result.res){
+//       swal("提示框",result.msg,"success");
+//       window.location.reload(true);
+//     }else{
+//       swal("提示框",result.msg,"error");
+//     }
+//   },"json");
+
+// })
 </script>
 
 </html>
