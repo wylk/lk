@@ -14,7 +14,7 @@
     .lk-rows-title{
       line-height: 40px;
       background-color: #fff;
-      padding-left: 15px; 
+      padding-left: 15px;
     }
     .lk-rows{
       min-height: 100px;
@@ -47,6 +47,7 @@
         background-color: #fff;
     }
     .lk-btn:hover{color: #5fb878;}
+    #pice i{margin-left:108px; }
   </style>
    <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
      <script type="text/javascript">
@@ -69,19 +70,22 @@
         <div class="lk-sell-input">
             <form class="layui-form" action="">
               <div class="layui-form-item">
-                <label class="layui-form-label">出售价：</label>
-                <div class="layui-input-block">
-                  <input type="text" name="price" required  lay-verify="price|number" placeholder="请输入出售价" autocomplete="off" class="layui-input">
-                </div>
-              </div>
-              <hr>
-              <div class="layui-form-item">
                 <label class="layui-form-label">出售量：</label>
                 <div class="layui-input-inline">
                   <input type="text" name="num" required lay-verify="num|number" placeholder="请输出售量" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux" id="surplusNum">可以:<i><?php echo number_format($numInfo['num']); ?></i></div>
               </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">出售价：</label>
+                <div class="layui-input-block">
+                  <input type="text" name="price" required  lay-verify="price|number" placeholder="请输入出售价" autocomplete="off" class="layui-input" id="numbers">
+                </div>
+                <div class="layui-form-mid layui-word-aux" id="pice"><i>输入0-1之间</i></div>
+
+              </div>
+              <hr>
+
                <hr>
               <div class="layui-form-item">
                 <label class="layui-form-label">最少购买数:</label>
@@ -104,7 +108,7 @@
     <div class="lk-rows-title">
       <div>当前委托</div>
     </div>
-    <div class="lk-rows">     
+    <div class="lk-rows">
        <table lay-skin="line" class="layui-table laytable-cell-space table-margin0">
         <colgroup>
           <col width="20%">
@@ -118,7 +122,7 @@
             <th id="laytable-cell-space">价格</th>
             <th id="laytable-cell-space">时间</th>
             <th id="laytable-cell-space" >操作</th>
-          </tr> 
+          </tr>
         </thead>
         <tbody>
           <?php foreach ($tranList as $key => $value) { ?>
@@ -147,6 +151,12 @@ layui.use(['form','layer'], function(){
   //监听提交
   form.on('submit(formDemo)', function(data){
     // console.log(JSON.stringify(data.field));
+    var numbers = $("#numbers").val();
+    if(numbers >= 1 || numbers == 0){
+        layer.msg("输入出售价不正确！",{icon:5,skin:'demo-class'});
+        layer.closeAll("loading");
+        return false;
+    }
       // console.log(data);
       layer.load();
       var surplusNum = $("#surplusNum i").html();
@@ -184,7 +194,7 @@ layui.use(['form','layer'], function(){
       },"json");
     return false;
   });
-  
+
 
 });
 // 点单撤销功能

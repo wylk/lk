@@ -45,7 +45,7 @@
         background-image: url('../template/wap/default/images/card2.jpg?r=3322');
         background-repeat:no-repeat;
         background-size:100% 100%;
-        -moz-background-size:100% 100%;  
+        -moz-background-size:100% 100%;
         border-radius: 5px;
         padding:10px;
     }
@@ -79,7 +79,7 @@
        background-size:100% 100%;
        -moz-background-size:100% 100%;   */
     }
-    
+
     .user-card-edit{
         line-height: 30px;
         text-align: center;
@@ -133,28 +133,28 @@
         </div>
 
          <div class="card" style="height: 40%">
-            <div class="mui-card-header data-line-header">交易数据</div>         
-            <div class="data-line-content" id="lineChart">     
+            <div class="mui-card-header data-line-header">交易数据</div>
+            <div class="data-line-content" id="lineChart">
             </div>
         </div>
 
-        <div class="card">    
+        <div class="card">
             <div class="user-card-infos">
                 <div class="user-card-info">可用：<span style="color: #333"><?= round(($user_card['num']),2);?></span></div>
                 <div class="user-card-info" style="">锁定：<?= round($user_card['frozen'],2);?></div>
                 <div class="user-card-info"><a href="./home.php?card_id=<?=$user_card['card_id'];?>&plugin=offset&shoreUid=<?=$user_card['uid'];?>"><span class="user_card_info_span">+</span> &nbsp;店铺</a></div>
             </div>
-            
-            
-            
+
+
+
             <div class="mui-card-footer" style="padding: 7px 15px">
                 <div class="user-card-edit"><a href="transferBill.php?cardId=<?=$user_card['card_id']?>">转账</a></div>
                  <div class="user-card-edit"><a href="changeInto.php?id=<?= $user_card['id'];?>" >充值</a></div>
                 <div class="user-card-edit"><a href="recordBooks.php?cardId=<?=$user_card['card_id']?>">账单</a></div>
                 <div class="user-card-edit" style="border:0;"><a href="transaction.php?cardId=<?=$user_card['card_id']?>">交易</a></div>
             </div>
-        </div> 
-        
+        </div>
+
     </div>
 <?php //include display('public_menu');?>
 </body>
@@ -164,7 +164,7 @@
 <script src="<?php echo STATIC_URL;?>mui/libs/echarts-all.js"></script>
 <script type="text/javascript">
 $(function(){
-    
+
     $("a[id^=transaction_]").bind("click",function(res){
         var cardId = $(this).attr("title");
         window.location.href = "./transaction.php?cardId="+cardId;
@@ -240,6 +240,6 @@ $(function(){
             };
             var lineChart = echarts.init(byId('lineChart'));
             lineChart.setOption(getOption('line'));
-            
-            
+
+
         </script>
