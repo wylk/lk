@@ -37,7 +37,7 @@
         border: 1px solid #00adff;
         border-radius: 5px;
      }
-    .layui-input-block { width: 200px; margin-left: 110px;}
+    .layui-input-block {margin-top: 50px;}
     .hidden { display: none;}
     .cardBody { width: 100%; margin-top: 46px; text-align: center;}
     .img-block{height: 95px}
@@ -54,6 +54,13 @@
     .lk-content{
         color: #555;
         margin-bottom: 0px;
+    }
+    .layui-tab-title li{width: 33%;padding: 0;}
+    .layui-container{
+        padding: 0px;
+    }
+    .layui-tab-bar{
+        display: none;
     }
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
@@ -75,7 +82,7 @@
     <div class="lk-content">
         <?php if(empty($type)){?>
         <div class="layui-container">
-            <p style="font-size: 12px;margin-top: 8px;"><i>注:</i>普通用户无需认证 发VIP1/VIP2请完成认证</p>
+            <p style="font-size: 12px;margin-top: 8px;"><i>&nbsp;&nbsp;&nbsp;&nbsp;注:</i>普通用户无需认证 发VIP1/VIP2请完成认证</p>
             <hr>
         </div>
         <?php }?>
@@ -91,7 +98,7 @@
             <hr>
         </div>
         
-        <div class="layui-container">
+        <div class="layui-container" style="padding: 0;">
             <div class="layui-tab layui-tab-brief" lay-filter="aduitTab">
                 <ul class="layui-tab-title">
                     <li class="<?php echo ($type==1 || empty($type)) ? "layui-this" : " "?>">个人认证</li>

@@ -30,21 +30,14 @@
     .layui-tab-brief>.layui-tab-title .layui-this:after{border-bottom: 1px solid #29aee7;}
 
     .content{border:1px solid red;height: 600px;}
+    .layui-tab-title li{width: 33%;}
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
-     <script type="text/javascript">
-        $(function(){
-            lk.is_weixin() && function(){
-                $('.lk-bar-nav').css('display','none');
-                $('.lk-content').css({"padding":"0px"});
-            }()
-        })
-    </script>
 </head>
 
 <body>
-    <div class="lk-content">
-         <div class="layui-container">
+    <div class="lk-content" style="padding: 0px;margin: 0px;">
+         <div class="layui-container" style="padding: 0;">
             <div class="layui-tab layui-tab-brief" lay-filter="aduitTab">
                 <ul class="layui-tab-title" style="background-color: white;">
                     <li class="layui-this " name="tab_all">全部订单</li>
@@ -53,13 +46,19 @@
                 </ul>
                 <div class="layui-tab-content" >
                     <div class="layui-tab-item layui-show " id="pullrefreshs_all" style="touch-action: none;overflow: auto;height: 500px;">
-                        <div id="content_all" ></div>
+                        <div>
+                            <div id="content_all" ></div>
+                        </div>
                     </div>
                     <div class="layui-tab-item " id="pullrefreshs_unpaid" style="touch-action: none;overflow: auto;height: 500px;">
-                        <div id="content_unpaid" ></div>
+                        <div>
+                            <div id="content_unpaid" ></div>
+                        </div>
                     </div>
                     <div class="layui-tab-item " id="pullrefreshs_paid" style="touch-action: none;overflow: auto;height: 500px;">
-                        <div id="content_paid" ></div>
+                        <div>
+                            <div id="content_paid" ></div>
+                        </div>
                     </div>
                 </div>
             </div>

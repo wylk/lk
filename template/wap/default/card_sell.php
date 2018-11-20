@@ -11,6 +11,9 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
+        html,body{
+            background-color: #fff;
+        }
         .lk-container-flex {padding: 0 5px;}
         .lk-content hr{margin: 0}
         .lk-nav-link a{width:30%;text-align: center; line-height: 45px; font-size:15px;}

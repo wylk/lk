@@ -21,9 +21,9 @@
 
         .shop_headlines{
             height: 120px;
-            width: 100%;
+            width: 98%;
             margin:0px auto 0px;
-            border-radius: 0px;
+            border-radius: 5px;
             background-image: url('../template/wap/default/images/home_head.png');
             background-repeat:no-repeat;
             background-size:100% 100%;
@@ -49,8 +49,8 @@
             /* margin-right: auto; */
         }
         .shop_head_img{
-            height: 72px;
-            width: 72px;
+            height: 65px;
+            width: 65px;
             margin:0px auto;
         }
         .shop_headline img{
@@ -239,6 +239,7 @@
 <div>
 <div class="lk-content">
     <div class="shop_headlines">
+        
         <div class="shop_infos">
             <div class="shop_info font-max"><?php echo $store['enterprise'];?></div>
         </div>

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>订单详情</title>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
@@ -75,7 +76,7 @@
         </div>
         <div class="foot">
             <?php if($orderInfo['status']==0){?>
-                <a href='./pay.php?id=<?=$orderInfo['id'];?>'> 支付</a>
+                <a href='./pay.php?id=<?=$orderInfo['id'];?>'> 去支付</a>
             <?php } else if($orderInfo['status']==1){?>
                 <a href='./card_package.php'> 卡包</a>
             <?php }?>

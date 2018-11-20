@@ -62,7 +62,7 @@ class CardAction{
 		return ['res'=>0,"msg"=>"订单撤销成功"];
 	}
 	// 根据地址转账
-	public function addressTran($data){
+	public function addressTran($data,$api=0){
 		$num = $data['num'];
 		$type = $data['type'];
 		$cardId = $data['cardId'];
@@ -74,10 +74,19 @@ class CardAction{
 			return ['res'=>1,"msg"=>"记录添加失败","other"=>$recodRes];
 
 		// 卡包数据处理
-		$editList[] = ['id'=>['field'=>"address","val"=>$sendAddress],"operator"=>"-","field"=>"num","step"=>$num];
-		$editList[] = ['id'=>['field'=>"address","val"=>$sendAddress],"operator"=>"+","field"=>"sell_count","step"=>$num];
+		if(!$api){
+			$editList1[] = ['id'=>['field'=>"address","val"=>$sendAddress],"operator"=>"-","field"=>"num","step"=>$num];
+		}else{
+			$editList1[] = ['id'=>['field'=>"address","val"=>$sendAddress],"operator"=>"-","field"=>"frozen","step"=>$num];
+		}
+
+		$editList1[] = ['id'=>['field'=>"address","val"=>$sendAddress],"operator"=>"+","field"=>"sell_count","step"=>$num];
+
+		$editRes = M("Card_package")->dataModification($editList1);
+
 		$editList[] = ['id'=>['field'=>"address","val"=>$getAddress],"operator"=>"+","field"=>"num","step"=>$num];
 		$editList[] = ['id'=>['field'=>"address","val"=>$getAddress],"operator"=>"+","field"=>"recovery_count","step"=>$num];
+
 		$editRes = M("Card_package")->dataModification($editList);
 		if($editRes>0) return ['res'=>0,"msg"=>"转账成功"];
 		return ['res'=>1,"msg"=>"转账失败！"];
@@ -103,5 +112,19 @@ class CardAction{
 		if(!$recordRes) return ['res'=>1,"msg"=>"添加交易记录失败"];
 
 		return ['res'=>0,"msg"=>"转账成功"];
+	}
+
+	public function apiTran($data)
+	{
+		$num = $data['num'];
+		$type = $data['type'];
+		$cardId = $data['cardId'];
+		$sendAddress = $data['sendAddress'];
+		$getAddress = $data['getAddress'];
+		// 添加交易记录
+		$recodRes = D("Record_books")->data(['card_id'=>$cardId,'send_address'=>$sendAddress,'get_address'=>$getAddress,'num'=>$num,"type"=>$type,"createtime"=>time()])->add();
+		if(!$recodRes)
+			return ['res'=>1,"msg"=>"记录添加失败","other"=>$recodRes];
+
 	}
 }
