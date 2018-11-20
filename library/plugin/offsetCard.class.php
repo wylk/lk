@@ -106,7 +106,11 @@ class offsetCard extends Card
             $b_type = $value['b_type'] == 1 ?'个人认证':'店铺认证';
             $price = number_format($value['price'],2);
             $limit = number_format($value['limit'],0).'-'.number_format($value['num']-$value['frozen'],0);
-            if($limit != '1-0'){
+            if(number_format($value['num']-$value['frozen'])<=number_format($value['limit'],0)){
+                $limit=number_format($value['num']-$value['frozen']).'-'.number_format($value['num']-$value['frozen']);
+            }
+
+            if(number_format($value['num']-$value['frozen'])!=0){
             $img = empty($value['avatar']) ? "../template/wap/default/images/default_home_user.png" : $value['avatar'];
             $str .=  <<<EOM
            <div class="home-plugin-info-row">
