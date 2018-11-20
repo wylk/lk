@@ -35,7 +35,7 @@ $payTypeRes = D("Pay_type")->select();
 foreach($payTypeRes as $value){
 	$payType[$value['id']] = $value;
 }
-// dump($payType);
+
 
 
 

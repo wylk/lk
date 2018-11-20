@@ -15,7 +15,7 @@
         html body {
             background-color: #fff;
         }
-        .container{flex-direction:column;text-align:center;height:130px;background-color: white;}
+       /* .container{flex-direction:column;text-align:center;height:130px;background-color: white;}
         .container h3,.container h2{margin:10px;padding:10px;}
         .detail{flex-direction:column;background-color: white;margin-top:30px;width: 95%;margin:0 auto;}
         .menuStyle{display:flex;justify-content:space-between;padding:8px;}
@@ -24,15 +24,15 @@
         .detail .spanRight{font-size: 15px;margin:2px 20px;}
         .spanBtn{height:100px;align-items:center;}
         .spanBtn .spanRight{display:inline-flex;flex-direction: column;height:100%;justify-content:center;align-items:center;}
-        .spanBtn .spanRight .spanitem{font-size: 15px;margin:2px 20px;}
+        .spanBtn .spanRight .spanitem{font-size: 15px;margin:2px 20px;}*/
         hr{margin: 0px 19px;}
-       .codeAddress{padding: 5px 5px; line-height: 250px; color: #666;border: 1px solid #0f7f7a; width: 250px; margin:10px auto; border-radius: 10px;display:flex;justify-content:center;}
-        .codeAddress img{ height: 100%; width: 100%;}
-
-        .detail1{flex-direction:column;background-color: white;width: 95%;margin:0 auto;border-radius: 5px;border:1px solid #c5c3c3;}
+   /*    .codeAddress{padding: 5px 5px; line-height: 250px; color: #666;border: 1px solid #0f7f7a; width: 250px; margin:10px auto; border-radius: 10px;display:flex;justify-content:center;}
+        .codeAddress img{ height: 100%; width: 100%;}*/
+        .lk-content{padding-top: 6px;}
+        .detail1{flex-direction:column;background-color: white;width: 95%;margin:0 auto;border-radius: 5px;border:1px solid #c5c3c3;margin-top: 3px;}
         .menuStyle1{display:flex;justify-content:space-between;padding:8px;}
-        .detail1 .spanLeft1{font-size: 15px;margin:2px 20px;}
-        .detail1 .spanRight1{font-size: 15px;margin:2px 20px;}
+        .detail1 .spanLeft1{font-size: 15px;margin:2px 10px;}
+        .detail1 .spanRight1{font-size: 15px;margin:2px 10px;}
         .color_gray{color:#999;}
         .color_black{color:#333;}
         .color_red{color:red;}
@@ -42,10 +42,6 @@
 </head>
 
 <body style="background: #f2f2f2;">
-    <header class="lk-bar lk-bar-nav">
-        <i onclick="javascript:history.back(-1);" class="iconfont">&#xe697;</i>
-        <h1 class="lk-title">订单详情</h1>
-    </header>
     <div class="lk-content">
       <div class="detail1">
         <div class="menuStyle1">
@@ -78,17 +74,17 @@
         </div>
       </div>
       <div >
-        <?php if($orderInfo['buy_id'] == $userId){ ?>
+        <?php if($orderInfo['buy_id'] == $userId && $payInfo){ ?>
         <p class="word">请选择以下方式给卖家打款</p>
         <?php foreach($payInfo as $value){ ?>
-        <div class="detail1" style="height: 80px;padding: 3px;margin-bottom: 2px;">
+        <div class="detail1" style="height: 95px;padding: 3px;margin-bottom: 2px;">
           <div class="spanLeft1 color_gray" style="width:50%;float:left;">
             <span style="display: block;">姓名：<?php echo $userRes['name'] ?></span>
             <span style="display: block;">支付宝账号：<?php echo $value['account'] ?></span>
             <span style="display: block;">不要备注如何信息</span>
           </div>
           <div class="spanRight1" style="width: 25%;float:right;text-align: center;">
-            <span style="width: 50px;height: 50px;margin:0 auto;display: block; background-size: 100%; background-image:url(<?php echo $payType[$value['type']]['logo']; ?>);"></span>
+            <span style="width: 50px;height: 50px;margin:0 auto;margin-bottom:5px;margin-top:5px;display: block; background-size: 100%; background-image:url(<?php echo $payType[$value['type']]['logo']; ?>);"></span>
             <span class="color_black">查看二维码</span>
           </div>
         </div>
@@ -103,7 +99,7 @@
           <span style="border:1px solid #c5c3c3;width: 80px;padding:5px;margin:5px;" id="revokeOrder_<?php echo $orderInfo['id']; ?>">取消订单</span>
           <?php } ?>
         </div>
-        <span style="padding: 10px;height: 34px;width: 90%; display: block;color:red">
+        <span style="padding: 10px;height: 50px;width: 90%; display: block;color:red;margin:0 auto;">
         <?php if($orderInfo['buy_id'] == $userId){ ?>
           未打款并点击付款付款完成，经核实，将会暂停账号功能
         <?php }else{ ?>
