@@ -28,7 +28,6 @@ if(IS_POST && $_POST['type'] == "revokeOrder"){
 
 $orderId = $_GET['id'];
 $orderInfo = D("Orders")->where(['id'=>$orderId])->find();
-$userRes=D("User")->where(array('id'=>$orderInfo['sell_id']))->find();
 
 $payInfo = D("Pay_img")->where(['uid'=>$orderInfo['sell_id']])->select();
 $payTypeRes = D("Pay_type")->select();
