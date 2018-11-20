@@ -30,8 +30,10 @@ if(IS_POST){
     $tranInfo = D("Card_transaction")->where(['id'=>$data['tran_id']])->find();
     $tranInfo['uid'] != $userId ? true : dexit(['error'=>1,'msg'=>'此交易为本人发布']);
     $tranInfo['status'] == '0' ? true : dexit(['error'=>1,'msg'=>"此交易已失效"]);
-    ($tranInfo['num'] - $tranInfo['frozen']) > $datas['number'] ? true : dexit(['error'=>1,'msg'=>"购买数量不合法"]);
 
+    if(($tranInfo['num']-$tranInfo['frozen']) < $datas['number']){
+        dexit(['error'=>1,'msg'=>"购买数量不合法"]);
+    }
 
     if($data['number'] <= $datas['quantity']){
         $order_id = D('Orders')->data($data)->add();
@@ -62,7 +64,7 @@ if(!D('Card_package')->where(['uid'=>$userId,'card_id'=>$UserAud['card_id']])->f
     $contract = $_GET['card']?$_GET['card']:'offset';
     $res = hook('addCardPackage',['card_id'=>$UserAud['card_id'],'uid'=>$userId],$contract);
     if(!$res){
-        dexit(['error'=>1,'msg'=>'网络错误稍后再试']);   
+        dexit(['error'=>1,'msg'=>'网络错误稍后再试']);
     }
 }
 dexit(['error'=>0,'msg'=>$UserAud]);

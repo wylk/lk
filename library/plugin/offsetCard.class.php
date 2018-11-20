@@ -76,7 +76,7 @@ class offsetCard extends Card
         }else{
             return false;
         }
-       
+
     }
     public function receive()
     {
@@ -98,13 +98,15 @@ class offsetCard extends Card
                         ->order("b_type desc")
                         ->limit((($data['i']-1)*10).",10")
                         ->select();
-   
+
+
         if($datas){
         $str = '';
         foreach ($datas as $k => $value) {
             $b_type = $value['b_type'] == 1 ?'个人认证':'店铺认证';
             $price = number_format($value['price'],2);
             $limit = number_format($value['limit'],0).'-'.number_format($value['num']-$value['frozen'],0);
+            if($limit != '1-0'){
             $img = empty($value['avatar']) ? "../template/wap/default/images/default_home_user.png" : $value['avatar'];
             $str .=  <<<EOM
            <div class="home-plugin-info-row">
@@ -117,8 +119,8 @@ class offsetCard extends Card
                 <div style="height: 48px;line-height: 23.5px">
                <p><span class="back font-16">{$value['b_name']}</span>
               <!-- <span class="layui-badge"> {$b_type} </span>-->
-               
-              
+
+
                </p>
                <p>单价:¥&nbsp <span class="back font-16">{$price}</span> &nbsp;&nbsp; 限购:&nbsp;<i class="back">{$limit}</i></p>
                </div>
@@ -129,6 +131,7 @@ class offsetCard extends Card
          </div>
          <hr>
 EOM;
+     }
         }
             dexit(['error'=>0,'msg'=>$str]);
         }else{
