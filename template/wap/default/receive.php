@@ -107,7 +107,7 @@
    <div class="card" style="text-align: center;line-height: 120px;">
       <a class="layui-btn layui-btn-primary" >购买</a>
    </div>
-  
+
  </form>
 </div>
   	<?php include display('public_menu');?>
@@ -131,7 +131,7 @@ layui.use(['form', 'layer'],function() {
       });
     $(".layui-btn-primary").click(function(){
       var data = {}
-        data.number = $("input[name='number']").val();
+        data.number = parseFloat($("input[name='number']").val());
         data.prices = $("input[name='prices']").val();
         data.card_id = "<?php echo $UserAud['card_id'] ?>";
         data.sell_id = "<?php echo $_GET['uid'] ?>";
