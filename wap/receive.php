@@ -54,6 +54,9 @@ $UserAud = D("Card_transaction")->where(array('id'=>$_GET['id']))->find();
 // dump($UserAud);
 $UserAud['limit'] = number_format($UserAud['limit'],2);
 $UserAud['num'] = number_format($UserAud['num']-$UserAud['frozen'],2);
+if(number_format($UserAud['num']-$UserAud['frozen'],2)<number_format($UserAud['limit'],2)){
+   $UserAud['limit'] = $UserAud['num'];
+}
 $UserAud['price'] = number_format($UserAud['price'],2);
 
 $shopInfo = D("User_audit")->where(['uid'=>$UserAud['uid']])->find();
@@ -67,6 +70,7 @@ if(!D('Card_package')->where(['uid'=>$userId,'card_id'=>$UserAud['card_id']])->f
         dexit(['error'=>1,'msg'=>'网络错误稍后再试']);
     }
 }
+
 dexit(['error'=>0,'msg'=>$UserAud]);
 //include display('receive');
 echo ob_get_clean();
