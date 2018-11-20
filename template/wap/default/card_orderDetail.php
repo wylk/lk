@@ -38,6 +38,8 @@
         .color_red{color:red;}
         .word{width: 95%;margin: 0 auto;padding:20px 10px 10px 25px;}
         .img{width: 50px;}
+        .chatDiv{position: absolute;left: 0;top: 0;z-index: 9;width: 100%;height: 100%;background: #2121212e;display: none;}
+        .chatDiv img{z-index: 13;width: 200px;}
     </style>
 </head>
 
@@ -77,18 +79,19 @@
         <?php if($orderInfo['buy_id'] == $userId && $payInfo){ ?>
         <p class="word">请选择以下方式给卖家打款</p>
         <?php foreach($payInfo as $value){ ?>
+         <?php if($value['status'] == 1){ ?>
         <div class="detail1" style="height: 95px;padding: 3px;margin-bottom: 2px;">
           <div class="spanLeft1 color_gray" style="width:50%;float:left;">
-            <span style="display: block;">姓名：<?php echo $userRes['name'] ?></span>
-            <span style="display: block;">支付宝账号：<?php echo $value['account'] ?></span>
+            <span style="display: block;"><?php echo $value['name'] ?></span>
+            <span style="display: block;">账号：<?php echo $value['account'] ?></span>
             <span style="display: block;">不要备注如何信息</span>
           </div>
-          <div class="spanRight1" style="width: 25%;float:right;text-align: center;">
+          <div class="spanRight1" style="width: 25%;float:right;text-align: center;" id="chatImg" img="<?php echo $value['img'] ?>">
             <span style="width: 50px;height: 50px;margin:0 auto;margin-bottom:5px;margin-top:5px;display: block; background-size: 100%; background-image:url(<?php echo $payType[$value['type']]['logo']; ?>);"></span>
-            <span class="color_black">查看二维码</span>
+            <span class="color_black" >查看二维码</span>
           </div>
         </div>
-        <?php } ?>
+        <?php }} ?>
         <?php } ?>
       </div>
       <br/>
@@ -115,11 +118,25 @@
       <?php } ?>
         </div>
     </div>
+<!-- 二维码弹框 -->
+<div class="chatDiv">
+  <div style="z-index: 10; margin:0 auto;margin-top:200px;text-align: center">
+  </div>
+</div>
     <?php include display('public_menu');?>
 </body>
 <script type="text/javascript">
-
-// var info = document.getElementById("info");
+// 显示二维码
+$("#chatImg").click(function(){
+  var img = $(this).attr("img");
+  var html = '<img src="'+img+'">';
+  $(".chatDiv div").html(html);
+  $(".chatDiv").show();
+});
+// 隐藏二维码
+$(".chatDiv").bind("click",function(){
+  $(".chatDiv").hide();
+});
 var btnArray = ['取消','确定'];
 // 转账事件
 $("#confirmTran").bind("click",function(){
