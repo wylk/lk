@@ -34,8 +34,12 @@
         }
         .shop_infos{
             line-height: 35px;
-            width: 20%;
+            width: 35%;
 
+        }
+        .shop_info{
+            width: 100%;
+            text-align: center;
         }
         .shop_headline{
             height: 75px;
@@ -239,9 +243,9 @@
 <div>
 <div class="lk-content">
     <div class="shop_headlines">
-        
+
         <div class="shop_infos">
-            <div class="shop_info font-max"><?php echo $store['enterprise'];?></div>
+            <div class="shop_info font-max" ><?php echo $store['enterprise'];?></div>
         </div>
         <div class="shop_headline">
             <div class="shop_head_img"><img src="<?php echo (!empty($store['logo']))?$store['logo']:'../template/wap/default/images/default_home_user.png"';?>"/></div>
@@ -257,11 +261,11 @@
             &nbsp;&nbsp; <span>抵现卡</span> &nbsp;&nbsp;| &nbsp;&nbsp; 积分卡
         </div>
     </div>
-  
+
             <div class="home-plugin-info" >
 
             </div>
-           
+
         </div>
     </div>
 </div>
@@ -427,14 +431,14 @@ layui.use(['form', 'layer'],function() {
         var num = parseFloat($("#c_num").val());
         var price = parseFloat($("#c_price").val());
         var data = {}
-        data.number = $("input[name='number']").val();
+        data.number = parseFloat($("input[name='number']").val());
         data.prices = $("input[name='prices']").val();
         data.card_id = $('#card_id').val();
         data.tranId = $('#c_id').val();
         data.quantity = $('#c_num').val();
         data.sell_id  = $('#c_uid').val();
         data.price = price;
-        if(data.number < text || data.number>num){
+        if(data.number < text || data.number > num){
           layer.msg('输入购买数不合法！',{icon: 5,time:1000},function(){
               $("input[name='prices']").val('');
               $("input[name='number']").val('');
@@ -442,7 +446,6 @@ layui.use(['form', 'layer'],function() {
           });
           return false;
         }
-        layer.load();
         //console.log(data);
         //return;
         // 支付数据处理

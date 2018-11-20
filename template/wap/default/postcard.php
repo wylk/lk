@@ -40,7 +40,7 @@
     .layui-input-block {margin-top: 50px;}
     .hidden { display: none;}
     .cardBody { width: 100%; margin-top: 46px; text-align: center;}
-    .img-block{height: 95px}
+    .img-block{height: 95px;margin-right: 45px;}
     .layui-tab-brief>.layui-tab-title{
         color: #999;
     }
@@ -52,7 +52,7 @@
         border-bottom: 1px solid #29aee7;
     }
     .lk-content{
-        color: #555;
+        color: #999;
         margin-bottom: 0px;
     }
     .layui-tab-title li{width: 33%;padding: 0;}
@@ -61,6 +61,18 @@
     }
     .layui-tab-bar{
         display: none;
+    }
+    .layui-input, .layui-textarea{
+        width: 80%;
+    }
+    .layui-input{
+        color: #999;
+    }
+    .layui-form-item {
+        margin-bottom: -27px;
+    }
+    .mt{
+         margin-top: -40px;
     }
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
@@ -111,7 +123,7 @@
                         <form class='layui-form <?php if( !empty($type) && $type != 1 ){ echo 'hidden';}?>'>
                         <input type="hidden" name="type" value="1">
                         <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : ""?>">
-                        <div class='layui-form-item'>
+                        <div class='layui-form-item mt' >
                             <label class="layui-form-label">姓名：</label>
                             <div class="layui-input-block">
                                 <input type="text" class='layui-input' name="name" required lay-verify='name' value="<?php echo isset($audit['name']) ? $audit['name'] : " "?>" placeholder="真实姓名" />
@@ -202,7 +214,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class='layui-form-item'>
+                    <div class='layui-form-item' style="margin-bottom: 30px;">
                         <div class="layui-input-block">
                             <button lay-submit class='layui-btn layui-btn-warm ' lay-filter='formPerson'>提交</button>
                         </div>
@@ -214,7 +226,7 @@
                     <form class='layui-form <?php if( !empty($type) && $type != 2 ){ echo 'hidden';}?>' action="javascript:;">
                     <input type="hidden" name="type" value="2">
                     <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : " "?>">
-                    <div class='layui-form-item'>
+                    <div class='layui-form-item mt'>
                         <label class="layui-form-label">店铺名称：</label>
                         <div class="layui-input-block">
                             <input type="text" class='layui-input' name="enterprise" required lay-verify='enterprise' value="<?php echo isset($audit['enterprise']) ? $audit['enterprise'] : " "?>" placeholder="店铺名称" />
@@ -330,7 +342,7 @@
                         </div>
                     </div>
                 </div>
-                <div class='layui-form-item'>
+                <div class='layui-form-item' style="margin-bottom: 30px;">
                     <div class="layui-input-block">
                         <button type='submit' lay-submit class='layui-btn layui-btn-warm ' lay-filter='formBusiness'>提交</button>
                     </div>
@@ -344,7 +356,7 @@
               <form class='layui-form <?php if(!empty($type) && $type != 3){ echo 'hidden';}?>'>
                 <input type="hidden" name="type" value="3">
                 <input type="hidden" name="status" value="<?php echo isset($audit['status']) ? $audit['status'] : " "?>">
-                <div class='layui-form-item'>
+                <div class='layui-form-item mt'>
                     <label class="layui-form-label">企业名称：</label>
                     <div class="layui-input-block">
                         <input type="text" class='layui-input' name="enterprise" required lay-verify='enterprise' value="<?php echo isset($audit['enterprise']) ? $audit['enterprise'] : " "?>" placeholder="企业名称" />
@@ -431,7 +443,7 @@
                     </div>
                 </div>
             </div>
-            <div class='layui-form-item'>
+            <div class='layui-form-item' style="margin-bottom: 30px;">
                 <div class="layui-input-block">
                     <button type='submit' lay-submit class='layui-btn layui-btn-warm ' lay-filter='formBusiness'>提交</button>
                 </div>
