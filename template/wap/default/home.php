@@ -34,8 +34,12 @@
         }
         .shop_infos{
             line-height: 35px;
-            width: 20%;
+            width: 35%;
 
+        }
+        .shop_info{
+            width: 100%;
+            text-align: center;
         }
         .shop_headline{
             height: 75px;
@@ -241,7 +245,7 @@
     <div class="shop_headlines">
 
         <div class="shop_infos">
-            <div class="shop_info font-max"><?php echo $store['enterprise'];?></div>
+            <div class="shop_info font-max" ><?php echo $store['enterprise'];?></div>
         </div>
         <div class="shop_headline">
             <div class="shop_head_img"><img src="<?php echo (!empty($store['logo']))?$store['logo']:'../template/wap/default/images/default_home_user.png"';?>"/></div>
