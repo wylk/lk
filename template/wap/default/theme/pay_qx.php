@@ -74,6 +74,7 @@
 <div class="content">
     <div class="line" style="font-size: 14px;">必须是本人的<?php echo ($tex=='2')?'支付宝':'微信';?>账号</div>
     <div class="line-head">
+         <div class="pay_type">真实姓名:<input name="name" type="text" value="<?php echo $pay_img["name"];?>" placeholder="请输入真实姓名"></div>
         <div class="pay_type">     
             <?php if($tex=='2'){?>
                   支付宝号:<input id="zf" type="text" value="<?php if($post_type=='save'){echo $pay_img["account"];} ?>"  placeholder="请输入支付宝账号">
@@ -133,6 +134,10 @@
         var pay_num=$('#zf').val();
         var password=$('#paw').val();
         var pay_img=$("input[name='up_img']").val();
+        var name=$("input[name='name']").val();
+        if(pay_num.length < 1){
+            mui.toast('请输入真实姓名');return;
+        }
         if(pay_num.length < 5){
             mui.toast('请输入正确的账号');return;
         }
@@ -148,6 +153,7 @@
         data.password = password;
         data.type = type;
         data.pay_img = pay_img;
+        data.name = name;
         data.post_type = post_type;
         if(post_type == 'save'){
             data.id = id;

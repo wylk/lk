@@ -4,7 +4,7 @@ if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST
  import('Hook');
 $user_audit = D('User_audit')->where(array('uid' =>$wap_user['userid']))->find();
 if(!$user_audit){
-    redirect('./cardType.php'); 
+    redirect('./cardType.php');
 }else{
     if(!$user_audit['lat']){
         redirect('./map.php?referer='.urlencode($_SERVER['REQUEST_URI']));
@@ -13,7 +13,7 @@ if(!$user_audit){
 if(IS_POST){
   $postData = clear_html($_POST);
   // 发卡前平台币是否冻结判断
-  
+
   if(option('config.card_currency_set')){
   	$userInfo = D("Card_package")->where(['uid'=>$wap_user['userid'],"type"=>option("hairpan_set.platform_type_name")])->find();
   	$limit = option('config.card_currency_limit');

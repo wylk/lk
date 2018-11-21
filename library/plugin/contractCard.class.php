@@ -41,13 +41,13 @@ class contractCard extends Card
             $dataPackage['num'] = $data['sum'];
             $dataPackage['is_publisher'] = 1;
             $dataPackage['address'] = $Account_book->addAccount( $this->encrypt(json_encode(['uid'=>$uid,'contract_id'=>$contract_id,'account_balance'=>$data['sum']])));
-            if(D('Card_package')->data($dataPackage)->add()) 
+            if(D('Card_package')->data($dataPackage)->add())
                 dexit(['error'=>0,'msg'=>'添加成功']);
-            else 
+            else
                 dexit(['error'=>0,'msg'=>'添加失败']);
             //记账hash field
             //$Account_book->addAccountBook($uid,$contract_id,$dataPackage['address'],$data['sum']);
-            
+
         }else{
             dexit(['error'=>0,'msg'=>'只能使用一次喔']);
         }
@@ -62,20 +62,20 @@ class contractCard extends Card
     {
     	echo "in verification";
     }
-    public function encrypt($data){ 
+    public function encrypt($data){
         $key = '-----BEGIN PUBLIC KEY-----
         MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqWgSnGR1Q2zsICgq0hmqh22BvTGqyPelEv3mXzuQ9CNq6xmxYHPzcGqabjP0r/2tJE465AfD2Gf6EGT6LU2h6qxx0Jw3firixZmwyWJ6M5lqWJA0p2bjdUCqK2H7/+s6J3uTXJvLNggoaI2SXaJOoACq5uk4Rm6g7CN9TJNdxTlga6fOSUjzI6N3ba27Jmp4laWHFhHl93rKPSx/mv08p7P5sj9GMJMAHwFvjq+/xiUlX2kzW0qqQT3eXv7I8J6Qu6J8vb3K8UqUGd2DOoC9iVOiqtcp2u5uMSk+pgQqMK6UvnTQ838WxbEy9tnAB5MWzEmZETvC+5OHGTdEBqnCUQIDAQAB
-        -----END PUBLIC KEY-----';  
+        -----END PUBLIC KEY-----';
         $encryptedList = array();
-        $step          = 11700; 
-        $encryptedData = ''; 
-        $len = strlen($data); 
-        for ($i = 0; $i < $len; $i += $step) {        
-           $tmpData   = substr($data, $i, $step); 
+        $step          = 11700;
+        $encryptedData = '';
+        $len = strlen($data);
+        for ($i = 0; $i < $len; $i += $step) {
+           $tmpData   = substr($data, $i, $step);
            $encrypted = '';
-            openssl_public_encrypt($tmpData, $encrypted, $key,OPENSSL_PKCS1_PADDING); 
+            openssl_public_encrypt($tmpData, $encrypted, $key,OPENSSL_PKCS1_PADDING);
            $encryptedList[] = ($encrypted);
-        }    
+        }
          $encryptedData = base64_encode(join('', $encryptedList));
         return $encryptedData;
     }

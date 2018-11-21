@@ -24,7 +24,11 @@ class offsetCard extends Card
     {
         $uid =$datas['uid'];
         $data = $datas['postData'];
-
+        $num = $data['sum'];
+        $cardnum = D('Hairpan_set')->where(array('name'=>'cardnum'))->find();
+        if($num > $cardnum['value']){
+           dexit(['error'=>1,'msg'=>'发卡量超过后台设置值！']);
+        }
         $contract_id =  md5($data['contract'].$uid);
         $dataArr = [];
         foreach ($data as $key => $value) {

@@ -70,7 +70,7 @@ class HtmlForm
             </div>
         </div>
         <script>
-        
+
         </script>
 EOM;
 $this->htmlall.=$str;

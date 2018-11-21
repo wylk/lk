@@ -17,7 +17,7 @@ if(IS_POST){
         if($pay_img){
             dexit(["res"=>1,'msg'=>"保存失败"]);
         }
-        if(D('Pay_img')->data(['account'=>$data['pay_num'],'uid'=>$wap_user['userid'],'type'=>$data['type'],'img'=>$data['pay_img']])->add()){
+        if(D('Pay_img')->data(['name'=>$data['name'],'account'=>$data['pay_num'],'uid'=>$wap_user['userid'],'type'=>$data['type'],'img'=>$data['pay_img']])->add()){
             dexit(["res"=>0,'msg'=>"保存成功"]);
         }else{
             dexit(["res"=>1,'msg'=>"保存失败"]);
@@ -28,7 +28,7 @@ if(IS_POST){
         if($pay_img['img'] != $data['pay_img']){
             unlink('..'.$pay_img['img']);
         }
-        if(D('Pay_img')->data(['account'=>$data['pay_num'],'img'=>$data['pay_img']])->where(['id'=>$data['id']])->save()){
+        if(D('Pay_img')->data(['name'=>$data['name'],'account'=>$data['pay_num'],'img'=>$data['pay_img']])->where(['id'=>$data['id']])->save()){
             dexit(["res"=>0,'msg'=>"保存成功"]);
         }else{
             dexit(["res"=>1,'msg'=>"保存失败"]);
