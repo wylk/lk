@@ -22,7 +22,7 @@
         .shop_headlines{
             height: 120px;
             width: 98%;
-            margin:0px auto 0px;
+            margin:5px auto 0px;
             border-radius: 5px;
             background-image: url('../template/wap/default/images/home_head.png');
             background-repeat:no-repeat;
@@ -381,6 +381,7 @@
             var index_layer = layer.load(0, {shade: false});
             $.get('receive.php',{id:id,uid:uid},function(re){
                 layer.close(index_layer);
+                console.log(re);
                 if(re.error == 0){
                     $('#up-div').css('display','block');
                     $('#limit').html(re.msg.limit);
@@ -389,7 +390,7 @@
 
                     $('#card_id').val(re.msg.card_id);
                     $('#c_id').val(re.msg.id);
-                    $('#c_num').val(re.msg.num);
+                    $('#c_num').val(re.msg.numTrue);
                     $('#c_uid').val(uid);
                     $('#c_price').val(re.msg.price);
                     $('#c_limit').val(re.msg.limit);
@@ -430,6 +431,7 @@ layui.use(['form', 'layer'],function() {
         var text = parseFloat($("#c_limit").val());
         var num = parseFloat($("#c_num").val());
         var price = parseFloat($("#c_price").val());
+        console.log(text,num,price);
         var data = {}
         data.number = parseFloat($("input[name='number']").val());
         data.prices = $("input[name='prices']").val();
@@ -438,7 +440,9 @@ layui.use(['form', 'layer'],function() {
         data.quantity = $('#c_num').val();
         data.sell_id  = $('#c_uid').val();
         data.price = price;
-        if(data.number < text || data.number > num){
+
+        console.log(data);
+        if(data.number < text || data.number>num){
           layer.msg('输入购买数不合法！',{icon: 5,time:1000},function(){
               $("input[name='prices']").val('');
               $("input[name='number']").val('');
@@ -446,6 +450,7 @@ layui.use(['form', 'layer'],function() {
           });
           return false;
         }
+        layer.load();
         //console.log(data);
         //return;
         // 支付数据处理

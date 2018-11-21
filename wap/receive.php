@@ -25,7 +25,6 @@ if(IS_POST){
     $data['onumber'] = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
     $data['out_trade_no'] = date('YmdHis', $_SERVER['REQUEST_TIME']) . mt_rand(100000, 999999);
 
-
     // 判断购买卡片是否是本人发布
     $tranInfo = D("Card_transaction")->where(['id'=>$data['tran_id']])->find();
     $tranInfo['uid'] != $userId ? true : dexit(['error'=>1,'msg'=>'此交易为本人发布']);
@@ -53,7 +52,8 @@ if(IS_POST){
 $UserAud = D("Card_transaction")->where(array('id'=>$_GET['id']))->find();
 // dump($UserAud);
 $UserAud['limit'] = number_format($UserAud['limit'],2);
-$UserAud['num'] = number_format($UserAud['num']-$UserAud['frozen'],2);
+$UserAud['numTrue'] = $UserAud['num']-$UserAud['frozen'];
+$UserAud['num'] = number_format($UserAud['numTrue']);
 if(number_format($UserAud['num']-$UserAud['frozen'],2)<number_format($UserAud['limit'],2)){
    $UserAud['limit'] = $UserAud['num'];
 }
