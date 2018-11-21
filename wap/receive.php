@@ -52,7 +52,8 @@ if(IS_POST){
 $UserAud = D("Card_transaction")->where(array('id'=>$_GET['id']))->find();
 // dump($UserAud);
 $UserAud['limit'] = number_format($UserAud['limit'],2);
-$UserAud['num'] = number_format($UserAud['num']-$UserAud['frozen'],2);
+$UserAud['numTrue'] = $UserAud['num']-$UserAud['frozen'];
+$UserAud['num'] = number_format($UserAud['numTrue']);
 if(number_format($UserAud['num']-$UserAud['frozen'],2)<number_format($UserAud['limit'],2)){
    $UserAud['limit'] = $UserAud['num'];
 }
