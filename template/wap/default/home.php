@@ -22,7 +22,7 @@
         .shop_headlines{
             height: 120px;
             width: 98%;
-            margin:0px auto 0px;
+            margin:5px auto 0px;
             border-radius: 5px;
             background-image: url('../template/wap/default/images/home_head.png');
             background-repeat:no-repeat;
