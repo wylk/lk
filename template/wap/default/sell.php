@@ -76,15 +76,14 @@
                 </div>
                 <div class="layui-form-mid layui-word-aux" id="surplusNum">可以:<i><?php echo number_format($numInfo['num']); ?></i></div>
               </div>
+                <hr>
+
               <div class="layui-form-item">
                 <label class="layui-form-label">出售价：</label>
                 <div class="layui-input-block">
-                  <input type="text" name="price" required  lay-verify="price|number" placeholder="请输入出售价" autocomplete="off" class="layui-input" id="numbers">
+                  <input type="text" name="price" required  lay-verify="price|number" placeholder="输入0-1之间" autocomplete="off" class="layui-input" id="numbers">
                 </div>
-                <div class="layui-form-mid layui-word-aux" id="pice"><i>输入0-1之间</i></div>
-
               </div>
-              <hr>
 
                <hr>
               <div class="layui-form-item">
@@ -126,12 +125,14 @@
         </thead>
         <tbody>
           <?php foreach ($tranList as $key => $value) { ?>
-          <tr id="<?php echo $value['id']?>">
-            <td ><?php echo number_format($value['num']-$value['frozen'],2);?></td>
-            <td><?php echo number_format($value['price'],2);?></td>
-            <td><?php echo date("Y-m-d H:i:s",$value['createtime']);?></td>
-            <td  id="revoke_<?php echo $value['id']?>" num="<?php echo $value['num'];?>" cardId="<?php echo $value['card_id'];?>" onclick="revoke(<?php echo $value['id']?>)" >撤销</td>
-          </tr>
+            <?php if(number_format($value['num']-$value['frozen'],2)!=0) { ?>
+              <tr id="<?php echo $value['id']?>">
+                <td ><?php echo number_format($value['num']-$value['frozen'],2);?></td>
+                <td><?php echo number_format($value['price'],2);?></td>
+                <td><?php echo date("Y-m-d H:i:s",$value['createtime']);?></td>
+                <td  id="revoke_<?php echo $value['id']?>" num="<?php echo $value['num'];?>" cardId="<?php echo $value['card_id'];?>" onclick="revoke(<?php echo $value['id']?>)" >撤销</td>
+              </tr>
+            <?php }?>
             <?php }?>
         </tbody>
       </table>
