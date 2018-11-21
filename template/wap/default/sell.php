@@ -16,6 +16,9 @@
       background-color: #fff;
       padding-left: 15px;
     }
+    .layui-input{
+      border:none;
+    }
     .lk-rows{
       min-height: 100px;
       margin: 0px auto;
@@ -42,12 +45,20 @@
       overflow:visible;
     }
     .lk-btn{
-        color: #5fb878;
-        border: 1px solid #5fb878;
+        color: #03A9F4;
+        border: 1px solid #03A9F4;
         background-color: #fff;
+        width: 108%;
+        margin-left: -62px;
+    }
+    #surplusNum i{
+      color: #0c0101;
+      margin-left: 122px;
+      font-weight:bold;
     }
     .lk-btn:hover{color: #5fb878;}
     #pice i{margin-left:108px; }
+    .out{color:red;}
   </style>
    <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
      <script type="text/javascript">
@@ -70,11 +81,13 @@
         <div class="lk-sell-input">
             <form class="layui-form" action="">
               <div class="layui-form-item">
+                 <div class="layui-form-mid layui-word-aux" id="surplusNum"><i>可以:<?php echo number_format($numInfo['num']); ?></i></div>
+                 <hr>
                 <label class="layui-form-label">出售量：</label>
                 <div class="layui-input-inline">
                   <input type="text" name="num" required lay-verify="num|number" placeholder="请输出售量" autocomplete="off" class="layui-input">
                 </div>
-                <div class="layui-form-mid layui-word-aux" id="surplusNum">可以:<i><?php echo number_format($numInfo['num']); ?></i></div>
+
               </div>
                 <hr>
 
@@ -97,8 +110,7 @@
                 <div class="layui-input-block">
                   <input type="hidden" name="type" value="transaction" />
                   <input type="hidden" name="cardId" value="<?php echo $cardId; ?>" />
-                  <button class="layui-btn lk-btn" lay-submit lay-filter="formDemo">立即提交</button>
-                  <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                  <button class="layui-btn lk-btn" lay-submit lay-filter="formDemo">卖出</button>
                 </div>
               </div>
             </form>
@@ -130,7 +142,7 @@
                 <td ><?php echo number_format($value['num']-$value['frozen'],2);?></td>
                 <td><?php echo number_format($value['price'],2);?></td>
                 <td><?php echo date("Y-m-d H:i:s",$value['createtime']);?></td>
-                <td  id="revoke_<?php echo $value['id']?>" num="<?php echo $value['num'];?>" cardId="<?php echo $value['card_id'];?>" onclick="revoke(<?php echo $value['id']?>)" >撤销</td>
+                <td  id="revoke_<?php echo $value['id']?>" num="<?php echo $value['num'];?>" cardId="<?php echo $value['card_id'];?>" onclick="revoke(<?php echo $value['id']?>)" class="out">撤销</td>
               </tr>
             <?php }?>
             <?php }?>
