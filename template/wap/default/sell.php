@@ -81,7 +81,7 @@
         <div class="lk-sell-input">
             <form class="layui-form" action="">
               <div class="layui-form-item">
-                 <div class="layui-form-mid layui-word-aux" id="surplusNum"><i>可用:<?php echo number_format($numInfo['num']); ?></i></div>
+                 <div class="layui-form-mid layui-word-aux" id="surplusNum"><i>可用:<?php echo number_format($numInfo['num'],2); ?></i></div>
                  <hr>
                 <label class="layui-form-label">出售量：</label>
                 <div class="layui-input-inline">
