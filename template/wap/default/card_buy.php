@@ -12,7 +12,7 @@
     <style type="text/css">
         body{
             background-color: #f2f2f2;
-            
+
         }
         .lk-container-flex{
             display: flex;
@@ -72,8 +72,8 @@
 </head>
 
 <body>
-  
-    <div class="content"><!-- dsfs -->
+
+    <div class="content">
         <div class="title" style="background-color: #fff;">
             <a href="card_buy.php" id="action">买入</a>
             <a href="card_sell.php">卖出</a>
@@ -82,29 +82,29 @@
         </div>
         <div class="input-line">
             <div class="input-link">
-                   <div class="input-title"><span>买入价:</span><input type='text' name="buyPrice" value='<?php echo number_format(option('hairpan_set.price'),2) ?>' placeholder="<?php echo number_format(option('hairpan_set.price'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div> 
+                   <div class="input-title"><span>买入价:</span><input type='text' name="buyPrice" value='<?php echo number_format(option('hairpan_set.price'),2) ?>' placeholder="<?php echo number_format(option('hairpan_set.price'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
                     <div style="color: #333">余额：<?php echo number_format($platformInfo['num'],2); ?></div>
             </div>
-  
+
             <div class="input-link">
                    <div class="input-title">
                     <span>买入数量:</span><input type='text' name="buyNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
                    </div>
                    <div>LK</div>
            </div>
-                 
+
            <div class="input-link">
                    <div class="input-title">最低买入量:<input type='text' name="limitNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" /></div>
                    <div>LK</div>
            </div>
-              
+
            <div class="input-link">
                    <div class="input-title">兑换资金:<span id="money">0.00</span></div>
                    <div>RMB</div>
            </div>
-                <div class="btn-link">  
+                <div class="btn-link">
                         <a href="javascript:;" class="mui-btn mui-btn-primary mui-btn-outlined"  id="buyTran" style="width: 70%">买入</a>
-                   
+
                 </div>
             </div>
             <?php if($register){ ?>
@@ -112,7 +112,7 @@
                 <div class="lk-container-flex register" style="border: 1px solid #f2f2f2;">
                     <div>委托数</div><div>单价</div><div>总价</div><div>操作</div>
                 </div>
-               
+
                 <?php foreach ($register as $key => $value) { ?>
                 <div class="lk-container-flex register" id="register_<?php echo $value['id'] ?>" style="border: 1px solid #f2f2f2;">
                     <div>
@@ -123,11 +123,11 @@
                     <div>
                         <a href="javascript:;" id="revoke_<?php echo $value['id'] ?>"  class="layui-btn">撤销</a>
                     </div>
-                </div>  
+                </div>
                 <?php } } ?>
             </div>
-       
-      
+
+
         <div class="lk-container-flex" style="background-color: #fff;margin-top: 5px;">
             <h3 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h3>
         </div>
@@ -163,7 +163,7 @@ $(function(){
         var buyNum = $("[name=buyNum]").val();
         var limitNum = $("[name=limitNum]").val();
         var money = buyPrice*buyNum;
-       
+
         var data = {"buyPrice":buyPrice,"buyNum":buyNum,'id':id,"limitNum":limitNum,"type":"register"};
         $.post("./card_buy.php",data,function(result){
             if(!result.res){
@@ -180,7 +180,7 @@ $(function(){
         var money = buyPrice*buyNum;
         $("#money").html(money);
     })
-    
+
     $("[id^=transaction]").bind("click",function(){
         var idStr = $(this).attr("id");
         var tranId = idStr.substring(idStr.indexOf("_")+1);
@@ -208,18 +208,17 @@ $(function(){
         $.post("./card_buy.php",data,function(result){
             console.log(result);
             if(!result.res){
-                layer.msg(result.msg,{icon:1,skin:"demo-class"});
-                // window.location.reload(true);
+                mui.toast(result.msg);
                 $("#register_"+tranId).remove();
                 // window.location.reload(true);
             }else{
-                layer.msg(result.msg,{icon:5,skin:"demo-class"});
+                 mui.toast(result.msg);
             }
         },"json");
-        
-    })  
+
+    })
 })
-   
+
 </script>
 </body>
 </html>

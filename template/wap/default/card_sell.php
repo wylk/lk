@@ -2,86 +2,125 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php if(!defined('LEKA_PATH')) exit('deny access!');?>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?<?=time()?>">
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
+   <!--  <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
+   <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?<?=time()?>"> -->
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
     <style type="text/css">
-        html,body{
+        body{
+            background-color: #f2f2f2;
+
+        }
+        .lk-container-flex{
+            display: flex;
+        }
+        .title{display: flex;padding: 0 5px;line-height: 35px;color: #999;}
+        .title a{color:#999;width:25%;text-align: center; line-height: 40px; font-size:14px;}
+        .input-line{
             background-color: #fff;
+            margin-top:10px;
+            color: #999;
         }
-        .lk-container-flex {padding: 0 5px;}
-        .lk-content hr{margin: 0}
-        .lk-nav-link a{width:30%;text-align: center; line-height: 45px; font-size:15px;}
+        .input-link{
+            display: flex;
+            padding: 0 15px;
+            border:1px solid #f2f2f2;
+            height: 50px;
+            align-items:center;
+        }
+        input[type=text]{
+            width: 40%;
+            border: 0px;
+            margin: 0px;
+        }
+        .input-title{
+            width: 70%;
+            line-height: 50px;
+        }
+        .btn-link{
+            height: 80px;
+            text-align: center;
+            padding-top: 20px;
+
+        }
+        #sellTran{
+            color: #999;
+            border-color: #29Aee7;
+        }
+
         .lk-deal-link a{text-align: center; line-height: 45px; font-size:15px;padding: 0 3px;}
-        .lk-deal-link a input[type='text']{
-            display: inline;
-            border:none;
-        }
+        .lk-deal-link a input[type='text']{display: inline;border:none; background-color: #ffffff;}
         .lk-justify-content-c{padding:25px;}
-        .lk-bazaar-sell{width: 70%;padding: 5px;}
+        .lk-bazaar-sell{width: 80%;padding: 5px;}
         .lk-bazaar-sell p{height: 27px;line-height: 27px;}
         /*.lk-bazaar-sell p{width:38%; padding-left:3%; line-height: 25px}*/
         .item-buy{align-self:center;  border:1px solid #FF5722; width:45px; border-radius: 50px; line-height: 45px; text-align: center;}
         .register div{width:20%;height:38px;line-height:38px;margin-left:20px;}
+        #action {
+            color: #333;
+            border-bottom: 1px solid #29Aee7;
+        }
+        .buy-order{
+            background-color: #fff;
+            margin: 3px 6px;
+            border-radius: 5px;
+        }
     </style>
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
-    <script type="text/javascript">
-        $(function(){
-            lk.is_weixin() && function(){
-                $('.lk-bar-nav').css('display','none');
-                $('.lk-content').css({"padding":"0px"});
-            }()
-        })
-    </script>
 </head>
 
 <body>
-    <header class="lk-bar lk-bar-nav">
-        <i class="iconfont">&#xe697;</i>
-        <h1 class="lk-title">卖出</h1>
-    </header>
-    <div class="lk-content">
-        <div class="lk-container-flex lk-nav-link">
-                <a href="card_buy.php">买入</a>
-                <a href="card_sell.php" class="layui-bg-orange">卖出</a>
-                <a href="card_order.php">订单</a>
-                <a href="card_orderlist.php">订单记录</a>
+
+    <div class="content">
+        <div class="title" style="background-color: #fff;">
+            <a href="card_buy.php" >买入</a>
+            <a href="card_sell.php" id="action">卖出</a>
+            <a href="card_order.php">订单</a>
+            <a href="card_orderlist.php">订单记录</a>
         </div>
-        <hr>
-        <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                <a href="javascript:;">卖出价：<input type='text' name="sellPrice" value='<?php echo number_format(option('hairpan_set.price'),2) ?>' placeholder="<?php echo number_format(option('hairpan_set.price'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></a>
-                <a href="javascript:;">余额：<?php echo number_format($platformInfo['num'],2); ?></a>
-        </div>
-        <hr>
-        <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                <a href="javascript:;">卖出数量：<input type='text' name="sellNum" value='' placeholder="<?php echo number_format(option('hairpan_set.limit'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
-                <a href="javascript:;">WLK</a>
-        </div>
-        <hr>
-        <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                <a href="javascript:;">最低卖出量：<input type='text' name="limitNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
-                <a href="javascript:;">WLK</a>
-        </div>
-        <hr>
-        <div class="lk-container-flex lk-justify-content-sb lk-deal-link">
-                <a href="javascript:;">兑换资金：<span id="money">0.00</span></a>
-                <a href="javascript:;">CNY</a>
-        </div>
-        <hr>
-        <div class="lk-container-flex lk-justify-content-c">
-            <a href="javascript:;" id="sellTran" class="layui-btn layui-btn-warm" style="width: 90%">卖出</a>
-        </div>
+        <div class="input-line">
+            <div class="input-link">
+                <div  class="input-title">
+                        <span>卖出价：<input type='text' name="sellPrice" value='<?php echo number_format(option('hairpan_set.price'),2) ?>' placeholder="<?php echo number_format(option('hairpan_set.price'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></span>
+                        </div>
+                         <div style="color: #333">余额：<?php echo number_format($platformInfo['num'],2); ?></div>
+            </div>
+            <div class="input-link">
+                <div  class="input-title">
+                <span>卖出数量：<input type='text' name="sellNum" value='' placeholder="<?php echo number_format(option('hairpan_set.limit'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+                </span>
+                </div>
+                <div>WLK</div>
+
+            </div>
+            <div class="input-link">
+                    <div  class="input-title">
+                    <span>最低卖出量：<input type='text' name="limitNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+                    </span></div>
+                    <div>WLK</div>
+
+            </div>
+            <div class="input-link">
+                   <div class="input-title">兑换资金:<span id="money">0.00</span></div>
+                   <div>RMB</div>
+            </div>
+            <div class="btn-link">
+                <a href="javascript:;" id="sellTran" class="mui-btn mui-btn-primary mui-btn-outlined" style="width: 70%">卖出</a>
+            </div>
+      </div>
         <?php if($register){ ?>
-        <div class="lk-container-flex">
-            <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场委托单</h1>
+      <div style="background-color: #fff;color: #999;">
+        <div class="lk-container-flex" style="background-color: #fff;margin-top: 5px;">
+            <h3 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h3>
         </div>
-        <div class="lk-container-flex register">
-            <div>数量</div><div>单价</div><div>总价</div><div>操作</div>
+        <div class="lk-container-flex register" style="border: 1px solid #f2f2f2;">
+                    <div>委托数</div><div>单价</div><div>总价</div><div>操作</div>
         </div>
         <hr>
         <?php foreach($register as $key=>$value){ ?>
@@ -97,11 +136,11 @@
         </div>
         <hr>
         <?php } } ?>
-        <div class="lk-container-flex">
-            <h1 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h1>
+         </div>
+         <div class="lk-container-flex" style="background-color: #fff;margin-top: 5px;">
+            <h3 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h3>
         </div>
-        <hr>
-        <hr>
+
 
         <?php foreach($buyList as $key=>$value){ ?>
         <?php if($value['num'] <= $value['frozen']) continue; ?>
@@ -125,23 +164,23 @@
         <?php } ?>
     </div>
     <?php include display('public_menu');?>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
 <script type="text/javascript">
-layui.use(['layer'],function(){
     $("#sellTran").bind("click",function(){
-        layer.load();
         var price = $("[name=sellPrice]").val();
         var num = $("[name=sellNum]").val();
         var limit = $('[name=limitNum]').val();
         var id = "<?php echo $platformInfo['id'] ?>";
         var data = {"price":price,"num":num,"id":id,"limitNum":limit,"type":"register"};
         $.post("./card_sell.php",data,function(res){
-            console.log(res);
-            layer.closeAll("loading");
+            //console.log(res);
+            //layer.closeAll("loading");
             if(!res.res){
-                layer.msg(res.msg,{icon:1,skin:"demo-class"});
+                mui.toast(res.msg);
                 window.location.reload(true);
             }else{
-               layer.msg(res.msg,{icon:5,skin:"demo-class"});
+                mui.toast(res.msg);
                if(res.url){
                     setTimeout(function(){
                         window.location.href = res.url;
@@ -150,6 +189,7 @@ layui.use(['layer'],function(){
             }
         },"json");
     })
+
     // $("[name=limitNum]").bind("keyup",function(){
     //     var sellNum = $("[name=sellNum]").val();
     //     var limitNum = $("[name=limitNum]").val();
@@ -166,10 +206,10 @@ layui.use(['layer'],function(){
         $.post("./card_sell.php",data,function(result){
             console.log(result);
             if(!result.res){
-                layer.msg(result.msg,{icon:1,skin:"demo-class"});
+                 mui.toast(result.msg);
                 window.location.href = "./card_order.php";
             }else{
-                layer.msg(result.msg,{icon:5,skin:"demo-class"});
+                 mui.toast(result.msg);
                 if(res.url){
                     setTimeout(function(){
                         window.location.href = res.url;
@@ -186,15 +226,15 @@ layui.use(['layer'],function(){
         $.post("./card_sell.php",data,function(result){
             console.log(result);
             if(!result.res){
-                layer.msg(result.msg,{icon:1,skin:"demo-class"});
+                 mui.toast(result.msg);
                 // $("#register_"+tranId).remove();
                 window.location.reload(true);
             }else{
-                layer.msg(result.msg,{icon:5,skin:"demo-class"});
+                mui.toast(result.msg);
             }
         },"json")
     })
-})
+
 $('input[name^=sell]').bind("keyup",function(){
     var price = $("[name=sellPrice]").val();
     var num = $("[name=sellNum]").val();
