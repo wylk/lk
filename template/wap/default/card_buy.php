@@ -73,7 +73,7 @@
 
 <body>
   
-    <div class="content">
+    <div class="content"><!-- dsfs -->
         <div class="title" style="background-color: #fff;">
             <a href="card_buy.php" id="action">买入</a>
             <a href="card_sell.php">卖出</a>
