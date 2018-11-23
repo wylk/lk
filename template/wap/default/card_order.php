@@ -24,31 +24,24 @@
         .b{font-size:16px;color:#5FB878}
         .s{font-size:16px;color:#FF5722}
         .total{color:#393D49;font-weight: 550; font-size:16px}
+        #action {
+            color: #333;
+            border-bottom: 1px solid #29Aee7;
+        }
+        .title{display: flex;padding: 0 5px;line-height: 35px;color: #999;}
+        .title a{color:#999;width:25%;text-align: center; line-height: 40px; font-size:14px;}
     </style>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
-     <script type="text/javascript">
-        $(function(){
-            lk.is_weixin() && function(){
-                $('.lk-bar-nav').css('display','none');
-                $('.lk-content').css({"padding":"0px"});
-            }()
-        })
-    </script>
 </head>
 
 <body>
-    <header class="lk-bar lk-bar-nav">
-        <i class="iconfont">&#xe697;</i>
-        <h1 class="lk-title">买入</h1>
-    </header>
-    <div class="lk-content">
-        <div class="lk-container-flex lk-deal-link">
-                <a href="card_buy.php">买入</a>
-                <a href="card_sell.php">卖出</a>
-                <a href="card_order.php" class="layui-bg-orange">订单</a>
-                <a href="card_orderlist.php">订单记录</a>
+    <div class="content">
+         <div class="title" style="background-color: #fff;">
+            <a href="card_buy.php" >买入</a>
+            <a href="card_sell.php">卖出</a>
+            <a href="card_order.php" id="action">订单</a>
+            <a href="card_orderlist.php">订单记录</a>
         </div>
-        <hr>
         <?php foreach($orderList as $key=>$value){ ?>
         <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
             <div class="order-left">
