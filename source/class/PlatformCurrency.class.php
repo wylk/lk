@@ -92,7 +92,7 @@ class PlatformCurrency{
             }
             // 检测保证金
             $bailRes = $this->bailInter($this->tranNum,$this->packageId);
-            if($bailRes['res']) return ['res',"msg"=>$bailRes['msg']];
+            if($bailRes['res']) return ['res'=>1,"msg"=>$bailRes['msg']];
             $this->bailNum = $bailRes['data']['bailNum'];
         }
 
@@ -230,7 +230,7 @@ class PlatformCurrency{
             if($packageInfo['num'] < $num)  return ['res'=>1,"msg"=>"现有金额不足","other"=>$packageInfo['num']];
             // 提现保证金冻结
             $bailRes = $this->bailInter($num,$packageInfo['id']);
-            if($bailRes['res']) return ['res',"msg"=>$bailRes['msg']];
+            if($bailRes['res']) return ['res'=>1,"msg"=>$bailRes['msg']];
             $this->bailNum = $bailRes['data']['bailNum'];
 
             // 如果是卖单，对卡包中的数据进行冻结
@@ -603,6 +603,10 @@ class PlatformCurrency{
         if($res['error'] == '101') return ['res'=>1,"msg"=>$res['msg']];
         else if($res['error'] == '102'){
             $bailNum = $num*(int)$this->bailRatio/100;
+
+            if($this->platform[$packageId]['num']-$num-$bailNum<0)
+                return ['res'=>1,"msg"=>"保证金不足","data"=>[$num,$bailNum,$num+$bailNum,$this->platform[$packageId]['num']-$num-$bailNum]];
+            
             $bail[] = ['id'=>$packageId,'operator'=>'+','step'=>$bailNum,'field'=>'bail'];
             $bail[] = ['id'=>$packageId,'operator'=>'-','step'=>$bailNum,'field'=>'num'];
             M("Card_package")->dataModification($bail);
