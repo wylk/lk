@@ -36,18 +36,22 @@
             display: flex;
             align-items:center;
             height: 80px;
-            background-color: #fff;
+           /*  background-color: #fff; */
+            background-image: url('../template/wap/default/images/index-card.png');
+            background-repeat:no-repeat;
+            background-size:100% 100%;
+            -moz-background-size:100% 100%;
             border-radius: 5px;
             color:#999;
         }
         .img{
             width: 20%;
             line-height: 75px;
-            margin-left: 8px;
+            margin-left: 10px;
         }
         .price{
-           width: 50%;
-           height: 80px;
+           width: 46.2%;
+           height: 70px;
            font-size: 13px;
            border-right: 1px dashed #999;
         }
@@ -65,7 +69,7 @@
         }
         .num{
             height:80px;
-            width: 25%;
+            width: 30%;
         }
         .num div{
             line-height: 40px;
