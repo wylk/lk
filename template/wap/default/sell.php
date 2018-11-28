@@ -94,7 +94,7 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">出售价：</label>
                 <div class="layui-input-block">
-                  <input type="text" name="price" required  lay-verify="price|number" placeholder="输入0-1之间" autocomplete="off" class="layui-input" id="numbers">
+                  <input type="text" name="price" required  lay-verify="price|number" placeholder="输入0-1之间(保留两位小数)" autocomplete="off" class="layui-input" id="numbers">
                 </div>
               </div>
 
@@ -165,6 +165,11 @@ layui.use(['form','layer'], function(){
   form.on('submit(formDemo)', function(data){
     // console.log(JSON.stringify(data.field));
     var numbers = $("#numbers").val();
+    if(numbers.length>4){
+        layer.msg("输入出售价格式不正确！",{icon:5,skin:'demo-class'});
+        layer.closeAll("loading");
+        return false;
+    }
     if(numbers >= 1 || numbers == 0){
         layer.msg("输入出售价不正确！",{icon:5,skin:'demo-class'});
         layer.closeAll("loading");
