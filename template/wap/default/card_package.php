@@ -43,7 +43,7 @@
 <body>
     <header class="lk-bar lk-bar-nav">
         <i class="iconfont">&#xe697;</i>
-        <h1 class="lk-title">买入</h1>
+        <h1 class="lk-title">卡包</h1>
     </header>
     <div class="lk-content">
        <div class="lk-container-flex" style="padding-left: 15px;height: 15px;">
@@ -54,7 +54,11 @@
         <?php foreach($cardList as $key=>$value){ ?>
         
         <div class="lk-container-flex lk-card-package lk-flex-direction-c">
-            <div class="lk-container-flex" style="padding:10px 0">
+            <?php if($value['type'] == option("hairpan_set.platform_type_name")){ ?>
+            <a href="card_buy.php?uid=<?php echo $value['uid'] ?>" class="lk-container-flex" style="padding:10px 0;">
+            <?php }else{ ?>
+            <a href="home.php?card_id=<?php echo $value['card_id'] ?>&plugin=<?php echo $value['type'] ?>&shoreUid=<?php echo $cardAttrArr[$value['card_id']]['uid'] ?>" class="lk-container-flex" style="padding:10px 0;">
+            <?php } ?>
                 <div class="item-flex card-info">
                     <p><?php echo $value['type']==option("hairpan_set.platform_type_name") ? '乐卡' : $cardType[$cardAttrArr[$value['card_id']]['uid']]; ?>
                     ：
@@ -65,7 +69,7 @@
                 <div class="item-flex card-logo">
                     <p <?php echo isset($cardAttrArr[$value['card_id']]['card_log']) ? 'style="background:url('.$cardAttrArr[$value['card_id']]['card_log'].') no-repeat;background-size: 100% 100%;"' : '' ?> ></p>
                 </div>
-            </div>
+            </a>
             <hr>
             <div class="lk-container-flex lk-flex-direction-r">
                 <ul class="lk-container-flex lk-justify-content-sa">
