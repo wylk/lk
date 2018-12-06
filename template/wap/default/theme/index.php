@@ -37,11 +37,11 @@
             align-items:center;
             height: 80px;
            /*  background-color: #fff; */
-            background-image: url('../template/wap/default/images/index-card.png');
+            background-image: url('../template/wap/default/images/index-card3.png');
             background-repeat:no-repeat;
             background-size:100% 100%;
             -moz-background-size:100% 100%;
-            border-radius: 5px;
+            border-radius: 1px;
             color:#999;
         }
         .img{
@@ -53,7 +53,7 @@
            width: 46.2%;
            height: 70px;
            font-size: 13px;
-           border-right: 1px dashed #999;
+           /* border-right: 1px dashed #999; */
         }
         .price div{
             line-height: 40px;
