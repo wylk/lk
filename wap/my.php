@@ -9,7 +9,8 @@ $phone = isset($wap_user['phone']) ? $wap_user['phone'] : "";
 $userId = isset($wap_user['userid']) ? $wap_user['userid'] : 1;
 
 // 清除超时订单
-$deadline_time = option('hairpan_set.expiry_time') ? option('hairpan_set.expiry_time') : 60*30;
+// $deadline_time = option('hairpan_set.expiry_time') ? option('hairpan_set.expiry_time') : 60*30;
+$deadline_time = 30;
 // /************平台币清除超时订单 start ***********/
 $leka_where = ['create_time'=>['<=',time()-$deadline_time],"status"=>'0',"type"=>0];
 $leka_orders = D("Orders")->where($leka_where)->select();
@@ -30,12 +31,12 @@ if($leka_orders){
 		}else{
 			$leka_num[$value['tran_id']] += $value['number'];
 			$leka_num[$value['tran_other']] += $value['number'];
+			$leka_frozen[$value['tran_other']] = ['id'=>$value['tran_other'],"operator"=>"-","step"=>$leka_num[$value['tran_other']],"field"=>"frozen"];
 		}
 
 		$leka_frozen[$value['tran_id']] = ['id'=>$value['tran_id'],"operator"=>"-","step"=>$leka_num[$value['tran_id']],"field"=>"frozen"];
-		$leka_frozen[$value['tran_other']] = ['id'=>$value['tran_other'],"operator"=>"-","step"=>$leka_num[$value['tran_other']],"field"=>"frozen"];
 	}
-	$res = D("Card_transaction")->frozen($leka_num);
+	M("Card_transaction")->frozen($leka_frozen);
 	if($leka_marker_num){
 		foreach($leka_marker_num as $key=>$value){
 			$clearPackage[] = ['id'=>['field'=>"uid",'val'=>$key],"operator"=>"+","field"=>'num',"step"=>$value];
@@ -53,14 +54,15 @@ if($leka_orders){
 
 // /************卡券清除超时订单 start *************/
 $card_where = ['create_time'=>['<=',time()-$deadline_time],"status"=>'0',"type"=>1];
-$card_orders = D("Orders")->where($leka_where)->select();
+$card_orders = D("Orders")->where($card_where)->select();
+// dump($card_orders);
 if($card_orders){
 	foreach($card_orders as $key=>$value){
 		$card_orderIds[] = $value['id'];
 		$card_num[$value['tran_id']] += $value['number'];
 		$card_frozen[$value['tran_id']] = ['id'=>$value['tran_id'],"operator"=>"-","step"=>$card_num[$value['tran_id']],"field"=>"frozen"];
 	}
-	D("Card_transaction")->frozen($card_frozen);
+	M("Card_transaction")->frozen($card_frozen);
 	D("Orders")->where(['id'=>['in',$card_orderIds]])->setField("status",4);
 }
 // /************卡券清除超时订单  end  *************/
