@@ -37,11 +37,11 @@
             align-items:center;
             height: 80px;
            /*  background-color: #fff; */
-            background-image: url('../template/wap/default/images/index-card3.png');
+            background-image: url('../template/wap/default/images/index-card3.png?r=1');
             background-repeat:no-repeat;
             background-size:100% 100%;
             -moz-background-size:100% 100%;
-            border-radius: 1px;
+            border-radius: 5px;
             color:#999;
         }
         .img{
@@ -86,6 +86,9 @@
         }
         .num a{
           border-radius: 5px;
+        }
+        .black-status{
+            color: #95ad6e;
         }
         .map{
             height: 100%;

@@ -134,7 +134,7 @@
             height: 45px;
         }
         .layui-btn-primary{
-            border: 1px solid #999;
+            border: 1px solid #ce856a;
             color: #999;
             height: 30px;
             line-height: 30px;
