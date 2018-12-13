@@ -26,6 +26,7 @@
       .us-checkbox{background-color: #FFF; color:#000; width: 12px; height: 12px; border:1px solid #ddd; margin:10px; font-size:9px;padding:2px; }
       .layui-layer-btn{background:none;}
       .layui-form-item button{padding:2px;border-radius: 6px;background: #29aee7;width: 45px;}
+      .api_state{border:1px solid red;width:100%;height:40px;margin-top: 10px;background: #FFF;}
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
      <script type="text/javascript">
@@ -74,13 +75,17 @@
                 <input type="text" id="key" name="key" length="16" placeholder="<?php echo $userInfo['mid_key'] ?>" autocomplete="off" class="layui-input" value="<?php echo $userInfo['mid_key']; ?>" >
             </div>
             <button id="copy_key" data-clipboard-target="#key">复制</button>
-        </div>
       <?php } ?>
+        </div>
   </div>
 </div>
 <?php if(empty($userInfo['mid'])){ ?>
   <div class="layui-row">
   <button id="layui-btn" class="layui-btn" style="width:100%;">申请商户号</button>
+  </div>
+<?php }else{ ?>
+  <div class="api_state">
+      此账号用于优惠券余额和组合支付使用，请妥善保管此账号
   </div>
 <?php } ?>
 </form>

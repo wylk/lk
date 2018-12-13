@@ -1,0 +1,1 @@
+<?php	return array ( 'res' => 0, 'data' => array ( 'bailNum' => 0.5, ), );?>
