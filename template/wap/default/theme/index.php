@@ -56,7 +56,7 @@
            /* border-right: 1px dashed #999; */
         }
         .price div{
-            line-height: 40px;
+            line-height: 36px;
             margin-left: 10px;
             text-align: left;
 
