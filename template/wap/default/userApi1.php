@@ -10,21 +10,11 @@
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?<?=time()?>">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>js/clipboard.min.js" charset="utf-8"></script>
     <style type="text/css">
-      .layui-input-block{margin-right: 50px;}
-      .layui-input{border:0; padding-left:6px;}
-      .layui-form-item .layui-input-inline.us-input-inline{display: inline-block; float: none; left: 0;  width: auto; margin: 0; padding: 10px 0 10px 0px;}
-      .layui-form-item{margin: 0; line-height: 45px;}
-      .us-btn{background-color: #FFF; color:#FF5722; font-weight: 500}
-      .us-btn:hover{color:#FF5722;}
-      .layui-form-item .layui-form-label{margin-top:10px;}
-      .layui-row{border-radius: 3px;}
+      .api_block{/*border:1px solid red;background: white;height:50px;*/width: 100%;}
+      .api_span{border:1px solid red;background:white;height:40px;line-height: 40px;}
 
-      .layui-checkbox{background-color: #FFF; color:#FFF; width: 12px; height: 12px; border:1px solid #f2f2f2; margin:10px; font-size:9px;padding:2px;}
-
-      .us-checkbox{background-color: #FFF; color:#000; width: 12px; height: 12px; border:1px solid #ddd; margin:10px; font-size:9px;padding:2px; }
-      .layui-layer-btn{background:none;}
-      .layui-form-item button{padding:2px;border-radius: 6px;background: #29aee7;width: 45px;}
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
      <script type="text/javascript">
@@ -42,48 +32,20 @@
       <i class="iconfont">&#xe697;</i>
       <h1 class="lk-title">api接口</h1>
   </header>
-  <div class="layui-container" style="padding-top:155px">
-    <form class="layui-form" action="javascript:;">
-  <div class="layui-row" style="border:1px solid #d2d2d2; background-color: #FFF; margin-bottom:50px;">
-    <div class="layui-col-xs12">
-      <?php if(empty($userInfo['mid'])){ ?>
-        <div class="layui-form-item">
-            <label class="layui-form-label">手机号码</label>
-            <div class="layui-input-inline us-input-inline" style="padding-left:0px;">
-                <input type="text" name="phone" id="phone" required lay-verify="phoneNumber" placeholder="<?php echo $phoneShow ?>" autocomplete="off" class="layui-input" value="<?php echo $phoneShow; ?>" readonly>
-            </div>
-        </div>
-        <div class="layui-form-item"  style="border-top:1px solid #F0F0F0">
-          <div class="layui-input-inline us-input-inline" style=" border-right:1px solid #F0F0F0">
-                <input type="text" name="password" required lay-verify="passVerify" placeholder="请输入手机验证码" autocomplete="off" class="layui-input" style="float:right; width: 78%">
-          </div>
-            <a href="javascript:;"  id="getVerify" class="layui-btn us-btn">获取验证码</a>
-        </div>
-      <?php }else{ ?>
-        <div class="layui-form-item">
-            <label class="layui-form-label">工商号：</label>
-            <div class="layui-input-inline us-input-inline" style="padding-left:0px;">
-                <input type="text" name="mid" placeholder="<?php echo $userInfo['mid'] ?>" autocomplete="off" class="layui-input" value="<?php echo $userInfo['mid']; ?>" readonly>
-            </div>
-            <button>复制</button>
-        </div>
-        <div class="layui-form-item"  style="border-top:1px solid #F0F0F0">
-            <label class="layui-form-label">秘钥：</label>
-            <div class="layui-input-inline us-input-inline" style="padding-left:0px;">
-                <input type="text" name="key" length="16" placeholder="<?php echo $userInfo['key'] ?>" autocomplete="off" class="layui-input" value="<?php echo $userInfo['key']; ?>" >
-            </div>
-            <button>复制</button>
-        </div>
-      <?php } ?>
+  <div class="layui-container" style="padding-top:70px">
+    <div class="api_block">
+      <div class="api_span">
+        <span style="">appid:</span>
+        <span>15703216869</span>
+        <span>复制</span>
+      </div>
+      <div class="api_span">
+        <span>key:</span>
+        <span>aa139b77c50b94a84a70a2feeca25d41</span>
+        <span>复制</span>
+      </div>
+    </div>
   </div>
-</div>
-<?php if(empty($userInfo['mid'])){ ?>
-  <div class="layui-row">
-  <button id="layui-btn" class="layui-btn" style="width:100%;">申请商户号</button>
-  </div>
-<?php } ?>
-</form>
-</div>
 
 </body>
 
@@ -96,15 +58,20 @@
   $("#getVerify").bind("click",function(){
     var data = {type:"verify"};
     $.post("./userApi.php",data,function(res){
-      console.log(res);
-      // if($)
+      if(res.messageRes)
+        layer.msg("验证码发送成功",{icon:1,skin:'demo-class'});
+      else 
+        layer.msg("验证码发送失败",{icon:5,skin:'demo-class'});
     },"json");
   });
   $("#layui-btn").bind("click",function(){
     var pwd = $("[name=password]").val();
+    if(pwd.length != 6){
+      layer.msg("验证码不正确",{icon:5,skin:'demo-class'});
+      return;
+    }
     var data = {type:'apply',pwd:pwd};
     $.post("./userApi.php",data,function(res){
-      console.log(res);
       if(!res['res']){
         layer.msg(res.msg,{icon:1,skin:'demo-class'});
         setTimeout(function(){
@@ -114,4 +81,15 @@
         layer.msg(res.msg,{icon:5,skin:'demo-class'});
     },"json");
   });
+  $("[id^=copy_]").bind("click",function(){
+    var idStr = $(this).attr('id');
+      var clipboard = new ClipboardJS("#"+idStr);
+      clipboard.on("success",function(e){
+          e.clearSelection();
+          layer.msg("复制成功",{ icon: 1, skin: "demo-class" });
+      })
+      clipboard.on("error",function(e){
+          layer.msg("复制失败",{ icon: 5, skin: "demo-class" });
+      })
+  })
 </script>
