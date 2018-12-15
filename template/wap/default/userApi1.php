@@ -28,6 +28,7 @@
       .inter_row_attr{display: flex;justify-content: space-around;padding-left: 45px}
       .inter_attr{font-size:12px; color:#999;}
       .inter_num{font-size:14px;color:#333;}
+      .switch_block{float: right;border:1px solid #41c7db85;height:40px;width: 60px;display: flex;align-items: center;flex-direction: row;}
 
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
@@ -69,9 +70,10 @@
         <div class="inter_row" style="height: 40px;line-height: 40px;">
           <span class="inter_img"></span>
           <span style="color:#333;font-size: 17px;margin-left: 5px;">会员卡支付</span>
-          <span style="float: right;border:1px solid #41c7db85;">
-            <!-- <div style="display: block;width: 15px;height: 10px;border:1px solid red;"></div> -->
-            开关
+          <span class="switch_block">
+            <div style="display: block;width: 15px;height: 10px;border:1px solid red;"></div>
+            <div style="display: block;width: 15px;height: 10px;border:1px solid red;"></div>
+            <!-- 开关 -->
           </span>
         </div>
         <div class="inter_row inter_row_attr">

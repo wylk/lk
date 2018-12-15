@@ -194,7 +194,7 @@ $(function(){
             if(!result.res){
                 mui.toast(result.msg);
                 $("#tran_"+tranId).remove();
-                window.location.reload(true);
+                window.location.href="./card_order.php";
             }else{
                  mui.toast(result.msg);
             }
