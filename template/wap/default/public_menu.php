@@ -33,14 +33,14 @@ height: 50px;
 padding-top: 4px;
 color: #999;
 font-size: 12px;
-background-color: #F9F5F5;
+background-color: #FFF;
 text-align: center;
 }
 .wx_nav a:active, .wx_nav a.on {
-	color: #333;
+	color: #29aee7;
 }
 .wx_nav a:before {
-background-image: url(../template/wap/default/images/icon_nav.png?r=23);
+background-image: url(../template/wap/default/images/icon_nav.png?r=25);
 background-repeat: no-repeat;
 background-size: 207px 46px;
 -webkit-background-size: 207px 46px;

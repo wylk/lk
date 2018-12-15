@@ -25,7 +25,7 @@
         .s{font-size:16px;color:#FF5722}
         .total{color:#393D49;font-weight: 550; font-size:16px}
          #action {
-            color: #333;
+            color: #29Aee7;
             border-bottom: 1px solid #29Aee7;
         }
         .title{display: flex;padding: 0 5px;line-height: 35px;color: #999;}
