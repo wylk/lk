@@ -45,7 +45,7 @@
             text-align: center;
         }
         .row{
-            width: 18%;
+            width: 15%;
         }
         .user_info p:first-child{
             color: #fff;
@@ -105,7 +105,7 @@
                 <div class="item-row lk-container-flex " style="margin: 0px auto;">
                     <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;"><?php echo $v['icon'];?></i></div>
                     <div class="item-row-title row" ><?php echo $v['title'];?></div>
-                    <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
+                    <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 18px;color: #999;">&#xe6a7;</i></div>
                 </div>
             </a>
             <hr class="layui-bg-gray">

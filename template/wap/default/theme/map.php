@@ -48,11 +48,22 @@
             display: flex;
             justify-content: space-around;
         }
+        #resultMapInfo {
+          position: absolute;
+          left: 0;
+          top: 30px;
+          z-index: 1;
+        }
+        #resultMapInfo p{
+            color: #000;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
 <div class="content">
-   <input type="text" name="" id="tipinput" placeholder="请输入店铺位置">
+    <input type="text" name="" id="tipinput" placeholder="请输入店铺位置">
+    <div id="resultMapInfo"></div>
     <div id="container" style="height:100%;"></div>
 </div>
 <div class="up">
@@ -73,6 +84,7 @@
 <script type = "text/javascript" >
 var Marker = null;
 var geocoder = null;
+var result = document.getElementById('resultMapInfo');
 var url = "<?=$referer?>";
 // 地图定位
 var map = new AMap.Map("container", {
@@ -87,6 +99,10 @@ $(function() {
 
 
     function select(e) {  
+        console.log(e.poi.address);
+        var str = '';
+        str += '<p>当前位置：' +e.poi.district+ e.poi.name + '</p>';
+        result.innerHTML = str;
         map.setCenter([e.poi.location.lng, e.poi.location.lat]);
         var marker = new AMap.Marker({
             position: [e.poi.location.lng, e.poi.location.lat],
@@ -133,6 +149,10 @@ $(function() {
         // 利用地图地理编码查询地址
         geocoder.getAddress(map.getCenter(), function(status, data) {
             if (status === 'complete' && data.info === 'OK') {
+                var str = '';
+            //var str = '<p>获取成功</p>';
+                str += '<p>当前位置：' + data.regeocode.formattedAddress + '</p>';
+                result.innerHTML = str;
                 lng = map.getCenter().getLng();
                 lat = map.getCenter().getLat();
                 ediell(lng, lat, data.regeocode.formattedAddress);
@@ -158,6 +178,7 @@ $(function() {
                     break;
                 }
                 str += '，请重新获取当前位置。</p>';
+                result.innerHTML = str;
             }
         });
         Marker.setPosition(map.getCenter());
@@ -220,6 +241,7 @@ $(function() {
         lat = data.position.getLat();
 
         str += '<p>当前位置：' + data.formattedAddress + '</p>';
+
         if (Marker) {
             // 标记存在则把地图中心点设置给标记
             Marker.setPosition(map.getCenter())
@@ -233,7 +255,7 @@ $(function() {
             // 把标记加入地图实例
             Marker.setMap(map);
         }
-
+        result.innerHTML = str;
     };
 
     function onError(data) {
@@ -270,6 +292,7 @@ $(function() {
             // 把标记加入地图实例
             Marker.setMap(map);
         }
+        result.innerHTML = str;
     };
     $('.amap-geo').css({'display':'none'});
 })

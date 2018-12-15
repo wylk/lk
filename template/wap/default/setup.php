@@ -26,7 +26,7 @@
             text-align: center;
         }
         .row{
-            width: 18%;
+            width: 15%;
         }
         .layui-bg-gray{
             margin: 0px 0px;
@@ -46,7 +46,7 @@
         <div class="item-row lk-container-flex" style="margin: 0px auto 0px;">
             <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe71c;</i></div>
             <div class="item-row-title row" >支付密码</div>
-            <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
+            <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 18px;color: #999">&#xe6a7;</i></div>
         </div>
     </a>
     <hr class="layui-bg-gray">
@@ -55,7 +55,7 @@
                          <div class="item-row lk-container-flex" style="margin: 0px auto">
                             <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;"><img src="<?php echo $config['site_url']?>/template/wap/default/images/zf.png" width="23px;"></i></div>
                             <div class="item-row-title row" >支付管理</div>
-                            <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
+                            <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 18px;color: #999">&#xe6a7;</i></div>
                         </div>
                     </a>
                     <hr class="layui-bg-gray">
@@ -63,8 +63,8 @@
                     <a href="./map.php">
                     <div class="item-row lk-container-flex" style="margin: 0px auto" >
                         <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe715;</i></div>
-                        <div class="item-row-title row"  >地理位置设置</div>
-                        <div class="item-row-arrow row center" ><i class="iconfont"   style="font-size: 20px;">&#xe6a7;</i></div>
+                        <div class="item-row-title row"  >地址设置</div>
+                        <div class="item-row-arrow row center" ><i class="iconfont"   style="font-size: 18px;color: #999">&#xe6a7;</i></div>
                     </div>
                     </a>
                     <?php }?>
@@ -73,7 +73,7 @@
      <div class="item-row lk-container-flex" style="margin: 20px auto 0px;">
         <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe6ba;</i></div>
         <div class="item-row-title row" >联系客服</div>
-        <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
+        <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 18px;color: #999">&#xe6a7;</i></div>
     </div>
 
    <!--  <hr class="layui-bg-gray">
@@ -86,17 +86,17 @@
     <div class="item-row lk-container-flex" style="margin: 0px auto">
         <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe6f5;</i></div>
         <div class="item-row-title row" >关于我们</div>
-        <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
+        <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 18px;color: #999">&#xe6a7;</i></div>
     </div>
     <a href="javascript:;" id = "signOut">
      <div class="item-row lk-container-flex" style="margin: 40px auto 10px;">
         <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;">&#xe718;</i></div>
            <?php if(is_weixin()){?>
-              <div class="item-row-title row" >清除缓存</div>
+              <div class="item-row-title row" >退出登录</div>
         <?php }else{?>
              <div class="item-row-title row" >退出登录</div>
          <?php } ?>
-        <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 20px;">&#xe6a7;</i></div>
+        <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 18px;color: #999">&#xe6a7;</i></div>
     </div>
     </a>
 </div>

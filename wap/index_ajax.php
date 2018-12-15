@@ -74,7 +74,7 @@ function index($data){
     	            </div>
     	            <div class="num">
     	            	<div ><span class="black">{$juli}</span>{$m}</div>
-    	            	<div class="black black-status">正在抢购</div>
+    	            	<div class="black black-status">去逛逛</div>
     	            </div>
     	         </div></a>
 
