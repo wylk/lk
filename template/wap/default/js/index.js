@@ -32,7 +32,9 @@
 
     function get_near_shops(){
         console.log();
-        ($('#up-map-div').css('display') == 'none') && $('#up-map-div').css('display','block');
+        setTimeout(function(){
+          ($('#up-map-div').css('display') == 'none') && $('#up-map-div').css('display','block');
+        },500);
         $.post('index_ajax.php',{i:i,plugin:plugin,lng:lng,lat:lat},function(re){
             ++i;
            // console.log(del);
