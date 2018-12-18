@@ -107,7 +107,13 @@ if(is_weixin()){
 
 }
 
-    include display("login");
+if($_GET['action'] == "check"){
+    $code = new Code(4,2,85,40);
+    $str = $code->createCode();
+    $code->outImage();
+}
+
+include display("login1");
 
 
 
