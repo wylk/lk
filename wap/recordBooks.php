@@ -28,4 +28,9 @@ if(IS_POST){
 $userInfo = D("Card_package")->where(['uid'=>$userId,'card_id'=>$cardId])->find();
 $address = $userInfo['address'];
 
+if($_GET['a'] == '1'){
+	include display("recordBooks1");
+	die();
+}
+
 include display("recordBooks");

@@ -113,7 +113,8 @@ if($_GET['action'] == "check"){
     $code->outImage();
 }
 
-include display("login1");
+// include display("login1");
+include display("login");
 
 
 

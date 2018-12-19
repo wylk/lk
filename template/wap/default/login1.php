@@ -11,12 +11,14 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
-      .login_block{height:100px;border:1px solid #d2d2d2;background-color: white;margin: 150px 10px;display: flex;flex-direction: column;justify-content: center;}
+      .login_block{height:100px;border:1px solid #d2d2d2;background-color: white;margin: 150px 10px;display: flex;flex-direction: column;justify-content: center;border-radius:4px;margin-bottom: 50px;}
       .login_input{height: 40px;/*border:1px solid red;*/display: flex;flex-direction: row;justify-content: center;margin:0 40px}
       .login_line{margin:0px;padding: 0px;}
       .login_input span{display: flex;align-items: center;width: 65px;flex-direction: column;justify-content: center;}
       .login_input input{border:0px;}
       .login_input img{height: 30px;border-radius:4px;}
+      .btn_block{border:1px solid red;margin:10px;}
+      .btn{border:1px solid red;height: 30px;}
     </style>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
     <script type="text/javascript"></script>
@@ -35,6 +37,9 @@
         <img onclick="this.src='login.php?action=check&'+Math.random();" src="./login.php?action=check"  />
       </span>
     </div>
+  </div>
+  <div class="btn_block">
+    <button class="btn">下一步</button>
   </div>
 </body>
 
