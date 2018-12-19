@@ -143,27 +143,19 @@ $isDelete = $ruleJudge['isdelete'];
 
 if($type == 2 && $status == 1 && empty($isDelete)){
 	$menu = [
-            ['icon'=>'&#xe6f5;','url'=>'./postcard.php','title'=>'认证'],
-            ['icon'=>'&#xe758;','url'=>'./cardType.php','title'=>'卡/券'],
-            ['icon'=>'&#xe803;','url'=>'./userApi.php','title'=>'接口'],
-            ['icon'=>'&#xe83a;','url'=>'promotion.php','title'=>'推广'],
+            ['icon'=>'icon-qiaquan','url'=>'./cardType.php','title'=>'卡/券'],
+            ['icon'=>'icon-api','url'=>'./userApi.php','title'=>'接口'],
+            ['icon'=>'icon-yemiantuiguang','url'=>'promotion.php','title'=>'推广'],
         ];
 }elseif($type == 3 && $status == 1 && empty($isDelete)){
 	$menu = [
-            ['icon'=>'&#xe6f5;','url'=>'./postcard.php','title'=>'认证'],
-            ['icon'=>'&#xe803;','url'=>'./userApi.php','title'=>'接口'],
+            ['icon'=>'icon-api','url'=>'./userApi.php','title'=>'接口'],
         ];
 }elseif($isDelete != 0){
-	$menu = [
+	/*$menu = [
             ['icon'=>'&#xe6f5;','url'=>'./postcard.php','title'=>'认证','msg'=>'无认证权限，请联系管理员'],
-        ];
-}else{
-	$menu = [
-            ['icon'=>'&#xe6f5;','url'=>'./postcard.php','title'=>'认证'],
-        ];
+        ];*/
 }
-$menu[] = ['icon'=>'&#xe6ae;','url'=>'./setup.php','title'=>'设置'];
-
 $res=D('User')->where(['phone' => $phone])->find();
 
 include display('my');

@@ -4,6 +4,7 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
         <title>用乐卡更省钱</title>
         <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
+        <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/iconfont.css?r=<?php echo time();?>">
         <style type="text/css">
         body, html,#allmap {
             width: 100%;height: 100%;overflow: hidden;margin:0px;padding:0px;font-family:"微软雅黑";

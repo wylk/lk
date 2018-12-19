@@ -1,76 +1,34 @@
 <style type="text/css">
-.wx_nav {
-display: box;
-display: -ms-box;
-display: -webkit-box;
-display: flex;
-display: -ms-flexbox;
-display: -webkit-flex;
-}
-.wx_nav {
-overflow: hidden;
-height: 50px;
-border-top: 1px solid #ddd;
-position: fixed;
-z-index: 999;
-width: 100%;
-bottom: 0;
-left: 0;
-}
-.wx_nav a {
-display: block;
-flex: 1;
--ms-flex: 1;
--webkit-flex: 1;
-box-flex: 1;
--ms-box-flex: 1;
--webkit-box-flex: 1;
-}
-.wx_nav a {
-position: relative;
-width: 200px;
-height: 50px;
-padding-top: 4px;
-color: #999;
-font-size: 12px;
-background-color: #FFF;
-text-align: center;
-}
-.wx_nav a:active, .wx_nav a.on {
-	color: #29aee7;
-}
-.wx_nav a:before {
-background-image: url(../template/wap/default/images/icon_nav.png?r=25);
-background-repeat: no-repeat;
-background-size: 207px 46px;
--webkit-background-size: 207px 46px;
-}
-.wx_nav a:before {
-width: 23px;
-height: 23px;
-content: '\20';
-display: block;
-margin: 0 auto 1px auto;
-}
-.wx_nav .nav_index:before {
-background-position: 0 0;
-}
-.wx_nav .card_buy:before {
-background-position: -183px 0;
-}
-.wx_nav .nav_shopcart:before {
-background-position: -138px 0;
-}
-.wx_nav .nav_me:before {
-background-position: -69px 0;
-}
-.wx_nav a:active:before, .wx_nav a.on:before {
-background-position-y: -23px;
-}
+	.mui-bar-tab{
+		background: #fff;
+	}
+	.mui-bar-tab .mui-tab-item.mui-active {
+    	color: #67ccf4;
+	}
+	.mui-bar .mui-icon {
+	    font-size: 22px;
+	    position: relative;
+	    z-index: 20;
+	    padding-top: 10px;
+	    padding-bottom: 10px;
+	}
 </style>
-<div class="wx_nav">
-	<a href="./index.php" class="nav_index <?php if($php_self == 'index.php' || $php_self == 'home.php'){ echo 'on';}?>">首页</a>
-	<a href="./card_package.php" class="card_buy <?php if($php_self == 'card_package.php' || $php_self == 'card_buy.php' || $php_self == 'card_sell.php' || $php_self == 'card_order.php' || $php_self == 'card_orderlist.php' || $php_self == 'transaction.php'){ echo 'on';}?>">卡包</a>
-	<a href="./orderList.php" class="nav_shopcart <?php if($php_self == 'orderList.php'){ echo 'on';}?>">订单</a>
-	<a href="./my.php" class="nav_me <?php if($php_self == 'my.php'){ echo 'on';}?>">我的</a>
-</div>
+
+<nav class="mui-bar mui-bar-tab">
+	<a class="mui-tab-item <?php if($php_self == 'index.php'){echo 'mui-active';}?>" href="./index.php">
+		<span class="mui-icon iconfont icon-shouye1"></span>
+		<span class="mui-tab-label">首页</span>
+	</a>
+	<a class="mui-tab-item <?php if($php_self == 'find.php'){echo 'mui-active';}?>" href="find.php">
+		<span class="mui-icon iconfont icon-faxian1"><span class="mui-badge">9</span></span>
+		<span class="mui-tab-label">发现</span>
+	</a>
+	<a class="mui-tab-item <?php if($php_self == 'card_package.php'){echo 'mui-active';}?>" href="./card_package.php">
+		<span class="mui-icon iconfont icon-qiabao3"></span>
+		<span class="mui-tab-label">卡包</span>
+	</a>
+	<a class="mui-tab-item <?php if($php_self == 'my.php'){echo 'mui-active';}?>" href="./my.php">
+		<span class="mui-icon iconfont icon-wode"></span>
+		<span class="mui-tab-label">我的</span>
+	</a>
+</nav>
