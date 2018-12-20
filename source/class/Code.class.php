@@ -4,6 +4,7 @@ class Code{
 	protected $number;
 	protected $codeType;
 	protected $width;
+	protected $code;
 	public function __construct($number=4,$codeType=0,$width=65,$height=40){
 		$this->number = $number;
 		$this->codeType= $codeType;
@@ -12,9 +13,9 @@ class Code{
 		$this->code = $this->createCode();
 	}
 	// public function __get(){}
-	// public function getCode(){
-	// 	return $this->code;
-	// }
+	public function getCode(){
+		return $this->code;
+	}
 	public function __destruct(){}
 	public function createCode(){
 		switch ($this->codeType) {
