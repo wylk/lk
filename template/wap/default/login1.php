@@ -27,13 +27,16 @@
       /*短信获取按钮*/
       .check_phone{width: 165px;align-items: flex-start;}
       .btn_msg{border:0px;width: 100%;font-size: 12px;background: white;color:#29aee7;}
+      .notice{margin:10px;padding-left:10px;}
+      .notice span{margin-left:5px;}
+      .notice i{color:#29aee7;}
     </style>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
     <script type="text/javascript"></script>
 </head>
 
 <body style="background-color: #f2f2f2;">
-  <div class="check_wrapper" >
+  <div class="check_wrapper">
     <div class="login_block">
       <div class="login_input">
         <span>手机号：</span>
@@ -68,12 +71,17 @@
     <div class="btn_block">
       <button id="btn_login" class="btn">登录</button>
     </div>
+    <div class="notice">
+      <input type="checkbox" id="checkbox" name="checkbox" value="dd">
+      <span>同意<i>《服务条款》</i></span>
+    </div>
   </div>
 </body>
 
 </html>
 <script type="text/javascript">
-var phone_status = check_code_status = msg_code_status = 0;
+
+var phone_status = check_code_status = msg_code_status= checkbox_status = 0;
 var phone = "";
 var check_code="";
   $("#btn_next").bind("click",function(){
@@ -149,7 +157,8 @@ var check_code="";
       console.log(msg_code);
       msg_code_status = 1;
       $(this).css("border","0px");
-      $("#btn_login").css("background","#a9e6ef");
+      if(msg_code_status == 1 && checkbox_status == 1)
+        $("#btn_login").css("background","#a9e6ef");
     }else{
       msg_code_status = 0;
       $("#btn_login").css("background","#f2f2f2");
@@ -171,9 +180,20 @@ var check_code="";
       }
     },"json");
   });
+  // 注意选项勾选
+  $("#checkbox").bind("click",function(){
+    if($(this).is(":checked")){
+      checkbox_status = 1;
+      if(checkbox_status == 1 && msg_code_status == 1)
+        $("#btn_login").css("background","#a9e6ef");
+    }else{
+      checkbox_status = 0;
+      $("#btn_login").css("background","#f2f2f2");
+    }
+  });
   // 登录
   $("#btn_login").bind("click",function(){
-    if(msg_code_status != 1) return;
+    if(msg_code_status != 1 || checkbox_status != 1) return;
     var msg_code = $("[name=msg_code]").val();
     var data = {phone:phone,logintype:"checkAccount",msg_code:msg_code};
     $.post("./login.php",data,function(res){
