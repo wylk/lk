@@ -6,11 +6,15 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>个人中心</title>
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=33">
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/iconfont.css?r=<?php echo time();?>">
+    <link rel="stylesheet" href="<?php echo TPL_URL;?>/css/base.css?r=1"> 
     <style type="text/css">
+        html,body{
+            height: 100%;
+            background: #ececec;
+        }
+        * { touch-action: none; }
         .item-headers{
             margin: 0px auto 20px;
             background-image: url('../template/wap/default/images/my.jpg?r=234');
@@ -29,24 +33,7 @@
             height: 100%;
             color: #999;
         }
-        .item-rows{
-            min-height: 80px;
-            background: #fff;
-            padding-top: 10px;
-        }
-        .item-row{
-            width: 95%;
-            line-height: 30px;
-        }
-        .item-row-title{
-           flex-grow: 1;
-        }
-        .center{
-            text-align: center;
-        }
-        .row{
-            width: 15%;
-        }
+   
         .user_info p:first-child{
             color: #fff;
             font-size: 16px;
@@ -56,25 +43,71 @@
            width: 65px;
            border-radius: 2%; 
         }
+        a{
+            color: #333;
+        }
+        .mui-table-view{
+            background: #fff;
+        }
+        .mui-table-view-cell {
+            padding: 6px 10px;
+        }
+        .mui-table-view:after,.mui-table-view:before {
+            background-color: #fff; 
+        }
+        .mui-table-view-cell:after {
+            right: 20px;
+            bottom: 0;
+            left: 20px;
+            background-color: #c8c7cc;
+        }
+        .menu_title{
+            font-size: 15px;
+            color: #333;
+        }
+
+        .icon-yemiantuiguang:before {
+            content: "\e600";
+            color: #67ccf4;
+            margin-right: 10px;
+        }
+
+        .icon-qiaquan:before {
+            content: "\e63e";
+            margin-right: 10px;
+            color: #67ccf4;;
+        }
+        .icon-api:before {
+            content: "\e888";
+            margin-right: 10px;
+            color: red;
+        }
+
+        .icon-authenticate:before {
+            content: "\e666";
+            color: red;
+            margin-right: 10px;
+        }
+
+        .mui-icon-gear:before {
+            content: '\e502';
+            color: #67ccf4;
+        }
+        .icon-dingdan:before {
+            content: "\e607";
+            margin-right: 10px;
+            color: #67ccf4;
+        }
+
+        .icon-shezhi:before {
+            content: "\e602";
+            margin-right: 10px;
+            color: #75cef4;
+        }
     </style>
-     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
-     <script type="text/javascript">
-        $(function(){
-            lk.is_weixin() && function(){
-                $('.lk-bar-nav').css('display','none');
-                $('.lk-content').css({"padding":"0px"});
-            }()
-        })
-    </script>
 </head>
 <body>
-<header class="lk-bar lk-bar-nav">
-    <i onclick="javascript:history.back(-1);" class="iconfont" style="font-size: 20px;">&#xe697;</i>
-    <h1 class="lk-title">个人中心</h1>
-  </header>
-<div class="lk-content" style="background-color: #f2f2f2;">
-
-
+<div class="lk-content" style="padding:0px;">
         <div class="item-headers lk-container-flex" >
             <div class="item-header-img lk-container-flex lk-justify-content-c lk-align-items-c">
                 <?php  if($res['avatar']){?>
@@ -95,32 +128,50 @@
             </div>
 
         </div>
-        <div class="item-rows">
-            <?php foreach ($menu as $k => $v) {?>
-            <?php if(isset($v['msg'])){ ?>
-                <a href="javascript:;" onclick="showMsg('<?php echo $v['msg']; ?>')">
-            <?php }else{ ?>
-                <a href="<?php echo $v['url'];?>">
-            <?php } ?>
-                <div class="item-row lk-container-flex " style="margin: 0px auto;">
-                    <div class="item-row-icon row center"><i class="iconfont" style="font-size: 20px;"><?php echo $v['icon'];?></i></div>
-                    <div class="item-row-title row" ><?php echo $v['title'];?></div>
-                    <div class="item-row-arrow row center"><i class="iconfont" style="font-size: 18px;color: #999;">&#xe6a7;</i></div>
-                </div>
-            </a>
-            <hr class="layui-bg-gray">
+            <ul class="mui-table-view" >
+                <li class="mui-table-view-cell">
+                    <a class="mui-navigate-left iconfont icon-dingdan" href="orderList.php">
+                        <span class="menu_title">订单</span>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a class="mui-navigate-left iconfont icon-authenticate" href="postcard.php">
+                        <span class="menu_title">认证</span>
+                    </a>
+                </li>
+            </ul>
+            <?php if(!empty($menu)){?>
+            
+            <ul class="mui-table-view" style="margin-top: 25px;">
+                <?php foreach($menu as $v){?>
+                <li class="mui-table-view-cell">
+                    <a class="mui-navigate-left iconfont <?php echo $v['icon'];?>" href="<?php echo $v['url'];?>">
+                        <span class="menu_title"><?php echo $v['title'];?></span>
+                    </a>
+                </li>
+                <?php }?>
+            </ul>
+            
             <?php }?>
+            <ul class="mui-table-view" style="margin-top: 25px;">
+                <li class="mui-table-view-cell">
+                    <a class="mui-navigate-left iconfont icon-shezhi" href="./setup.php">
+                        <span class="menu_title">设置</span>
+                    </a>
+                </li>
+            </ul>       
         </div>
 </div>
 <?php include display('public_menu');?>
 </body>
 </html>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
 <script type="text/javascript">
-    var layer;
-    layui.use(['layer'],function(){
-        layer = layui.layer;
-    })
     function showMsg(msg){
-        layer.msg(msg, { icon: 5, skin: "demo-class" });
+        mui.toast(msg, { icon: 5, skin: "demo-class" });
     }
+    mui('body').on('tap','a',function(){
+        window.top.location.href=this.href;
+    });
 </script>

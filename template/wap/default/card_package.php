@@ -7,45 +7,34 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>卡包</title>
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
-    <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=1">
-    
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
+    <link rel="stylesheet" href="<?php echo TPL_URL;?>/css/base.css?r=1"> 
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/iconfont.css?r=<?php echo time();?>">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
         body{
             background-color: #f2f2f2;
         }
+        ul{padding:0px; margin: 0px}
         ul.lk-container-flex {width: 100%}
-        .lk-content hr{margin: 0;}
+        .lk-content{margin: 0;padding:0px;}
         .lk-card-package{margin: 0 5px 8px;border:1px solid #dedede; border-radius: 3px; height: 125px;background-color: #fff;}
-        .card-info{width:70%;line-height: 30px; padding:0 10px;}
+        .card-info{width:80%;line-height: 25px; padding:0 10px;height:73px;}
         .card-logo p{width:50px; height: 50px; border-radius: 50%; border:0px solid #000;
                     background: url("/static/sweetalert/images/vs_icon@2x.png") no-repeat;
                     background-size: 110% 110%;
                 }
-        .card-handle{width:20%; border-right:1px solid #ded5d5; line-height: 30px; margin:5px 0; text-align: center; color: #666;}
+        .card-handle{width:20%; border-right:1px solid #ded5d5; line-height: 30px; margin:5px 0; text-align: center; color: #666;font-size: 14px;}
+        hr{background-color: #e6e6e6;}
         hr.cut-off-rule{margin:10px 0;}
         .no-border{
             border-right: 0px;
         }
-    </style>
-     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
-     <script type="text/javascript">
-        $(function(){
-            lk.is_weixin() && function(){
-                $('.lk-bar-nav').css('display','none');
-                $('.lk-content').css({"padding":"0px"});
-            }()
-        })
-    </script>
+        p{color: #333}
+    </style> 
 </head>
 
 <body>
-    <header class="lk-bar lk-bar-nav">
-        <i class="iconfont">&#xe697;</i>
-        <h1 class="lk-title">卡包</h1>
-    </header>
     <div class="lk-content">
        <div class="lk-container-flex" style="padding-left: 15px;height: 15px;">
           <!--  <i class="layui-icon layui-icon-layer" style="font-size: 35px; color:#1E9FFF">&#xe638;</i>
@@ -56,9 +45,9 @@
         
         <div class="lk-container-flex lk-card-package lk-flex-direction-c">
             <?php if($value['type'] == option("hairpan_set.platform_type_name")){ ?>
-            <a href="card_buy.php?uid=<?php echo $value['uid'] ?>" class="lk-container-flex" style="padding:10px 0;">
+            <a href="card_buy.php?uid=<?php echo $value['uid'] ?>" class="lk-container-flex" style="padding:10px 0;border-bottom: 1px solid #e6e6e6;">
             <?php }else{ ?>
-            <a href="home.php?card_id=<?php echo $value['card_id'] ?>&plugin=<?php echo $value['type'] ?>&shoreUid=<?php echo $cardAttrArr[$value['card_id']]['uid'] ?>" class="lk-container-flex" style="padding:10px 0;">
+            <a href="home.php?card_id=<?php echo $value['card_id'] ?>&plugin=<?php echo $value['type'] ?>&shoreUid=<?php echo $cardAttrArr[$value['card_id']]['uid'] ?>" class="lk-container-flex" style="padding:10px 0;border-bottom: 1px solid #e6e6e6;">
             <?php } ?>
                 <div class="item-flex card-info">
                     <p><?php echo $value['type']==option("hairpan_set.platform_type_name") ? '乐卡' : $cardType[$cardAttrArr[$value['card_id']]['uid']]; ?>
@@ -71,7 +60,7 @@
                     <p <?php echo isset($cardAttrArr[$value['card_id']]['card_log']) ? 'style="background:url('.$cardAttrArr[$value['card_id']]['card_log'].') no-repeat;background-size: 100% 100%;"' : '' ?> ></p>
                 </div>
             </a>
-            <hr>
+           
             <div class="lk-container-flex lk-flex-direction-r">
                 <ul class="lk-container-flex lk-justify-content-sa">
                     <a class="card-handle" href="./transferBill.php?cardId=<?php echo $value['card_id'] ?>">核销</a>
