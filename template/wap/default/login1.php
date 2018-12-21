@@ -13,15 +13,15 @@
     <style type="text/css">
       .check_wrapper,.login_wrapper{margin: 150px 5px;padding: 30px 10px 10px 10px;background: white; border-radius: 4px;}
       /*输入框*/
-      .login_block{height:100px;border:1px solid #29aee7;background-color: white;display: flex;flex-direction: column;justify-content: center;border-radius:4px;margin-bottom: 50px;}
+      .login_block{height:100px;border:1px solid #d2d2d2;background-color: white;display: flex;flex-direction: column;justify-content: center;border-radius:4px;margin-bottom: 50px;}
       .login_input{height: 40px;/*border:1px solid red;*/display: flex;flex-direction: row;justify-content: center;margin:0 40px}
-      .login_line{margin:0px;padding: 0px;background:#29aee7;}
+      .login_line{margin:0px;padding: 0px;background:#d2d2d2;}
       .login_input span{display: flex;align-items: center;width: 65px;flex-direction: column;justify-content: center;}
       .login_input input{border:0px;}
       .login_input img{height: 30px;border-radius:4px;}
       /*点击按钮*/
       .btn_block{margin:10px;}
-      .btn{border:1px solid #d2d2d2;height: 30px;background: #f2f2f2;width: 100%;font-size:15px;color: #333;border-radius:3px;height: 38px;}
+      .btn{border:1px solid #29aee7;height: 30px;background: #f2f2f2;width: 100%;font-size:15px;color: #333;border-radius:3px;height: 38px;}
 
       .btn_action{background: #a9e6ef;}
       /*短信获取按钮*/
@@ -35,12 +35,13 @@
     <script type="text/javascript"></script>
 </head>
 
-<body style="background-color: #f9f9f9;">
+<body style="background-color: #ececec;">
   <div class="check_wrapper">
     <div class="login_block">
       <div class="login_input">
-        <span>手机号：</span>
+        <!-- <span>手机号：</span> -->
         <input type="text" name="phone" placeholder="请输入手机号">
+        <span></span>
       </div>
       <hr class="login_line" />
       <div class="login_input">
@@ -57,8 +58,8 @@
   <div class="login_wrapper" style="display: none;">
     <div class="login_block">
       <div class="login_input">
-        <span>手机号：</span>
         <span class="check_phone" style="width: 180px;align-items: flex-start;"></span>
+        <span><!-- 手机号： --></span>
       </div>
       <hr class="login_line" />
       <div class="login_input">
