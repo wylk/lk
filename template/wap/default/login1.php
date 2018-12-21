@@ -8,16 +8,18 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?<?=time()?>">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
       .check_wrapper,.login_wrapper{margin: 150px 5px;padding: 30px 10px 10px 10px;background: white; border-radius: 4px;}
       /*输入框*/
       .login_block{height:100px;border:1px solid #d2d2d2;background-color: white;display: flex;flex-direction: column;justify-content: center;border-radius:4px;margin-bottom: 50px;}
-      .login_input{height: 40px;/*border:1px solid red;*/display: flex;flex-direction: row;justify-content: center;margin:0 40px}
-      .login_line{margin:0px;padding: 0px;background:#d2d2d2;}
+      .login_input{height: 40px;/*border:1px solid red;*/display: flex;flex-direction: row;justify-content: center;margin:0 40px;}
+      .login_line{margin:0px;padding: 0px;background:#d2d2d2;height: 1px;}
       .login_input span{display: flex;align-items: center;width: 65px;flex-direction: column;justify-content: center;}
-      .login_input input{border:0px;}
+      .login_input input{border:0px; font-size:14px;}
       .login_input img{height: 30px;border-radius:4px;}
       /*点击按钮*/
       .btn_block{margin:10px;}
@@ -91,11 +93,13 @@ var check_code="";
     var phoneReg = /^1([0-9]{10})$/;
     if(!phoneReg.test(phone)){
       console.log("请输入正确的手机号");
+      mui.toast(result.msg);
       return;
     }
     // check_code = $("[name=check]").val();
     if(phone.length != 11 || check_code.length != 4){
       console.log("请检查手机号或者验证码是否正确填写");
+      mui.toast(result.msg);
       return;
     }
     //检测手机号、验证码
