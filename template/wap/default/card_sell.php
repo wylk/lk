@@ -63,7 +63,7 @@
             color: #29Aee7;
             border-bottom: 1px solid #29Aee7;
         }
-        .buy-order{
+        .sell-order{
             background-color: #fff;
             margin: 3px 6px;
             border-radius: 5px;
@@ -140,7 +140,7 @@
 
         <?php foreach($buyList as $key=>$value){ ?>
         <?php if($value['num'] <= $value['frozen']) continue; ?>
-        <div class="lk-container-flex">
+        <div class="lk-container-flex sell-order" >
             <div class="lk-container-flex lk-bazaar-sell">
                 <div style="width: 45%;padding-left: 5px;">
                     <p><?php echo $userInfo[$value['uid']]['name']?></p>
@@ -156,7 +156,7 @@
                 <p class="item-buy"><a href="javascript:;" id="transaction_<?php echo $value['id'] ?>">卖出</a></p>
             </div>
         </div>
-        <hr>
+        <!-- <hr> -->
         <?php } ?>
     </div>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

@@ -149,7 +149,6 @@
                 <p class="item-buy"><a href="javascript:;" id="transaction_<?php echo $value['id'] ?>">买入</a></p>
             </div>
         </div>
-        <hr>
         <?php } ?>
     </div>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
