@@ -19,13 +19,13 @@
 		<span class="mui-icon iconfont icon-shouye1"></span>
 		<span class="mui-tab-label">首页</span>
 	</a>
-	<a class="mui-tab-item <?php if($php_self == 'find.php'){echo 'mui-active';}?>" href="find.php">
-		<span class="mui-icon iconfont icon-faxian1"><span class="mui-badge">9</span></span>
-		<span class="mui-tab-label">发现</span>
-	</a>
 	<a class="mui-tab-item <?php if($php_self == 'card_package.php'){echo 'mui-active';}?>" href="./card_package.php">
 		<span class="mui-icon iconfont icon-qiabao3"></span>
 		<span class="mui-tab-label">卡包</span>
+	</a>
+	<a class="mui-tab-item <?php if($php_self == 'find.php'){echo 'mui-active';}?>" href="find.php">
+		<span class="mui-icon iconfont icon-faxian1"><span class="mui-badge">9</span></span>
+		<span class="mui-tab-label">发现</span>
 	</a>
 	<a class="mui-tab-item <?php if($php_self == 'my.php'){echo 'mui-active';}?>" href="./my.php">
 		<span class="mui-icon iconfont icon-wode"></span>
