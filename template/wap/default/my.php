@@ -152,7 +152,7 @@
                 <?php }?>
             </ul>
             
-            <?php }?>
+            <?php } ?>
             <ul class="mui-table-view" style="margin-top: 25px;">
                 <li class="mui-table-view-cell">
                     <a class="mui-navigate-left iconfont icon-shezhi" href="./setup.php">

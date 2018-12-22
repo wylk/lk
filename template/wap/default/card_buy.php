@@ -152,7 +152,6 @@
         <hr>
         <?php } ?>
     </div>
-    <?php //include display('public_menu');?>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
 <script type="text/javascript">
