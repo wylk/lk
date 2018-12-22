@@ -50,7 +50,9 @@
   </header>
 <div class="lk-content">
   <div class="layui-container" id="pullrefreshs" style="touch-action: none;overflow: auto;height: 500px;">
+    <div>
     <div class="layui-tab" lay-filter="aduitTab" id="content"></div>
+  </div>
   </div>
 </div>
 <?php include display('public_menu');?>

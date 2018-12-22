@@ -13,14 +13,14 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
-      .check_wrapper,.login_wrapper{margin: 150px 5px;padding: 30px 10px 10px 10px;background: white; border-radius: 4px;}
+      .check_wrapper,.login_wrapper{margin: 100px 5px;padding: 10px;background: white; border-radius: 4px;}
       /*输入框*/
       .login_block{height:100px;border:1px solid #d2d2d2;background-color: white;display: flex;flex-direction: column;justify-content: center;border-radius:4px;margin-bottom: 50px;}
-      .login_input{height: 40px;/*border:1px solid red;*/display: flex;flex-direction: row;justify-content: center;margin:0 40px;}
+      .login_input{height: 48%;/*border:1px solid red;*/display: flex;flex-direction: row;justify-content: center;margin:0 10px;}
       .login_line{margin:0px;padding: 0px;background:#d2d2d2;height: 1px;}
-      .login_input span{display: flex;align-items: center;width: 65px;flex-direction: column;justify-content: center;}
-      .login_input input{border:0px; font-size:14px;}
-      .login_input img{height: 30px;border-radius:4px;}
+      .login_input span{display: flex;align-items: center;width: 110px;flex-direction: column;justify-content: center;}
+      .login_input input{border:0px; font-size:14px;height: 100%;}
+      .login_input img{height: 80%;border-radius:4px;width: 100%;}
       /*点击按钮*/
       .btn_block{margin:10px;}
       .btn{border:1px solid #29aee7;height: 30px;background: #f2f2f2;width: 100%;font-size:15px;color: #333;border-radius:3px;height: 38px;}
@@ -32,6 +32,7 @@
       .notice{margin:10px;padding-left:10px;}
       .notice span{margin-left:5px;}
       .notice i{color:#29aee7;}
+      .title{border:1px solid red;margin: 20px; text-align: center; height: 50px; padding: 5px}
     </style>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
     <script type="text/javascript"></script>
@@ -39,11 +40,10 @@
 
 <body style="background-color: #ececec;">
   <div class="check_wrapper">
+    <div class="title" >五一乐卡</div>
     <div class="login_block">
       <div class="login_input">
-        <!-- <span>手机号：</span> -->
         <input type="text" name="phone" placeholder="请输入手机号">
-        <span></span>
       </div>
       <hr class="login_line" />
       <div class="login_input">
@@ -93,13 +93,13 @@ var check_code="";
     var phoneReg = /^1([0-9]{10})$/;
     if(!phoneReg.test(phone)){
       console.log("请输入正确的手机号");
-      mui.toast(result.msg);
+      mui.toast("请输入正确的手机号");
       return;
     }
     // check_code = $("[name=check]").val();
     if(phone.length != 11 || check_code.length != 4){
       console.log("请检查手机号或者验证码是否正确填写");
-      mui.toast(result.msg);
+      mui.toast("请检查手机号或者验证码是否正确填写");
       return;
     }
     //检测手机号、验证码
@@ -114,6 +114,7 @@ var check_code="";
         $(".login_wrapper").show();
       }else{
         console.log(res.msg);
+        mui.toast(res.msg);
       }
     },"json");
   })
@@ -159,7 +160,6 @@ var check_code="";
     var msg_code = $(this).val();
     if(msg_code.length>=6){
       $(this).val(msg_code.substr(0,6));
-      console.log(msg_code);
       msg_code_status = 1;
       $(this).css("border","0px");
       if(msg_code_status == 1 && checkbox_status == 1)
@@ -177,11 +177,14 @@ var check_code="";
       console.log(res);
       if(res['result'] == 1){
         console.log(res['msg']);
+        mui.toast(res['msg']);
       }
       if(res['result']['result']['success']){
         console.log("验证码发送成功");
+        mui.toast("验证码发送成功");
       }else{
         console.log("验证码发送失败");
+        mui.toast("验证码发送失败");
       }
     },"json");
   });
@@ -206,7 +209,8 @@ var check_code="";
       if(!res['res']){
         window.location.href =  "<?php echo $referer ? $referer : './my.php'; ?>";
       }else{
-        console.log("登录失败");
+        console.log(res['msg']);
+        mui.toast(res['msg']);
       }
     },"json");
   });

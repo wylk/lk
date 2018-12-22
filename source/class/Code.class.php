@@ -49,7 +49,7 @@ class Code{
 		return $str;
 	}
 	public function getNumberCharCode(){
-		$num = join("",range(0,9));
+		$num = join("",range(1,9));
 		$char = join("",range('a','z'));
 		$str = str_repeat($num, $this->number).str_repeat($char, $this->number);
 		$str = str_shuffle($str);
@@ -66,12 +66,13 @@ class Code{
 		for($i=0;$i<$this->number;$i++){
 			$x = mt_rand($i*$width+5,($i+1)*$width-8);
 			$y = mt_rand(3,$this->height/2);
-			imagechar($this->image, 8, $x, $y, $this->code[$i], $this->darkColor());
+			imagechar($this->image, 5, $x, $y, $this->code[$i], $this->darkColor());
 		}
 	}
 	// 浅色
 	public function lightColor(){
-		return imagecolorallocate($this->image, mt_rand(133,255), mt_rand(133,255), mt_rand(133,255));
+		// return imagecolorallocate($this->image, mt_rand(133,255), mt_rand(133,255), mt_rand(133,255));
+		return imagecolorallocate($this->image, 230, 230, 230);
 	}
 	// 深色
 	public function darkColor(){
