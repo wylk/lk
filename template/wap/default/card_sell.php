@@ -95,14 +95,14 @@
                 <span>卖出数量：<input type='text' name="sellNum" value='' placeholder="<?php echo number_format(option('hairpan_set.limit'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
                 </span>
                 </div>
-                <div>LK</div>
+                <div>WLK</div>
 
             </div>
             <div class="input-link">
                     <div  class="input-title">
                     <span>最低卖出量：<input type='text' name="limitNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
                     </span></div>
-                    <div>LK</div>
+                    <div>WLK</div>
 
             </div>
             <div class="input-link">

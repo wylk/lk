@@ -93,12 +93,12 @@
                    <div class="input-title">
                     <span>买入数量:</span><input type='text' name="buyNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
                    </div>
-                   <div>LK</div>
+                   <div>WLK</div>
            </div>
 
            <div class="input-link">
                    <div class="input-title">最低买入量:<input type='text' name="limitNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" /></div>
-                   <div>LK</div>
+                   <div>WLK</div>
            </div>
 
            <div class="input-link">

@@ -13,7 +13,7 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
-      .check_wrapper,.login_wrapper{margin: 100px 5px;padding: 10px;background: white; border-radius: 4px;}
+      .check_wrapper,.login_wrapper{margin: 100px 5px 10px 5px;padding: 10px;background: white; border-radius: 4px;}
       /*输入框*/
       .login_block{height:100px;border:1px solid #d2d2d2;background-color: white;display: flex;flex-direction: column;justify-content: center;border-radius:4px;margin-bottom: 50px;}
       .login_input{height: 48%;/*border:1px solid red;*/display: flex;flex-direction: row;justify-content: center;margin:0 10px;}
@@ -32,15 +32,21 @@
       .notice{margin:10px;padding-left:10px;}
       .notice span{margin-left:5px;}
       .notice i{color:#29aee7;}
-      .title{border:1px solid red;margin: 20px; text-align: center; height: 50px; padding: 5px}
+      .img1{margin: 0 auto; display: block;/* position: relative;top: -80px;*/ width: 70%;}
+      .mui-bar{background: #a9e6ef;}
+      .notice a{color:#29aee7;}
+      .mui-content-padded,.mui-title{color: #333;}
     </style>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
     <script type="text/javascript"></script>
 </head>
 
-<body style="background-color: #ececec;">
+<body style="background-color: #ececec;overflow: hidden;">
   <div class="check_wrapper">
-    <div class="title" >五一乐卡</div>
+    <!-- <div class="title" ></div> -->
+    <div style="height: 100px;display: flex; justify-content: center;background-image: url(../template/wap/default/images/logo.png);background-size: 60%;background-repeat: no-repeat;    background-position: center; margin-bottom: 17px;">
+      <!-- <img class="img1" src="../template/wap/default/images/logo.png"> -->
+    </div>
     <div class="login_block">
       <div class="login_input">
         <input type="text" name="phone" placeholder="请输入手机号">
@@ -58,6 +64,7 @@
     </div>
   </div>
   <div class="login_wrapper" style="display: none;">
+    <div style="height: 100px;display: flex; justify-content: center;background-image: url(../template/wap/default/images/logo.png);background-size: 60%;background-repeat: no-repeat;    background-position: center; margin-bottom: 17px;"></div>
     <div class="login_block">
       <div class="login_input">
         <span class="check_phone" style="width: 180px;align-items: flex-start;"></span>
@@ -76,9 +83,21 @@
     </div>
     <div class="notice">
       <input type="checkbox" id="checkbox" name="checkbox" value="dd">
-      <span>同意<i>《服务条款》</i></span>
+      <span>同意
+        <a href="#modal">《服务条款》</a>
+      </span>
     </div>
   </div>
+<!-- 同意条款 -->
+<div id="modal" class="mui-modal">
+  <header class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-icon-close mui-pull-right" href="#modal"></a>
+    <h1 class="mui-title">《服务条款》</h1>
+  </header>
+  <div class="mui-content" style="height: 100%;overflow: scroll;background-color: #f2f2f2;">
+    <p class="mui-content-padded"><?php echo $config['reg_readme_content'];?></p>
+  </div>
+</div>
 </body>
 
 </html>
