@@ -23,6 +23,9 @@
             background-color: #fff;
             margin-top:10px;
             color: #999;
+            font-size: 14px;
+            border-radius: 3px;
+            margin:5px;
         }
         .input-link{
             display: flex;
@@ -37,14 +40,14 @@
             margin: 0px;
         }
         .input-title{
-            width: 70%;
+            width: 65%;
             line-height: 50px;
         }
         .btn-link{
             height: 80px;
             text-align: center;
             padding-top: 20px;
-
+            border:1px solid #f2f2f2;
         }
         #sellTran{
             color: #999;
@@ -92,14 +95,14 @@
                 <span>卖出数量：<input type='text' name="sellNum" value='' placeholder="<?php echo number_format(option('hairpan_set.limit'),2) ?>" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
                 </span>
                 </div>
-                <div>WLK</div>
+                <div>LK</div>
 
             </div>
             <div class="input-link">
                     <div  class="input-title">
                     <span>最低卖出量：<input type='text' name="limitNum" value='' placeholder="0.00" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
                     </span></div>
-                    <div>WLK</div>
+                    <div>LK</div>
 
             </div>
             <div class="input-link">
@@ -134,7 +137,7 @@
         <?php } } ?>
          </div>
          <div class="lk-container-flex" style="background-color: #fff;margin-top: 5px;">
-            <h3 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h3>
+            <h3 style="font-size:15px; font-weight: 600; padding:8px 0 8px 20px">市场卖单</h3>
         </div>
 
 
@@ -156,7 +159,6 @@
                 <p class="item-buy"><a href="javascript:;" id="transaction_<?php echo $value['id'] ?>">卖出</a></p>
             </div>
         </div>
-        <!-- <hr> -->
         <?php } ?>
     </div>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

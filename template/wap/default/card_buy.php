@@ -23,6 +23,9 @@
             background-color: #fff;
             margin-top:10px;
             color: #999;
+            font-size: 14px;
+            border-radius: 3px;
+            margin:5px;
         }
         .input-link{
             display: flex;
@@ -37,14 +40,14 @@
             margin: 0px;
         }
         .input-title{
-            width: 70%;
+            width: 65%;
             line-height: 50px;
         }
         .btn-link{
             height: 80px;
             text-align: center;
             padding-top: 20px;
-
+            border:1px solid #f2f2f2;
         }
         #buyTran{
             color: #999;
@@ -129,7 +132,7 @@
 
 
         <div class="lk-container-flex" style="background-color: #fff;margin-top: 5px;">
-            <h3 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h3>
+            <h3 style="font-size:15px; font-weight: 600; padding:8px 0 8px 20px">市场卖单</h3>
         </div>
         <?php foreach ($sellList as $key => $value) { ?>
         <?php if($value['num'] <= $value['frozen']) continue; ?>
