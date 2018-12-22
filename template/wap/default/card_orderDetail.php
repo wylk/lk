@@ -123,7 +123,7 @@
   <div style="z-index: 10; margin:0 auto;margin-top:200px;text-align: center">
   </div>
 </div>
-    <?php include display('public_menu');?>
+    <?php// include display('public_menu');?>
 </body>
 <script type="text/javascript">
 // 显示二维码
