@@ -13,7 +13,7 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
-      .check_wrapper,.login_wrapper{margin: 100px 5px 10px 5px;padding: 10px;background: white; border-radius: 4px;}
+      .check_wrapper,.login_wrapper{margin: 40px 5px;padding: 10px;background: white; border-radius: 4px;padding-bottom: 35px;}
       /*输入框*/
       .login_block{height:100px;border:1px solid #d2d2d2;background-color: white;display: flex;flex-direction: column;justify-content: center;border-radius:4px;margin-bottom: 50px;}
       .login_input{height: 48%;/*border:1px solid red;*/display: flex;flex-direction: row;justify-content: center;margin:0 10px;}
@@ -151,7 +151,7 @@ var check_code="";
       phone_status = 1;
       $(this).css("border","0px");
       if(phone_status == 1 && check_code_status == 1){
-        $("#btn_next").css("background-color","#a9e6ef");
+        $("#btn_next").css("background-color","white");
       }
     }else{
       phone_status = 0;
@@ -167,7 +167,7 @@ var check_code="";
       check_code_status = 1;
       $(this).css("border","0px");
       if(phone_status == 1 && check_code_status == 1){
-        $("#btn_next").css("background","#a9e6ef");
+        $("#btn_next").css("background","white");
       }
     }else{
       check_code_status = 0;
@@ -182,7 +182,7 @@ var check_code="";
       msg_code_status = 1;
       $(this).css("border","0px");
       if(msg_code_status == 1 && checkbox_status == 1)
-        $("#btn_login").css("background","#a9e6ef");
+        $("#btn_login").css("background","white");
     }else{
       msg_code_status = 0;
       $("#btn_login").css("background","#f2f2f2");
@@ -212,7 +212,7 @@ var check_code="";
     if($(this).is(":checked")){
       checkbox_status = 1;
       if(checkbox_status == 1 && msg_code_status == 1)
-        $("#btn_login").css("background","#a9e6ef");
+        $("#btn_login").css("background","white");
     }else{
       checkbox_status = 0;
       $("#btn_login").css("background","#f2f2f2");

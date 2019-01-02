@@ -80,7 +80,6 @@
       </div>
     <?php }?>
 </div>
-<?php include display('public_menu');?>
 </body>
 </html>
 <script type="text/javascript">

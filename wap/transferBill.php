@@ -26,7 +26,7 @@ if(IS_POST && $_POST['type'] == "transferBill"){
 	$getAddressInfo ? true : dexit(['res'=>1,"msg"=>"您输入的地址不正确"]);
 	$sendAdressInfo = D("Card_package")->where(['uid'=>$userId,'address'=>$sendAddress])->find();
 	$num > 0 ? true : dexit(['res'=>1,"msg"=>"您转账的数目不能低于0"]);
-	$sendAdressInfo['num'] >= $num ? true : dexit(['res'=>1,"msg"=>"您转账的数目已超支"]);
+	$sendAdressInfo['num'] - $num >= 0 ? true : dexit(['res'=>1,"msg"=>"您转账的数目已超支"]);
 
 	// 判断地址是否保存过
 	$remarkCheckRes = D("User_address")->where(['uid'=>$userId,"address"=>$getAddress])->find();
