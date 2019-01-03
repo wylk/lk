@@ -18,12 +18,9 @@ if (strpos($referer,'&amp;')) {
 if(isset($_POST['phone'])){
     // ajax判断该用户账号是否存在
     if(isset($_POST['type']) && $_POST['type'] == "check"){
-        // if($_POST['check_code'] != $_SESSION['verify']){
-        //     dexit(['res'=>false,"msg"=>"验证码错误","data"=>['check_code'=>$_SESSION['verify'],"input"=>$_POST['check_code']]]);
-        // }
-        // if(md5($_POST['check_code']) != $_SESSION['check_code']){
-        //     dexit(['res'=>false,"msg"=>"验证码错误","data"=>['check_code'=>$_SESSION['check_code'],"input"=>$_POST['check_code'],"md"=>md5($_POST['check_code'])]]);
-        // }
+        if(md5($_POST['check_code']) != $_SESSION['check_code']){
+            dexit(['res'=>false,"msg"=>"验证码错误","data"=>['check_code'=>$_SESSION['check_code'],"input"=>$_POST['check_code'],"md"=>md5($_POST['check_code'])]]);
+        }
         dexit(["res"=>true,"msg"=>"验证码正确"]);
         // $res = M("lk_user")->findField("id,phone","phone=".$phone);
         // if($res) $res1 = ["res"=>false,'msg'=>"该手机号已经被注册"];
