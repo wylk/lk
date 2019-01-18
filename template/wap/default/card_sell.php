@@ -23,6 +23,9 @@
             background-color: #fff;
             margin-top:10px;
             color: #999;
+            font-size: 14px;
+            border-radius: 3px;
+            margin:5px;
         }
         .input-link{
             display: flex;
@@ -37,14 +40,14 @@
             margin: 0px;
         }
         .input-title{
-            width: 70%;
+            width: 65%;
             line-height: 50px;
         }
         .btn-link{
             height: 80px;
             text-align: center;
             padding-top: 20px;
-
+            border:1px solid #f2f2f2;
         }
         #sellTran{
             color: #999;
@@ -63,7 +66,7 @@
             color: #29Aee7;
             border-bottom: 1px solid #29Aee7;
         }
-        .buy-order{
+        .sell-order{
             background-color: #fff;
             margin: 3px 6px;
             border-radius: 5px;
@@ -134,13 +137,13 @@
         <?php } } ?>
          </div>
          <div class="lk-container-flex" style="background-color: #fff;margin-top: 5px;">
-            <h3 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h3>
+            <h3 style="font-size:15px; font-weight: 600; padding:8px 0 8px 20px">市场卖单</h3>
         </div>
 
 
         <?php foreach($buyList as $key=>$value){ ?>
         <?php if($value['num'] <= $value['frozen']) continue; ?>
-        <div class="lk-container-flex">
+        <div class="lk-container-flex sell-order" >
             <div class="lk-container-flex lk-bazaar-sell">
                 <div style="width: 45%;padding-left: 5px;">
                     <p><?php echo $userInfo[$value['uid']]['name']?></p>
@@ -156,10 +159,8 @@
                 <p class="item-buy"><a href="javascript:;" id="transaction_<?php echo $value['id'] ?>">卖出</a></p>
             </div>
         </div>
-        <hr>
         <?php } ?>
     </div>
-    <?php include display('public_menu');?>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
 <script type="text/javascript">

@@ -36,7 +36,7 @@ mui.init();
                     pullupRefresh({type:type,containerId:containerId,contentId:contentId,file:file1});
                 }
             }
-        })  
+        }) 
     });
   }
 
@@ -53,7 +53,7 @@ mui.init();
       arr['page'] = page[arr["type"]];
       data(arr);
     },1000);
-      // mui.init();
+      mui.init();
   }
 
   function data(arr){
@@ -78,14 +78,19 @@ mui.init();
           mui(arr["containerId"]).pullRefresh().endPullupToRefresh(false);
         }
         // 3、判断是否禁止上拉加载
-        if(res['data']['limit'] && res['data']['limit'] < res['data']['data'].length)
-          mui(arr["containerId"]).pullRefresh().disablePullupToRefresh();
+        // if(res['data']['limit'] && res['data']['limit'] < res['data']['data'].length)
+          // mui(arr["containerId"]).pullRefresh().disablePullupToRefresh();
       }else{
         mui(arr["containerId"]).pullRefresh().endPullupToRefresh(true);
-        mui(arr["containerId"]).pullRefresh().disablePullupToRefresh();  //禁止上拉加载
+        // mui(arr["containerId"]).pullRefresh().disablePullupToRefresh();  //禁止上拉加载
       }
     },"json");
   }
+  // function endPullupToRefresh(finished){
+  //   if(finished){
+
+  //   }
+  // }
 function getTime(time=null){
   var date = new Date();
   if(time){

@@ -13,22 +13,39 @@
     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/clipboard.min.js" charset="utf-8"></script>
     <style type="text/css">
       .layui-container{padding: 0 8px;}
+      /*登录样式*/
+      .layui-form{margin-top: 100px;}
+      .layui-input-block{margin-right: 50px;}
+      .layui-input{border:0; padding-left:6px;}
+      .layui-form-item .layui-input-inline.us-input-inline{display: inline-block; float: none; left: 0;  width: auto; margin: 0; padding: 10px 0 10px 0px;}
+      .layui-form-item{margin: 0; line-height: 45px;color: #333;}
+      .us-btn{background-color: #FFF; color:#FF5722; font-weight: 500}
+      .us-btn:hover{color:#FF5722;}
+      .layui-form-item .layui-form-label{margin-top:10px;}
+      .layui-row{border-radius: 3px;}
+      /*账号样式*/
       .api_block{padding: 10px 0px;background: white; border-radius: 5px;margin-top:5px;}
       .api_line{border-top:1px solid #ddd;}
       .api_span{background:white;height:40px;line-height: 40px;color: #333;display: flex;align-items: center;}
       .api_attr{display: block;float:left;margin:auto 10px;width: 45px;text-align: right;}
       .api_input{display: block;float:left;width: 65%;overflow:scroll;}
-      .api_btn{float:right;margin-left:10px;height:25px;line-height: 25px;padding:2px 6px;border-radius: 3px;background: #41c7db85;}
+      .api_btn{float:right;margin-left:10px;height:25px;line-height: 25px;padding:2px 6px;border-radius: 3px;background: #a9e6ef;}
 
       /*接口样式*/
       .inter{background: white;margin-top:5px;border-radius: 5px;padding:10px 0px;margin-bottom: 30px;}
-      .inter_block{border:1px solid #29aee7;border-radius:4px;margin:15px 5px;display: flex;align-items: center;padding:8px;flex-direction: column;}
+      .inter_block{border:1px solid #f2f2f2;border-radius:4px;margin:15px 5px;display: flex;align-items: center;padding:8px;flex-direction: column;}
       .inter_row{/*border:1px solid red;*/width: 100%;}
       .inter_img{background-image: url(../template/wap/default/images/logo.jpg);background-size: 40px 40px;background-repeat: no-repeat;display: block;width: 40px;height: 40px;float: left;}
+      .inter_name{color:#333;font-size: 17px;margin-left: 5px;}
       .inter_row_attr{display: flex;justify-content: space-around;padding-left: 45px}
       .inter_attr{font-size:12px; color:#999;}
       .inter_num{font-size:14px;color:#333;}
-      .switch_block{float: right;border:1px solid #41c7db85;height:40px;width: 60px;display: flex;align-items: center;flex-direction: row;}
+      /*开关样式*/
+      .switch_block{float: right;height:40px;}
+      .switch_opt{display: flex;align-items: center;flex-direction: row;}
+      .switch{width: 28px;height: 20px;border:1px solid #a9e6ef;border-radius:1px;font-size: 12px;}
+      .switch_on{color:white;background:#a9e6ef;display: flex;align-items: center;justify-content: center;}
+      .switch_off{color:#333;background:#f2f2f2;display: flex;align-items: center;justify-content: center;border:1px solid #f2f2f2;}
 
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
@@ -43,23 +60,42 @@
 </head>
 
 <body style="background-color: #f2f2f2;">
-  <header class="lk-bar lk-bar-nav" style="background-color: #FFF">
-      <i class="iconfont">&#xe697;</i>
-      <h1 class="lk-title">api接口</h1>
-  </header>
-  <div class="layui-container" style="padding-top:70px">
+  <div class="layui-container" style="padding-top:15px;">
+      <?php if(empty($userInfo['mid'])){ ?>
+    <form class="layui-form" action="javascript:;">
+      <div class="layui-row" style="border:1px solid #d2d2d2; background-color: #FFF; margin-bottom:50px;">
+        <div class="layui-col-xs12">
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号码</label>
+                <div class="layui-input-inline us-input-inline" style="padding-left:0px;">
+                    <input type="text" name="phone" id="phone" required lay-verify="phoneNumber" placeholder="<?php echo $phoneShow ?>" autocomplete="off" class="layui-input" value="<?php echo $phoneShow; ?>" readonly>
+                </div>
+            </div>
+            <div class="layui-form-item"  style="border-top:1px solid #F0F0F0">
+              <div class="layui-input-inline us-input-inline" style=" border-right:1px solid #F0F0F0">
+                    <input type="text" name="password" required lay-verify="passVerify" placeholder="请输入手机验证码" autocomplete="off" class="layui-input" style="float:right; width: 78%">
+              </div>
+                <a href="javascript:;"  id="getVerify" class="layui-btn us-btn">获取验证码</a>
+            </div>
+        </div>
+      </div>
+      <div class="layui-row">
+      <button id="layui-btn" class="layui-btn" style="width:100%;">申请商户号</button>
+      </div>
+    </form>
+<?php }else{ ?>
     <div style="font-size: 17px;">接口账号</div>
     <div class="api_block">
       <div class="api_span">
         <span class="api_attr">appid:</span>
-        <span class="api_input">15703216869</span>
-        <span class="api_btn">复制</span>
+        <span class="api_input" id="api"><?php echo $userInfo['mid'] ?></span>
+        <span class="api_btn" id="copy_api" data-clipboard-target="#api">复制</span>
       </div>
       <div class="api_line"></div>
       <div class="api_span">
         <span class="api_attr">key:</span>
-        <span class="api_input">aa139b77c50b94a84a70a2feeca25d41</span>
-        <span class="api_btn">复制</span>
+        <span class="api_input" id="key"><?php echo $userInfo['mid_key'] ?></span>
+        <span class="api_btn" id="copy_key" data-clipboard-target="#key">复制</span>
       </div>
     </div>
     <!-- 接口开关 -->
@@ -69,11 +105,16 @@
       <div class="inter_block">
         <div class="inter_row" style="height: 40px;line-height: 40px;">
           <span class="inter_img"></span>
-          <span style="color:#333;font-size: 17px;margin-left: 5px;">会员卡支付</span>
-          <span class="switch_block">
-            <div style="display: block;width: 15px;height: 10px;border:1px solid red;"></div>
-            <div style="display: block;width: 15px;height: 10px;border:1px solid red;"></div>
-            <!-- 开关 -->
+          <span class="inter_name">会员卡支付</span>
+          <span class="switch_block switch_opt">
+            <div class="switch_opt" id="on_<?php echo $i; ?>" >
+              <div class="switch"></div>
+              <div class="switch switch_on">ON</div>
+            </div>
+            <div class="switch_opt" id="off_<?php echo $i; ?>" style="display: none;">
+              <div class="switch switch_off">OFF</div>
+              <div class="switch" style="border:1px solid #f2f2f2;"></div>
+            </div>
           </span>
         </div>
         <div class="inter_row inter_row_attr">
@@ -83,12 +124,9 @@
       </div>
       <?php } ?>
     </div>
-
   </div>
-
-
+<?php } ?>
 </body>
-
 </html>
 <script type="text/javascript">
   var layer;
@@ -121,8 +159,22 @@
         layer.msg(res.msg,{icon:5,skin:'demo-class'});
     },"json");
   });
-  $("[id^=copy_]").bind("click",function(){
-    var idStr = $(this).attr('id');
+   $("[id^=on_]").bind('click',function(){
+      var idStr = $(this).attr('id');
+      var val = idStr.substr(idStr.indexOf("_")+1);
+      $(this).hide();
+      $("#off_"+val).show();
+   });
+   $("[id^=off_]").bind("click",function(){
+      var idStr = $(this).attr("id");
+      var val = idStr.substr(idStr.indexOf('_')+1);
+      $(this).hide();
+      $("#on_"+val).show();
+   });
+   // 点击复制
+   $("[id^=copy_]").bind("click",function(){
+      var idStr = $(this).attr("id");
+      console.log(idStr);
       var clipboard = new ClipboardJS("#"+idStr);
       clipboard.on("success",function(e){
           e.clearSelection();
@@ -131,5 +183,6 @@
       clipboard.on("error",function(e){
           layer.msg("复制失败",{ icon: 5, skin: "demo-class" });
       })
-  })
+   });
+
 </script>

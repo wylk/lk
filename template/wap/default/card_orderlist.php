@@ -66,7 +66,6 @@
         <?php } ?>
 
     </div>
-    <?php include display('public_menu');?>
     <script type="text/javascript">
     </script>
 </body>

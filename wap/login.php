@@ -18,21 +18,28 @@ if (strpos($referer,'&amp;')) {
 if(isset($_POST['phone'])){
     // ajax判断该用户账号是否存在
     if(isset($_POST['type']) && $_POST['type'] == "check"){
-        $res = M("lk_user")->findField("id,phone","phone=".$phone);
-        if($res) $res1 = ["res"=>false,'msg'=>"该手机号已经被注册"];
-        else $res1 = ["res"=>true,"msg"=>"该手机号可以注册"];
-        echo dexit($res1);
+        if(md5($_POST['check_code']) != $_SESSION['check_code']){
+            dexit(['res'=>false,"msg"=>"验证码错误","data"=>['check_code'=>$_SESSION['check_code'],"input"=>$_POST['check_code'],"md"=>md5($_POST['check_code'])]]);
+        }
+        dexit(["res"=>true,"msg"=>"验证码正确"]);
+        // $res = M("lk_user")->findField("id,phone","phone=".$phone);
+        // if($res) $res1 = ["res"=>false,'msg'=>"该手机号已经被注册"];
+        // else $res1 = ["res"=>true,"msg"=>"该手机号可以注册"];
+        // dexit($res1);
         exit();
     }
     // 验证码获取
     if(isset($_POST['type']) && $_POST['type'] == "code"){
-        import("transfer");
+        if(md5($_POST['check_code']) != $_SESSION['check_code']){
+            dexit(['result'=>1,"msg"=>"验证码错误"]);
+        }
+        // import("Transfer");
         $a = new Transfer();
         $getPhone = $_POST['phone'];
         $code = rangdNumber($verifyLen);
         $result = $a->message($getPhone,array("code"=>$code));
-        $_SESSION['verify'][$getPhone] = $code;
-        dexit(['result'=>$result,'code'=>$code]);
+        $_SESSION['verify_msg'] = $code;
+        dexit(['result'=>$result,'code'=>$code,'phone'=>$getPhone]);
     }
     // 退出登录
     if(isset($_POST['type']) && $_POST['type'] == "signOut"){
@@ -49,13 +56,13 @@ if(isset($_POST['phone'])){
     // 验证码登录
     if(isset($_POST['logintype']) && $_POST['logintype'] == "checkAccount"){
         $phone = trim($_POST['phone']);
-        $code = trim($_POST['password']);
+        $code = trim($_POST['msg_code']);
         import("PlatformCurrency");
         $platformObj = new PlatformCurrency();
         $unphone = $platformObj->getPhone();
         if($unphone == $phone) dexit(["res"=>1,'msg'=>"该手机号无登录权限"]);
-        // if($code != $_SESSION['verify'][$phone]){
-        //  dexit(["res"=>1,'msg'=>"验证码错误"]);
+        // if($code != $_SESSION['verify_msg']){
+        //  dexit(["res"=>1,'msg'=>"验证码错误","data"=>['code'=>$code,"msg"=>$_SESSION['verify_msg']]]);
         // }
         $phoneRes = D("User")->field("id")->where(['phone'=>$phone])->find();
 
@@ -107,7 +114,18 @@ if(is_weixin()){
 
 }
 
-    include display("login");
+if($_GET['action'] == "check"){
+    // $code = new Code(4,2,65,30);
+    // $_SESSION['check_code'] = $code->getCode();
+    // $code->outImage();
+    // // import('source.class.ValidateCode');
+    $_vc = new ValidateCode();  //实例化一个对象
+    $_vc->doimg();
+    $_SESSION['check_code'] = md5($_vc->getCode());
+    // // Image::buildImageVerify();
+}
+include display("login1");
+// include display("login");
 
 
 

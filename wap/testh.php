@@ -137,4 +137,20 @@ require_once dirname(__FILE__).'/global.php';
 
 // $bookRes = D("Record_books")->limit("15,30")->select();
 // dump($bookRes);
-include display('testh');
+// include display('testh');
+
+// 验证码测试
+
+// $code = new Code(4,2);
+// // $num = $code->getNumberCode();
+// // $char = $code->getCharCode();
+// // $str = $code->getNumberCharCode();
+// $str = $code->createCode();
+// file_put_contents("check.png", $code->outImage());
+// dump($str);
+
+$_vc = new ValidateCode();  //实例化一个对象
+// $_vc->doimg();
+// $_SESSION['check_code'] = md5($_vc->getCode());
+$code = $_vc->getCode();
+var_dump($code);
