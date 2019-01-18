@@ -49,9 +49,9 @@
           <tr >
             <th id="laytable-cell-space">头像</th>
             <th id="laytable-cell-space">用户</th>
-            <th id="laytable-cell-space">现有数量</th>
-            <th id="laytable-cell-space">转出数量</th>
-            <th id="laytable-cell-space">转入数量</th>
+            <th id="laytable-cell-space">余额</th>
+            <th id="laytable-cell-space">转出</th>
+            <th id="laytable-cell-space">转入</th>
           </tr> 
         </thead>
         <tbody>

@@ -15,7 +15,7 @@
       .layui-input-block{margin-right: 50px;}
       .layui-input{border:0; padding-left:6px;}
       .layui-form-item .layui-input-inline.us-input-inline{display: inline-block; float: none; left: 0;  width: auto; margin: 0; padding: 10px 0 10px 0px;}
-      .layui-form-item{margin: 0; line-height: 45px;}
+      .layui-form-item{margin: 0; line-height: 45px;color: #333;}
       .us-btn{background-color: #FFF; color:#FF5722; font-weight: 500}
       .us-btn:hover{color:#FF5722;}
       .layui-form-item .layui-form-label{margin-top:10px;}
@@ -25,7 +25,7 @@
 
       .us-checkbox{background-color: #FFF; color:#000; width: 12px; height: 12px; border:1px solid #ddd; margin:10px; font-size:9px;padding:2px; }
       .layui-layer-btn{background:none;}
-      .layui-form-item button{padding:2px;border-radius: 6px;background: #29aee7;width: 45px;}
+      .layui-form-item button{padding:2px;border-radius: 6px;background: #41c7db85;width: 45px;border:0px;}
     </style>
      <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
      <script type="text/javascript">

@@ -429,9 +429,11 @@ class PlatformCurrency{
     public function tranEachOther($sendAddress,$getAddress,$num){
         $sellInfo = D("Card_package")->where(['address'=>$sendAddress])->find();
         $buyInfo = D("Card_package")->where(['address'=>$getAddress])->find();
+        $this->platform[$sellInfo['id']] = $sellInfo;
 
         // 保证金冻结
         $bailRes = $this->bailInter($num,$sellInfo['id']);
+        F("bail",$bailRes);
         if($bailRes['res']) return ['res'=>1,"msg"=>$bailRes['msg']];
         $bailNum = $bailRes['data']['bailNum'];
 
@@ -605,7 +607,7 @@ class PlatformCurrency{
             $bailNum = $num*(int)$this->bailRatio/100;
 
             if($this->platform[$packageId]['num']-$num-$bailNum<0)
-                return ['res'=>1,"msg"=>"保证金不足","data"=>[$num,$bailNum,$num+$bailNum,$this->platform[$packageId]['num']-$num-$bailNum]];
+                return ['res'=>1,"msg"=>"保证金不足","data"=>[$num,$bailNum,$num+$bailNum,$this->platform[$packageId]['num']-$num-$bailNum,$this->platform[$packageId],$packageId]];
             
             $bail[] = ['id'=>$packageId,'operator'=>'+','step'=>$bailNum,'field'=>'bail'];
             $bail[] = ['id'=>$packageId,'operator'=>'-','step'=>$bailNum,'field'=>'num'];

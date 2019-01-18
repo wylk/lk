@@ -60,7 +60,7 @@
         .item-buy{align-self:center;  border:1px solid #FF5722; width:45px; border-radius: 50px; line-height: 45px; text-align: center;}
         .register div{width:20%;height:38px;line-height:38px;margin-left:20px;}
         #action {
-            color: #333;
+            color: #29Aee7;
             border-bottom: 1px solid #29Aee7;
         }
         .buy-order{
@@ -194,7 +194,7 @@ $(function(){
             if(!result.res){
                 mui.toast(result.msg);
                 $("#tran_"+tranId).remove();
-                window.location.reload(true);
+                window.location.href="./card_order.php";
             }else{
                  mui.toast(result.msg);
             }

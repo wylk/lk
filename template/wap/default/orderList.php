@@ -26,7 +26,7 @@
     .layui-tab-content{padding:0px;margin-top: 10px;}
     .layui-tab{margin:0;}
     .layui-tab-title{color: #999;}
-    .layui-tab-brief>.layui-tab-title .layui-this{color:#333;}
+    .layui-tab-brief>.layui-tab-title .layui-this{color:#29aee7;}
     .layui-tab-brief>.layui-tab-title .layui-this:after{border-bottom: 1px solid #29aee7;}
 
     .content{border:1px solid red;height: 600px;}

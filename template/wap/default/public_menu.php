@@ -12,7 +12,7 @@ overflow: hidden;
 height: 50px;
 border-top: 1px solid #ddd;
 position: fixed;
-z-index: 900;
+z-index: 999;
 width: 100%;
 bottom: 0;
 left: 0;
@@ -33,14 +33,14 @@ height: 50px;
 padding-top: 4px;
 color: #999;
 font-size: 12px;
-background-color: #F9F5F5;
+background-color: #FFF;
 text-align: center;
 }
 .wx_nav a:active, .wx_nav a.on {
-	color: #333;
+	color: #29aee7;
 }
 .wx_nav a:before {
-background-image: url(../template/wap/default/images/icon_nav.png?r=23);
+background-image: url(../template/wap/default/images/icon_nav.png?r=25);
 background-repeat: no-repeat;
 background-size: 207px 46px;
 -webkit-background-size: 207px 46px;
@@ -55,8 +55,8 @@ margin: 0 auto 1px auto;
 .wx_nav .nav_index:before {
 background-position: 0 0;
 }
-.wx_nav .nav_search:before {
-background-position: -46px 0;
+.wx_nav .card_buy:before {
+background-position: -183px 0;
 }
 .wx_nav .nav_shopcart:before {
 background-position: -138px 0;
@@ -72,5 +72,5 @@ background-position-y: -23px;
 	<a href="./index.php" class="nav_index <?php if($php_self == 'index.php' || $php_self == 'home.php'){ echo 'on';}?>">首页</a>
 	<a href="./card_package.php" class="card_buy <?php if($php_self == 'card_package.php' || $php_self == 'card_buy.php' || $php_self == 'card_sell.php' || $php_self == 'card_order.php' || $php_self == 'card_orderlist.php' || $php_self == 'transaction.php'){ echo 'on';}?>">卡包</a>
 	<a href="./orderList.php" class="nav_shopcart <?php if($php_self == 'orderList.php'){ echo 'on';}?>">订单</a>
-	<a href="./my.php" class="nav_me <?php if($php_self == 'my.php'){ echo 'on';}?>">个人中心</a>
+	<a href="./my.php" class="nav_me <?php if($php_self == 'my.php'){ echo 'on';}?>">我的</a>
 </div>

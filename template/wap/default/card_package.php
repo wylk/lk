@@ -9,6 +9,7 @@
     <title>卡包</title>
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=1">
+    
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
@@ -23,7 +24,7 @@
                     background: url("/static/sweetalert/images/vs_icon@2x.png") no-repeat;
                     background-size: 110% 110%;
                 }
-        .card-handle{width:20%; border-right:1px solid #ded5d5; line-height: 30px; margin:5px 0; text-align: center; color: #333;}
+        .card-handle{width:20%; border-right:1px solid #ded5d5; line-height: 30px; margin:5px 0; text-align: center; color: #666;}
         hr.cut-off-rule{margin:10px 0;}
         .no-border{
             border-right: 0px;

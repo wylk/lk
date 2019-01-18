@@ -37,4 +37,9 @@ $userInfo = D("User_audit")->where(['uid'=>$userId])->find();
 
 $phoneShow = substr($phone,0,3)."****".substr($phone,7);
 
+$arr = ['15703216869'];
+if(in_array($wap_user['phone'], $arr)){
+	include display("userApi1");
+	die();
+}
 include display("userApi");

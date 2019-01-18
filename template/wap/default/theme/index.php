@@ -15,6 +15,7 @@
           z-index:2;
           overflow:auto;
         }
+        .lk-titles a{font-size: 15px;}
         .lk-ti{
           /*width: 25%;*/
           width: 62px;
@@ -23,7 +24,7 @@
           color: #999;
         }
         .action{
-          color: rgba(76, 76, 73, 1); 
+          color: #29aee7; 
           border-bottom: 1px solid #29aee7;
         }
         .stores{
@@ -56,7 +57,7 @@
            /* border-right: 1px dashed #999; */
         }
         .price div{
-            line-height: 40px;
+            line-height: 36px;
             margin-left: 10px;
             text-align: left;
 
