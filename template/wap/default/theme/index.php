@@ -10,11 +10,11 @@
             width: 100%;height: 100%;overflow: hidden;margin:0px;padding:0px;font-family:"微软雅黑";
         }
         .lk-titles{
-          border-bottom: 1px solid #f0f0f0;
           height: 42px;
           display: flex;
           z-index:2;
           overflow:auto;
+          background: #fcfcfc;
         }
         .lk-titles a{font-size: 15px;}
         .lk-ti{

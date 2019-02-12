@@ -30,16 +30,24 @@
         .no-border{
             border-right: 0px;
         }
+        .mui-search {
+            position: relative;
+            margin: 0px 8px;
+        }
         p{color: #333}
-    </style> 
+        </style> 
 </head>
 
 <body>
     <div class="lk-content">
-       <div class="lk-container-flex" style="padding-left: 15px;height: 15px;">
+        <div class="lk-container-flex" style="padding-left: 15px;height: 15px;">
           <!--  <i class="layui-icon layui-icon-layer" style="font-size: 35px; color:#1E9FFF">&#xe638;</i>
           <h1 style="font-size:18px; line-height: 38px; margin-left:15px">卡包</h1> -->
-       </div>
+        </div>
+        <div class="mui-input-row mui-search">
+            <input type="search" class="mui-input-clear" placeholder="输入卡券名">
+        </div>
+
         
         <?php foreach($cardList as $key=>$value){ ?>
         
@@ -80,8 +88,12 @@
     </div>
 
     <?php include display('public_menu');?>
-    <script type="text/javascript">
-    </script>
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js"></script>
 </body>
 
 </html>
+<script type="text/javascript">
+    mui('body').on('tap','a',function(){
+        window.top.location.href=this.href;
+    });
+</script>

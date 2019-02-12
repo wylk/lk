@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Hello MUI</title>
+		<title>发现</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/iconfont.css?r=<?php echo time();?>">
 		<!--App自定义的css-->
 		<style type="text/css">
+
 			.mui-preview-image.mui-fullscreen {
 				position: fixed;
 				z-index: 20;
@@ -157,32 +158,46 @@
 					opacity: 0;
 				}
 			}
+			p{
+				color: #333;
+			}
 			p img {
 				max-width: 100%;
 				height: auto;
+			}
+			.mui-content{
+				margin-bottom: 60px;
 			}
 		</style>
 
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">image viewer（图片预览）</h1>
-		</header>
-		<div class="mui-content">
+		<div class="mui-content" >
 			<div class="mui-content-padded">
 				<p>这是图片放大预览示例，点击如下图片体验全屏预览功能</p>
 				<p>
-					<img src="../images/yuantiao.jpg" data-preview-src="" data-preview-group="1" />
+					<img src="http://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1295,h_720,f_auto/w_80,x_15,y_15,g_south_west,l_klook_water/activities/rwq4gwp2pajj4za1xdlg/%E6%B2%B3%E5%86%85%E8%80%81%E5%9F%8E%E5%8C%BA%E7%BE%8E%E9%A3%9F%E4%B9%8B%E6%97%85.jpg" data-preview-src="" data-preview-group="1" />
+				</p>
+				<p>这是图片放大预览示例，点击如下图片体验全屏预览功能</p>
+				<p>
+					<img src="http://imgsrc.baidu.com/imgad/pic/item/b17eca8065380cd795edcc73ab44ad34588281b8.jpg" data-preview-src="" data-preview-group="1" />
+				</p>
+				<p>这是图片放大预览示例，点击如下图片体验全屏预览功能</p>
+				<p>
+					<img src="http://imgsrc.baidu.com/imgad/pic/item/f7246b600c3387447d2db0ff5b0fd9f9d62aa04d.jpg" data-preview-src="" data-preview-group="1" />
+				</p>
+				<p>这是图片放大预览示例，点击如下图片体验全屏预览功能</p>
+				<p>
+					<img src="http://img5.imgtn.bdimg.com/it/u=2145359727,1719103010&fm=26&gp=0.jpg" data-preview-src="" data-preview-group="1" />
 				</p>
 				<p>图片全屏后，双击或双指缩放均可对图片进行放大、缩小操作，左右滑动可查看同组(data-preview-group相同的图片为一组)其它图片，点击会关闭预览</p>
 				<p>
-					<img src="../images/muwu.jpg" data-preview-src="" data-preview-group="1" />
+					<img src="http://downhdlogo.yy.com/hdlogo/640640/640/640/23/2335233391/u23352333917rqiJFh.jpg" data-preview-src="" data-preview-group="1" />
 				</p>
 				<p>第三张图片，纯粹为了占位： </p>
 				<p>
-					<img src="../images/shuijiao.jpg" data-preview-src="" data-preview-group="1" />
+					<img src="http://imgsrc.baidu.com/imgad/pic/item/55e736d12f2eb938299a886fdf628535e4dd6fbc.jpg" data-preview-src="" data-preview-group="1" />
 				</p>
 			</div>
 		</div>

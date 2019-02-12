@@ -150,6 +150,8 @@
       </table>
     </div>
 </div>
+<?php //include display('public_menu');?>
+
 </body>
 </html>
 <script>
