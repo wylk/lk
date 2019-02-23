@@ -1,5 +1,9 @@
 <?php
 require_once dirname(__FILE__).'/global.php';
+// if(empty($wap_user)) redirect('./login.php?referer='.urlencode($_SERVER['REQUEST_URI']));
+$userId = $wap_user['userid'];
+
+
 // 微信登录
 // $appid = 'wxcf45e0f03cb2fe06';
 // $appSecret = '230bbd5800c6e0fa2524266f03892c3a';
@@ -149,8 +153,69 @@ require_once dirname(__FILE__).'/global.php';
 // file_put_contents("check.png", $code->outImage());
 // dump($str);
 
-$_vc = new ValidateCode();  //实例化一个对象
-// $_vc->doimg();
-// $_SESSION['check_code'] = md5($_vc->getCode());
-$code = $_vc->getCode();
-var_dump($code);
+// // 图片验证码
+// $_vc = new ValidateCode();  //实例化一个对象
+// // $_vc->doimg();
+// // $_SESSION['check_code'] = md5($_vc->getCode());
+// $code = $_vc->getCode();
+// var_dump($code);
+
+// // // 接口添加
+// $arr[] = ['uid'=>$userId,"platform_id"=>2,"inter_name"=>"组合支付"];
+// $arr[] = ['uid'=>$userId,"platform_id"=>2,"inter_name"=>"余额支付"];
+// dump($arr);
+// $res = D("Shop_inter")->data($arr)->addAll();
+// $shop_inter = D("Shop_inter");
+// $shop_inter->data($arr);
+// dump($shop_inter);
+// dump($res);
+
+/*****接口******/
+// // 余额支付接口
+// // $data = ["num"=>`num`+1,"money"=>`money`+10];
+// $data = "num=`num`+1,money=`money`+10";
+// $res = D("Shop_inter")->data($data)->where(['uid'=>$userId,"inter_name"=>"余额支付",'platform_id'=>2])->save();
+// $shop_inter = D("Shop_inter");
+// $shop_inter->$data;
+// dump($shop_inter);
+// dump($res);
+// $addData[] = ['inter'=>"会员卡支付1","pid"=>0];
+// $addData[] = ['inter'=>"会员卡支付2","pid"=>0];
+// $addData[] = ['inter'=>"会员卡支付3","pid"=>0];
+// // $res = D("Inter_type")->data($addData)->addAll();
+// // dump($res);
+
+// $attrData[] = ['pid'=>1,"inter"=>"组合支付"];
+// $attrData[] = ['pid'=>1,"inter"=>"余额支付"];
+// $attrData[] = ['pid'=>2,"inter"=>"组合支付1"];
+// $attrData[] = ['pid'=>2,"inter"=>"组合支付2"];
+// $attrData[] = ['pid'=>2,"inter"=>"组合支付3"];
+// // $attrRes = D("Inter_type")->data($attrData)->addAll();
+// // dump($attrRes);
+// // $where = ['inter'=>"会员卡支付"];
+// $where = "inter='组合支付' or id = (select pid from lk_inter_type where inter='组合支付')";
+// // $res = D("Inter_type")->where($where)->select();
+// // dump($res);
+// $field = "*,group_concat(concat_ws('_',id,inter,switch,inter_attr,pid)) as info";
+// $list = D("Inter_type")->field($field)->group('pid')->select();
+// dump($list);
+
+// $list1 = D("Inter_type")->field($field)->group("pid")->limit(2)->select();
+// dump($list1);
+foreach($list as $key=>$value){
+	$attr = explode(",",$value['info']);
+	foreach($attr as $k=>$v){
+		$attr1 = explode("_",$v);
+		// $list2['attr'] = $attr1;
+		$list1[$key]['attr'][$attr1[0]]['inter'] = $attr1[1];
+		$list1[$key]['attr'][$attr1[0]]['switch'] = $attr1[2];
+		$list1[$key]['attr'][$attr1[0]]['pid'] = $attr1[3];
+	}
+		// dump($list2);
+}
+dump($list1);
+
+
+include display("testh");
+die();
+

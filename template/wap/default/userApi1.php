@@ -37,8 +37,9 @@
       .inter_row{/*border:1px solid red;*/width: 100%;}
       .inter_img{background-image: url(../template/wap/default/images/logo.jpg);background-size: 40px 40px;background-repeat: no-repeat;display: block;width: 40px;height: 40px;float: left;}
       .inter_name{color:#333;font-size: 17px;margin-left: 5px;}
-      .inter_row_attr{display: flex;justify-content: space-around;padding-left: 45px}
-      .inter_attr{font-size:12px; color:#999;}
+      .inter_attr{font-size:12px; color:#999;padding:0 4px;}
+      .attr_left{float: left;margin-left: 42px;}
+      .attr_right{float:right;}
       .inter_num{font-size:14px;color:#333;}
       /*开关样式*/
       .switch_block{float: right;height:40px;}
@@ -101,28 +102,30 @@
     <!-- 接口开关 -->
     <div style="margin-top: 80px;font-size: 17px;">接口管理</div>
     <div class="inter" >
-      <?php for($i=0;$i<5;$i++){ ?>
+      <?php foreach($inter_arr as $key=>$value){ ?>
       <div class="inter_block">
         <div class="inter_row" style="height: 40px;line-height: 40px;">
           <span class="inter_img"></span>
-          <span class="inter_name">会员卡支付</span>
+          <span class="inter_name">会员卡支付<?php echo $key ?></span>
           <span class="switch_block switch_opt">
-            <div class="switch_opt" id="on_<?php echo $i; ?>" >
+            <div class="switch_opt" id="on_<?php echo $key; ?>" <?php if(!$value['status']) echo "style='display:none'" ?> >
               <div class="switch"></div>
               <div class="switch switch_on">ON</div>
             </div>
-            <div class="switch_opt" id="off_<?php echo $i; ?>" style="display: none;">
+            <div class="switch_opt" id="off_<?php echo $key; ?>" <?php if($value['status']) echo 'style="display: none;"' ?> >
               <div class="switch switch_off">OFF</div>
               <div class="switch" style="border:1px solid #f2f2f2;"></div>
             </div>
           </span>
         </div>
-        <div class="inter_row inter_row_attr">
-          <span class="inter_attr">组合支付：<i class="inter_num">￥123.45</i></span>
-          <span class="inter_attr">余额支付：<i class="inter_num">￥123.45</i></span>
+        <div class="inter_row">
+          <?php foreach($value as $k=>$v){ ?>
+          <?php if(!is_array($v)) continue; ?>
+          <span class="inter_attr <?php echo ($k%2==0)?"attr_left" : "attr_right"; ?>"><?php echo $v['inter_name'] ?>：<i class="inter_num"><?php echo $v['num']; ?>次</i></span>
+          <?php } ?>
         </div>
       </div>
-      <?php } ?>
+      <?php  } ?>
     </div>
   </div>
 <?php } ?>
@@ -159,18 +162,36 @@
         layer.msg(res.msg,{icon:5,skin:'demo-class'});
     },"json");
   });
+  // 开关
    $("[id^=on_]").bind('click',function(){
       var idStr = $(this).attr('id');
       var val = idStr.substr(idStr.indexOf("_")+1);
-      $(this).hide();
-      $("#off_"+val).show();
+      // $(this).hide();
+      // $("#off_"+val).show();
+      swtich_status(val,0);
    });
    $("[id^=off_]").bind("click",function(){
       var idStr = $(this).attr("id");
       var val = idStr.substr(idStr.indexOf('_')+1);
-      $(this).hide();
-      $("#on_"+val).show();
+      // $(this).hide();
+      // $("#on_"+val).show();
+      swtich_status(val,1);
    });
+   function swtich_status(val,status){
+    var data = {type:'switch',val:val,status:status}
+    console.log(data);
+    $.post("./userApi.php",data,function(result){
+      console.log(result);
+      if(result['res']){
+        layer.msg(result['msg'],{ icon: 5, skin: "demo-class" });
+      }else{
+        layer.msg(result['msg'],{ icon: 1, skin: "demo-class" });
+      }
+        setTimeout(function() {
+          window.location.reload();
+        }, 1000);
+    },"json");
+   }
    // 点击复制
    $("[id^=copy_]").bind("click",function(){
       var idStr = $(this).attr("id");

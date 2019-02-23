@@ -200,7 +200,10 @@ class PlatformCurrency{
     }
     // 获取交易市场中的委托单
     public function selectTradeList($data){
-        return D("Card_transaction")->where(["uid"=>['not in',[$data['userId']]],"card_id"=>$data['cardId'],'type'=>$data['type'],"status"=>$data['status'],"frozen"=>['>=',0]])->select();
+        $sum = D("Card_transaction")->where(["uid"=>['not in',[$data['userId']]],"card_id"=>$data['cardId'],'type'=>$data['type'],"status"=>$data['status'],"frozen"=>['>=',0]])->count("uid");
+        if($sum < $data['start_limit']) return [];
+        $limit = $data['start_limit'].",".$data['limit'];
+        return D("Card_transaction")->where(["uid"=>['not in',[$data['userId']]],"card_id"=>$data['cardId'],'type'=>$data['type'],"status"=>$data['status'],"frozen"=>['>=',0]])->limit($limit)->select();
     }
     // 查找个人的委托单
     public function selectPersonRegister($data){

@@ -41,26 +41,27 @@ if(IS_POST && $_POST['type'] == "revoke"){
 	$revoke = $platformObj->revokeRegister($revoke);
 	dexit($revoke);
 }
-
+if(IS_POST && $_POST['type'] == 'page'){
+	$page = $_POST['page'];
+	$limit = 10;
+	$start_limit = $page*$limit;
+	$platformInfo = D("Card_package")->where(['uid'=>$userId,"type"=>option("hairpan_set.platform_type_name")])->find();
+	$platformObj = new PlatformCurrency();
+	$buyList = $platformObj->selectTradeList(['userId'=>$userId,'type'=>'1','cardId'=>$platformInfo['card_id'],"status"=>0,'limit'=>$limit,"start_limit"=>$start_limit]);
+	foreach ($buyList as $key => $value) {
+		if(!in_array($value['uid'], $ids))  $ids[] = $value['uid'];
+	}
+	$userRes = D("User")->where("id in (".implode($ids, ",").")")->select();
+	foreach($userRes as $key=>$value){
+		$userInfo[$value['id']]['avatar'] = $value['avatar'];
+		$userInfo[$value['id']]['name'] = $value['name'];
+	}
+	dexit(['res'=>0,"data"=>['buyList'=>$buyList,"userInfo"=>$userInfo]]);
+}
 
 $platformInfo = D("Card_package")->where(['uid'=>$userId,"type"=>option("hairpan_set.platform_type_name")])->find();
-// 卖单交易单
-// $buyList = D("Card_transaction")->where(['card_id'=>$platformInfo['card_id'],"type"=>1])->select();
 
 $platformObj = new PlatformCurrency();
-$buyList = $platformObj->selectTradeList(['userId'=>$userId,'type'=>'1','cardId'=>$platformInfo['card_id'],"status"=>0]);
-// dump($buyList);
-foreach ($buyList as $key => $value) {
-	if(!in_array($value['uid'], $ids))  $ids[] = $value['uid'];
-}
-// dump($ids);
-$userRes = D("User")->where("id in (".implode($ids, ",").")")->select();
-
-foreach($userRes as $key=>$value){
-	$userInfo[$value['id']]['avatar'] = $value['avatar'];
-	$userInfo[$value['id']]['name'] = $value['name'];
-}
-
 $register = $platformObj->selectPersonRegister(['card_id'=>$platformInfo['card_id'],"userId"=>$userId,'type'=>'2']);
 //dump($register);die();
 include display('card_sell');

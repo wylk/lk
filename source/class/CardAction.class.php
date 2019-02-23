@@ -12,7 +12,7 @@ class CardAction{
 		$cardBagInfo = D("Card_package")->field("num,address,is_publisher,frozen")->where(['uid'=>$this->userId,'card_id'=>$data['cardId']])->find();
 		if(!$cardBagInfo) return ['res'=>1,"msg"=>"该卡券失效"];
 		// $cardBagInfo['is_publisher'] == 1 ? true : dexit(["res"=>1,'msg'=>"不是本人发布"]);
-		if($cardBagInfo['num'] - $num < 0) return ['res'=>1,"发布额度超出现有额度"];
+		if($cardBagInfo['num'] - $data['num'] < 0) return ['res'=>1,"发布额度超出现有额度"];
 
 		// 判断发布的数值超出
 		$tranData['card_id'] = $data['cardId'];

@@ -134,25 +134,14 @@
         <div class="lk-container-flex" style="background-color: #fff;margin-top: 5px;">
             <h3 style="font-size:15px; font-weight: 600; padding:8px 0 8px 20px">市场卖单</h3>
         </div>
-        <?php foreach ($sellList as $key => $value) { ?>
-        <?php if($value['num'] <= $value['frozen']) continue; ?>
-        <div class="lk-container-flex buy-order" id="tran_<?php echo $value['id'] ?>">
-            <div class="lk-container-flex lk-bazaar-sell">
-                <div style="width: 45%;padding-left: 5px;">
-                    <p style="margin-left: 22px;"><?php echo $userInfo[$value['uid']]['name']?></p>
-                    <img src="<?php echo $userInfo[$value['uid']]['avatar'] ?>" style="height:60px;border-radius: 20%;"/>
+        <div class="layui-container" id="pullrefresh" style="touch-action: none;overflow: auto;height: 500px;width: 100%">
+            <div>
+                <div class="lk-container-flex buy-order" lay-filter="aduitTab" >
+                    <ul class="mui-table-view order-ul"  id="buylist_content">
+                    </ul>
                 </div>
-                <div style="width: 50%;">
-                    <p><span id="num_<?php echo $value['id'] ?>" num="<?php echo $value['num']-$value['frozen'] ?>"><?php echo number_format($value['num']-$value['frozen'],2) ?></span> WLK</p>
-                    <p>价格：<?php echo number_format($value['price'],2) ?></p>
-                    <p>限额：<?php echo number_format($value['limit'],2) ?> - <?php echo number_format($value['num']-$value['frozen'],2) ?></p>
-                </div>
-            </div>
-            <div class="lk-container-flex">
-                <p class="item-buy"><a href="javascript:;" id="transaction_<?php echo $value['id'] ?>">买入</a></p>
             </div>
         </div>
-        <?php } ?>
     </div>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
@@ -182,25 +171,6 @@ $(function(){
         $("#money").html(money);
     })
 
-    $("[id^=transaction]").bind("click",function(){
-        var idStr = $(this).attr("id");
-        var tranId = idStr.substring(idStr.indexOf("_")+1);
-        // console.log(idStr,idStr.indexOf("_"),id);
-        var packageId = "<?php echo $platformInfo['id']; ?>";
-        var num = $("#num_"+tranId).attr("num");
-        var data = {"type":"transaction","tranId":tranId,"packageId":packageId,"num":num}
-        console.log(data);
-        $.post("./card_buy.php",data,function(result){
-            // console.log(result);
-            if(!result.res){
-                mui.toast(result.msg);
-                $("#tran_"+tranId).remove();
-                window.location.href="./card_order.php";
-            }else{
-                 mui.toast(result.msg);
-            }
-        },"json");
-    });
     $("[id^=revoke_]").bind("click",function(){
         var idStr = $(this).attr("id");
         var tranId = idStr.substring(idStr.indexOf("_")+1);
@@ -219,7 +189,73 @@ $(function(){
 
     })
 })
+function tranFunc(tranId,num){
+    var packageId = "<?php echo $platformInfo['id']; ?>";
+    var data = {"type":"transaction","tranId":tranId,"packageId":packageId,"num":num}
+    console.log(data);
+    $.post("./card_buy.php",data,function(result){
+        // console.log(result);
+        if(!result.res){
+            mui.toast(result.msg);
+            $("#tran_"+tranId).remove();
+            window.location.href="./card_order.php";
+        }else{
+             mui.toast(result.msg);
+        }
+    },"json");
+}
+// ***************** 分页 start *****************
+var page = 0;
+mui.init({
+    pullRefresh: {
+        container: '#pullrefresh',
+        up:{
+            auto:true,
+            contentrefresh:'正在加载...',
+            callback:pullupRefresh
+        }
+    }
+});
 
+function pullupRefresh(){
+    console.log(page);
+    var data = {type:'page',"page":page};
+    $.post("./card_buy.php",data,function(result){
+        if(result.data['sellList'].length > 0){
+            page++;
+            console.log(result);
+            var htmlStr = '';
+            $.each(result.data['sellList'],function(key,value){
+                var str = strFunc(value,result.data['userInfo']);
+                if(str) htmlStr += str;
+            })
+            $("#buylist_content").append(htmlStr);
+        }
+        mui("#pullrefresh").pullRefresh().endPullupToRefresh(false);
+    },"json");
+
+}
+function strFunc(card,userInfo){
+    var num = Number(card['num']-card['frozen']);
+    console.log(num);
+    if(num <= 0) return false;
+    console.log("dddd");
+    var price = Number(card['price']);
+    var sum = num*price;
+    var str = '';
+    str += '<li class="mui-table-view-cell mui-media">';
+    str += '<img class="mui-media-object mui-pull-left" src="';
+    if(userInfo[card['uid']]['avatar']) str += userInfo[card['uid']]['avatar'];
+    else str += '../static/images/jftc_03.png';
+        str += '"><div class="mui-media-body">';
+            str += '<p class="mui-ellipsis"><span class="order_num">数量:'+num+'</span><span class="order_price">单价:'+price.toFixed(2)+'</span></p>';
+            str += '<p class="mui-ellipsis"><span class="order_money">￥'+sum.toFixed(2)+'</span></p>';
+        str += '</div>';
+        str += '<button type="button" onclick="tranFunc('+card['id']+','+num+')" style="float: right;position: absolute;right: 10px;top:0px;    font-size: 14px; color: #29Aee7;border:0">买入</button>';
+    str += '</li>';
+    return str;
+}
+// ***************** 分页 end *****************
 </script>
 </body>
 </html>

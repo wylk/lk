@@ -18,8 +18,7 @@
     <style type="text/css">
       .list_body,.list_title,.list_content{border:1px solid #d0cfcf;border-radius: 4px;}
       .list_body{background-color: #f2f2f2;width: 100%;padding-bottom:15px;}
-      .list_title{background: white;width: 95%;margin:0 auto;text-align: center;margin-top: 15px;height: 30px;line-height: 30px;}
-      .list_head{width: 16%;display: block;float:left;}
+      .list_title1{height: 30px;line-height: 30px;}
       
       .list_content{background: white;width: 95%;margin:0 auto;text-align: center;margin-top:6px;display: flex;}
       .rows{width: 16%;display: flex;align-items: center;justify-content: center;}
@@ -30,7 +29,7 @@
 
       .rows_line{border-right: 1px solid #cecdcd;}
       .rows_line1{display: block; width: 100%; height: 30px; line-height: 30px}
-      .row_content1{width: 33%; display: inline-block; float: left;}
+      .row_content1{width: 100%; display: inline-block; float: left;}
       .cols_line{border-top: 1px solid #cecdcd;}
 
       /*开关样式*/
@@ -57,34 +56,31 @@
         <span class="x-right" style="line-height:40px;">共有数据：100 条</span>
       <div style="clear:both;"></div>
       <div class="list_body">
-        <div class="list_title">
-          <span class="list_head rows_line">店铺名称</span>
-          <span class="list_head rows_line">平台</span>
-          <span class="list_head rows_line">调用接口</span>
-          <span class="list_head rows_line">调用次数</span>
-          <span class="list_head rows_line">支付总额</span>
-          <span class="list_head">状态</span>
+        <div class="list_content list_title1">
+          <div class="rows rows_content rows_line">接口</div>
+          <div class="rows rows_content rows_line">用户数量</div>
+          <div class="rows1 rows_content rows_line">接口属性</div>
+          <div class="rows rows_content">开关</div>
+          <!-- <div class="rows rows_content rows_line">说明</div> -->
         </div>
-        <?php foreach($inter_info as $key=>$value){ ?>
+        <?php foreach($inter_list as $key=>$value){ ?>
         <div class="list_content">
-          <div class="rows rows_content rows_line"><?php echo $userinfo[$value['uid']] ?></div>
-          <div class="rows rows_content rows_line">壹商城<?php echo $value['platform_id'] ?></div>
+          <div class="rows rows_content rows_line"><?php echo $value['inter'] ?></div>
+          <div class="rows rows_content rows_line">0<?php echo $value['id'] ?></div>
           <div class="rows1 rows_line">
-            <?php foreach($value['inter'] as $k=>$v){ ?>
+            <?php foreach($value['attr'] as $k=>$v){ ?>
             <span class="rows_line1 <?php echo $k == 0 ? '' : 'cols_line' ?>">
-              <span class="row_content1 rows_line"><?php echo $v['inter_name'] ?></span>
-              <span class="row_content1 rows_line"><?php echo $v['num'] ?></span>
-              <span class="row_content1"><?php echo number_format($v['money'],2) ?></span>
+              <span class="row_content1 rows_line"><?php echo $v['inter'] ?></span>
             </span>
             <?php } ?>
           </div>
           <span class="rows rows_content"><?php // echo $value['status'] ? "true" : "false" ?>
             <span class="switch_block switch_opt">
-            <div class="switch_opt" uid="<?php echo $value['uid']; ?>" id="on_<?php echo $value['platform_id']; ?>" <?php if(!$value['switch_set']) echo "style='display:none'" ?> >
+            <div class="switch_opt" id="on_<?php echo $value['id']; ?>" <?php if(!$value['switch']) echo "style='display:none'" ?> >
               <div class="switch"></div>
               <div class="switch switch_on">ON</div>
             </div>
-            <div class="switch_opt" uid="<?php echo $value['uid']; ?>" id="off_<?php echo $value['platform_id']; ?>" <?php if($value['switch_set']) echo 'style="display: none;"' ?> >
+            <div class="switch_opt" id="off_<?php echo $value['id']; ?>" <?php if($value['switch']) echo 'style="display: none;"' ?> >
               <div class="switch switch_off">OFF</div>
               <div class="switch" style="border:1px solid #f2f2f2;"></div>
             </div>
@@ -116,9 +112,9 @@
       switch_status(val,1,uid);
    });
    function switch_status(val,status,uid){
-    var data = {val:val,status:status,uid:uid}
+    var data = {pid:val,status:status,uid:uid}
     console.log(data);
-    $.post("?c=management&a=switch_set",data,function(result){
+    $.post("?c=management&a=inter",data,function(result){
       console.log(result);
       if(result['res']){
         layer.msg(result['msg'],{ icon: 5, skin: "demo-class" });
