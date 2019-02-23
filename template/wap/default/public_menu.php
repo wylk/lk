@@ -1,6 +1,6 @@
 <style type="text/css">
 	.mui-bar-tab{
-		background: #fff;
+		background: #fcfcfc;
 	}
 	.mui-bar-tab .mui-tab-item.mui-active {
     	color: #67ccf4;
@@ -11,6 +11,9 @@
 	    z-index: 20;
 	    padding-top: 10px;
 	    padding-bottom: 10px;
+	}
+	.mui-bar-tab .mui-tab-item {
+    	color: #adadad;
 	}
 </style>
 
