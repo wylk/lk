@@ -71,12 +71,22 @@
             margin: 3px 6px;
             border-radius: 5px;
         }
+        .order-ul{width: 100%;}
+        .order_num,.order_price{display: block; float: left;}
+        .order_num{color:#333;}
+        .order_price{color: #999;margin-left: 10px;}
+        .order_money{color: red}
+        .mui-table-view-cell{padding: 8.8px 15px;}
+        .order_sellBtn{float: right;position: absolute;right: 10px;top:0px;    font-size: 14px; color: #29Aee7;}
+        .mui-media img{border-radius: 5px; }
     </style>
 </head>
 
 <body>
 
     <div class="content">
+    <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+    <div class="mui-scroll">
         <div class="title" style="background-color: #fff;">
             <a href="card_buy.php" id="action">买入</a>
             <a href="card_sell.php">卖出</a>
@@ -127,25 +137,25 @@
                         <a href="javascript:;" id="revoke_<?php echo $value['id'] ?>"  class="layui-btn">撤销</a>
                     </div>
                 </div>
-                <?php } } ?>
+                <?php }  ?>
             </div>
+            <?php } ?>
 
 
         <div class="lk-container-flex" style="background-color: #fff;margin-top: 5px;">
             <h3 style="font-size:15px; font-weight: 600; padding:8px 0 8px 20px">市场卖单</h3>
         </div>
-        <div class="layui-container" id="pullrefresh" style="touch-action: none;overflow: auto;height: 500px;width: 100%">
-            <div>
-                <div class="lk-container-flex buy-order" lay-filter="aduitTab" >
-                    <ul class="mui-table-view order-ul"  id="buylist_content">
-                    </ul>
-                </div>
-            </div>
-        </div>
+                <!-- 卖单展示 -->
+        <ul class="mui-table-view order-ul"  id="buylist_content"></ul>
+    </div>
+</div>
     </div>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
 <script type="text/javascript">
+mui("body").on("tap","a",function(){
+    document.location.href = this.href;
+})
 var id = "<?php echo $platformInfo['id']; ?>";
 $(function(){
     $("#buyTran").bind("click",function(){
@@ -171,6 +181,7 @@ $(function(){
         $("#money").html(money);
     })
 
+    
     $("[id^=revoke_]").bind("click",function(){
         var idStr = $(this).attr("id");
         var tranId = idStr.substring(idStr.indexOf("_")+1);
@@ -206,6 +217,7 @@ function tranFunc(tranId,num){
 }
 // ***************** 分页 start *****************
 var page = 0;
+
 mui.init({
     pullRefresh: {
         container: '#pullrefresh',
@@ -256,6 +268,7 @@ function strFunc(card,userInfo){
     return str;
 }
 // ***************** 分页 end *****************
+
 </script>
 </body>
 </html>
