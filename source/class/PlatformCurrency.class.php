@@ -192,10 +192,11 @@ class PlatformCurrency{
             $matchOrderData = array_values($this->matchOrderData);
             if(D("Orders")->data($matchOrderData[0])->add())     $orderNum = 1;
         }else{
-            $orderNum = D("Orders")->data($this->matchOrderData)->addAll();
+            $matchOrderData = array_values($this->matchOrderData);
+            $orderNum = D("Orders")->data($matchOrderData)->addAll();
         }
 
-        if(!$orderNum) return ['res'=>1,"msg"=>"订单添加失败"];
+        if(!$orderNum) return ['res'=>1,"msg"=>"订单添加失败","data"=>['orderNum'=>$orderNum,"matchOrderData"=>$this->matchOrderData]];
         return ['res'=>0,"msg"=>"已匹配到".$orderNum."条订单","data"=>$orderNum];
     }
     // 获取交易市场中的委托单

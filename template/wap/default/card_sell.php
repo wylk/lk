@@ -79,6 +79,8 @@
         .mui-table-view-cell{padding: 8.8px 15px;}
         .order_sellBtn{float: right;position: absolute;right: 10px;top:0px;    font-size: 14px; color: #29Aee7;}
         .mui-media img{border-radius: 5px; }
+        .wei{ width: 25%; float: left; height: 30px; line-height: 1.9rem;text-align: center;color:#999;}
+        .wei button{border:0;color:#29Aee7; }
     </style>
 </head>
 
@@ -121,32 +123,38 @@
                        <div>RMB</div>
                 </div>
                 <div class="btn-link">
-                    <a href="javascript:;" id="sellTran" class="mui-btn mui-btn-primary mui-btn-outlined" style="width: 70%">卖出</a>
+                    <button  id="sellTran" class="mui-btn mui-btn-primary mui-btn-outlined" style="width: 70%">卖出</button>
                 </div>
             </div>
             <?php if($register){ ?>
+
           <div style="background-color: #fff;color: #999;">
             <div class="lk-container-flex" style="background-color: #fff;margin-top: 5px;">
-                <h3 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">市场卖单</h3>
+                <h3 style="font-size:16px; font-weight: 600; padding:20px 0 10px 20px">委托卖单</h3>
             </div>
-            <div class="lk-container-flex register" style="border: 1px solid #f2f2f2;">
-                        <div>委托数</div><div>单价</div><div>总价</div><div>操作</div>
-            </div>
-            <hr>
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell mui-media">
+                <div class="mui-media-body">
+                    <p class="mui-ellipsis wei">数量</p>
+                    <p class="mui-ellipsis wei">单价</p>
+                    <p class="mui-ellipsis wei">总价</p>
+                    <p class="mui-ellipsis wei">操作</p>
+                </div>
+            </li>
             <?php foreach($register as $key=>$value){ ?>
-            <div class="lk-container-flex register" id="register_<?php echo $value['id'] ?>">
-                <div>
-                    <span id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num'],2) ?></span>WLK
+            <li class="mui-table-view-cell mui-media" id="register_<?php echo $value['id'] ?>">
+                <div class="mui-media-body">
+                    <p class="mui-ellipsis wei" id="num_<?php echo $value['id'] ?>"><?php echo number_format($value['num'],2) ?></p>
+                    <p class="mui-ellipsis wei"><?php echo number_format($value['price'],2) ?></p>
+                    <p class="mui-ellipsis wei"><?php echo number_format($value['price']*$value['num'],2) ?></p>
+                    <p class="mui-ellipsis wei">
+                        <button type="button" id="revoke_<?php echo $value['id'] ?>">撤销</button>
+                    </p>
                 </div>
-                <div><?php echo number_format($value['price'],2) ?></div>
-                <div><?php echo number_format($value['price']*$value['num'],2) ?></div>
-                <div>
-                    <a href="javascript:;" id="revoke_<?php echo $value['id'] ?>"  class="layui-btn">撤销</a>
-                </div>
-            </div>
-            <hr>
+            </li>
             <?php } ?>
             </div>
+        </ul>
             <?php } ?>
              <div class="lk-container-flex" style="background-color: #fff;margin-top: 5px;">
                 <h3 style="font-size:15px; font-weight: 600; padding:8px 0 8px 20px">市场卖单</h3>
@@ -165,11 +173,13 @@ mui("body").on("tap","a",function(){
     document.location.href = this.href;
 })
     $("#sellTran").bind("click",function(){
+        console.log("dkjjjkj");
         var price = $("[name=sellPrice]").val();
         var num = $("[name=sellNum]").val();
         var limit = $('[name=limitNum]').val();
         var id = "<?php echo $platformInfo['id'] ?>";
         var data = {"price":price,"num":num,"id":id,"limitNum":limit,"type":"register"};
+        console.log(data);
         $.post("./card_sell.php",data,function(res){
             console.log(res);
             //layer.closeAll("loading");
@@ -227,8 +237,8 @@ mui("body").on("tap","a",function(){
             console.log(result);
             if(!result.res){
                  mui.toast(result.msg);
-                // $("#register_"+tranId).remove();
-                window.location.reload(true);
+                $("#register_"+tranId).remove();
+                // window.location.reload(true);
             }else{
                 mui.toast(result.msg);
             }
@@ -296,6 +306,7 @@ function strFunc(card,userInfo){
 // ***************** 分页 end *****************
 
 </script>
+
 </body>
 
 </html>
