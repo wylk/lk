@@ -38,8 +38,8 @@
         .color_red{color:red;}
         .word{width: 95%;margin: 0 auto;padding:20px 10px 10px 25px;}
         .img{width: 50px;}
-        .chatDiv{position: absolute;left: 0;top: 0;z-index: 9;width: 100%;height: 100%;background: #2121212e;display: none;}
-        .chatDiv img{z-index: 13;width: 200px;}
+        .chatDiv{position: absolute;left: 0;top: 0;z-index: 9;width: 100%;height: 100%;background: #2121212e;display: none;flex-direction: column; justify-content: center}
+        .chatDiv img{z-index: 13;width: 100%;}
     </style>
 </head>
 
@@ -120,8 +120,7 @@
     </div>
 <!-- 二维码弹框 -->
 <div class="chatDiv">
-  <div style="z-index: 10; margin:0 auto;margin-top:200px;text-align: center">
-  </div>
+    <div style="z-index: 10; margin:0 auto;text-align: center;width: 85%;"></div>
 </div>
     <?php// include display('public_menu');?>
 </body>
@@ -131,7 +130,7 @@ $("#chatImg").click(function(){
   var img = $(this).attr("img");
   var html = '<img src="'+img+'">';
   $(".chatDiv div").html(html);
-  $(".chatDiv").show();
+  $(".chatDiv").css("display","flex");
 });
 // 隐藏二维码
 $(".chatDiv").bind("click",function(){

@@ -89,12 +89,12 @@
     <div class="wrapper">
         <h5>收款二维码</h5>
         <div class="wrapper_cent">
-            <div class="LUploader" id="up_img">
+            <div class="LUploader" id="up_img" >
                 <div class="LUploader-container">
                     <input data-LUploader="up_img" data-form-file='basestr' data-upload-type='front' type="file" />
                     <ul class="LUploader-list"></ul>
                 </div>
-                <div>
+                <div style="background-image: url('<?php echo $pay_img['img']; ?>');background-repeat: no-repeat;background-size: contain; background-position: center;">
                     <div class="icon icon-camera font20"></div>
                     <p>单击上传</p>
                 </div>
