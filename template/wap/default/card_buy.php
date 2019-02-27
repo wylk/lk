@@ -242,8 +242,10 @@ function pullupRefresh(){
                 if(str) htmlStr += str;
             })
             $("#buylist_content").append(htmlStr);
+            mui("#pullrefresh").pullRefresh().endPullupToRefresh(false);
+        }else{
+            mui("#pullrefresh").pullRefresh().endPullupToRefresh(true);
         }
-        mui("#pullrefresh").pullRefresh().endPullupToRefresh(false);
     },"json");
 
 }

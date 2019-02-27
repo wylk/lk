@@ -262,23 +262,22 @@ function pullupRefresh(){
     $.post("./card_sell.php",data,function(result){
         if(result.data['buyList'].length > 0){
             page++;
-            console.log(result);
             var htmlStr = '';
             $.each(result.data['buyList'],function(key,value){
                 var str = strFunc(value,result.data['userInfo']);
                 if(str) htmlStr += str;
             })
             $("#buylist_content").append(htmlStr);
+            mui("#pullrefresh").pullRefresh().endPullupToRefresh(false);
+        }else{
+            mui("#pullrefresh").pullRefresh().endPullupToRefresh(true);
         }
-        mui("#pullrefresh").pullRefresh().endPullupToRefresh(false);
     },"json");
 
 }
 function strFunc(card,userInfo){
     var num = Number(card['num']-card['frozen']);
-    console.log(num);
     if(num <= 0) return false;
-    console.log("dddd");
     var price = Number(card['price']);
     var sum = num*price;
     var str = '';
