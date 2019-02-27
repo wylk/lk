@@ -113,14 +113,17 @@
 </script>
 <script type="text/javascript">
 
-         //var url = "<?php echo './login.php?referer='.urlencode($_SERVER['REQUEST_URI']);?>";   
+         //var url = "<?php // echo './login.php?referer='.urlencode($_SERVER['REQUEST_URI']);?>";   
         var url = "index.php";   
         layui.use(['form','layer'], function(){
             var layer = layui.layer;
             //退出登录
             $("#signOut").bind("click",function(){
-                var phone = <?php echo $wap_user['phone'];?>;
-                $.post("./login.php",{phone:phone,type:"signOut"},function(res){
+                console.log("dfdfdf");
+                var phone = "<?php echo $wap_user['phone'];?>";
+                console.log(phone);
+                $.post("./setup.php",{phone:phone,type:"signOut"},function(res){
+                    console.log(res);
                     if(res.error == 0){
                         layer.msg(res.msg,{icon:1,time:2000},function(){
                             window.location.href = url;
