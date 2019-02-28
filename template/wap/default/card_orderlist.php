@@ -9,6 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?<?=time()?>">
+     <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css" type="text/css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
@@ -30,6 +31,10 @@
         }
         .title{display: flex;padding: 0 5px;line-height: 35px;color: #999;}
         .title a{color:#999;width:25%;text-align: center; line-height: 40px; font-size:14px;}
+
+        .mui-scroll-wrapper,.mui-scroll,.mui-scrollbar{position: relative;background: white;}
+        p{color:#333;margin-bottom: 0px;}
+        .content hr{height: 1px; margin: 10px 0; border: 0; clear: both;}
     </style>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
 </head>
@@ -42,6 +47,12 @@
             <a href="card_order.php" >订单</a>
             <a href="card_orderlist.php" id="action">订单记录</a>
         </div>
+        <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+            <div class="mui-scroll" >
+                <div id="order_content"></div>
+            </div>
+        </div>
+
         <?php foreach ($orderList as $key => $value) { ?>
         <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
             <div class="order-left">
@@ -66,8 +77,70 @@
         <?php } ?>
 
     </div>
-    <script type="text/javascript">
-    </script>
+<script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+mui.init({
+    pullRefresh: {
+        container: '#pullrefresh',
+        down:{
+            style:'circle',
+            callback:pulldownRefresh
+        },
+        up:{
+            auto:true,
+            contentrefresh:'正在加载...',
+            callback:pullupRefresh
+        }
+    }
+});
+
+function pulldownRefresh(){
+    console.log("down");
+    mui("#pullrefresh").pullRefresh().endPulldownToRefresh(false);
+
+}
+var page = 1;
+function pullupRefresh(){
+    var strHtml = '';
+    var data = {type:"page",page:page};
+    $.post("./card_orderlist.php",data,function(result){
+        console.log(result);
+        console.log(result.data.length);
+        if(result.error == 0 && result.data.length > 0){
+            $.each(result.data,function(key,value){
+                strHtml += strFunc(value);
+            })
+            page++;
+            $("#order_content").append(strHtml);
+            mui("#pullrefresh").pullRefresh().endPullupToRefresh(false);
+        }else{
+            mui("#pullrefresh").pullRefresh().endPullupToRefresh(true);
+        }
+    },"json");
+}
+function strFunc(data){
+    var userId = "<?php echo $userId ?>";
+    var number = new Number(data['number']);
+    var price = new Number(data['price']);
+    var str = "";
+    str += '<div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell" style="background: white;">';
+    str += '<div class="order-left">';
+    if(data['sell_id'] == userId)
+        str += '<p><span class="s">卖出</span>';
+    else
+        str += '<p><span class="b">买入</span>';
+    str += '单号：'+data['onumber']+'</p><p><?php echo date("Y-m-d H:i:s",$value['create_time']) ?>下单</p>';
+    str += '<p>数量：'+number.toFixed(2)+'</p>';
+    str += '</div>';
+    str += '<div class="order-right">';
+    str += '<p><a class="layui-bg-cyan" style="padding: 5px 7px" href="card_orderDetail.php?id='+data['id']+'" >查看详情</a></p>';
+    str += '<p>价格：￥'+price.toFixed(2)+'</p>';
+        str += '<p style="color: #2F4056">已完成</p>';
+    str += '<p>总金额：<span class="total">￥'+(number*price).toFixed(2)+'</span></p>';
+    str += '</div></div><hr>';
+    return str; 
+}
+</script>
 </body>
 
 </html>

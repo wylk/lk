@@ -284,7 +284,9 @@ class PlatformCurrency{
     public function selectOrderList($data){
         $packageInfo = D("Card_package")->where(['uid'=>$data['userId'],"type"=>$this->cardType])->find();
         $orderWhere = "(`buy_id` = ".$data['userId']." or `sell_id` = ".$data['userId'].") and `card_id` = '".$packageInfo['card_id']."' and status ".$data['status']." and out_trade_no = '' ";
-        return D("Orders")->where($orderWhere)->order("create_time desc")->select();
+        if($data['limit']) $limit = $data['limit'];
+        else $limit = 10;
+        return D("Orders")->where($orderWhere)->order("create_time desc")->limit($limit)->select();
     }
     // 撤销委托单
     public function revokeRegister($data){
