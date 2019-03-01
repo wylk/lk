@@ -83,15 +83,17 @@ function pulldownRefresh(){
                 strHtml += strFunc(value);
             })
             $("#order_content").html(strHtml);
+            page = 2;
         }
         mui("#pullrefresh").pullRefresh().endPulldownToRefresh(false);
+        mui("#pullrefresh").pullRefresh().refresh(true);
     },"json");
 
 }
 var page = 1;
 function pullupRefresh(){
     var strHtml = '';
-    var data = {type:"page",page:1};
+    var data = {type:"page",page:page};
     $.post("./card_order.php",data,function(result){
         if(result.error == 0 && result.data.length > 0){
             $.each(result.data,function(key,value){

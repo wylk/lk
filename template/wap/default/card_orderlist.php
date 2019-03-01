@@ -83,8 +83,10 @@ function pulldownRefresh(){
                 strHtml += strFunc(value);
             })
             $("#order_content").html(strHtml);
+            page = 2;
         }
         mui("#pullrefresh").pullRefresh().endPulldownToRefresh(false);
+        mui("#pullrefresh").pullRefresh().refresh(true);
     },"json");
 
 }
