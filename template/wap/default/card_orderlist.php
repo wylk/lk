@@ -32,7 +32,7 @@
         .title{display: flex;padding: 0 5px;line-height: 35px;color: #999;}
         .title a{color:#999;width:25%;text-align: center; line-height: 40px; font-size:14px;}
 
-        .mui-scroll-wrapper,.mui-scroll,.mui-scrollbar{position: relative;background: white;}
+        .mui-scroll-wrapper,.mui-scroll,.mui-scrollbar{/*position: relative;*/background: white;}
         p{color:#333;margin-bottom: 0px;}
         .content hr{height: 1px; margin: 10px 0; border: 0; clear: both;}
     </style>
@@ -41,40 +41,17 @@
 
 <body>
     <div class="content">
-       <div class="title" style="background-color: #fff;">
-            <a href="card_buy.php" >买入</a>
-            <a href="card_sell.php">卖出</a>
-            <a href="card_order.php" >订单</a>
-            <a href="card_orderlist.php" id="action">订单记录</a>
-        </div>
         <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
             <div class="mui-scroll" >
+                <div class="title" style="background-color: #fff;">
+                    <a href="card_buy.php" >买入</a>
+                    <a href="card_sell.php">卖出</a>
+                    <a href="card_order.php" >订单</a>
+                    <a href="card_orderlist.php" id="action">订单记录</a>
+                </div>
                 <div id="order_content"></div>
             </div>
         </div>
-
-        <?php foreach ($orderList as $key => $value) { ?>
-        <div class="lk-container-flex lk-flex-wrap-w lk-bazaar-sell">
-            <div class="order-left">
-                <p>
-                <?php if($value['sell_id'] == $userId){ ?>
-                    <span class="s">卖出</span>
-                <?php }else{ ?>
-                    <span class="b">买入</span>
-                <?php } ?>
-                 单号：<?php echo $value['onumber'] ?></p>
-                <p><?php echo date("Y-m-d H:i:s",$value['create_time']) ?>下单</p>
-                <p>数量：<?php echo number_format($value['number'],2) ?></p>
-            </div>
-            <div class="order-right">
-                <p><a class="layui-bg-cyan" style="padding: 5px 7px" href="./card_orderDetail.php?id=<?php echo $value['id'] ?>">查看详情</a></p>
-                <p>价格：￥<?php echo number_format($value['price'],2) ?></p>
-                <p style="color: #2F4056">已完成</p>
-                <p>总金额：<span class="total">￥<?php echo number_format($value['number']*$value['price'],2) ?></span></p>
-            </div>
-        </div>
-        <hr>
-        <?php } ?>
 
     </div>
 <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
@@ -98,8 +75,17 @@ mui.init({
 });
 
 function pulldownRefresh(){
-    console.log("down");
-    mui("#pullrefresh").pullRefresh().endPulldownToRefresh(false);
+    var data = {type:"page",page:1};
+    mui.post("./card_orderlist.php",data,function(result){
+        if(result.error == 0 && result.data.length > 0){
+            var strHtml = "";
+            $.each(result.data,function(key,value){
+                strHtml += strFunc(value);
+            })
+            $("#order_content").html(strHtml);
+        }
+        mui("#pullrefresh").pullRefresh().endPulldownToRefresh(false);
+    },"json");
 
 }
 var page = 1;
@@ -143,6 +129,12 @@ function strFunc(data){
     str += '</div></div><hr>';
     return str; 
 }
+  (function($){
+        $(".mui-scroll-wrapper").scroll({
+            bounce:false,
+            indicators:false
+        })
+    })
 </script>
 </body>
 

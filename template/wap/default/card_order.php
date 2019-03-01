@@ -33,7 +33,7 @@
         .title{display: flex;padding: 0 5px;line-height: 35px;color: #999;}
         .title a{color:#999;width:25%;text-align: center; line-height: 40px; font-size:14px;}
 
-        .mui-scroll-wrapper,.mui-scroll,.mui-scrollbar{position: relative;background: white;}
+        .mui-scroll-wrapper,.mui-scroll,.mui-scrollbar{/*position: relative;*/background: white;}
         p{color:#333;margin-bottom: 0px;}
         .content hr{height: 1px; margin: 10px 0; border: 0; clear: both;}
     </style>
@@ -41,14 +41,14 @@
 
 <body>
 <div class="content">
-     <div class="title" style="background-color: #fff;">
-        <a href="card_buy.php" >买入</a>
-        <a href="card_sell.php">卖出</a>
-        <a href="card_order.php" id="action">订单</a>
-        <a href="card_orderlist.php">订单记录</a>
-    </div>
     <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
         <div class="mui-scroll" >
+             <div class="title" style="background-color: #fff;">
+                <a href="card_buy.php" >买入</a>
+                <a href="card_sell.php">卖出</a>
+                <a href="card_order.php" id="action">订单</a>
+                <a href="card_orderlist.php">订单记录</a>
+            </div>
             <div id="order_content"></div>
         </div>
     </div>
@@ -56,6 +56,9 @@
 </div>
    <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
 <script type="text/javascript">
+mui('body').on('tap','a',function(){
+    window.top.location.href=this.href;
+});
 mui.init({
     pullRefresh: {
         container: '#pullrefresh',
@@ -72,17 +75,24 @@ mui.init({
 });
 
 function pulldownRefresh(){
-    console.log("down");
-    mui("#pullrefresh").pullRefresh().endPulldownToRefresh(false);
+    var data = {type:"page",page:1};
+    mui.post("card_order.php",data,function(result){
+        if(result.error == 0 && result.data.length > 0){
+            var strHtml = '';
+            $.each(result.data,function(key,value){
+                strHtml += strFunc(value);
+            })
+            $("#order_content").html(strHtml);
+        }
+        mui("#pullrefresh").pullRefresh().endPulldownToRefresh(false);
+    },"json");
 
 }
 var page = 1;
 function pullupRefresh(){
     var strHtml = '';
-    var data = {type:"page",page:page};
+    var data = {type:"page",page:1};
     $.post("./card_order.php",data,function(result){
-        console.log(result);
-        console.log(result.data.length);
         if(result.error == 0 && result.data.length > 0){
             $.each(result.data,function(key,value){
                 strHtml += strFunc(value);
