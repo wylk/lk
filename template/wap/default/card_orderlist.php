@@ -79,6 +79,9 @@
     </div>
 <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
 <script type="text/javascript">
+  mui('body').on('tap','a',function(){
+    window.top.location.href=this.href;
+});
 mui.init({
     pullRefresh: {
         container: '#pullrefresh',
