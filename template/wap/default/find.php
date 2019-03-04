@@ -42,6 +42,10 @@
 		    		font-size: 21px;
 		    		margin-right: 10px;
 				}
+				.mui-table-view-cell>a:not(.mui-btn) {
+				    color: #333;
+				    font-size: 14px;
+				}
 		</style>
 
 	</head>
