@@ -1,6 +1,6 @@
 <style type="text/css">
 	.mui-bar-tab{
-		background: #fcfcfc;
+		background: #fff;
 	}
 	.mui-bar-tab .mui-tab-item.mui-active {
     	color: #67ccf4;
@@ -12,9 +12,6 @@
 	    padding-top: 10px;
 	    padding-bottom: 10px;
 	}
-	.mui-bar-tab .mui-tab-item {
-    	color: #adadad;
-	}
 </style>
 
 <nav class="mui-bar mui-bar-tab">
@@ -22,14 +19,15 @@
 		<span class="mui-icon iconfont icon-shouye1"></span>
 		<span class="mui-tab-label">首页</span>
 	</a>
-	<a class="mui-tab-item <?php if($php_self == 'card_package.php'){echo 'mui-active';}?>" href="./card_package.php">
-		<span class="mui-icon iconfont icon-qiabao3"></span>
-		<span class="mui-tab-label">卡包</span>
-	</a>
 	<a class="mui-tab-item <?php if($php_self == 'find.php'){echo 'mui-active';}?>" href="find.php">
 		<span class="mui-icon iconfont icon-faxian1"><span class="mui-badge">9</span></span>
 		<span class="mui-tab-label">发现</span>
 	</a>
+	<a class="mui-tab-item <?php if($php_self == 'card_package.php'){echo 'mui-active';}?>" href="./card_package.php">
+		<span class="mui-icon iconfont icon-qiabao3"></span>
+		<span class="mui-tab-label">卡包</span>
+	</a>
+
 	<a class="mui-tab-item <?php if($php_self == 'my.php'){echo 'mui-active';}?>" href="./my.php">
 		<span class="mui-icon iconfont icon-wode"></span>
 		<span class="mui-tab-label">我的</span>

@@ -1,4 +1,4 @@
-<?php if(!defined('LEKA_PATH')) exit('deny access!');?>
+t<?php if(!defined('LEKA_PATH')) exit('deny access!');?>
 <!DOCTYPE html>
 <html lang="en">
 
