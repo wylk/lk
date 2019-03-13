@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
         <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/iconfont.css?r=<?php echo time();?>">
         <style type="text/css">
+          * { touch-action: pan-y; } 
         body, html,#allmap {
             width: 100%;height: 100%;overflow: hidden;margin:0px;padding:0px;font-family:"微软雅黑";
         }
@@ -16,13 +17,32 @@
           overflow:auto;
           background: #fcfcfc;
         }
-        .lk-titles a{font-size: 15px;}
-        .lk-ti{
-          /*width: 25%;*/
-          width: 62px;
-          line-height: 40px;
-          text-align: center;
-          color: #999;
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+            color: #67ccf4;
+            border-bottom: 2px solid #67ccf4;
+            background: 0 0;
+        }
+        .mui-segmented-control.mui-scroll-wrapper .mui-control-item {  
+            padding: 0 8px;
+            color: #999;
+        }
+        .mui-table-view-cell {
+            position: relative;
+            overflow: hidden;
+            padding: 5px 15px;
+            -webkit-touch-callout: none;
+        }
+
+        .icon-sousuo3,.mui-slider-indicator.mui-segmented-control {
+                background-color: #ffffff;
+                /* background-color: rgba(2, 3, 5, 0.382); */
+        }
+        .icon-sousuo3:before {
+            position: relative;
+            top: 2px;
+            margin-left: 10px;
+            content: "\e68d";
+            color: #999;
         }
         .action{
           color: #29aee7; 
@@ -33,59 +53,51 @@
             text-align: center;
             width: 95%;
         }
+
         .store{
             margin-top:5px;
             display: flex;
             align-items:center;
-            height: 80px;
-           /*  background-color: #fff; */
-            background-image: url('../template/wap/default/images/index-card3.png?r=1');
-            background-repeat:no-repeat;
-            background-size:100% 100%;
-            -moz-background-size:100% 100%;
-            border-radius: 5px;
+            height: 70px;
             color:#999;
-        }
-        .img{
-            width: 20%;
-            line-height: 75px;
-            margin-left: 10px;
         }
         .price{
            width: 46.2%;
-           height: 70px;
            font-size: 13px;
            /* border-right: 1px dashed #999; */
         }
         .price div{
-            line-height: 36px;
+            line-height: 25px;
             margin-left: 10px;
             text-align: left;
 
         }
         .font18{
-            font-size: 18px;
+            font-size: 16px;
         }
         .font20{
             font-size: 18px;
         }
         .num{
-            height:80px;
-            width: 30%;
+            height:50px;
+            width: 40%;
+            text-align: right;
         }
         .num div{
-            line-height: 40px;
             font-size: 13px;
         }
         .black{
                 color: rgba(76, 76, 73, 1);
         }
-        .imgs{
-            height: 65px;
-            width: 65px;
-            margin: auto 0;
-            border-radius:5px;
+        .red{
+            color: red;
         }
+        .mui-slider .mui-slider-group .mui-slider-item img {
+            height: 50px;
+            width: 70px;
+            border-radius:3px;
+        }
+        
         .num a{
           border-radius: 5px;
         }
@@ -93,19 +105,8 @@
             color: #95ad6e;
         }
         .map{
-            height: 100%;
+            height: 160px;
             width: 100%;
-        }
-
-        #up-map-div{
-            width:100%;
-            height:560px;
-            top:330px;
-            left:0px;
-            position:absolute;
-            z-index:1;
-            background-color:rgba(0, 0, 02, 0.6);
-            display: none;
         }
         .wind_f{
           overflow:scroll;
@@ -147,8 +148,8 @@
 
         #resultMapInfo {
           position: absolute;
-          left: 0;
-          top: 30px;
+          left: 0px;
+          top: 0px;
           z-index: 1;
         }
         #resultMapInfo p{
@@ -164,85 +165,89 @@
             display: flex;
             justify-content:center;
         }
+
+        .mui-scroll {
+            position: absolute;
+            z-index: 223;
+            width: 100%;
+        }
+
+        .mui-pull-bottom-wrapper {
+            text-align: center;
+        }
         </style>
-        <script type="text/javascript">
-            var plugin = '<?php echo isset($_GET['id'])?$_GET['id']:'';?>';
-        </script>
+        
     </head>
     <body>
-        <div class="lk-titles">
-            <a href="index.php"><div class="lk-ti <?php echo  empty($_GET['id'])?'action':''; ?>" id="stree">全部</div></a>                       
-            <?php foreach ($res as $k => $v) {?>
-                <a href="index.php?id=<?php echo $v['id'];?>"><div class="lk-ti <?php echo ($_GET['id'] == $v['id'])?'action':'';?>" id="stree"><?php echo $v['name'] ?></div></a>
-            <?php } ?>            
-        </div>
-        <div id="resultMapInfo"></div>
-        <div class="map" id="map"></div>
-    
-        <div id="up-map-div">
-            <div id="touch" class="touch">  
-                <!-- <img src="../template/wap/default/images/icon_map.png?r=12" style="height:33px;margin-top:-5px;border-r:"> -->
-            </div>     
-            <div class="wind_f" id="work">
-              <div id="pullrefreshs" style="touch-action: none;overflow: hidden;height: 300px;">
+       <div class="mui-content" >
+            <div id="slider" class="mui-slider mui-fullscreen">
+                <div style="display: flex;justify-content:space-between;margin-bottom: 2px">
+                    <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="width: 90%">
+                        <div class="mui-scroll">
+                            <a class="mui-control-item" href="#item1mobile">
+                           关注
+                        </a>
+                        <a class="mui-control-item mui-active" href="#item2mobile">
+                            推荐
+                        </a>
+                        <?php foreach ($res as $k => $v) {?>
+                           
+                            <a class="mui-control-item" href="#item<?php echo ($k+3);?>mobile">
+                               <?php echo $v['name'] ?>
+                            </a>
+                        <?php } ?> 
+
+                        </div>
+                    </div>
+                    <div style="width: 10%;line-height: 35px;" class="iconfont icon-sousuo3" id="search"></div>
+                </div>
                
-                      <div class="lk-content" style="padding-top:0px ">
-
-                          <div class="stores" >
-
-                          </div>
-
-                      </div>
-                 
-              </div>
+                <div class="mui-slider-group"  id="mui-scroll-wrapper">
+                    <div id="item1mobile" class="mui-slider-item mui-control-content ">
+                        <div id="scroll1" class="mui-scroll-wrapper">
+                             
+                            <div class="mui-scroll">
+                                <ul class="mui-table-view" id="ul0">
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="item2mobile" class="mui-slider-item mui-control-content mui-active">
+                        <div class="mui-scroll-wrapper" >
+                           <!--  <div id="resultMapInfo"></div>
+                           <div class="map" id="map"></div> -->
+                            <div class="mui-scroll" >
+                                <ul class="mui-table-view"  id="mui-ac">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <?php foreach ($res as $k => $v) {?>
+                    <div id="item<?=($k+3);?>mobile" class="mui-slider-item mui-control-content">
+                        <div class="mui-scroll-wrapper">
+                            <div class="mui-scroll">
+                                <ul class="mui-table-view" id="ul<?=($k+3);?>">
+                                     
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
             </div>
         </div>
-
+        <input type="hidden" name="" id="lng" value="116.40717">
+        <input type="hidden" name="" id="lat" value="39.90469">
         <?php include display('public_menu');?>
     </body>
 </html>
 <script src="https://code.jquery.com/jquery-1.8.0.min.js" type="text/javascript"></script>
-<!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
-<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp"></script> -->
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.5&key=0bda08c2afb77bff30115186de665721&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
 <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
+ <script src="<?php echo STATIC_URL;?>mui/js/mui.pullToRefresh.js"></script>
+<script src="<?php echo STATIC_URL;?>mui/js/mui.pullToRefresh.material.js"></script>
 <script type="text/javascript" src="<?php echo TPL_URL;?>js/index.js?r=<?=time();?>"></script>
-<script>
-var startX,//触摸时的坐标
-    startY,
-     x, //滑动的距离
-     y,
-     aboveY=330; //设一个全局变量记录上一次内部块滑动的位置
 
-var inner=document.getElementById("up-map-div");
 
-function touchSatrt(e){//触摸
-    e.preventDefault();
-    var touch=e.touches[0];
-    startY = touch.pageY;   //刚触摸时的坐标
-}
-function touchMove(e){//滑动
-     e.preventDefault();
-     var  touch = e.touches[0];
-     y = touch.pageY - startY;//滑动的距离
-    //inner.style.webkitTransform = 'translate(' + 0+ 'px, ' + y + 'px)';  //也可以用css3的方式
-    //console.log(inner.style.top);
-    //console.log(aboveY+y);
-    var hei = document.documentElement.clientHeight;
-    document.getElementById("work").style.height = (hei-(aboveY+y+80-20))+'px';
-    document.getElementById("pullrefreshs").style.height = (hei-(aboveY+y+80-21))+'px';
-    document.getElementById("up-map-div").style.height = (hei-(aboveY+y+80-30))+'px';
-    if((aboveY+y) < 40){
-        inner.style.top="40px"; //这一句中的aboveY是inner上次滑动后的位置
-    } else{
-        inner.style.top=aboveY+y+"px"; //这一句中的aboveY是inner上次滑动后的位置
-    }
-}
-function touchEnd(e){//手指离开屏幕
-  e.preventDefault();
-  aboveY=parseInt(inner.style.top);//touch结束后记录内部滑块滑动的位置 在全局变量中体现 一定要用parseInt()将其转化为整数字;
-}//
- document.getElementById("touch").addEventListener('touchstart', touchSatrt,false);
- document.getElementById("touch").addEventListener('touchmove', touchMove,false);
- document.getElementById("touch").addEventListener('touchend', touchEnd,false);
-</script>
+   

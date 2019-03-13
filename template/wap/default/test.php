@@ -83,8 +83,8 @@
                 width: 40px;
             }
             .icon-sousuo3,.mui-slider-indicator.mui-segmented-control {
-                /*background-color: #F2F2F2;*/
-                background-color: rgba(2, 3, 5, 0.382);
+                background-color: #ffffff;
+                /* background-color: rgba(2, 3, 5, 0.382); */
             }
             
 
@@ -96,7 +96,7 @@
 
             .mui-segmented-control.mui-scroll-wrapper .mui-control-item {  
                 padding: 0 12px;
-                color: #f1f1f1;
+                color: #999;
             }
 
             .padding-0{
@@ -108,13 +108,13 @@
                 top: 2px;
                 margin-left: 5px;
                 content: "\e68d";
-                color: #fdfdfd;
+                color: #999;
             }
 
             .img-view{
                 line-height: 0px;
-                position: absolute;
-                z-index: 20;
+                /* position: absolute;
+                z-index: 20; */
                 background-color: #f0f0f0;
                 margin: 3px 3px;
                 border-radius: 8px;
@@ -151,20 +151,30 @@
                 padding:0px 10px;
             }
 
+            .col-r1{
+                color: #e62323;
+            }
+            .font-24{
+                font-size: 21px;
+            }
+            .col-f1{
+                color: #f1efef;
+            }
+
             .flex{
                 display: flex;
             }
 
             .ju-sb{
-               justify-content:space-between; 
+                justify-content:space-between; 
             }
             
             .ju-sa{
-               justify-content:space-around; 
+                justify-content:space-around; 
             }
 
             .ai-fe{
-                 align-items: flex-end;
+                align-items: flex-end;
             }
 
             .lk-ellipsis {
@@ -173,115 +183,13 @@
                 text-overflow: ellipsis;
             }
 
-            
-            /* 第一个模块 */
-            .f_box{
-                
-                display: flex;
-                justify-content:space-around;
-                padding:21px 0px;
-
-            }
-
-           .f_box div{
-                height: 68px;
-                width: 110px;
-                border-radius: 2px;
-                background-size:100% 100%;  
-            }
-            .f_box .f-card-1{
-                background-image: url(../static/images/00.png);
-                box-shadow: #666 0px 0px 8px;
-            }
-
-            .f_box .f-card-2{
-                background-image: url(../static/images/00.png);
-                box-shadow: #666 0px 0px 8px;
-            }
-
-            .f_box .f-card-3{
-                background-image: url(../static/images/00.png);
-                box-shadow: #666 0px 0px 8px;
-            }
-
-            .f_box div .f-card-text{
-                width: 20%;
-                line-height: 15px;
-                margin: 12px 0px 0px 19px;
-
-            }
-
-
-             
-
-             /* 第二模块 */
-            .t-title{
-                line-height: 42px;
-            }
-            .t-img{
-                height: 68px;
-                display: flex;
-                justify-content:space-around;
-            }
-            .t-store{
-                height: 54px;
-                padding: 8px 10px;
-            }
-
-            .t-img div{
-                height: 68px;
-                width: 110px;
-                border-radius: 2px;
-            }
-
-            
-            .t-img .t-card{
-                background-image: url(../static/images/5.png?r=22);
-            }
-            .t-store div{
-                height: 100%;
-            }
-            .t-store .t-srore-info{
-                display: flex;
-                justify-content:space-between;
-            }
-            .t-store .t-srore-info div{
-                padding: 0px;
-                height: 100%;
-                width: 12%;
-            }
-            .t-store .t-srore-info div:nth-child(3){
-                text-align: right;
-            }
-            .mui-icon-arrowright:before {
-                font-size: 20px;
-            }
-            .t-store-info-tag{
-                flex-grow:1;
-                line-height: 35px;
-            }
-
-            .t-card .t-card-val{
-                width: 61.8%;
-                line-height: 68px;
-                text-align: center;
-                font-size: 22px;
-                color: red;
-                text-align: right;
-                padding-right:5px;
-
-            }
-            .t-card .t-total-val{
-                width: 38.2%;
-                padding-left: 2px;
-
-            }
-            .t-card .t-total-val span{
-                text-align: center;
-                width: 100%;
-                color: #fff;
-                font-size: 12px;
-                margin-bottom: 2px;
+            .mui-table-view {
+                position: relative;
+                margin-top: 0;
+                margin-bottom: 0;
+                padding-left: 0;
+                list-style: none;
+                background-color: #ececec;
             }
 
             .mui-table-view-cell {
@@ -294,12 +202,110 @@
             .t-store .t-srore-info div .t-store-btn{
                 width: 70%;
             }
+
+            .bo{
+                border: 1px solid red;
+            }
+
+            .mui-table-view-cell:after {    
+                height: 0px; 
+            }
+            .card-box{
+                margin:5px 10px 10px;
+                height: 144px;
+                border-radius: 8px;
+                /* border: 1px solid #dad5d5; */
+                background-color: #fff;
+                box-shadow: #999 0px 0px 5px;
+            }
+            .card-top{
+                height: 38.2%;
+                border-radius: 8px 8px 0px 0px; 
+                background-image: url(../static/images/top.jpg?r=332);
+                background-size:100% 100%;
+                display: flex;
+                align-items:flex-end;
+                padding: 10px 0px;
+            }
+            .c-logo{
+                width: 30%;
+                height: 100%;
+                display: flex;
+                align-items:center;
+                justify-content:center;
+
+            }
+            .mui-slider .mui-slider-group .mui-slider-item .c-logo img{
+                width: 60px;
+                height: 50px;
+                border-radius: 8px;
+            }
+            
+            .c-title{
+                 width: 70%;
+                 height: 100%;
+            }
+            .c-title p{
+                color: #fff;
+                font-size: 16px;
+                margin: 8px 0px 6px 0px;
+            }
+            .card-b{
+                 height: 61.8%;
+                 padding: 7px 3px;
+                 display: flex;
+                 justify-content: space-around;
+            }
+
+            .card-b-1 ,  .card-b-2{
+                width: 48%;
+                height: 100%;
+                border-radius: 5px;
+            }
+
+            .card-info {
+                margin-top: 30px;
+                padding-left: 5px;
+                width: 50%;
+                float: right;
+                line-height: 24px; 
+            }
+
+            .card-bc-img{
+                background-image: url(../static/images/0.png?r=35); 
+                background-size: 100% 100%;
+                width: 100%;
+                height: 100%;
+                border-radius: 5px;
+            }
+/* 
+<div style="display: flex;justify-content:space-between;margin-bottom: 2px">
+            <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="width: 85%">
+                <div class="mui-scroll">
+                    <a class="mui-control-item" href="#item1mobile">
+                       关注
+                    </a>
+                    <a class="mui-control-item mui-active" href="#item2mobile">
+                        推荐
+                    </a>
+                    <?php foreach ($res as $k => $v) {?>
+                       
+                        <a class="mui-control-item" href="#item3mobile">
+                           <?php echo $v['name'] ?>
+                        </a>
+                    <?php } ?> 
+                </div>
+            </div>
+            <div style="width: 15%;line-height: 35px;" class="iconfont icon-sousuo3"></div>
+        </div> */
+
+
     </style>
 </head>
 <body>
-    <div class="mui-content">
+    <div class="mui-content" >
         <div id="slider" class="mui-slider mui-fullscreen">
-            <div style="display: flex;justify-content:space-between;position: absolute;z-index: 22">
+            <div style="display: flex;justify-content:space-between;margin-bottom: 2px">
                 <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="width: 90%">
                     <div class="mui-scroll">
                         <a class="mui-control-item" href="#item1mobile">
@@ -325,10 +331,6 @@
                 </div>
                 <div style="width: 10%;line-height: 35px;" class="iconfont icon-sousuo3"></div>
             </div>
-            <div class="img-view box-shadow-13" id="videobox" >
-                <img id="vodeobox-img" src="../static/images/index/0.jpg?r=2" data-id="0">
-            </div>
-            <div id="content-box" style="background-color: #ffffff;"></div>
             <div class="mui-slider-group"  id="mui-scroll-wrapper">
                 <div id="item1mobile" class="mui-slider-item mui-control-content ">
                     <div id="scroll1" class="mui-scroll-wrapper">
@@ -342,42 +344,44 @@
                     </div>
                 </div>
                 <div id="item2mobile" class="mui-slider-item mui-control-content mui-active">
-                    <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll-wrapper" >
                         <div class="mui-scroll">
-                            <ul class="mui-table-view">
-                                <li class="mui-table-view-cell padding-0">
-                                   <div class="f_box font-6" data-id="1">
-                                       <div class="f-card f-card-1 box-shadow-8"> <div class="f-card-text">好评店</div></div>
-                                       <div class="f-card f-card-2 box-shadow-8"><div class="f-card-text">零花钱</div></div>
-                                       <div class="f-card f-card-3 box-shadow-8"><div class="f-card-text">明星店</div></div>
-                                   </div> 
-                                </li>
-                               <!--<li class="mui-table-view-cell padding-0">
-                                   <div class="t-box">
-                                       <div class="t-title font-3 padding-10 lk-ellipsis">用会员卡购买拉面可省3元</div>
-                                       <div class="t-img">
-                                           <div class="t-card flex">
-                                               <div class="t-card-val lk-ellipsis"> 500</div>
-                                               <div class="t-total-val flex  ai-fe"> <span>¥400</span></div>
-                                           </div>
-                                           <div class="t-card flex">
-                                                <div class="t-card-val lk-ellipsis"> 500</div>
-                                               <div class="t-total-val flex  ai-fe"> <span>¥400</span></div>
-                                           </div>
-                                           <div class="t-card flex">
-                                                <div class="t-card-val lk-ellipsis"> 500</div>
-                                               <div class="t-total-val flex  ai-fe"> <span>¥400</span></div>
-                                           </div>
-                                       </div>
-                                       <div class="t-store">
-                                           <div class="t-srore-info">
-                                               <div ><img class="t-store-info-logo" src="../static/images/21.jpg" style="width: 35px;height: 35px ;border-radius: 50%;"></div>
-                                               <div class="t-store-info-tag flex"><div class="font-3 t-store-name lk-ellipsis">老王咖啡fads申达股份电饭锅</div>  <div class="t-store-btn">   <a href="" class="font-9">关注</a> | <a href="" class="font-9">购物</a> | <span href="" class="font-6">10km</span></div></div>
-                                               <div > <span class="mui-icon mui-icon-arrowright"></span></div>
-                                           </div>
-                                       </div>
-                                   </div>
-                               </li> --> 
+                            <ul class="mui-table-view" >
+                                <?php for($i=1;$i<4;++$i){?>
+                               <li class="mui-table-view-cell padding-0 ">
+                                    <div class="card-box">
+                                        <div class="card-top">
+                                            <div class="c-logo">
+                                                <img src="../static/images/8.jpg">
+                                            </div>
+                                            <div class="c-title">
+                                                <p >老王咖啡</p>
+                                                <span style="color: #d2c8c8">辉煌国际4号楼 - 21km</span>
+                                            </div>
+                                        </div> 
+                                        <div class="card-b " >
+                                            <div class="card-b-1" style="background-image: url(../static/images/index/0.jpg?r=1); background-size: 100% 100%;">
+                                                <div class="card-bc-img">
+                                                    <div class="card-info">
+                                                        <span class="col-r1 font-24">1000</span ><span class="col-r1" >元</span><br>
+                                                        <span class="col-f1">&nbsp;&nbsp;抵现券</span><br>
+                                                        <span class="col-f1">&nbsp;&nbsp;8折</span>
+                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-b-1" style="background-image: url(../static/images/index/1.jpg?r=1); background-size: 100% 100%;">
+                                                <div class="card-bc-img">
+                                                    <div class="card-info">
+                                                        <span class="col-r1 font-24">1000</span ><span class="col-r1" >元</span><br>
+                                                        <span class="col-f1">&nbsp;&nbsp;抵现券</span><br>
+                                                        <span class="col-f1">&nbsp;&nbsp;8折</span>
+                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </li> 
+                               <?php } ?>
                             </ul>
                         </div>
                     </div>
@@ -435,49 +439,15 @@
     <script src="<?php echo STATIC_URL;?>mui/js/mui.pullToRefresh.js"></script>
     <script src="<?php echo STATIC_URL;?>mui/js/mui.pullToRefresh.material.js"></script>
     <script>
-
-        var _h = window.innerHeight;
-        var _w = window.innerWidth;
-        var f_out = 1;
-        var f_in = 0;
-        var videobox = document.getElementById('videobox');
-        var content_box = document.getElementById('content-box');
-        var hjfgx_height = (_h/2.618)-42;
-        videobox.style.height = hjfgx_height + 'px';
-        videobox.style.width = (_w-6)+'px';
-        content_box.style.height = (hjfgx_height+2) + 'px';
-
-        $(document).ready(function(){ 
-            $(window).scroll(function(){
-                var s = $(window).scrollTop();
-                $('.mui-control-item').each(function(index, el) {
-                    var cla = $(this).attr("class");
-                    if(cla.indexOf('mui-active') != -1){
-                        $('#item'+(index + 1)+'mobile li').each(function(index, el) {
-                            var self_top = $(this).offset().top;
-                            console.log(self_top);
-                            console.log(hjfgx_height);
-                            if( self_top < (hjfgx_height+3) &&  self_top > (hjfgx_height-20)){
-                                var id = $(this).find('div').data('id');
-                                var imgobj = $('#vodeobox-img');
-                                var img_data_id = imgobj.data('id');
-                                
-                                (img_data_id != index) && f_out && imgobj.fadeOut(0,function () {
-                                    imgobj.attr('src','../static/images/index/'+ index +'.jpg?r=2');
-                                    imgobj.data('id',index);
-                                    imgobj.fadeIn(0.382,function () {
-                                        f_out = 1;
-                                    }); 
-                                }) 
-                            }
-                        });
-                    }
-                });
-               
-            });
+        
+        $(function(){
+            var card_box = $('.card-box');
+            var jiao = $('.jiao');
+            card_box.height((card_box.width()*0.618)+'px');
+            jiao.css('left',(card_box.width()*0.382)+'px');
         })
-        
-        
+
+ 
 
         mui.init();
         (function($) {
@@ -503,7 +473,7 @@
                             }
                         },*/
                         up: {
-                            auto:true,
+                            //auto:true,
                             callback: function() {
                                 var self = this;
                                 index_action = index;
@@ -524,7 +494,7 @@
                         li = document.createElement('li');
                         li.className = 'mui-table-view-cell';
                         /*li.innerHTML = '第' + (index + 1) + '个选项卡子项-' + (length + (reverse ? (count - i) : (i + 1)));*/
-                        li.innerHTML = '<div class="t-box" data-id="'+ (length + (reverse ? (count - i) : (i + 1))) +'"><div class="t-title font-3 padding-10 lk-ellipsis">用会员卡购买拉面可省3元</div><div class="t-img"><div class="t-card flex box-shadow-8"><div class="t-card-val lk-ellipsis">500</div><div class="t-total-val flex ai-fe"><span>¥400</span></div></div><div class="t-card flex box-shadow-8"><div class="t-card-val lk-ellipsis">500</div><div class="t-total-val flex ai-fe"><span>¥400</span></div></div><div class="t-card flex box-shadow-8"><div class="t-card-val lk-ellipsis">500</div><div class="t-total-val flex ai-fe"><span>¥400</span></div></div></div><div class="t-store"><div class="t-srore-info"><div><img class="t-store-info-logo" src="../static/images/8.jpg" style="width:35px;height:35px;border-radius:50%"></div><div class="t-store-info-tag flex"><div class="font-3 t-store-name lk-ellipsis">老王咖啡fads申达股份电饭锅</div><div class="t-store-btn"><a href="" class="font-9">关注</a> | <a href="" class="font-9">购物</a> | <span href="" class="font-6">10km</span></div></div><div><span class="mui-icon mui-icon-more"></span></div></div></div></div>';
+                        li.innerHTML = 'sdgdr';
                         fragment.appendChild(li);
                     }
                     return fragment;

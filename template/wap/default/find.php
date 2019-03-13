@@ -44,7 +44,7 @@
 				}
 				.mui-table-view-cell>a:not(.mui-btn) {
 				    color: #333;
-				    font-size: 14px;
+				    font-size: 16px;
 				}
 		</style>
 
@@ -61,7 +61,7 @@
 			</ul>
 			<ul class="mui-table-view" style="margin-top: 20px;">
 				<li class="mui-table-view-cell">
-					<a id="about" class="iconfont icon-icontuan mui-navigate-right">
+					<a href="./group_buying.php" id="about" class="iconfont icon-icontuan mui-navigate-right">
 						团购
 					</a>
 				</li>
