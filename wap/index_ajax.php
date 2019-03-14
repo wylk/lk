@@ -21,6 +21,7 @@ if(IS_POST){
 }
 
 function index($data){
+
         if($data['plugin'] > 1){
            $where = "and b.s_id=".($data['plugin']-1);
         }else{
@@ -43,17 +44,40 @@ function index($data){
             $str = '';
             $mapinfo = array();
             foreach ($store_package as $k => $v) {
+
                 if($v['juli']){
                     /*$mapinfo[$k]['lng'] = $v['lng'];
                     $mapinfo[$k]['lat'] = $v['lat'];
                     $mapinfo[$k]['enterprise'] = $v['enterprise'];*/
-                    if($v['juli']>1000){
+                    if($v['juli'] > 1000){
                         $juli = round(($v['juli']/1000),2);
                         $m = 'km';
                     }else{
                         $juli = ($v['juli']/1);
                         $m = 'm';
                     }
+                    $whe = 'card_id="'.$v['card_id'].'" and status=0 and frozen<num';
+                    $max = D('Card_transaction')->where($whe)->max('price');
+
+                    $min = D('Card_transaction')->where($whe)->min('price');
+                    $z = '折';
+                    $color = 'red';
+                    
+                    if(empty($max)){
+                        $color = 'black_9';
+                        $max_min = "售完";
+                        $z = '';
+                    }else if($max == $min){
+                        $max_min = round($max *10,1);
+                    }else{
+                        $max_min = round($min*10,1).' - '.round($max*10,1);
+                    }
+
+                   /*if($v['card_id'] == "261c3ac71c5ea928a9aedc7a9e48bbd3"){
+                        dump($min);die;
+                    }*/
+
+
                     $str .=  <<<EOM
                     <li class="mui-table-view-cell">
                     <a  href="./home.php?card_id={$v['card_id']}&plugin=offset&shoreUid={$v['uid']}" >
@@ -62,11 +86,11 @@ function index($data){
         	                <img src="{$v['logo']}" class="imgs"/>
         	            </div >
         	            <div class="price">
-        	            	<div class="font18 black">{$v['enterprise']}</div>
-        	            	<div><span class="red">6-9.9</span>&nbsp;折卡券</div>
+        	            	<div class="font18 black_3">{$v['enterprise']}</div>
+        	            	<div><span class="{$color}">{$max_min}</span>&nbsp;{$z}</div>
         	            </div>
         	            <div class="num">
-        	            	<div ><span class="black">{$juli}</span>{$m}</div>
+        	            	<div ><span class="">{$juli}</span>{$m}</div>
         	            </div>
         	         </div></a>
                      <li>

@@ -8,7 +8,7 @@
         <style type="text/css">
           * { touch-action: pan-y; } 
         body, html,#allmap {
-            width: 100%;height: 100%;overflow: hidden;margin:0px;padding:0px;font-family:"微软雅黑";
+            width: 100%;height: 100%;overflow: hidden;margin:0px;padding:0px;
         }
         .lk-titles{
           height: 42px;
@@ -24,7 +24,7 @@
         }
         .mui-segmented-control.mui-scroll-wrapper .mui-control-item {  
             padding: 0 8px;
-            color: #999;
+            color: #888;
         }
         .mui-table-view-cell {
             position: relative;
@@ -32,17 +32,29 @@
             padding: 5px 15px;
             -webkit-touch-callout: none;
         }
+        .mui-toast-container {
+            line-height: 17px;
+            position: fixed;
+            z-index: 9999;
+            bottom: 50%;
+            left: 50%;
+            -webkit-transition: opacity .3s;
+            transition: opacity .3s;
+            -webkit-transform: translate(-50%,0);
+            transform: translate(-50%,0);
+            opacity: 0
+        }
 
         .icon-sousuo3,.mui-slider-indicator.mui-segmented-control {
                 background-color: #ffffff;
                 /* background-color: rgba(2, 3, 5, 0.382); */
         }
-        .icon-sousuo3:before {
+        .mui-icon-search:before {
+            content: '\e466';
+            font-size: 20px;
             position: relative;
-            top: 2px;
-            margin-left: 10px;
-            content: "\e68d";
-            color: #999;
+            top: 3px;
+            left: 6px;
         }
         .action{
           color: #29aee7; 
@@ -55,7 +67,6 @@
         }
 
         .store{
-            margin-top:5px;
             display: flex;
             align-items:center;
             height: 70px;
@@ -86,15 +97,21 @@
         .num div{
             font-size: 13px;
         }
-        .black{
-                color: rgba(76, 76, 73, 1);
+        .black_3{
+            color:#333;
+        }
+        .black_9{
+            color:#888;
+        }
+        .black_6{
+            color:#555;
         }
         .red{
             color: red;
         }
         .mui-slider .mui-slider-group .mui-slider-item img {
             height: 50px;
-            width: 70px;
+            width: 50px;
             border-radius:3px;
         }
         
@@ -199,7 +216,7 @@
 
                         </div>
                     </div>
-                    <div style="width: 10%;line-height: 35px;" class="iconfont icon-sousuo3" id="search"></div>
+                    <div style="width: 10%;line-height: 35px;background-color: #ffffff;" class="mui-icon mui-icon-search" id="search"></div>
                 </div>
                
                 <div class="mui-slider-group"  id="mui-scroll-wrapper">

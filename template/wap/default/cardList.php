@@ -25,6 +25,10 @@
     .color-black3{
         color: #333;
     }
+
+    .cl-a{
+        color: #d68c24;
+    }
     .mar-top{
         margin-top: 2px;
     }
@@ -39,22 +43,31 @@
         box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
 
     }
-    .card-title{
+    .card-title {
         height: 100px;
-        margin: 10px 20px;
-        background-image: url('../template/wap/default/images/card2.jpg?r=3322');
-        background-repeat:no-repeat;
-        background-size:100% 100%;
-        -moz-background-size:100% 100%;
-        border-radius: 5px;
-        padding:10px;
+        margin: 0px 0px 19px 0px;
+        background: #c79a59;
+        background: linear-gradient(to top right, #b98e50 0%, #cab495 25%, #cc8f3a 100%);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        -moz-background-size: 100% 100%;
+        padding: 10px 30px;
     }
-    .card-name{
+    .card-name {
         text-align: center;
-        margin-top: 30px;
-        font-size: 20px;
-        color: #333;
-        font-weight:bold;
+        margin-top: 15px;
+        font-size: 16px;
+        color: #fff;
+        font-weight: bold;
+    }
+    .card-id {
+        overflow: hidden;
+        color: #fff;
+        text-align: center;
+        background: #a7814d;
+        padding: 5px 0px;
+        margin-top: 10px;
+        border-radius: 5px;
     }
     .mui-card-content-inne{
         display: flex;
@@ -100,48 +113,50 @@
         color: #29aee7;
         font-size: 16px;
     }
+
+    .mui-table-view-cell:after {
+        right: 15px;
+    }
   </style>
 </head>
 <body>
    <div class="content" style="padding-top:1px;">
         <div class="card">
             <div class="mui-card-content-inner card-title">
-                <div class="card-id" style="overflow: hidden;color:#333">
-                    <?=$card['card_id'];?>
-                </div>
                 <div class="card-name">
                     <?=$card['val'];?>
                 </div>
+                <div class="card-id">
+                    <?=$card['card_id'];?>
+                </div>
                 <div></div>
             </div>
-            <!--  <a href="transactionRecord.php?cardId=<?php echo $value['card_id']; ?>">全部交易</a>
-                        <a href="cardRecord.php?cardId=<?php echo $value['card_id'] ?>" class="lk-row-btn">持卡记录</a> -->
             <div class="mui-card-content-inne">
                 <div class="card_info">
-                    <div class="color-black3"><?=$sum['val']?></div>
+                    <div class="color-black3 cl-a"><?=$sum['val']?></div>
                     <div class="mar-top">发布总数</div>
                 </div>
                 <div class="card_info">
-                    <div class="color-black3"><?=$count_fand;?></div>
+                    <div class="color-black3 cl-a"><?=$count_fand;?></div>
                     <div class="mar-top"><a href="cardRecord.php?cardId=<?php echo $user_card['card_id'] ?>">会员</a></div>
                 </div>
                 <div class="card_info">
-                    <div class="color-black3"><?=$count_record;?></div>
+                    <div class="color-black3 cl-a"><?=$count_record;?></div>
                     <div class="mar-top"><a href="transactionRecord.php?cardId=<?php echo $user_card['card_id']; ?>">转账记录</a></div>
                 </div>
             </div>
         </div>
 
-         <div class="card" style="height: 40%">
-            <div class="mui-card-header data-line-header">交易数据</div>
-            <div class="data-line-content" id="lineChart">
-            </div>
-        </div>
+       <!--   <div class="card" style="height: 40%">
+          <div class="mui-card-header data-line-header">交易数据</div>
+          <div class="data-line-content" id="lineChart">
+          </div>
+               </div> -->
 
         <div class="card">
             <div class="user-card-infos">
-                <div class="user-card-info">可用：<span style="color: #333"><?= round(($user_card['num']),2);?></span></div>
-                <div class="user-card-info" style="">锁定：<?= round($user_card['frozen'],2);?></div>
+                <div class="user-card-info">可用：<span class="cl-a"><?= round(($user_card['num']),2);?></span></div>
+                <div class="user-card-info ">锁定：<span class="cl-a"><?= round($user_card['frozen'],2);?></span></div>
                 <div class="user-card-info"><a href="./home.php?card_id=<?=$user_card['card_id'];?>&plugin=offset&shoreUid=<?=$user_card['uid'];?>"><span class="user_card_info_span">+</span> &nbsp;店铺</a></div>
             </div>
 
@@ -153,6 +168,17 @@
                 <div class="user-card-edit"><a href="recordBooks.php?cardId=<?=$user_card['card_id']?>">账单</a></div>
                 <div class="user-card-edit" style="border:0;"><a href="transaction.php?cardId=<?=$user_card['card_id']?>">交易</a></div>
             </div>
+        </div>
+
+        <div class="card">
+            <ul class="mui-table-view mui-table-view-chevron">
+                <li class="mui-table-view-cell">
+                    <a href="" class="mui-navigate-right">拼卡</a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a href="" class="mui-navigate-right">数据统计</a>
+                </li>
+            </ul>
         </div>
 
     </div>

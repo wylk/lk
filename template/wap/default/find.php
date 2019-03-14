@@ -54,7 +54,7 @@
 		<div class="mui-content" >
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell ">
-					<a id="about" class="iconfont icon-pengyouquan mui-navigate-right">
+					<a href="./find_circle.php" id="about" class="iconfont icon-pengyouquan mui-navigate-right"><span class="mui-badge" style="background-color: red;color: #fff;">2</span>
 						卡圈
 					</a>
 				</li>

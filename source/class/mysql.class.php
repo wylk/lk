@@ -289,6 +289,14 @@ class mysql{
 		$row = $this->fetch_array($this->dbselect());
 		return $row["$field"];
 	}
+
+	function min($field){
+		$this->field = '`'.$field.'`';
+		$this->limit = '1';
+		$this->order = '`'.$field.'` ASC';
+		$row = $this->fetch_array($this->dbselect());
+		return $row["$field"];
+	}
 	function delete(){
 		$sql = 'DELETE FROM '.$this->table;
 		if(empty($this->where)){
