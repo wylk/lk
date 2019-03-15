@@ -16,8 +16,8 @@
 
 <nav class="mui-bar mui-bar-tab">
 	<a class="mui-tab-item <?php if($php_self == 'index.php'){echo 'mui-active';}?>" href="./index.php">
-		<span class="mui-icon iconfont icon-shouye1"></span>
-		<span class="mui-tab-label">首页</span>
+		<span class="mui-icon iconfont icon-zhaowendang"></span>
+		<span class="mui-tab-label">找卡</span>
 	</a>
 	<a class="mui-tab-item <?php if($php_self == 'find.php'){echo 'mui-active';}?>" href="find.php">
 		<span class="mui-icon iconfont icon-faxian1"><span class="mui-badge">9</span></span>

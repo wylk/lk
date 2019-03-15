@@ -58,13 +58,13 @@
         });
         // 把定位插件加入地图实例
         map.addControl(geolocation);
-
         // 添加地图全局定位事件
         AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
         AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
 
         // 调用定位
         geolocation.getCurrentPosition();
+        mui.toast('定位中...',{ duration:'long', type:'div' }) 
     });
 
     /*
