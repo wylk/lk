@@ -26,11 +26,12 @@
         .img{max-width: 69%;}
         .img img{max-width: 100%;}
 
-        .menu{float: right; width: 100%;align-items: flex-end; display: flex; flex-direction: row-reverse;}
+        .menu{float: right; width: 100%;align-items: flex-end; display: flex; flex-direction: row;justify-content: space-between;margin-bottom: 2px;}
         .mui-icon-extra-heart:before {float: right;}
-        .mui-icon-extra-heart{font-size: 18px;}
+        .mui-icon-extra-heart{font-size: 19px;}
         .menu .points{font-size: 14px;margin:1px}
-        .menu button{float:right;border:0;padding: 0px 5px;margin:-2px;}
+        .menu button{float:right;border:0;padding: 0px 5px;}
+        .menu .time{color:#999; font-size: 14px;}
 
         .comment{font-size: 13px; width: 80%;}
         .comment_content {color: #8f8f94;white-space: normal}
@@ -106,7 +107,7 @@ function downRefresh(){
         console.log(result);
         if(!result.error && result.data.list.length > 0){
             $.each(result.data.list,function(key,value){
-                strHtml += dataFunc(value,result.data.comment_list,result.data.userinfo);
+                strHtml += dataFunc(value,result.data.comment_list,result.data.userinfo,result.data.userId);
             })
             page = 2;
             $(".mui-table-view").html(strHtml);
@@ -123,7 +124,7 @@ function upRefresh(){
         console.log(result);
         if(!result.error && result.data.list.length > 0){
             $.each(result.data.list,function(key,value){
-                strHtml += dataFunc(value,result.data.comment_list,result.data.userinfo);
+                strHtml += dataFunc(value,result.data.comment_list,result.data.userinfo,result.data.userId);
             })
             page++;
             $(".mui-table-view").append(strHtml);
@@ -133,10 +134,11 @@ function upRefresh(){
         }
     },"json");
 }
-function dataFunc(data,comment,userinfo){
+function dataFunc(data,comment,userinfo,userId=null){
+    
     var str = "";
     // str += '<li class="mui-table-view-cell mui-media" ><a href="javascript:;">';
-    str += '<li class="mui-table-view-cell mui-media" ><div >';
+    str += '<li class="mui-table-view-cell mui-media" id="li_'+data['id']+'"><div >';
         str += '<img class="mui-media-object mui-pull-left" ';
         if(userinfo[data['uid']] && userinfo[data['uid']]['avatar']){
             str += ' src="'+userinfo[data['uid']]['avatar']+'">';
@@ -157,7 +159,13 @@ function dataFunc(data,comment,userinfo){
                 }
                 str += '</div>';
                 str += ' ';
-                str += '<div class="menu"><button type="button" onclick="comment('+data['id']+')">留言</button><button id="heart_'+data['id']+'" onclick="gitHeart('+data['id']+')" class="mui-icon-extra mui-icon-extra-heart"><span class="points">'+data['heart']+'</span></button></div>';
+                str += '<div class="menu">';
+                str += '<div><span class="time">'+getTime(data['createtime'])+'</span></div>';
+                str += '<div><button type="button" onclick="comment('+data['id']+')">留言</button><button id="heart_'+data['id']+'" onclick="gitHeart('+data['id']+')" class="mui-icon-extra mui-icon-extra-heart"><span class="points">'+data['heart']+'</span></button>';
+                if(data['uid'] == userId){
+                    str += '<button type="button" style="color:#999" onclick="deleteSet('+data['id']+')" >删除</button></div>';
+                }
+                str +='</div>';
             str += '</div>';
 
             if(comment){
@@ -177,20 +185,20 @@ function dataFunc(data,comment,userinfo){
     return str; 
 }
 
-mui(".mui-table-view").on("tap",".mui-table-view-cell",function(){
-    console.log(this);
-    console.log(this.querySelector(".mui-media-object1"));
-console.log("-------------");
-    // var image = new Image();
-    // image.onload = function(){
-        EXIF.getData(this.querySelector(".mui-media-object1"),function(){
-            console.log(this);
-            console.log(EXIF.getAllTags(this));
-            console.log(EXIF.pretty(this));
-        });
-    // }
-    // image.src = $(this).find(".mui-media-object1").attr("src");
-});
+// mui(".mui-table-view").on("tap",".mui-table-view-cell",function(){
+//     console.log(this);
+//     console.log(this.querySelector(".mui-media-object1"));
+// console.log("-------------");
+//     // var image = new Image();
+//     // image.onload = function(){
+//         EXIF.getData(this.querySelector(".mui-media-object1"),function(){
+//             console.log(this);
+//             console.log(EXIF.getAllTags(this));
+//             console.log(EXIF.pretty(this));
+//         });
+//     // }
+//     // image.src = $(this).find(".mui-media-object1").attr("src");
+// });
 
 function release(){
     console.log("release");
@@ -233,6 +241,27 @@ function sendRelease(){
 }
 function cancelRelease(){
 	$(".release_block").css("display","none");
+}
+// 删除帖子
+function deleteSet(id){
+    var data = {id:id,type:"delete"};
+    mui.post("./find_circle.php",data,function(result){
+        console.log(result);
+        if(!result.error){
+            var child = document.getElementById("li_"+id);
+            child.parentNode.removeChild(child);
+            mui.toast("删除成功");
+        }else{
+            if(result.hasOwnProperty("data") && result.data.hasOwnProperty("url") ){
+                mui.toast("请先登录");
+                setTimeout(function(){
+                    window.location.href = result.data.url;
+                },1000);
+            }else{
+                mui.toast("删除失败");
+            }
+        }
+    },"json");
 }
 // $("[name=sendMsg]").blur(function(){
 //     $(".comment_block").hide();
@@ -317,6 +346,24 @@ function gitHeart(id){
         //showsize:true//是否显示原始文件大小 默认false
     });
 });
+
+function getTime(time){
+    var time = new Date(time*1000);
+    var now = new Date();
+    var y = time.getFullYear();
+    var m = time.getMonth();
+    var d = time.getDate();
+    var h = time.getHours();
+    var i = time.getMinutes();
+    var s = time.getSeconds();
+    if(y != now.getFullYear()){
+        return y+'年'+m+'月'+d+'日';
+    }else if(d != now.getDate()){
+        return m+'月'+d+'日';
+    }else{
+        return h+":"+i;
+    }
+}
 </script>
 
 </html>

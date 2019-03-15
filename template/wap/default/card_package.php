@@ -236,7 +236,7 @@ function htmlStr(data,cardAttrArr,cardType){
         str += '<div class="item-flex card-info">';
             if(data['type'] == platform_type_name) str += '<p>乐卡：leka </p>';
         else str += '<p>'+cardType[cardAttrArr[data['card_id']]['uid']]+"："+cardAttrArr[data['card_id']]['name']+"</p>";
-            str += '<p style="font-size: 13px;color: #999"><span style="margin-right: 20px;">可用：<i style="font-size: 14px;color: #333;">332</i></span> 锁定：'+(frozen+bail).toFixed(2)+'</p>';
+            str += '<p style="font-size: 13px;color: #999"><span style="margin-right: 20px;">可用：<i style="font-size: 14px;color: #333;">'+num.toFixed(2)+'</i></span> 锁定：'+(frozen+bail).toFixed(2)+'</p>';
         str += '</div>';
         str += '<div class="item-flex card-logo"><p ';
         if(data['type'] != platform_type_name){
