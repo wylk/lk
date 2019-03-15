@@ -173,7 +173,7 @@
         <div class="card">
             <ul class="mui-table-view mui-table-view-chevron">
                 <li class="mui-table-view-cell">
-                    <a href="" class="mui-navigate-right">拼卡</a>
+                    <a href="release_group.php" class="mui-navigate-right">拼卡</a>
                 </li>
                 <li class="mui-table-view-cell">
                     <a href="" class="mui-navigate-right">数据统计</a>

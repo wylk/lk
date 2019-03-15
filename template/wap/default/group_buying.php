@@ -61,12 +61,19 @@
 				.gr-info-card{
 					display: flex;
 				}
+				.gr-card-info-f{
+					width: 40%;
+					height: 100px;
+					background-image: url(../static/images/index/15.jpg?r=22); 
+					background-size: 100% 100%;
+					border-radius: 5px;
+				}
 				.gr-card-info{
 					display: flex;
-					width: 40%;
-					background-image: url(../static/images/2.jpg?r=22); 
+					width: 100%;
+					background-image: url(../static/images/0.png?r=22222); 
 					background-size: 100% 100%;
-					height: 100px;
+					height: 100%;
 					border-radius: 5px;
 				}
 				.gr-card-total {
@@ -185,7 +192,7 @@
 
 	</head>
 
-	<body><!-- mui-bar-transparent -->
+	<body><!-- mdsdsui-bar-transparent -->
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left cl-6"></a>
 			<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right cl-6" href="#topPopover"></a>
@@ -213,13 +220,16 @@
 					<div class="group-list-box">	
 						<div class="group-info ">
 							<div class="gr-info-card">
-								<div class="gr-card-info">
-								 	<div class="gr-card-total "></div>
-								 	<div class="gr-card-val ">
-								 		<span style="color: red;font-size: 18px;">1000</span>元<br>
-								 		<span style="font-size: 12px;">抵现卡</span><br>
-								 		<span>¥100</span>
-								 	</div>
+								<div class="gr-card-info-f">
+									<div class="gr-card-info">
+
+									 	<div class="gr-card-total "></div>
+									 	<div class="gr-card-val ">
+									 		<span style="color:#d20808;font-size: 18px;">1000</span>元<br>
+									 		<span style="font-size: 12px;">抵现卡</span><br>
+									 		<span>¥100</span>
+									 	</div>
+									</div>
 								</div>
 								<div class="gr-buy-info">
 									<div style="padding: 0px;">店铺: <span class="cl-3" style="font-weight: bold;">呷哺呷哺</span></div>
