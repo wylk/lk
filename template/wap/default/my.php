@@ -43,14 +43,14 @@
            width: 65px;
            border-radius: 2%; 
         }
-        a{
-            color: #333;
+        .mui-table-view-cell>a:not(.mui-btn) {
+             color: #333;
+        }
+        .font-17{
+            font-size: 16px;
         }
         .mui-table-view{
             background: #fff;
-        }
-        .mui-table-view-cell {
-            /*padding: 6px 10px;*/
         }
         .mui-table-view:after,.mui-table-view:before {
             background-color: #fff; 
@@ -66,43 +66,21 @@
             color: #333;
         }
 
-        .icon-yemiantuiguang:before {
-            content: "\e600";
-            color: #67ccf4;
-            margin-right: 10px;
-        }
-
-        .icon-qiaquan:before {
-            content: "\e63e";
-            margin-right: 10px;
-            color: #67ccf4;;
-        }
-        .icon-api:before {
-            content: "\e888";
-            margin-right: 10px;
+        .icon-authenticate:before,.icon-api:before {
             color: red;
         }
-
-        .icon-authenticate:before {
-            content: "\e666";
-            color: red;
-            margin-right: 10px;
-        }
-
-        .mui-icon-gear:before {
-            content: '\e502';
-            color: #67ccf4;
-        }
-        .icon-dingdan:before {
-            content: "\e607";
-            margin-right: 10px;
-            color: #67ccf4;
+        .mui-icon-gear:before,.icon-dingdan:before,.icon-qiaquan:before,.icon-yemiantuiguang:before {
+            color: #67ccf4; 
         }
 
         .icon-shezhi:before {
-            content: "\e602";
-            margin-right: 10px;
             color: #75cef4;
+        }
+
+        .icon-authenticate:before,.icon-dingdan:before,.icon-shezhi:before,.mui-icon-gear:before,.icon-api:before,.icon-qiaquan:before,.icon-yemiantuiguang:before{
+            margin-right: 15px;
+            float: left;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -130,13 +108,13 @@
         </div>
             <ul class="mui-table-view" >
                 <li class="mui-table-view-cell">
-                    <a class="mui-navigate-left iconfont icon-dingdan" href="orderList.php">
-                        <span class="menu_title">订单</span>
+                    <a class="mui-navigate-left iconfont icon-dingdan font-17" href="orderList.php">
+                        订单
                     </a>
                 </li>
                 <li class="mui-table-view-cell">
-                    <a class="mui-navigate-left iconfont icon-authenticate" href="postcard.php">
-                        <span class="menu_title">认证</span>
+                    <a class="mui-navigate-left iconfont icon-authenticate  font-17" href="postcard.php">
+                        认证
                     </a>
                 </li>
             </ul>
@@ -145,8 +123,8 @@
             <ul class="mui-table-view" style="margin-top: 25px;">
                 <?php foreach($menu as $v){?>
                 <li class="mui-table-view-cell">
-                    <a class="mui-navigate-left iconfont <?php echo $v['icon'];?>" href="<?php echo $v['url'];?>">
-                        <span class="menu_title"><?php echo $v['title'];?></span>
+                    <a class="mui-navigate-left iconfont <?php echo $v['icon'];?> font-17" href="<?php echo $v['url'];?>">
+                        <?php echo $v['title'];?>
                     </a>
                 </li>
                 <?php }?>
@@ -155,8 +133,8 @@
             <?php }?>
             <ul class="mui-table-view" style="margin-top: 25px;">
                 <li class="mui-table-view-cell">
-                    <a class="mui-navigate-left iconfont icon-shezhi" href="./setup.php">
-                        <span class="menu_title">设置</span>
+                    <a class="mui-navigate-left iconfont icon-shezhi font-17" href="./setup.php">
+                        设置
                     </a>
                 </li>
             </ul>       

@@ -9,74 +9,98 @@
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?<?=time()?>">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
     <script type="text/javascript" src="<?php echo STATIC_URL;?>mui/js/mui.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo STATIC_URL;?>js/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>x-admin/lib/layui/layui.js" charset="utf-8"></script>
     <style type="text/css">
     body{
        background: -webkit-linear-gradient(#70d1f5, #48bee9);
     }
-      .check_wrapper,.login_wrapper{padding: 10px;background: white;border-radius: 4px;width: 81%;margin-left: 31px;height: 229px;margin-top: -2px;}
+      .check_wrapper, .login_wrapper {
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            height: 250px;
+            margin: -4px 38px 0px;
+        }
       /*输入框*/
-      .login_block{height:212px;background-color: white;display: flex;flex-direction: column;justify-content: center;border-radius:4px;margin-bottom: 50px;}
-      .login_input{height: 48%;display: flex;}
+    
+      .login_input{display: flex;padding: 25px 15px 0px;}
       .login_line{border-bottom: 2px solid #d2d2d2;}
       .login_input span{display: flex;align-items: center;width: 110px;flex-direction: column;justify-content: center;}
-      .login_input input{    border: 0px;
-    font-size: 14px;
-    height: 100%;
-    margin-top: 17px;}
-      .login_input img{height: 80%;border-radius:4px;width: 100%;}
+      .login_input input{    
+            border: 0px;
+            font-size: 14px;
+            margin:0px;
+            padding: 10px 5px;
+        }
+      .login_input img{height: 70%;border-radius:4px;width: 100%;}
       /*点击按钮*/
-      .btn{border: 1px solid #f8fcfd;height: 30px;background: white;width: 81%;font-size: 15px;color: #8dd0f1;border-radius: 6px;height: 38px;margin-left: 29px;margin-top: 17px;}
+      .btn {
+            border: 1px solid #f8fcfd;
+            height: 30px;
+            background: white;
+            width: 100%;
+            font-size: 15px;
+            color: #4fc2eb;
+            border-radius: 5px;
+            height: 38px;
+        }
       .btn_action{background: #a9e6ef;}
       /*短信获取按钮*/
       .check_phone{width: 165px;align-items: flex-start;}
-      .btn_msg{border:0px;width: 100%;font-size: 12px;background: white;color:#29aee7;margin-top: 26px;}
-      .notice{margin:10px;padding-left: 34px;}
+      .btn_msg{border:0px;width: 100%;font-size: 12px;background: white;color:#6dd0f4;}
+      .notice {text-align: center;padding: 40px 0px;font-size: 14px;}
       .notice span{margin-left:5px;}
       .notice i{color:#29aee7;}
       .img1{margin: 0 auto; display: block;/* position: relative;top: -80px;*/ width: 70%;}
       .mui-bar{background: #a9e6ef;}
       .notice a{color:white;}
       .mui-content-padded,.mui-title{color: #333;}
+      .mui-table-view-cell:after {
+            left: 10px;
+            right: 10px;
+        }
+      .mui-table-view-cell:last-child:after, .mui-table-view-cell:last-child:before {
+            height: 1px;
+        }
+
     </style>
     <script type="text/javascript" src="<?php echo STATIC_URL;?>js/common.js" charset="utf-8"></script>
     <script type="text/javascript"></script>
 </head>
 
 <body style="background-color: #ececec;overflow: hidden;">
- <div><img src="../template/wap/default/images/11.png" style="width: 89%;height: 22px;margin-left: 17px;
-    margin-top: 39%;"></div>
+ <div style="padding: 25% 25.8px 0px">
+    <img src="../template/wap/default/images/11.png" style="width: 100%;height: 15px;">
+ </div>
+   
   <div class="login_wrapper" >
     <div class="login_block">
-        <div class="login_input">
-          <input type="text" name="phone" placeholder="手机号">
+        <div class="login_input mui-table-view-cell" >
+          <input type="number" name="phone" placeholder="手机号">
         </div>
-        <hr class="login_line" />
-        <div class="login_input">
+        <div class="login_input mui-table-view-cell">
           <input type="text" name="check" placeholder="验证码">
           <span>
             <img onclick="this.src='login.php?action=check&'+Math.random();" src="./login.php?action=check"  />
           </span>
         </div>
-        <hr class="login_line" />
-        <div class="login_input">
-          <input type="text" name="msg_code" placeholder="短信验证码">
+        <div class="login_input mui-table-view-cell">
+          <input type="number" name="msg_code" placeholder="短信验证码">
           <span>
             <button class="btn_msg">获取验证码</button>
           </span>
         </div>
-          <hr class="login_line" />
     </div>
 
   </div>
-     <div >
+     <div style="padding: 15px 38px;">
       <button id="btn_login" class="btn">登录</button>
     </div>
     <div class="notice">
-      <input type="checkbox" id="checkbox" name="checkbox" value="dd">
-      <span>同意
-        <a href="#modal">《服务条款》</a>
+      <!-- <input type="checkbox" id="checkbox" name="checkbox" value="dd">
+      <span>同意 
+        <a href="#modal">乐卡网</a>-->
       </span>
     </div>
 </body>
@@ -140,15 +164,11 @@ var check_code="";
     phone = $("[name=phone]").val();
     var phoneReg = /^1([0-9]{10})$/;
     if(!phoneReg.test(phone)){
-      console.log("请输入正确的手机号");
-      mui.toast("请输入正确的手机号");
-      return;
+      mui.toast("请输入正确的手机号"); return;
     }
-    // check_code = $("[name=check]").val();
-    if(phone.length != 11 || check_code.length != 4){
-      console.log("请检查手机号或者验证码是否正确填写");
-      mui.toast("请检查手机号或者验证码是否正确填写");
-      return;
+    check_code = $("[name=check]").val();
+    if(check_code.length != 4){
+      mui.toast("验证码不正确");return;
     }
 
     var data = {phone:phone,type:"code",check_code:check_code};
@@ -169,30 +189,31 @@ var check_code="";
       }
     },"json");
   });
-  // 注意选项勾选
-  $("#checkbox").bind("click",function(){
-    if($(this).is(":checked")){
-      checkbox_status = 1;
-      if(checkbox_status == 1 && msg_code_status == 1)
-        $("#btn_login").css("background","white");
-    }else{
-      checkbox_status = 0;
-      $("#btn_login").css("background","#f2f2f2");
-    }
-  });
+  
   // 登录
   $("#btn_login").bind("click",function(){
-     console.log(msg_code_status);
-    if(msg_code_status != 1 || checkbox_status != 1) return;
-    var msg_code = $("[name=msg_code]").val();
+    //console.log(msg_code_status);
+    //if(msg_code_status != 1 || checkbox_status != 1) return;
     phone = $("[name=phone]").val();
+    var phoneReg = /^1([0-9]{10})$/;
+    if(!phoneReg.test(phone)){
+      mui.toast("请输入正确的手机号");return;
+    }
+    var msg_code = $("[name=msg_code]").val();
+
+    if(msg_code.length != 6){
+         mui.toast("请输入正确的验证码");return;
+    }
+    
     var data = {phone:phone,logintype:"checkAccount",msg_code:msg_code};
     $.post("./login.php",data,function(res){
-      console.log(res);
       if(!res['res']){
-        window.location.href =  "<?php echo $referer ? $referer : './my.php'; ?>";
+        mui.toast(res['msg']);
+        setTimeout(function(){
+            window.location.href =  "<?php echo $referer ? $referer : './my.php'; ?>";
+        },1000)
       }else{
-        console.log(res['msg']);
+        
         mui.toast(res['msg']);
       }
     },"json");

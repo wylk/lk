@@ -390,7 +390,7 @@ class mysql{
 		$this->clear_data();
 		//logss($sql);
 		//error_log($sql);
-		//echo $sql;
+		//echo $sql;die;
 		$this->last_sql = $sql;
 		$result = @mysql_query($sql,$this->conn);
 		return $result;

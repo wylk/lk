@@ -26,12 +26,6 @@
             padding: 0 8px;
             color: #888;
         }
-        .mui-table-view-cell {
-            position: relative;
-            overflow: hidden;
-            padding: 5px 15px;
-            -webkit-touch-callout: none;
-        }
         .mui-toast-container {
             line-height: 17px;
             position: fixed;
@@ -64,38 +58,18 @@
             margin: 0 auto;
             text-align: center;
             width: 95%;
+        } 
+        .flex-grow{
+          flex-grow: 1;
         }
-
-        .store{
-            display: flex;
-            align-items:center;
-            height: 70px;
-            color:#999;
+        .img{
+            margin-right: 10px;
         }
-        .price{
-           width: 46.2%;
-           font-size: 13px;
-           /* border-right: 1px dashed #999; */
-        }
-        .price div{
-            line-height: 25px;
-            margin-left: 10px;
-            text-align: left;
-
-        }
-        .font18{
-            font-size: 16px;
+        .font17{
+            font-size: 17px;
         }
         .font20{
             font-size: 18px;
-        }
-        .num{
-            height:50px;
-            width: 40%;
-            text-align: right;
-        }
-        .num div{
-            font-size: 13px;
         }
         .black_3{
             color:#333;
@@ -110,25 +84,15 @@
             color: red;
         }
         .mui-slider .mui-slider-group .mui-slider-item img {
-            height: 50px;
-            width: 50px;
-            border-radius:3px;
+            height: 42px;
+            width: 42px;
+            line-height: 42px;
+            border-radius:5px;
+            margin-right: 10px;
         }
         
-        .num a{
-          border-radius: 5px;
-        }
-        .black-status{
-            color: #95ad6e;
-        }
-        .map{
-            height: 160px;
-            width: 100%;
-        }
-        .wind_f{
-          overflow:scroll;
-          height: 560px;
-        }
+        
+        
 
         .marker-route{
             width: 70px;
@@ -192,6 +156,7 @@
         .mui-pull-bottom-wrapper {
             text-align: center;
         }
+
         </style>
         
     </head>

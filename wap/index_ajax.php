@@ -29,7 +29,8 @@ function index($data){
         }
         $lng = $data['lng'];
         $lat = $data['lat'];
-
+        $_SESSION['map']['lng'] = $lng; 
+        $_SESSION['map']['lat'] = $lat; 
         $join = "ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN(({$lat}*PI()/180-`b`.`lat`*PI()/180)/2),2)+COS({$lat}*PI()/180)*COS(`b`.`lat`*PI()/180)*POW(SIN(({$lng}*PI()/180-`b`.`lng`*PI()/180)/2),2)))*1000)";
         $store_package = D('')->table("User_audit as b")
                   ->join('Card_package as a ON a.uid=b.uid','LEFT')
@@ -70,29 +71,24 @@ function index($data){
                     }else if($max == $min){
                         $max_min = round($max *10,1);
                     }else{
-                        $max_min = round($min*10,1).' - '.round($max*10,1);
+                        $max_min = round($min*10,1).'-'.round($max*10,1);
                     }
-
-                   /*if($v['card_id'] == "261c3ac71c5ea928a9aedc7a9e48bbd3"){
-                        dump($min);die;
-                    }*/
-
-
+                  
                     $str .=  <<<EOM
                     <li class="mui-table-view-cell">
-                    <a  href="./home.php?card_id={$v['card_id']}&plugin=offset&shoreUid={$v['uid']}" >
-                    <div class="store">
-        	            <div class="img">
-        	                <img src="{$v['logo']}" class="imgs"/>
-        	            </div >
-        	            <div class="price">
-        	            	<div class="font18 black_3">{$v['enterprise']}</div>
-        	            	<div><span class="{$color}">{$max_min}</span>&nbsp;{$z}</div>
+                    <a  href="./home.php?card_id={$v['card_id']}&plugin=offset&shoreUid={$v['uid']}" style="display:flex">
+                    
+        	            
+        	           <img src="{$v['logo']}" class="imgs"/>
+        	            
+        	            <div class="mui-media-body flex-grow font17">
+        	            	{$v['enterprise']}
+        	            	<p class="mui-ellipsis"><span class="{$color}">{$max_min}</span>{$z}</p>
         	            </div>
         	            <div class="num">
-        	            	<div ><span class="">{$juli}</span>{$m}</div>
+        	            	<div class="black_9"><span >{$juli}</span>{$m}</div>
         	            </div>
-        	         </div></a>
+        	         </a>
                      <li>
 EOM;
                 }

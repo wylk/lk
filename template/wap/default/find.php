@@ -66,8 +66,8 @@
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
-					<a id="about" class="iconfont icon-laoke mui-navigate-right">
-						捞一捞
+					<a href="./fishing_card.php" id="about" class="iconfont icon-laoke mui-navigate-right">
+						捞卡
 					</a>
 				</li>
 			</ul>

@@ -6,8 +6,8 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
     <title>交易</title>
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-   <!--  <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/font.css"> -->
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/mui.min.css">
+    <link rel="stylesheet" href="<?php echo STATIC_URL;?>mui/css/icons-extra.css">
     <link rel="stylesheet" href="<?php echo STATIC_URL;?>x-admin/css/xadmin.css?r=<?php echo time();?>">
 
     <style type="text/css">
@@ -111,45 +111,39 @@
         .line-width1{
             width: 17%;
         }
-        .line-width3{
-            width: 20%;
-        }
-        .row-card2{
-           flex-grow: 1;
-        }
+        
+        
         .back{
             color: #333;
         }
 
-        .font-max{
-            font-size: 18px;
+
+        .font-c-red{
+            color: #ce1717;
+        }
+        .font-17{
+            font-size: 17px;
+        }
+         .font-14{
+            font-size: 14px;
         }
 
-        .font-16{
-            font-size: 16px;
+        .mui-table-view-cell>a:not(.mui-btn) { 
+            display: flex;          
         }
 
-        .home-plugin-info-row-card-img{
-            width: 45px;
-            height: 45px;
+        .flex-g{
+            flex-grow: 1
         }
-        .layui-btn-primary{
-            border: 1px solid #ce856a;
-            color: #999;
-            height: 30px;
-            line-height: 30px;
+
+        .mui-table-view .mui-media-object {
             border-radius: 5px;
         }
-        .card-3{
-            text-align: center;
+        .mui-table-view:before ,.mui-table-view:after{    
+            height: 0px;
         }
-        .layui-badge{
-            margin-left: 5px;
-        }
-        .home-plugin-info-row, hr{
-          width: 95%;
-          margin: 0px auto;
-        }
+        
+       
 
         /* 弹框 */
         #up-div{
@@ -234,42 +228,49 @@
         p{
             color: #999;
         }
+        .mui-scroll-wrapper {
+            bottom: 53px;
+        }
         /* end */
     </style>
 
 </head>
-<body >
-<div id="pullrefreshs" style="touch-action: none;" class="mui-content mui-scroll-wrapper">
-<div>
-<div class="lk-content">
-    <div class="shop_headlines">
+<body>
+    <div id="pullrefreshs" style="touch-action: none;" class="mui-content mui-scroll-wrapper">
+    <div >
+        <div class="lk-content">
+            <div class="shop_headlines">
 
-        <div class="shop_infos">
-            <div class="shop_info font-max" ><?php echo $store['enterprise'];?></div>
-        </div>
-        <div class="shop_headline">
-            <div class="shop_head_img"><img src="<?php echo (!empty($store['logo']))?$store['logo']:'../template/wap/default/images/default_home_user.png"';?>"/></div>
-            <div class="flex-g">
-                <p>信用:9分</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="plugin-title">
-        <div>
-
-            &nbsp;&nbsp; <span>抵现卡</span> &nbsp;&nbsp;| &nbsp;&nbsp; 积分卡
-        </div>
-    </div>
-
-            <div class="home-plugin-info" >
-
+                <div class="shop_infos">
+                    <div class="shop_info font-max" ><?php echo $store['enterprise'];?></div>
+                </div>
+                <div class="shop_headline">
+                    <div class="shop_head_img"><img src="<?php echo (!empty($store['logo']))?$store['logo']:'../template/wap/default/images/default_home_user.png"';?>"/></div>
+                    <div class="flex-g">
+                        <p>信用:9分</p>
+                    </div>
+                </div>
             </div>
 
+            <div class="plugin-title">
+                <div>
+                    &nbsp;&nbsp; <span>抵现卡</span> &nbsp;&nbsp;| &nbsp;&nbsp; 积分卡
+                </div>
+            </div>
+                <div class="mui-content" >
+                    <ul class="mui-table-view" style="margin-top: 0px;"> 
+                    </ul>
+                </div>
+        </div>
         </div>
     </div>
-</div>
-  	<?php //include display('public_menu');?>
+    <!-- 底部导航 -->
+    <nav class="mui-bar mui-bar-tab ">
+        <a class="mui-tab-item" href="#Popover_0">关注</a>
+        <a class="mui-tab-item" href="#Popover_1">购物</a>
+        <a class="mui-tab-item" href="#Popover_2">客服</a>
+    </nav>
+  	<!-- 弹框 -->
     <div id="up-div">
         <div id="up-index">
             <div class="receivea">
@@ -338,10 +339,32 @@
     });
 
     function data(){
-        $.post('home_ajax.php',{i:i,plugin:type,card_id:card_id},function(re){
+        $.post('./home_ajax.php',{i:i,plugin:type,card_id:card_id},function(re){
             ++i;
             if(re.error == 0){
-                $('.home-plugin-info').append(re.msg);
+                var card_info = '';
+                $.each(re.msg,function(index, el) {
+                    var num = parseFloat(el.num,2);
+                    var frozen = parseFloat(el.frozen,2);
+                    var limit = parseFloat(el.limit,2);
+                    var max_limit = num-frozen;
+                    var max_limt_str = limit + '-' + max_limit;
+                    if(max_limit > 1000){
+                        max_limt_str = limit + '-' + (max_limit/1000) + 'k';
+                    }
+                    if(max_limit < limit){
+                        max_limt_str = max_limit;
+                    }
+                    if(el.avatar == ''){
+                        el.avatar = '../template/wap/default/images/default_home_user.png';
+                    }
+
+                    if(el.num != el.frozen){
+                        card_info += ' <li class="mui-table-view-cell mui-media"> <a class="d-flex" href="click-buy" data-id="'+el.id+'" data-id="'+el.uid+'"> <img class="mui-media-object mui-pull-left " src="'+el.avatar+'"> <div class="mui-media-body font-17 flex-g">'+el.b_name+'<p class="mui-ellipsis font-14">限购:'+max_limt_str +'&nbsp;&nbsp;单价:'+parseFloat(el.price,2)+'</p></div><div class="mui-icon-extra mui-icon-extra-cart font-17 font-c-red"></div></a></li>';
+                    }
+                });
+
+                $('.mui-table-view').append(card_info);
                 mui("#pullrefreshs").pullRefresh().endPullupToRefresh(false);
             }else{
                 mui("#pullrefreshs").pullRefresh().endPullupToRefresh(true);
